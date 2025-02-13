@@ -1,0 +1,570 @@
+openapi: 3.0.0
+info:
+  title: BigPanda API
+  description: >-
+    [https://docs.bigpanda.io/reference/introduction](https://docs.bigpanda.io/reference/introduction)
+  version: 1.0.0
+servers:
+  - url: https://api.bigpanda.io
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []
+tags:
+  - name: Alerts
+    description: >-
+      [https://docs.bigpanda.io/reference/alerts-how-it-works](https://docs.bigpanda.io/reference/alerts-how-it-works)
+
+
+      ``` shell
+
+      curl -X POST -H "Content-Type: application/json" \
+          -H "Authorization: Bearer " \
+          https://api.bigpanda.io/data/v2/alerts \
+          -d '{ "app_key": "", "status": "critical", "host": "production-database-1", "check": "CPU overloaded" }'
+
+      ```
+  - name: Users
+    description: >-
+      [https://docs.bigpanda.io/reference/users-beta](https://docs.bigpanda.io/reference/users-beta)
+  - name: Maintenance Plans
+    description: >-
+      [https://docs.bigpanda.io/reference/maintenance-plans-how-it-works](https://docs.bigpanda.io/reference/maintenance-plans-how-it-works)
+  - name: Schedules v1
+    description: >-
+      [https://docs.bigpanda.io/reference/maintenance-schedules-create](https://docs.bigpanda.io/reference/maintenance-schedules-create)
+  - name: Enrichments
+  - name: Changes
+    description: >-
+      [https://docs.bigpanda.io/reference/rcc-how-it-works](https://docs.bigpanda.io/reference/rcc-how-it-works)
+  - name: Environments
+    description: >-
+      [https://docs.bigpanda.io/reference/environments-object](https://docs.bigpanda.io/reference/environments-object)
+  - name: Audit
+    description: >-
+      [https://docs.bigpanda.io/reference/audit-log-object](https://docs.bigpanda.io/reference/audit-log-object)
+  - name: Troubleshooting / Logs
+    description: >-
+      [https://docs.bigpanda.io/reference/retrieve-all-troubleshooting-logs](https://docs.bigpanda.io/reference/retrieve-all-troubleshooting-logs)
+  - name: Correlation Patterns
+    description: >-
+      [https://docs.bigpanda.io/reference/correlation-patterns](https://docs.bigpanda.io/reference/correlation-patterns)
+  - name: Alert Enrichment v2
+    description: >-
+      [https://docs.bigpanda.io/reference/alert-enrichment-v2](https://docs.bigpanda.io/reference/alert-enrichment-v2)
+  - name: Incidents v2
+    description: >-
+      [https://docs.bigpanda.io/reference/alert-enrichment-v2](https://docs.bigpanda.io/reference/alert-enrichment-v2)
+  - name: Incident Tags
+    description: >-
+      [https://docs.bigpanda.io/reference/incident-tags-how-it-works](https://docs.bigpanda.io/reference/incident-tags-how-it-works)
+  - name: Topology
+    description: >-
+      How To: Topologies
+
+
+      [https://docs.bigpanda.io/reference/topology-ui-object](https://docs.bigpanda.io/reference/topology-ui-object)
+paths:
+  /data/v2/alerts:
+    post:
+      tags:
+        - Alerts
+      summary: Send Alert
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                app_key: <app_key>
+                status: critical
+                host: sanity-server-15
+                check: network overloaded
+                datacenter: sanity-dc-4
+                description: CPU is above upper limit (70%)
+                cluster: sanity-cluster-5
+                region: sanity-region-1
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v1.0/scim/Users:
+    get:
+      tags:
+        - Users
+      summary: Retrieve All Users
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Users
+      summary: Create Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                userName: testing@abc123.com
+                displayName: test_user
+                active: false
+                password: Pa$$word
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v1.0/scim/Users/INSERT_USER_ID:
+    patch:
+      tags:
+        - Users
+      summary: Update a User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                userName: kitsen.andrey@gmail.com
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Users
+      summary: Delete a User
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/maintenance-plans:
+    get:
+      tags:
+        - Maintenance Plans
+      summary: Retrieve All Plans
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Maintenance Plans
+      summary: Create a Plan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: host1 maintenance
+                condition:
+                  '=':
+                    - host
+                    - prod-api-1
+                start: 1633904622
+                end: 1634768622
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v1.0/schedules:
+    post:
+      tags:
+        - Schedules v1
+      summary: Create a Schedule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Weekend Maintenance
+                starts_on: 1491265491
+                ends_on: 1491294307
+                active: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Schedules v1
+      summary: Retrieve All Schedules
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v1.0/schedules/{id}:
+    get:
+      tags:
+        - Schedules v1
+      summary: Retrieve a Schedule
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/enrichments-config/tags:
+    get:
+      tags:
+        - Enrichments
+      summary: Get Alert Enrichment Tags
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/alert-enrichments/{id}:
+    patch:
+      tags:
+        - Enrichments
+      summary: Update Alert Enrichment Item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                when:
+                  IN:
+                    - source_system
+                    - - api.integration1_test
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/changes/:
+    get:
+      tags:
+        - Changes
+      summary: Retrieve All Changes
+      parameters:
+        - name: start_time_frame
+          in: query
+          schema:
+            type: integer
+          example: '1573745094'
+        - name: end_time_frame
+          in: query
+          schema:
+            type: integer
+          example: '1572253401'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /data/changes:
+    post:
+      tags:
+        - Changes
+      summary: Create/Update a Change
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                identifier: CNG-123
+                tags:
+                  host: prod1.cluster1.app1
+                  type: risky
+                ticket_url: https://jira.link.com/ticket?change=chng123
+                summary: 'Summary of the change '
+                end: 1634583017
+                start: 1633891817
+                status: In Progress
+      parameters:
+        - name: x-bp-app-key
+          in: header
+          schema:
+            type: string
+          example: e1575fe93b9ded67d0e5cde6f6bb3d95
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/environments:
+    get:
+      tags:
+        - Environments
+      summary: Retrieve All Environments
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/environments/{id}:
+    get:
+      tags:
+        - Environments
+      summary: Retrieve an Environment by ID
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/audit/logs/:
+    get:
+      tags:
+        - Audit
+      summary: Retrieve All Audit Logs
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/troubleshooting/logs:
+    get:
+      tags:
+        - Troubleshooting / Logs
+      summary: Retrieve All Troubleshooting Logs
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/correlation-patterns:
+    post:
+      tags:
+        - Correlation Patterns
+      summary: Create Correlation Pattern
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: |-
+                {
+                    "tags": [
+                        "service",
+                        "check"
+                    ],
+                    "time_window": 60,
+                    "active": true,
+                    "cross_source": false,
+                }
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /web/correlation_patterns:
+    get:
+      tags:
+        - Correlation Patterns
+      summary: GET Correlation Patterns
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/enrichments-config/tags/{tag_name}:
+    get:
+      tags:
+        - Alert Enrichment v2
+      summary: List All Enrichment Items of a Tag
+      parameters:
+        - name: tag_name
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/environments/{environment_id}/incidents/:
+    get:
+      tags:
+        - Incidents v2
+      summary: Search Incidents
+      parameters:
+        - name: query
+          in: query
+          schema:
+            type: string
+          example: {query}
+        - name: environment_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}:
+    get:
+      tags:
+        - Incidents v2
+      summary: Retrieve Incident by ID
+      parameters:
+        - name: environment_id
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: incident_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/environments/{env_id}/incidents/{incident_id}/tags/{tag_id}:
+    get:
+      tags:
+        - Incident Tags
+      summary: Retrieve an Incident Tag from an Incident
+      parameters:
+        - name: env_id
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: incident_id
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: tag_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/environments/{env_id}/incidents/{incident_id}/tags:
+    get:
+      tags:
+        - Incident Tags
+      summary: Retrieve All Tags for an Incident
+      parameters:
+        - name: env_id
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: incident_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/topologies:
+    get:
+      tags:
+        - Topology
+      summary: Get All Topologies
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - Topology
+      summary: Create Topology Copy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                links:
+                  - source: host
+                    target: check
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Topology
+      summary: Update Topology
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                links:
+                  - source: host
+                    target: check
+                  - source: host
+                    target: cluster
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /resources/v2.0/topologies/{id}:
+    delete:
+      tags:
+        - Topology
+      summary: Delete Topology
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
