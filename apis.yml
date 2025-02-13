@@ -53,6 +53,42 @@ tags:
 type: Contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
+common:
+  - url: https://www.postman.com/bigpandaio/bigpanda-api-staging/overview
+    name: Postman Workspace
+    type: PostmanWorkspace
+  - name: Get Started
+    description: 'null'
+    url: https://docs.bigpanda.io/docs/get-started
+    type: GettingStarted
+  - name: Release Notes
+    description: 'null'
+    url: https://docs.bigpanda.io/docs/release-notes
+    type: ChangeLog
+  - name: Glossary
+    description: 'null'
+    url: https://docs.bigpanda.io/docs/glossary
+    type: Glossary
+  - name: Security
+    description: 'null'
+    url: https://docs.bigpanda.io/docs/security
+    type: Security
+  - name: BigPanda blog | BigPanda
+    description: 'null'
+    url: https://www.bigpanda.io/blog/
+    type: Blog
+  - name: Customer Support for AIOps | BigPanda
+    description: 'null'
+    url: https://www.bigpanda.io/customer-support/
+    type: Support
+  - name: Big Panda AIOps Integrations - Open Box Machine Learning
+    description: 'null'
+    url: https://www.bigpanda.io/partners/
+    type: Partners
+  - name: BigPanda Status
+    description: 'null'
+    url: https://status.bigpanda.io/
+    type: Status
 created: '2025-01-08'
 modified: '2025-02-12'
 position: Consuming
@@ -66,7 +102,3 @@ maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.19'
-common:
-  - name: Postman Workspace
-    url: https://www.postman.com/bigpandaio/bigpanda-api-staging/overview
-    type: PostmanWorkspace
