@@ -1,8 +1,9 @@
 openapi: 3.0.0
 info:
-  title: BigPanda API
+  title: BigPanda
   description: >-
-    [https://docs.bigpanda.io/reference/introduction](https://docs.bigpanda.io/reference/introduction)
+    Use the Environments API to define incident groups based on incident
+    properties such as source, severity, or alert data.
   version: 1.0.0
 servers:
   - url: https://api.bigpanda.io
@@ -72,6 +73,7 @@ paths:
     post:
       tags:
         - Alerts
+        - - Data
       summary: Send Alert
       requestBody:
         content:
@@ -102,6 +104,8 @@ paths:
     get:
       tags:
         - Users
+        - - Resources
+          - Users
       summary: Retrieve All Users
       responses:
         '200':
@@ -111,6 +115,8 @@ paths:
     post:
       tags:
         - Users
+        - - Resources
+          - Users
       summary: Create Users
       requestBody:
         content:
@@ -131,6 +137,11 @@ paths:
     patch:
       tags:
         - Users
+        - - Resources
+          - Users
+          - E
+          - T
+          - D
       summary: Update a User
       requestBody:
         content:
@@ -147,6 +158,11 @@ paths:
     delete:
       tags:
         - Users
+        - - Resources
+          - Users
+          - E
+          - T
+          - D
       summary: Delete a User
       responses:
         '200':
@@ -157,6 +173,9 @@ paths:
     get:
       tags:
         - Maintenance Plans
+        - - Resources
+          - Maintenance
+          - Plans
       summary: Retrieve All Plans
       responses:
         '200':
@@ -166,6 +185,9 @@ paths:
     post:
       tags:
         - Maintenance Plans
+        - - Resources
+          - Maintenance
+          - Plans
       summary: Create a Plan
       requestBody:
         content:
@@ -189,6 +211,8 @@ paths:
     post:
       tags:
         - Schedules v1
+        - - Resources
+          - Schedules
       summary: Create a Schedule
       requestBody:
         content:
@@ -208,6 +232,8 @@ paths:
     get:
       tags:
         - Schedules v1
+        - - Resources
+          - Schedules
       summary: Retrieve All Schedules
       responses:
         '200':
@@ -218,6 +244,8 @@ paths:
     get:
       tags:
         - Schedules v1
+        - - Resources
+          - Schedules
       summary: Retrieve a Schedule
       parameters:
         - name: id
@@ -234,6 +262,9 @@ paths:
     get:
       tags:
         - Enrichments
+        - - Resources
+          - Enrichments
+          - Tags
       summary: Get Alert Enrichment Tags
       responses:
         '200':
@@ -244,6 +275,8 @@ paths:
     patch:
       tags:
         - Enrichments
+        - - Resources
+          - Alert
       summary: Update Alert Enrichment Item
       requestBody:
         content:
@@ -270,6 +303,8 @@ paths:
     get:
       tags:
         - Changes
+        - - Resources
+          - Changes
       summary: Retrieve All Changes
       parameters:
         - name: start_time_frame
@@ -291,6 +326,8 @@ paths:
     post:
       tags:
         - Changes
+        - - Data
+          - Changes
       summary: Create/Update a Change
       requestBody:
         content:
@@ -322,6 +359,8 @@ paths:
     get:
       tags:
         - Environments
+        - - Resources
+          - Environments
       summary: Retrieve All Environments
       responses:
         '200':
@@ -332,6 +371,8 @@ paths:
     get:
       tags:
         - Environments
+        - - Resources
+          - Environments
       summary: Retrieve an Environment by ID
       parameters:
         - name: id
@@ -348,6 +389,9 @@ paths:
     get:
       tags:
         - Audit
+        - - Resources
+          - Audit
+          - Logs
       summary: Retrieve All Audit Logs
       responses:
         '200':
@@ -358,6 +402,9 @@ paths:
     get:
       tags:
         - Troubleshooting / Logs
+        - - Resources
+          - Troubleshooting
+          - Logs
       summary: Retrieve All Troubleshooting Logs
       responses:
         '200':
@@ -368,6 +415,9 @@ paths:
     post:
       tags:
         - Correlation Patterns
+        - - Resources
+          - Correlation
+          - Patterns
       summary: Create Correlation Pattern
       requestBody:
         content:
@@ -393,6 +443,8 @@ paths:
     get:
       tags:
         - Correlation Patterns
+        - - Web
+          - Patterns
       summary: GET Correlation Patterns
       responses:
         '200':
@@ -403,6 +455,10 @@ paths:
     get:
       tags:
         - Alert Enrichment v2
+        - - Resources
+          - Enrichments
+          - Tags
+          - Name
       summary: List All Enrichment Items of a Tag
       parameters:
         - name: tag_name
@@ -419,6 +475,9 @@ paths:
     get:
       tags:
         - Incidents v2
+        - - Resources
+          - Environments
+          - Incidents V2
       summary: Search Incidents
       parameters:
         - name: query
@@ -440,6 +499,9 @@ paths:
     get:
       tags:
         - Incidents v2
+        - - Resources
+          - Environments
+          - Incident
       summary: Retrieve Incident by ID
       parameters:
         - name: environment_id
@@ -461,6 +523,11 @@ paths:
     get:
       tags:
         - Incident Tags
+        - - Resources
+          - Environments
+          - Incidents
+          - Incident
+          - Tags
       summary: Retrieve an Incident Tag from an Incident
       parameters:
         - name: env_id
@@ -487,6 +554,11 @@ paths:
     get:
       tags:
         - Incident Tags
+        - - Resources
+          - Environments
+          - Incidents
+          - Incident
+          - Tags
       summary: Retrieve All Tags for an Incident
       parameters:
         - name: env_id
@@ -508,6 +580,8 @@ paths:
     get:
       tags:
         - Topology
+        - - Resources
+          - Topologies
       summary: Get All Topologies
       responses:
         '200':
@@ -517,6 +591,8 @@ paths:
     put:
       tags:
         - Topology
+        - - Resources
+          - Topologies
       summary: Create Topology Copy
       requestBody:
         content:
@@ -535,6 +611,8 @@ paths:
     post:
       tags:
         - Topology
+        - - Resources
+          - Topologies
       summary: Update Topology
       requestBody:
         content:
@@ -556,6 +634,8 @@ paths:
     delete:
       tags:
         - Topology
+        - - Resources
+          - Topologies
       summary: Delete Topology
       parameters:
         - name: id
