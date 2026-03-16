@@ -90,7 +90,7 @@ common:
     type: Status
     description: 'null'
 created: '2025-01-08'
-modified: '2025-02-12'
+modified: '2026-03-16'
 position: Consuming
 description: >-
   BigPanda is a software platform that uses artificial intelligence (AI) to help
@@ -100,5 +100,5 @@ description: >-
   response by providing context and insights through intelligent data analysis.
 maintainers:
   - FN: Kin Lane
-    email: info@apievangelist.com
+    email: kin@apievangelist.com
 specificationVersion: '0.19'
