@@ -6,36 +6,24 @@ apis:
     name: BigPanda
     tags:
       - Alerts
-      - ' Users'
-      - ' Maintenance Plans'
-      - Maintenance
-      - Plans
-      - Schedules
-      - Schedules
-      - Schedules
-      - ' Enrichments'
-      - Enrichments
-      - Tags
-      - ' Changes'
-      - Changes
-      - Changes
-      - ' Environments'
-      - Environments
-      - Environments
-      - ' Audit'
       - Audit
-      - Logs
-      - Troubleshooting
-      - Logs
-      - ' Correlation Patterns'
+      - Changes
       - Correlation
-      - Patterns
-      - Patterns
-      - Name
+      - Correlation Patterns
+      - Enrichments
+      - Environments
       - Incident Tags
       - Incidents
-      - Incidents
+      - Logs
+      - Maintenance
+      - Maintenance Plans
+      - Name
+      - Patterns
+      - Plans
+      - Schedules
       - Topologies
+      - Troubleshooting
+      - Users
     humanURL: https://docs.bigpanda.io/reference/environments-api
     properties:
       - url: https://docs.bigpanda.io/reference/environments-api
@@ -47,8 +35,8 @@ apis:
       properties such as source, severity, or alert data.
 name: BigPanda
 tags:
-  - Monitoring
   - Incidents
+  - Monitoring
   - Platform
 type: Contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
