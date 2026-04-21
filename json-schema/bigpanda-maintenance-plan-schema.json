@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MaintenancePlan",
+  "type": "object",
+  "description": "A BigPanda maintenance plan for suppressing alerts.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Maintenance plan ID.",
+      "example": "mp-abc123"
+    },
+    "name": {
+      "type": "string",
+      "description": "Maintenance plan name.",
+      "example": "Weekend Maintenance"
+    },
+    "active": {
+      "type": "boolean",
+      "description": "Whether the maintenance plan is currently active.",
+      "example": false
+    },
+    "start": {
+      "type": "integer",
+      "description": "Start Unix timestamp.",
+      "example": 1713000000
+    },
+    "end": {
+      "type": "integer",
+      "description": "End Unix timestamp.",
+      "example": 1713086400
+    }
+  }
+}

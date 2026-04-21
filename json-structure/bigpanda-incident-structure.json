@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "name": "Incident",
+  "type": "object",
+  "description": "A correlated incident from multiple alerts.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Incident ID."
+    },
+    "status": {
+      "type": "string",
+      "description": "Incident status."
+    },
+    "severity": {
+      "type": "string",
+      "description": "Incident severity level."
+    },
+    "description": {
+      "type": "string",
+      "description": "Incident description."
+    },
+    "alerts_count": {
+      "type": "int32",
+      "description": "Number of correlated alerts."
+    },
+    "started_at": {
+      "type": "int32",
+      "description": "Unix timestamp when incident started."
+    }
+  }
+}

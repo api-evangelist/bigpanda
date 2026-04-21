@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "name": "AlertResponse",
+  "type": "object",
+  "description": "Response after ingesting an alert.",
+  "properties": {
+    "_id": {
+      "type": "string",
+      "description": "Internal alert ID."
+    },
+    "status": {
+      "type": "string",
+      "description": "Ingestion status."
+    }
+  }
+}

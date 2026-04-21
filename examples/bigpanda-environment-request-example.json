@@ -1,0 +1,5 @@
+{
+  "name": "Production",
+  "description": "Production environment",
+  "condition": "source = \"nagios\""
+}

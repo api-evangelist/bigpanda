@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "name": "MaintenancePlansResponse",
+  "type": "object",
+  "description": "List of maintenance plans.",
+  "properties": {
+    "maintenance_plans": {
+      "type": "array",
+      "description": "Array of maintenance plans."
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "name": "EnvironmentRequest",
+  "type": "object",
+  "description": "Payload for creating or updating an environment.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Environment name."
+    },
+    "description": {
+      "type": "string",
+      "description": "Environment description."
+    },
+    "condition": {
+      "type": "string",
+      "description": "Filter condition for grouping incidents."
+    }
+  }
+}

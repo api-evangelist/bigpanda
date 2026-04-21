@@ -1,0 +1,6 @@
+{
+  "id": "env-abc123",
+  "name": "Production",
+  "description": "Production environment",
+  "condition": "source = \"nagios\""
+}

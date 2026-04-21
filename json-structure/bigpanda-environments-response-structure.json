@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "name": "EnvironmentsResponse",
+  "type": "object",
+  "description": "List of BigPanda environments.",
+  "properties": {
+    "environments": {
+      "type": "array",
+      "description": "Array of environments."
+    }
+  }
+}

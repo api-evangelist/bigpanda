@@ -1,0 +1,120 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: BigPanda
+  description: >-
+    Domain vocabulary for the BigPanda AIOps platform, covering alert
+    correlation, incident management, environment configuration, and
+    maintenance scheduling.
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - namespace: bigpanda-api-v2
+      version: v2
+      baseUrl: https://api.bigpanda.io
+      status: active
+      description: BigPanda API for AIOps incident management
+
+  resources:
+    - name: alerts
+      api: bigpanda-api-v2
+      actions: [send]
+      description: Monitoring alerts ingested for correlation
+    - name: environments
+      api: bigpanda-api-v2
+      actions: [list, get, create, delete]
+      description: Incident grouping environments
+    - name: incidents
+      api: bigpanda-api-v2
+      actions: [list, get]
+      description: Correlated incidents from alerts
+    - name: maintenance-plans
+      api: bigpanda-api-v2
+      actions: [list, create]
+      description: Maintenance windows for alert suppression
+    - name: changes
+      api: bigpanda-api-v2
+      actions: [send]
+      description: Change events for incident correlation
+    - name: audit-logs
+      api: bigpanda-api-v2
+      actions: [get]
+      description: Audit logs for compliance
+
+  actions:
+    - name: list
+      httpMethod: GET
+      pattern: read
+    - name: get
+      httpMethod: GET
+      pattern: read
+    - name: create
+      httpMethod: POST
+      pattern: write
+    - name: delete
+      httpMethod: DELETE
+      pattern: write
+    - name: send
+      httpMethod: POST
+      pattern: write
+      description: Ingests data into BigPanda
+
+  schemas:
+    core:
+      - name: AlertRequest
+        keyProperties: [app_key, status, host]
+      - name: AlertResponse
+        keyProperties: [_id, status]
+      - name: Environment
+        keyProperties: [id, name, condition]
+      - name: Incident
+        keyProperties: [id, status, severity, alerts_count]
+      - name: MaintenancePlan
+        keyProperties: [id, name, active, start, end]
+      - name: ChangeRequest
+        keyProperties: [summary, status, hosts]
+      - name: AuditLogEntry
+        keyProperties: [id, user, action, timestamp]
+
+  authentication:
+    schemes:
+      - type: bearer
+        description: Bearer token passed in Authorization header
+
+capability:
+  workflows:
+    - id: incident-management
+      name: Incident Management
+      description: Full incident lifecycle from alert ingestion to resolution
+      tools: [send-alert, list-environments, list-incidents, get-incident, create-maintenance-plan, send-change]
+
+  personas:
+    - id: sre-engineer
+      name: SRE Engineer
+      description: Site reliability engineer managing incidents and alert correlation
+      workflows: [incident-management]
+    - id: it-ops-manager
+      name: IT Ops Manager
+      description: IT operations manager overseeing incident response
+      workflows: [incident-management]
+
+  domains:
+    - name: Alert Correlation
+      description: AI-powered correlation of alerts into actionable incidents
+    - name: Incident Management
+      description: Triage, acknowledge, and resolve correlated incidents
+    - name: Maintenance Management
+      description: Schedule maintenance windows to suppress expected alerts
+    - name: Change Management
+      description: Ingest change events to correlate with alert spikes
+
+crossReference:
+  resources:
+    - operational: alerts
+      capability: send-alert
+    - operational: incidents
+      capability: list-incidents
+    - operational: maintenance-plans
+      capability: create-maintenance-plan

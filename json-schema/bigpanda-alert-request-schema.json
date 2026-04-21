@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AlertRequest",
+  "type": "object",
+  "description": "Payload for ingesting a monitoring alert.",
+  "properties": {
+    "app_key": {
+      "type": "string",
+      "description": "BigPanda application key for routing.",
+      "example": "abc123appkey"
+    },
+    "status": {
+      "type": "string",
+      "description": "Alert status.",
+      "enum": [
+        "critical",
+        "warning",
+        "ok",
+        "acknowledged"
+      ],
+      "example": "critical"
+    },
+    "host": {
+      "type": "string",
+      "description": "Hostname associated with the alert.",
+      "example": "production-database-1"
+    },
+    "check": {
+      "type": "string",
+      "description": "Check or metric name that triggered the alert.",
+      "example": "CPU overloaded"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable alert description.",
+      "example": "CPU usage above 95% for 5 minutes"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp of the alert.",
+      "example": 1713000000
+    }
+  },
+  "required": [
+    "app_key",
+    "status",
+    "host"
+  ]
+}

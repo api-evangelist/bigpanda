@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Incident",
+  "type": "object",
+  "description": "A correlated incident from multiple alerts.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Incident ID.",
+      "example": "inc-abc123"
+    },
+    "status": {
+      "type": "string",
+      "description": "Incident status.",
+      "enum": [
+        "active",
+        "resolved",
+        "acknowledged"
+      ],
+      "example": "active"
+    },
+    "severity": {
+      "type": "string",
+      "description": "Incident severity level.",
+      "enum": [
+        "critical",
+        "warning",
+        "unknown"
+      ],
+      "example": "critical"
+    },
+    "description": {
+      "type": "string",
+      "description": "Incident description.",
+      "example": "CPU overload on production-database-1"
+    },
+    "alerts_count": {
+      "type": "integer",
+      "description": "Number of correlated alerts.",
+      "example": 3
+    },
+    "started_at": {
+      "type": "integer",
+      "description": "Unix timestamp when incident started.",
+      "example": 1713000000
+    }
+  }
+}

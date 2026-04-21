@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "name": "MaintenancePlanRequest",
+  "type": "object",
+  "description": "Payload for creating a maintenance plan.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Maintenance plan name."
+    },
+    "condition": {
+      "type": "string",
+      "description": "Filter condition for hosts in maintenance."
+    },
+    "start": {
+      "type": "int32",
+      "description": "Start Unix timestamp."
+    },
+    "end": {
+      "type": "int32",
+      "description": "End Unix timestamp."
+    }
+  }
+}

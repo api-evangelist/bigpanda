@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AuditLogsResponse",
+  "type": "object",
+  "description": "List of audit log entries.",
+  "properties": {
+    "logs": {
+      "type": "array",
+      "description": "Array of log entries.",
+      "items": {
+        "$ref": "#/components/schemas/AuditLogEntry"
+      }
+    }
+  }
+}

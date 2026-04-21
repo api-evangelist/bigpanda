@@ -1,0 +1,6 @@
+{
+  "id": "log-abc123",
+  "user": "admin@example.com",
+  "action": "created_environment",
+  "timestamp": 1713000000
+}

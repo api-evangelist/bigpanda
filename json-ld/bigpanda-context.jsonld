@@ -1,0 +1,90 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "bp": "https://docs.bigpanda.io/vocab#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "app_key": {
+      "@id": "bp:app_key",
+      "@type": "xsd:string"
+    },
+    "status": "schema:status",
+    "host": {
+      "@id": "bp:host",
+      "@type": "xsd:string"
+    },
+    "check": {
+      "@id": "bp:check",
+      "@type": "xsd:string"
+    },
+    "description": "schema:description",
+    "timestamp": "schema:dateCreated",
+    "_id": {
+      "@id": "bp:_id",
+      "@type": "xsd:string"
+    },
+    "name": "schema:name",
+    "condition": {
+      "@id": "bp:condition",
+      "@type": "xsd:string"
+    },
+    "id": "schema:identifier",
+    "environments": {
+      "@id": "bp:environments",
+      "@type": "xsd:string"
+    },
+    "severity": {
+      "@id": "bp:severity",
+      "@type": "xsd:string"
+    },
+    "alerts_count": {
+      "@id": "bp:alerts_count",
+      "@type": "xsd:integer"
+    },
+    "started_at": {
+      "@id": "bp:started_at",
+      "@type": "xsd:integer"
+    },
+    "incidents": {
+      "@id": "bp:incidents",
+      "@type": "xsd:string"
+    },
+    "start": {
+      "@id": "bp:start",
+      "@type": "xsd:integer"
+    },
+    "end": {
+      "@id": "bp:end",
+      "@type": "xsd:integer"
+    },
+    "active": {
+      "@id": "bp:active",
+      "@type": "xsd:boolean"
+    },
+    "maintenance_plans": {
+      "@id": "bp:maintenance_plans",
+      "@type": "xsd:string"
+    },
+    "summary": {
+      "@id": "bp:summary",
+      "@type": "xsd:string"
+    },
+    "identifier": {
+      "@id": "bp:identifier",
+      "@type": "xsd:string"
+    },
+    "hosts": {
+      "@id": "bp:hosts",
+      "@type": "xsd:string"
+    },
+    "user": "schema:person",
+    "action": {
+      "@id": "bp:action",
+      "@type": "xsd:string"
+    },
+    "logs": {
+      "@id": "bp:logs",
+      "@type": "xsd:string"
+    }
+  }
+}

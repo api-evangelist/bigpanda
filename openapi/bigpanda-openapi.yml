@@ -1,650 +1,799 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info:
-  title: BigPanda
+  title: BigPanda API
   description: >-
-    Use the Environments API to define incident groups based on incident
-    properties such as source, severity, or alert data.
-  version: 1.0.0
+    The BigPanda API enables IT operations teams to programmatically manage
+    incidents, alerts, environments, enrichments, maintenance plans, and
+    correlation patterns. BigPanda uses AI to correlate alerts from multiple
+    monitoring systems into actionable incidents.
+  version: v2
+  contact:
+    name: BigPanda Support
+    url: https://docs.bigpanda.io
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-generated-from: documentation
 servers:
   - url: https://api.bigpanda.io
+    description: BigPanda API
+tags:
+  - name: Alerts
+    description: Ingest and manage monitoring alerts
+  - name: Incidents
+    description: View and manage correlated incidents
+  - name: Environments
+    description: Define incident grouping environments
+  - name: Maintenance Plans
+    description: Schedule maintenance windows to suppress alerts
+  - name: Changes
+    description: Ingest change events for correlation
+  - name: Audit
+    description: Access audit logs
+paths:
+  /data/v2/alerts:
+    post:
+      operationId: sendAlert
+      summary: BigPanda Send Alert
+      description: >-
+        Ingests a monitoring alert into BigPanda for correlation and incident
+        management.
+      tags:
+        - Alerts
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRequest'
+            examples:
+              SendAlert201Example:
+                summary: Default sendAlert request example
+                x-microcks-default: true
+                value:
+                  app_key: abc123appkey
+                  status: critical
+                  host: production-database-1
+                  check: CPU overloaded
+                  description: CPU usage above 95% for 5 minutes
+      responses:
+        '201':
+          description: Alert ingested successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertResponse'
+              examples:
+                SendAlert201Example:
+                  summary: Default sendAlert 201 response
+                  x-microcks-default: true
+                  value:
+                    _id: alert-abc123
+                    status: ok
+        '400':
+          description: Invalid alert payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /resources/v2.0/environments:
+    get:
+      operationId: listEnvironments
+      summary: BigPanda List Environments
+      description: Returns a list of all BigPanda environments.
+      tags:
+        - Environments
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of environments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentsResponse'
+              examples:
+                ListEnvironments200Example:
+                  summary: Default listEnvironments 200 response
+                  x-microcks-default: true
+                  value:
+                    environments:
+                      - id: env-abc123
+                        name: Production
+                        description: Production environment
+                        condition: source = "nagios"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createEnvironment
+      summary: BigPanda Create Environment
+      description: Creates a new incident grouping environment.
+      tags:
+        - Environments
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvironmentRequest'
+            examples:
+              CreateEnvironment201Example:
+                summary: Default createEnvironment request example
+                x-microcks-default: true
+                value:
+                  name: Production
+                  description: Production environment
+                  condition: source = "nagios"
+      responses:
+        '201':
+          description: Environment created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+              examples:
+                CreateEnvironment201Example:
+                  summary: Default createEnvironment 201 response
+                  x-microcks-default: true
+                  value:
+                    id: env-abc123
+                    name: Production
+                    description: Production environment
+                    condition: source = "nagios"
+        '400':
+          description: Invalid environment configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /resources/v2.0/environments/{id}:
+    get:
+      operationId: getEnvironment
+      summary: BigPanda Get Environment
+      description: Returns a single environment by ID.
+      tags:
+        - Environments
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: env-abc123
+      responses:
+        '200':
+          description: Environment details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+              examples:
+                GetEnvironment200Example:
+                  summary: Default getEnvironment 200 response
+                  x-microcks-default: true
+                  value:
+                    id: env-abc123
+                    name: Production
+                    description: Production environment
+                    condition: source = "nagios"
+        '404':
+          description: Environment not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteEnvironment
+      summary: BigPanda Delete Environment
+      description: Deletes an environment by ID.
+      tags:
+        - Environments
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: env-abc123
+      responses:
+        '204':
+          description: Environment deleted successfully.
+        '404':
+          description: Environment not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /resources/v2.0/environments/{environment_id}/incidents:
+    get:
+      operationId: listIncidents
+      summary: BigPanda List Incidents
+      description: Returns a list of incidents for the specified environment.
+      tags:
+        - Incidents
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: environment_id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: env-abc123
+        - name: active
+          in: query
+          required: false
+          schema:
+            type: boolean
+          description: Filter by active incidents.
+      responses:
+        '200':
+          description: List of incidents.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncidentsResponse'
+              examples:
+                ListIncidents200Example:
+                  summary: Default listIncidents 200 response
+                  x-microcks-default: true
+                  value:
+                    incidents:
+                      - id: inc-abc123
+                        status: active
+                        severity: critical
+                        description: CPU overload on production-database-1
+                        alerts_count: 3
+                        started_at: 1713000000
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}:
+    get:
+      operationId: getIncident
+      summary: BigPanda Get Incident
+      description: Returns details for a single incident.
+      tags:
+        - Incidents
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: environment_id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: env-abc123
+        - name: incident_id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: inc-abc123
+      responses:
+        '200':
+          description: Incident details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+              examples:
+                GetIncident200Example:
+                  summary: Default getIncident 200 response
+                  x-microcks-default: true
+                  value:
+                    id: inc-abc123
+                    status: active
+                    severity: critical
+                    description: CPU overload on production-database-1
+                    alerts_count: 3
+                    started_at: 1713000000
+        '404':
+          description: Incident not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /resources/v2.0/maintenance-plans:
+    get:
+      operationId: listMaintenancePlans
+      summary: BigPanda List Maintenance Plans
+      description: Returns all maintenance plans.
+      tags:
+        - Maintenance Plans
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of maintenance plans.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenancePlansResponse'
+              examples:
+                ListMaintenancePlans200Example:
+                  summary: Default listMaintenancePlans 200 response
+                  x-microcks-default: true
+                  value:
+                    maintenance_plans:
+                      - id: mp-abc123
+                        name: Weekend Maintenance
+                        active: false
+                        start: 1713000000
+                        end: 1713086400
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createMaintenancePlan
+      summary: BigPanda Create Maintenance Plan
+      description: Creates a new maintenance plan to suppress alerts during a window.
+      tags:
+        - Maintenance Plans
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MaintenancePlanRequest'
+            examples:
+              CreateMaintenancePlan201Example:
+                summary: Default createMaintenancePlan request example
+                x-microcks-default: true
+                value:
+                  name: Weekend Maintenance
+                  condition: host = "production-database-1"
+                  start: 1713000000
+                  end: 1713086400
+      responses:
+        '201':
+          description: Maintenance plan created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenancePlan'
+              examples:
+                CreateMaintenancePlan201Example:
+                  summary: Default createMaintenancePlan 201 response
+                  x-microcks-default: true
+                  value:
+                    id: mp-abc123
+                    name: Weekend Maintenance
+                    active: false
+                    start: 1713000000
+                    end: 1713086400
+        '400':
+          description: Invalid maintenance plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /data/changes:
+    post:
+      operationId: sendChange
+      summary: BigPanda Send Change
+      description: Ingests a change event (deployment, config change) for alert correlation.
+      tags:
+        - Changes
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeRequest'
+            examples:
+              SendChange201Example:
+                summary: Default sendChange request example
+                x-microcks-default: true
+                value:
+                  summary: Deployed v2.1.0 to production-database-1
+                  status: started
+                  identifier: deploy-20240413-001
+                  hosts:
+                    - production-database-1
+                  timestamp: 1713000000
+      responses:
+        '201':
+          description: Change ingested successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeResponse'
+              examples:
+                SendChange201Example:
+                  summary: Default sendChange 201 response
+                  x-microcks-default: true
+                  value:
+                    _id: chg-abc123
+                    status: ok
+        '400':
+          description: Invalid change payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /resources/v2.0/audit/logs:
+    get:
+      operationId: getAuditLogs
+      summary: BigPanda Get Audit Logs
+      description: Returns audit log entries for API and user activity.
+      tags:
+        - Audit
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Start timestamp for log query.
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: End timestamp for log query.
+      responses:
+        '200':
+          description: Audit log entries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogsResponse'
+              examples:
+                GetAuditLogs200Example:
+                  summary: Default getAuditLogs 200 response
+                  x-microcks-default: true
+                  value:
+                    logs:
+                      - id: log-abc123
+                        user: admin@example.com
+                        action: created_environment
+                        timestamp: 1713000000
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
-security:
-  - bearerAuth: []
-tags:
-  - name: Alerts
-    description: >-
-      [https://docs.bigpanda.io/reference/alerts-how-it-works](https://docs.bigpanda.io/reference/alerts-how-it-works)
-
-
-      ``` shell
-
-      curl -X POST -H "Content-Type: application/json" \
-          -H "Authorization: Bearer " \
-          https://api.bigpanda.io/data/v2/alerts \
-          -d '{ "app_key": "", "status": "critical", "host": "production-database-1", "check": "CPU overloaded" }'
-
-      ```
-  - name: Users
-    description: >-
-      [https://docs.bigpanda.io/reference/users-beta](https://docs.bigpanda.io/reference/users-beta)
-  - name: Maintenance Plans
-    description: >-
-      [https://docs.bigpanda.io/reference/maintenance-plans-how-it-works](https://docs.bigpanda.io/reference/maintenance-plans-how-it-works)
-  - name: Schedules v1
-    description: >-
-      [https://docs.bigpanda.io/reference/maintenance-schedules-create](https://docs.bigpanda.io/reference/maintenance-schedules-create)
-  - name: Enrichments
-  - name: Changes
-    description: >-
-      [https://docs.bigpanda.io/reference/rcc-how-it-works](https://docs.bigpanda.io/reference/rcc-how-it-works)
-  - name: Environments
-    description: >-
-      [https://docs.bigpanda.io/reference/environments-object](https://docs.bigpanda.io/reference/environments-object)
-  - name: Audit
-    description: >-
-      [https://docs.bigpanda.io/reference/audit-log-object](https://docs.bigpanda.io/reference/audit-log-object)
-  - name: Troubleshooting / Logs
-    description: >-
-      [https://docs.bigpanda.io/reference/retrieve-all-troubleshooting-logs](https://docs.bigpanda.io/reference/retrieve-all-troubleshooting-logs)
-  - name: Correlation Patterns
-    description: >-
-      [https://docs.bigpanda.io/reference/correlation-patterns](https://docs.bigpanda.io/reference/correlation-patterns)
-  - name: Alert Enrichment v2
-    description: >-
-      [https://docs.bigpanda.io/reference/alert-enrichment-v2](https://docs.bigpanda.io/reference/alert-enrichment-v2)
-  - name: Incidents v2
-    description: >-
-      [https://docs.bigpanda.io/reference/alert-enrichment-v2](https://docs.bigpanda.io/reference/alert-enrichment-v2)
-  - name: Incident Tags
-    description: >-
-      [https://docs.bigpanda.io/reference/incident-tags-how-it-works](https://docs.bigpanda.io/reference/incident-tags-how-it-works)
-  - name: Topology
-    description: >-
-      How To: Topologies
-
-
-      [https://docs.bigpanda.io/reference/topology-ui-object](https://docs.bigpanda.io/reference/topology-ui-object)
-paths:
-  /data/v2/alerts:
-    post:
-      tags:
-        - Alerts
-        - - Data
-      summary: Send Alert
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              example:
-                app_key: <app_key>
-                status: critical
-                host: sanity-server-15
-                check: network overloaded
-                datacenter: sanity-dc-4
-                description: CPU is above upper limit (70%)
-                cluster: sanity-cluster-5
-                region: sanity-region-1
-      parameters:
-        - name: Content-Type
-          in: header
-          schema:
+      description: BigPanda API Bearer token
+  schemas:
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+          example: resource not found
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+    AlertRequest:
+      title: Alert Request
+      description: Payload for ingesting a monitoring alert.
+      type: object
+      required:
+        - app_key
+        - status
+        - host
+      properties:
+        app_key:
+          type: string
+          description: BigPanda application key for routing.
+          example: abc123appkey
+        status:
+          type: string
+          description: Alert status.
+          enum:
+            - critical
+            - warning
+            - ok
+            - acknowledged
+          example: critical
+        host:
+          type: string
+          description: Hostname associated with the alert.
+          example: production-database-1
+        check:
+          type: string
+          description: Check or metric name that triggered the alert.
+          example: CPU overloaded
+        description:
+          type: string
+          description: Human-readable alert description.
+          example: CPU usage above 95% for 5 minutes
+        timestamp:
+          type: integer
+          description: Unix timestamp of the alert.
+          example: 1713000000
+    AlertResponse:
+      title: Alert Response
+      description: Response after ingesting an alert.
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Internal alert ID.
+          example: alert-abc123
+        status:
+          type: string
+          description: Ingestion status.
+          example: ok
+    EnvironmentRequest:
+      title: Environment Request
+      description: Payload for creating or updating an environment.
+      type: object
+      required:
+        - name
+        - condition
+      properties:
+        name:
+          type: string
+          description: Environment name.
+          example: Production
+        description:
+          type: string
+          description: Environment description.
+          example: Production environment
+        condition:
+          type: string
+          description: Filter condition for grouping incidents.
+          example: source = "nagios"
+    Environment:
+      title: Environment
+      description: A BigPanda environment for incident grouping.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Environment ID.
+          example: env-abc123
+        name:
+          type: string
+          description: Environment name.
+          example: Production
+        description:
+          type: string
+          description: Environment description.
+          example: Production environment
+        condition:
+          type: string
+          description: Filter condition for grouping incidents.
+          example: source = "nagios"
+    EnvironmentsResponse:
+      title: Environments Response
+      description: List of BigPanda environments.
+      type: object
+      properties:
+        environments:
+          type: array
+          description: Array of environments.
+          items:
+            $ref: '#/components/schemas/Environment'
+    Incident:
+      title: Incident
+      description: A correlated incident from multiple alerts.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Incident ID.
+          example: inc-abc123
+        status:
+          type: string
+          description: Incident status.
+          enum:
+            - active
+            - resolved
+            - acknowledged
+          example: active
+        severity:
+          type: string
+          description: Incident severity level.
+          enum:
+            - critical
+            - warning
+            - unknown
+          example: critical
+        description:
+          type: string
+          description: Incident description.
+          example: CPU overload on production-database-1
+        alerts_count:
+          type: integer
+          description: Number of correlated alerts.
+          example: 3
+        started_at:
+          type: integer
+          description: Unix timestamp when incident started.
+          example: 1713000000
+    IncidentsResponse:
+      title: Incidents Response
+      description: List of incidents for an environment.
+      type: object
+      properties:
+        incidents:
+          type: array
+          description: Array of incidents.
+          items:
+            $ref: '#/components/schemas/Incident'
+    MaintenancePlanRequest:
+      title: Maintenance Plan Request
+      description: Payload for creating a maintenance plan.
+      type: object
+      required:
+        - name
+        - condition
+        - start
+        - end
+      properties:
+        name:
+          type: string
+          description: Maintenance plan name.
+          example: Weekend Maintenance
+        condition:
+          type: string
+          description: Filter condition for hosts in maintenance.
+          example: host = "production-database-1"
+        start:
+          type: integer
+          description: Start Unix timestamp.
+          example: 1713000000
+        end:
+          type: integer
+          description: End Unix timestamp.
+          example: 1713086400
+    MaintenancePlan:
+      title: Maintenance Plan
+      description: A BigPanda maintenance plan for suppressing alerts.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Maintenance plan ID.
+          example: mp-abc123
+        name:
+          type: string
+          description: Maintenance plan name.
+          example: Weekend Maintenance
+        active:
+          type: boolean
+          description: Whether the maintenance plan is currently active.
+          example: false
+        start:
+          type: integer
+          description: Start Unix timestamp.
+          example: 1713000000
+        end:
+          type: integer
+          description: End Unix timestamp.
+          example: 1713086400
+    MaintenancePlansResponse:
+      title: Maintenance Plans Response
+      description: List of maintenance plans.
+      type: object
+      properties:
+        maintenance_plans:
+          type: array
+          description: Array of maintenance plans.
+          items:
+            $ref: '#/components/schemas/MaintenancePlan'
+    ChangeRequest:
+      title: Change Request
+      description: Payload for ingesting a change event.
+      type: object
+      required:
+        - summary
+        - status
+      properties:
+        summary:
+          type: string
+          description: Human-readable change summary.
+          example: Deployed v2.1.0 to production-database-1
+        status:
+          type: string
+          description: Change status.
+          enum:
+            - started
+            - success
+            - failure
+          example: started
+        identifier:
+          type: string
+          description: Unique change identifier.
+          example: deploy-20240413-001
+        hosts:
+          type: array
+          description: Hosts affected by the change.
+          items:
             type: string
-          example: application/json
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v1.0/scim/Users:
-    get:
-      tags:
-        - Users
-        - - Resources
-          - Users
-      summary: Retrieve All Users
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-    post:
-      tags:
-        - Users
-        - - Resources
-          - Users
-      summary: Create Users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              example:
-                userName: testing@abc123.com
-                displayName: test_user
-                active: false
-                password: Pa$$word
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v1.0/scim/Users/INSERT_USER_ID:
-    patch:
-      tags:
-        - Users
-        - - Resources
-          - Users
-          - E
-          - T
-          - D
-      summary: Update a User
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              example:
-                userName: kitsen.andrey@gmail.com
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-    delete:
-      tags:
-        - Users
-        - - Resources
-          - Users
-          - E
-          - T
-          - D
-      summary: Delete a User
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/maintenance-plans:
-    get:
-      tags:
-        - Maintenance Plans
-        - - Resources
-          - Maintenance
-          - Plans
-      summary: Retrieve All Plans
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-    post:
-      tags:
-        - Maintenance Plans
-        - - Resources
-          - Maintenance
-          - Plans
-      summary: Create a Plan
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              example:
-                name: host1 maintenance
-                condition:
-                  '=':
-                    - host
-                    - prod-api-1
-                start: 1633904622
-                end: 1634768622
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v1.0/schedules:
-    post:
-      tags:
-        - Schedules v1
-        - - Resources
-          - Schedules
-      summary: Create a Schedule
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              example:
-                name: Weekend Maintenance
-                starts_on: 1491265491
-                ends_on: 1491294307
-                active: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-    get:
-      tags:
-        - Schedules v1
-        - - Resources
-          - Schedules
-      summary: Retrieve All Schedules
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v1.0/schedules/{id}:
-    get:
-      tags:
-        - Schedules v1
-        - - Resources
-          - Schedules
-      summary: Retrieve a Schedule
-      parameters:
-        - name: id
-          in: path
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/enrichments-config/tags:
-    get:
-      tags:
-        - Enrichments
-        - - Resources
-          - Enrichments
-          - Tags
-      summary: Get Alert Enrichment Tags
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/alert-enrichments/{id}:
-    patch:
-      tags:
-        - Enrichments
-        - - Resources
-          - Alert
-      summary: Update Alert Enrichment Item
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              example:
-                when:
-                  IN:
-                    - source_system
-                    - - api.integration1_test
-      parameters:
-        - name: id
-          in: path
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/changes/:
-    get:
-      tags:
-        - Changes
-        - - Resources
-          - Changes
-      summary: Retrieve All Changes
-      parameters:
-        - name: start_time_frame
-          in: query
-          schema:
-            type: integer
-          example: '1573745094'
-        - name: end_time_frame
-          in: query
-          schema:
-            type: integer
-          example: '1572253401'
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /data/changes:
-    post:
-      tags:
-        - Changes
-        - - Data
-          - Changes
-      summary: Create/Update a Change
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              example:
-                identifier: CNG-123
-                tags:
-                  host: prod1.cluster1.app1
-                  type: risky
-                ticket_url: https://jira.link.com/ticket?change=chng123
-                summary: 'Summary of the change '
-                end: 1634583017
-                start: 1633891817
-                status: In Progress
-      parameters:
-        - name: x-bp-app-key
-          in: header
-          schema:
-            type: string
-          example: e1575fe93b9ded67d0e5cde6f6bb3d95
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/environments:
-    get:
-      tags:
-        - Environments
-        - - Resources
-          - Environments
-      summary: Retrieve All Environments
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/environments/{id}:
-    get:
-      tags:
-        - Environments
-        - - Resources
-          - Environments
-      summary: Retrieve an Environment by ID
-      parameters:
-        - name: id
-          in: path
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/audit/logs/:
-    get:
-      tags:
-        - Audit
-        - - Resources
-          - Audit
-          - Logs
-      summary: Retrieve All Audit Logs
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/troubleshooting/logs:
-    get:
-      tags:
-        - Troubleshooting / Logs
-        - - Resources
-          - Troubleshooting
-          - Logs
-      summary: Retrieve All Troubleshooting Logs
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/correlation-patterns:
-    post:
-      tags:
-        - Correlation Patterns
-        - - Resources
-          - Correlation
-          - Patterns
-      summary: Create Correlation Pattern
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              example: |-
-                {
-                    "tags": [
-                        "service",
-                        "check"
-                    ],
-                    "time_window": 60,
-                    "active": true,
-                    "cross_source": false,
-                }
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /web/correlation_patterns:
-    get:
-      tags:
-        - Correlation Patterns
-        - - Web
-          - Patterns
-      summary: GET Correlation Patterns
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/enrichments-config/tags/{tag_name}:
-    get:
-      tags:
-        - Alert Enrichment v2
-        - - Resources
-          - Enrichments
-          - Tags
-          - Name
-      summary: List All Enrichment Items of a Tag
-      parameters:
-        - name: tag_name
-          in: path
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/environments/{environment_id}/incidents/:
-    get:
-      tags:
-        - Incidents v2
-        - - Resources
-          - Environments
-          - Incidents V2
-      summary: Search Incidents
-      parameters:
-        - name: query
-          in: query
-          schema:
-            type: string
-          example: {query}
-        - name: environment_id
-          in: path
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}:
-    get:
-      tags:
-        - Incidents v2
-        - - Resources
-          - Environments
-          - Incident
-      summary: Retrieve Incident by ID
-      parameters:
-        - name: environment_id
-          in: path
-          schema:
-            type: string
-          required: true
-        - name: incident_id
-          in: path
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/environments/{env_id}/incidents/{incident_id}/tags/{tag_id}:
-    get:
-      tags:
-        - Incident Tags
-        - - Resources
-          - Environments
-          - Incidents
-          - Incident
-          - Tags
-      summary: Retrieve an Incident Tag from an Incident
-      parameters:
-        - name: env_id
-          in: path
-          schema:
-            type: string
-          required: true
-        - name: incident_id
-          in: path
-          schema:
-            type: string
-          required: true
-        - name: tag_id
-          in: path
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/environments/{env_id}/incidents/{incident_id}/tags:
-    get:
-      tags:
-        - Incident Tags
-        - - Resources
-          - Environments
-          - Incidents
-          - Incident
-          - Tags
-      summary: Retrieve All Tags for an Incident
-      parameters:
-        - name: env_id
-          in: path
-          schema:
-            type: string
-          required: true
-        - name: incident_id
-          in: path
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/topologies:
-    get:
-      tags:
-        - Topology
-        - - Resources
-          - Topologies
-      summary: Get All Topologies
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-    put:
-      tags:
-        - Topology
-        - - Resources
-          - Topologies
-      summary: Create Topology Copy
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              example:
-                links:
-                  - source: host
-                    target: check
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-    post:
-      tags:
-        - Topology
-        - - Resources
-          - Topologies
-      summary: Update Topology
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              example:
-                links:
-                  - source: host
-                    target: check
-                  - source: host
-                    target: cluster
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
-  /resources/v2.0/topologies/{id}:
-    delete:
-      tags:
-        - Topology
-        - - Resources
-          - Topologies
-      summary: Delete Topology
-      parameters:
-        - name: id
-          in: path
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json: {}
+          example:
+            - production-database-1
+        timestamp:
+          type: integer
+          description: Unix timestamp of the change.
+          example: 1713000000
+    ChangeResponse:
+      title: Change Response
+      description: Response after ingesting a change event.
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Internal change ID.
+          example: chg-abc123
+        status:
+          type: string
+          description: Ingestion status.
+          example: ok
+    AuditLogEntry:
+      title: Audit Log Entry
+      description: A single audit log entry.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Log entry ID.
+          example: log-abc123
+        user:
+          type: string
+          description: User who performed the action.
+          example: admin@example.com
+        action:
+          type: string
+          description: Action performed.
+          example: created_environment
+        timestamp:
+          type: integer
+          description: Unix timestamp.
+          example: 1713000000
+    AuditLogsResponse:
+      title: Audit Logs Response
+      description: List of audit log entries.
+      type: object
+      properties:
+        logs:
+          type: array
+          description: Array of log entries.
+          items:
+            $ref: '#/components/schemas/AuditLogEntry'

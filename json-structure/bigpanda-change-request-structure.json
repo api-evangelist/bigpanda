@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "name": "ChangeRequest",
+  "type": "object",
+  "description": "Payload for ingesting a change event.",
+  "properties": {
+    "summary": {
+      "type": "string",
+      "description": "Human-readable change summary."
+    },
+    "status": {
+      "type": "string",
+      "description": "Change status."
+    },
+    "identifier": {
+      "type": "string",
+      "description": "Unique change identifier."
+    },
+    "hosts": {
+      "type": "array",
+      "description": "Hosts affected by the change."
+    },
+    "timestamp": {
+      "type": "int32",
+      "description": "Unix timestamp of the change."
+    }
+  }
+}

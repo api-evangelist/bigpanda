@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ChangeRequest",
+  "type": "object",
+  "description": "Payload for ingesting a change event.",
+  "properties": {
+    "summary": {
+      "type": "string",
+      "description": "Human-readable change summary.",
+      "example": "Deployed v2.1.0 to production-database-1"
+    },
+    "status": {
+      "type": "string",
+      "description": "Change status.",
+      "enum": [
+        "started",
+        "success",
+        "failure"
+      ],
+      "example": "started"
+    },
+    "identifier": {
+      "type": "string",
+      "description": "Unique change identifier.",
+      "example": "deploy-20240413-001"
+    },
+    "hosts": {
+      "type": "array",
+      "description": "Hosts affected by the change.",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "production-database-1"
+      ]
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp of the change.",
+      "example": 1713000000
+    }
+  },
+  "required": [
+    "summary",
+    "status"
+  ]
+}

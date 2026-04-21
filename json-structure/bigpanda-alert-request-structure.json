@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "name": "AlertRequest",
+  "type": "object",
+  "description": "Payload for ingesting a monitoring alert.",
+  "properties": {
+    "app_key": {
+      "type": "string",
+      "description": "BigPanda application key for routing."
+    },
+    "status": {
+      "type": "string",
+      "description": "Alert status."
+    },
+    "host": {
+      "type": "string",
+      "description": "Hostname associated with the alert."
+    },
+    "check": {
+      "type": "string",
+      "description": "Check or metric name that triggered the alert."
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable alert description."
+    },
+    "timestamp": {
+      "type": "int32",
+      "description": "Unix timestamp of the alert."
+    }
+  }
+}

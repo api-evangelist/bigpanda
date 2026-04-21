@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AuditLogEntry",
+  "type": "object",
+  "description": "A single audit log entry.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Log entry ID.",
+      "example": "log-abc123"
+    },
+    "user": {
+      "type": "string",
+      "description": "User who performed the action.",
+      "example": "admin@example.com"
+    },
+    "action": {
+      "type": "string",
+      "description": "Action performed.",
+      "example": "created_environment"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp.",
+      "example": 1713000000
+    }
+  }
+}

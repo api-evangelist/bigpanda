@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AlertResponse",
+  "type": "object",
+  "description": "Response after ingesting an alert.",
+  "properties": {
+    "_id": {
+      "type": "string",
+      "description": "Internal alert ID.",
+      "example": "alert-abc123"
+    },
+    "status": {
+      "type": "string",
+      "description": "Ingestion status.",
+      "example": "ok"
+    }
+  }
+}

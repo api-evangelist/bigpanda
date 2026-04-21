@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "name": "AuditLogsResponse",
+  "type": "object",
+  "description": "List of audit log entries.",
+  "properties": {
+    "logs": {
+      "type": "array",
+      "description": "Array of log entries."
+    }
+  }
+}

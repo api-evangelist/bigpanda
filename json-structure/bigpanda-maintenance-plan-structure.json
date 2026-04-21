@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "name": "MaintenancePlan",
+  "type": "object",
+  "description": "A BigPanda maintenance plan for suppressing alerts.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Maintenance plan ID."
+    },
+    "name": {
+      "type": "string",
+      "description": "Maintenance plan name."
+    },
+    "active": {
+      "type": "boolean",
+      "description": "Whether the maintenance plan is currently active."
+    },
+    "start": {
+      "type": "int32",
+      "description": "Start Unix timestamp."
+    },
+    "end": {
+      "type": "int32",
+      "description": "End Unix timestamp."
+    }
+  }
+}

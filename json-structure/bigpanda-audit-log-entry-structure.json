@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "name": "AuditLogEntry",
+  "type": "object",
+  "description": "A single audit log entry.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Log entry ID."
+    },
+    "user": {
+      "type": "string",
+      "description": "User who performed the action."
+    },
+    "action": {
+      "type": "string",
+      "description": "Action performed."
+    },
+    "timestamp": {
+      "type": "int32",
+      "description": "Unix timestamp."
+    }
+  }
+}

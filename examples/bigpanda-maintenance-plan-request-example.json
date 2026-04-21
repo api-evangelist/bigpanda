@@ -1,0 +1,6 @@
+{
+  "name": "Weekend Maintenance",
+  "condition": "host = \"production-database-1\"",
+  "start": 1713000000,
+  "end": 1713086400
+}

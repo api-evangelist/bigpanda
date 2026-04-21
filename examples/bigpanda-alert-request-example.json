@@ -1,0 +1,8 @@
+{
+  "app_key": "abc123appkey",
+  "status": "critical",
+  "host": "production-database-1",
+  "check": "CPU overloaded",
+  "description": "CPU usage above 95% for 5 minutes",
+  "timestamp": 1713000000
+}

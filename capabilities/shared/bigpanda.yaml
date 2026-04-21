@@ -1,0 +1,86 @@
+name: BigPanda API
+description: Shared capability definitions for the BigPanda AIOps platform API
+version: v2
+baseUrl: https://api.bigpanda.io
+
+authentication:
+  type: bearer
+  value: "{{BIGPANDA_API_TOKEN}}"
+
+operations:
+  - operationId: sendAlert
+    name: send-alert
+    summary: Ingest a monitoring alert for correlation
+    method: POST
+    path: /data/v2/alerts
+    tags:
+      - Alerts
+  - operationId: listEnvironments
+    name: list-environments
+    summary: List all incident grouping environments
+    method: GET
+    path: /resources/v2.0/environments
+    tags:
+      - Environments
+  - operationId: createEnvironment
+    name: create-environment
+    summary: Create a new incident grouping environment
+    method: POST
+    path: /resources/v2.0/environments
+    tags:
+      - Environments
+  - operationId: getEnvironment
+    name: get-environment
+    summary: Get a specific environment by ID
+    method: GET
+    path: /resources/v2.0/environments/{id}
+    tags:
+      - Environments
+  - operationId: listIncidents
+    name: list-incidents
+    summary: List incidents for an environment
+    method: GET
+    path: /resources/v2.0/environments/{environment_id}/incidents
+    tags:
+      - Incidents
+  - operationId: getIncident
+    name: get-incident
+    summary: Get a specific incident by ID
+    method: GET
+    path: /resources/v2.0/environments/{environment_id}/incidents/{incident_id}
+    tags:
+      - Incidents
+  - operationId: listMaintenancePlans
+    name: list-maintenance-plans
+    summary: List all maintenance plans
+    method: GET
+    path: /resources/v2.0/maintenance-plans
+    tags:
+      - Maintenance Plans
+  - operationId: createMaintenancePlan
+    name: create-maintenance-plan
+    summary: Create a maintenance plan to suppress alerts
+    method: POST
+    path: /resources/v2.0/maintenance-plans
+    tags:
+      - Maintenance Plans
+  - operationId: sendChange
+    name: send-change
+    summary: Ingest a change event for alert correlation
+    method: POST
+    path: /data/changes
+    tags:
+      - Changes
+  - operationId: getAuditLogs
+    name: get-audit-logs
+    summary: Get API and user audit logs
+    method: GET
+    path: /resources/v2.0/audit/logs
+    tags:
+      - Audit
+
+expose:
+  rest:
+    port: 8100
+  mcp:
+    port: 9100

@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Environment",
+  "type": "object",
+  "description": "A BigPanda environment for incident grouping.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Environment ID.",
+      "example": "env-abc123"
+    },
+    "name": {
+      "type": "string",
+      "description": "Environment name.",
+      "example": "Production"
+    },
+    "description": {
+      "type": "string",
+      "description": "Environment description.",
+      "example": "Production environment"
+    },
+    "condition": {
+      "type": "string",
+      "description": "Filter condition for grouping incidents.",
+      "example": "source = \"nagios\""
+    }
+  }
+}
