@@ -104,6 +104,8 @@ common:
     description: Correlate Prometheus/Alertmanager alerts in BigPanda.
   - name: Jira
     description: Create Jira issues from BigPanda incidents for engineering tracking.
+- type: Integrations
+  url: https://docs.bigpanda.io/integrations
 created: '2025-01-08'
 modified: '2026-04-19'
 position: Consuming
@@ -113,6 +115,8 @@ description: >-
   various systems, identifying root causes, and streamlining the incident
   resolution process, essentially moving from reactive to proactive incident
   response by providing context and insights through intelligent data analysis.
+integrations:
+  - name: Logo
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
