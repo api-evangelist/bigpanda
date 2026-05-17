@@ -38,7 +38,7 @@ tags:
 - Incidents
 - Monitoring
 - Platform
-type: Contract
+kind: contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 common:
@@ -52,7 +52,7 @@ common:
   url: https://docs.bigpanda.io/docs/release-notes
 - type: PostmanWorkspace
   url: https://www.postman.com/bigpandaio/bigpanda-api-staging/overview
-- type: Status
+- type: StatusPage
   url: https://status.bigpanda.io/
 - type: SpectralRules
   url: https://raw.githubusercontent.com/api-evangelist/bigpanda/refs/heads/main/rules/bigpanda-spectral-rules.yml
