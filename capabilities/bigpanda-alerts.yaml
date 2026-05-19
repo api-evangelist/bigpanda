@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: BigPanda API — Alerts
+  description: 'BigPanda API — Alerts. 1 operations. Lead operation: BigPanda Send Alert. Self-contained Naftiko capability
+    covering one Bigpanda business surface.'
+  tags:
+  - Bigpanda
+  - Alerts
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BIGPANDA_API_KEY: BIGPANDA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bigpanda-alerts
+    baseUri: https://api.bigpanda.io
+    description: BigPanda API — Alerts business capability. Self-contained, no shared references.
+    resources:
+    - name: data-v2-alerts
+      path: /data/v2/alerts
+      operations:
+      - name: sendalert
+        method: POST
+        description: BigPanda Send Alert
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BIGPANDA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bigpanda-alerts-rest
+    port: 8080
+    description: REST adapter for BigPanda API — Alerts. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/data/v2/alerts
+      name: data-v2-alerts
+      description: REST surface for data-v2-alerts.
+      operations:
+      - method: POST
+        name: sendalert
+        description: BigPanda Send Alert
+        call: bigpanda-alerts.sendalert
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bigpanda-alerts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for BigPanda API — Alerts. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: bigpanda-send-alert
+      description: BigPanda Send Alert
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bigpanda-alerts.sendalert
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

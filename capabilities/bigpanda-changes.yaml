@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: BigPanda API — Changes
+  description: 'BigPanda API — Changes. 1 operations. Lead operation: BigPanda Send Change. Self-contained Naftiko capability
+    covering one Bigpanda business surface.'
+  tags:
+  - Bigpanda
+  - Changes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BIGPANDA_API_KEY: BIGPANDA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: bigpanda-changes
+    baseUri: https://api.bigpanda.io
+    description: BigPanda API — Changes business capability. Self-contained, no shared references.
+    resources:
+    - name: data-changes
+      path: /data/changes
+      operations:
+      - name: sendchange
+        method: POST
+        description: BigPanda Send Change
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BIGPANDA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: bigpanda-changes-rest
+    port: 8080
+    description: REST adapter for BigPanda API — Changes. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/data/changes
+      name: data-changes
+      description: REST surface for data-changes.
+      operations:
+      - method: POST
+        name: sendchange
+        description: BigPanda Send Change
+        call: bigpanda-changes.sendchange
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: bigpanda-changes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for BigPanda API — Changes. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: bigpanda-send-change
+      description: BigPanda Send Change
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bigpanda-changes.sendchange
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
