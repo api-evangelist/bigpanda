@@ -1,11 +1,19 @@
 # BigPanda (bigpanda)
-BigPanda is an AIOps platform that uses artificial intelligence to help IT operations teams automate incident management by correlating alerts from 200+ monitoring systems, identifying root causes, and streamlining incident resolution. BigPanda moves teams from reactive to proactive incident response with ML-powered alert correlation.
 
-**URL:** [https://docs.bigpanda.io](https://docs.bigpanda.io)
+BigPanda is a software platform that uses artificial intelligence (AI) to help IT operations teams automate incident management by correlating alerts from various systems, identifying root causes, and streamlining the incident resolution process, essentially moving from reactive to proactive incident response by providing context and insights through intelligent data analysis.
 
-## Tags:
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/bigpanda/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/bigpanda/refs/heads/main/apis.yml)
 
- - Incidents, Monitoring, Platform, AIOps, Alert Correlation, IT Operations
+## Scope
+
+- **Position:** Consuming
+- **Access:** 3rd-Party
+
+## Tags
+
+- Incidents
+- Monitoring
+- Platform
 
 ## Timestamps
 
@@ -14,101 +22,60 @@ BigPanda is an AIOps platform that uses artificial intelligence to help IT opera
 
 ## APIs
 
-### BigPanda API
-The BigPanda API enables programmatic management of incidents, alerts, environments, maintenance plans, correlation patterns, and enrichments.
+### BigPanda
 
-**Human URL:** [https://docs.bigpanda.io/reference/environments-api](https://docs.bigpanda.io/reference/environments-api)
+Use the Environments API to define incident groups based on incident properties such as source, severity, or alert data.
 
-#### Tags:
+- **Human URL:** [https://docs.bigpanda.io/reference/environments-api](https://docs.bigpanda.io/reference/environments-api)
 
- - Alerts, Incidents, Environments, Maintenance Plans, Changes, Audit
+#### Tags
+
+- Alerts
+- Audit
+- Changes
+- Correlation
+- Correlation Patterns
+- Enrichments
+- Environments
+- Incident Tags
+- Incidents
+- Logs
+- Maintenance
+- Maintenance Plans
+- Name
+- Patterns
+- Plans
+- Schedules
+- Topologies
+- Troubleshooting
+- Users
 
 #### Properties
 
-- [Documentation](https://docs.bigpanda.io/reference)
-- [OpenAPI](openapi/bigpanda-openapi.yml)
+- [Documentation](https://docs.bigpanda.io/reference/environments-api)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/bigpanda/refs/heads/main/openapi/bigpanda-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/bigpanda.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/bigpanda.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ## Common Properties
 
+- [GitHub Organization](https://github.com/bigpandaio)
+- [LinkedIn](https://www.linkedin.com/company/bigpanda)
 - [Portal](https://docs.bigpanda.io)
-- [GettingStarted](https://docs.bigpanda.io/docs/get-started)
+- [Getting Started](https://docs.bigpanda.io/docs/get-started)
 - [Documentation](https://docs.bigpanda.io/reference)
-- [ChangeLog](https://docs.bigpanda.io/docs/release-notes)
-- [PostmanWorkspace](https://www.postman.com/bigpandaio/bigpanda-api-staging/overview)
-- [Status](https://status.bigpanda.io/)
-
-## Features
-
-| Name | Description |
-|------|-------------|
-| AI Alert Correlation | ML-powered correlation of alerts from 200+ monitoring tools into actionable incidents. |
-| Incident Management | Triage, acknowledge, and resolve correlated incidents with full audit trail. |
-| Root Cause Analysis | Automatically identify root causes by correlating alerts with change events. |
-| Maintenance Plans | Schedule maintenance windows to suppress expected alerts during planned work. |
-| Change Correlation | Ingest deployment and config changes to correlate with alert spikes. |
-| Environments | Define DSL-based environments to group incidents by source, severity, or host. |
-| Enrichments | Enrich alerts with contextual tags from CMDB and other data sources. |
-| AIOps Automation | Automate incident response workflows with AI-driven insights and routing. |
-
-## Use Cases
-
-| Name | Description |
-|------|-------------|
-| Alert Noise Reduction | Reduce alert fatigue by correlating thousands of alerts into a handful of incidents. |
-| Change Impact Analysis | Automatically link deployment changes to alert spikes for faster root cause identification. |
-| On-Call Automation | Route correlated incidents to the right on-call team with full context. |
-| Maintenance Scheduling | Suppress alerts during planned maintenance to prevent false incident creation. |
-| ITSM Integration | Automatically create and update tickets in ServiceNow or Jira from correlated incidents. |
-
-## Integrations
-
-| Name | Description |
-|------|-------------|
-| PagerDuty | Route correlated incidents to PagerDuty for on-call alerting. |
-| ServiceNow | Create and update ServiceNow incidents automatically from BigPanda. |
-| Datadog | Ingest Datadog alerts into BigPanda for cross-tool correlation. |
-| Nagios | Ingest Nagios monitoring alerts via BigPanda integration. |
-| Prometheus | Correlate Prometheus/Alertmanager alerts in BigPanda. |
-| Jira | Create Jira issues from BigPanda incidents for engineering tracking. |
-
-## Artifacts
-
-### OpenAPI
-
-- [BigPanda API](openapi/bigpanda-openapi.yml)
-
-### JSON Schema
-
-- [bigpanda-alert-request-schema.json](json-schema/bigpanda-alert-request-schema.json)
-- [bigpanda-alert-response-schema.json](json-schema/bigpanda-alert-response-schema.json)
-- [bigpanda-environment-schema.json](json-schema/bigpanda-environment-schema.json)
-- [bigpanda-incident-schema.json](json-schema/bigpanda-incident-schema.json)
-- [bigpanda-maintenance-plan-schema.json](json-schema/bigpanda-maintenance-plan-schema.json)
-- [bigpanda-change-request-schema.json](json-schema/bigpanda-change-request-schema.json)
-- [bigpanda-audit-log-entry-schema.json](json-schema/bigpanda-audit-log-entry-schema.json)
-
-## Capabilities
-
-### Shared Per-API Definitions
-
-- [BigPanda API](capabilities/shared/bigpanda.yaml) — 10 operations for alerts, incidents, environments, maintenance, changes, and audit
-
-### Workflow Capabilities
-
-| Workflow | APIs Combined | Tools | Persona |
-|----------|--------------|-------|---------|
-| [Incident Management](capabilities/incident-management.yaml) | BigPanda | 9 | SRE Engineer, IT Ops Manager |
-
-## Vocabulary
-
-- [BigPanda Vocabulary](vocabulary/bigpanda-vocabulary.yaml) — Unified taxonomy mapping 6 resources, 5 actions, 1 workflow, and 2 personas
-
-## Rules
-
-- [BigPanda Spectral Rules](rules/bigpanda-spectral-rules.yml) — 24 rules across 9 categories enforcing BigPanda API conventions
+- [Changelog](https://docs.bigpanda.io/docs/release-notes)
+- [Postman Workspace](https://www.postman.com/bigpandaio/bigpanda-api-staging/overview)
+- [Status Page](https://status.bigpanda.io/)
+- [Spectral Rules](https://raw.githubusercontent.com/api-evangelist/bigpanda/refs/heads/main/rules/bigpanda-spectral-rules.yml)
+- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/bigpanda/refs/heads/main/vocabulary/bigpanda-vocabulary.yaml)
+- [Features](undefined)
+- [Use Cases](undefined)
+- [Integrations](undefined)
+- [Integrations](https://docs.bigpanda.io/integrations)
+- [L L Ms Txt](https://docs.bigpanda.io/llms.txt)
 
 ## Maintainers
 
 **FN:** Kin Lane
-
 **Email:** kin@apievangelist.com
