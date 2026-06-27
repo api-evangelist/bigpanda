@@ -107,7 +107,7 @@ common:
         description: Create Jira issues from BigPanda incidents for engineering tracking.
   - type: Integrations
     url: https://docs.bigpanda.io/integrations
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.bigpanda.io/llms.txt
 created: '2025-01-08'
 modified: '2026-04-19'
