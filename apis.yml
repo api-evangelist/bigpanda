@@ -41,6 +41,12 @@ kind: contract
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 common:
+  - type: TrustCenter
+    url: security/bigpanda-trust-center.yml
+  - type: DomainSecurity
+    url: security/bigpanda-domain-security.yml
+  - type: Authentication
+    url: authentication/bigpanda-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/bigpandaio
   - type: LinkedIn
@@ -109,6 +115,8 @@ common:
     url: https://docs.bigpanda.io/integrations
   - type: LlmsText
     url: https://docs.bigpanda.io/llms.txt
+  - type: Blog
+    url: https://www.bigpanda.io/feed/
 created: '2025-01-08'
 modified: '2026-04-19'
 position: Consuming
