@@ -1,0 +1,21 @@
+{
+  "repo": "bigpanda",
+  "feeds": [
+    {
+      "source": "https://www.bigpanda.io/feed/",
+      "feed_url": "https://www.bigpanda.io/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://docs.bigpanda.io/llms.txt",
+      "feed_url": "https://docs.bigpanda.io/llms.txt",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 66
+}
