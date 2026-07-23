@@ -1,0 +1,179 @@
+openapi: 3.0.3
+info:
+  title: BigPanda Alerts Incidents API
+  description: The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.
+  version: v2
+  contact:
+    name: BigPanda Support
+    url: https://docs.bigpanda.io
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-generated-from: documentation
+servers:
+- url: https://api.bigpanda.io
+  description: BigPanda API
+tags:
+- name: Incidents
+  description: View and manage correlated incidents
+paths:
+  /resources/v2.0/environments/{environment_id}/incidents:
+    get:
+      operationId: listIncidents
+      summary: BigPanda List Incidents
+      description: Returns a list of incidents for the specified environment.
+      tags:
+      - Incidents
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: environment_id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: env-abc123
+      - name: active
+        in: query
+        required: false
+        schema:
+          type: boolean
+        description: Filter by active incidents.
+      responses:
+        '200':
+          description: List of incidents.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncidentsResponse'
+              examples:
+                ListIncidents200Example:
+                  summary: Default listIncidents 200 response
+                  x-microcks-default: true
+                  value:
+                    incidents:
+                    - id: inc-abc123
+                      status: active
+                      severity: critical
+                      description: CPU overload on production-database-1
+                      alerts_count: 3
+                      started_at: 1713000000
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}:
+    get:
+      operationId: getIncident
+      summary: BigPanda Get Incident
+      description: Returns details for a single incident.
+      tags:
+      - Incidents
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: environment_id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: env-abc123
+      - name: incident_id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: inc-abc123
+      responses:
+        '200':
+          description: Incident details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incident'
+              examples:
+                GetIncident200Example:
+                  summary: Default getIncident 200 response
+                  x-microcks-default: true
+                  value:
+                    id: inc-abc123
+                    status: active
+                    severity: critical
+                    description: CPU overload on production-database-1
+                    alerts_count: 3
+                    started_at: 1713000000
+        '404':
+          description: Incident not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    IncidentsResponse:
+      title: Incidents Response
+      description: List of incidents for an environment.
+      type: object
+      properties:
+        incidents:
+          type: array
+          description: Array of incidents.
+          items:
+            $ref: '#/components/schemas/Incident'
+    Incident:
+      title: Incident
+      description: A correlated incident from multiple alerts.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Incident ID.
+          example: inc-abc123
+        status:
+          type: string
+          description: Incident status.
+          enum:
+          - active
+          - resolved
+          - acknowledged
+          example: active
+        severity:
+          type: string
+          description: Incident severity level.
+          enum:
+          - critical
+          - warning
+          - unknown
+          example: critical
+        description:
+          type: string
+          description: Incident description.
+          example: CPU overload on production-database-1
+        alerts_count:
+          type: integer
+          description: Number of correlated alerts.
+          example: 3
+        started_at:
+          type: integer
+          description: Unix timestamp when incident started.
+          example: 1713000000
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+          example: resource not found
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: BigPanda API Bearer token

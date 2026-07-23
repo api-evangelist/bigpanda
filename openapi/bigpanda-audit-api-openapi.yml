@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  title: BigPanda Alerts Audit API
+  description: The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.
+  version: v2
+  contact:
+    name: BigPanda Support
+    url: https://docs.bigpanda.io
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-generated-from: documentation
+servers:
+- url: https://api.bigpanda.io
+  description: BigPanda API
+tags:
+- name: Audit
+  description: Access audit logs
+paths:
+  /resources/v2.0/audit/logs:
+    get:
+      operationId: getAuditLogs
+      summary: BigPanda Get Audit Logs
+      description: Returns audit log entries for API and user activity.
+      tags:
+      - Audit
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: from
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Start timestamp for log query.
+      - name: to
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: End timestamp for log query.
+      responses:
+        '200':
+          description: Audit log entries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogsResponse'
+              examples:
+                GetAuditLogs200Example:
+                  summary: Default getAuditLogs 200 response
+                  x-microcks-default: true
+                  value:
+                    logs:
+                    - id: log-abc123
+                      user: admin@example.com
+                      action: created_environment
+                      timestamp: 1713000000
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    AuditLogsResponse:
+      title: Audit Logs Response
+      description: List of audit log entries.
+      type: object
+      properties:
+        logs:
+          type: array
+          description: Array of log entries.
+          items:
+            $ref: '#/components/schemas/AuditLogEntry'
+    AuditLogEntry:
+      title: Audit Log Entry
+      description: A single audit log entry.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Log entry ID.
+          example: log-abc123
+        user:
+          type: string
+          description: User who performed the action.
+          example: admin@example.com
+        action:
+          type: string
+          description: Action performed.
+          example: created_environment
+        timestamp:
+          type: integer
+          description: Unix timestamp.
+          example: 1713000000
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: BigPanda API Bearer token

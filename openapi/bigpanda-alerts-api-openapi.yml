@@ -1,0 +1,138 @@
+openapi: 3.0.3
+info:
+  title: BigPanda Alerts API
+  description: The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.
+  version: v2
+  contact:
+    name: BigPanda Support
+    url: https://docs.bigpanda.io
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-generated-from: documentation
+servers:
+- url: https://api.bigpanda.io
+  description: BigPanda API
+tags:
+- name: Alerts
+  description: Ingest and manage monitoring alerts
+paths:
+  /data/v2/alerts:
+    post:
+      operationId: sendAlert
+      summary: BigPanda Send Alert
+      description: Ingests a monitoring alert into BigPanda for correlation and incident management.
+      tags:
+      - Alerts
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRequest'
+            examples:
+              SendAlert201Example:
+                summary: Default sendAlert request example
+                x-microcks-default: true
+                value:
+                  app_key: abc123appkey
+                  status: critical
+                  host: production-database-1
+                  check: CPU overloaded
+                  description: CPU usage above 95% for 5 minutes
+      responses:
+        '201':
+          description: Alert ingested successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertResponse'
+              examples:
+                SendAlert201Example:
+                  summary: Default sendAlert 201 response
+                  x-microcks-default: true
+                  value:
+                    _id: alert-abc123
+                    status: ok
+        '400':
+          description: Invalid alert payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    AlertResponse:
+      title: Alert Response
+      description: Response after ingesting an alert.
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Internal alert ID.
+          example: alert-abc123
+        status:
+          type: string
+          description: Ingestion status.
+          example: ok
+    AlertRequest:
+      title: Alert Request
+      description: Payload for ingesting a monitoring alert.
+      type: object
+      required:
+      - app_key
+      - status
+      - host
+      properties:
+        app_key:
+          type: string
+          description: BigPanda application key for routing.
+          example: abc123appkey
+        status:
+          type: string
+          description: Alert status.
+          enum:
+          - critical
+          - warning
+          - ok
+          - acknowledged
+          example: critical
+        host:
+          type: string
+          description: Hostname associated with the alert.
+          example: production-database-1
+        check:
+          type: string
+          description: Check or metric name that triggered the alert.
+          example: CPU overloaded
+        description:
+          type: string
+          description: Human-readable alert description.
+          example: CPU usage above 95% for 5 minutes
+        timestamp:
+          type: integer
+          description: Unix timestamp of the alert.
+          example: 1713000000
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+          example: resource not found
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: BigPanda API Bearer token

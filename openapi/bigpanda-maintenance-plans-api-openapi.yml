@@ -1,0 +1,179 @@
+openapi: 3.0.3
+info:
+  title: BigPanda Alerts Maintenance Plans API
+  description: The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.
+  version: v2
+  contact:
+    name: BigPanda Support
+    url: https://docs.bigpanda.io
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-generated-from: documentation
+servers:
+- url: https://api.bigpanda.io
+  description: BigPanda API
+tags:
+- name: Maintenance Plans
+  description: Schedule maintenance windows to suppress alerts
+paths:
+  /resources/v2.0/maintenance-plans:
+    get:
+      operationId: listMaintenancePlans
+      summary: BigPanda List Maintenance Plans
+      description: Returns all maintenance plans.
+      tags:
+      - Maintenance Plans
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: List of maintenance plans.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenancePlansResponse'
+              examples:
+                ListMaintenancePlans200Example:
+                  summary: Default listMaintenancePlans 200 response
+                  x-microcks-default: true
+                  value:
+                    maintenance_plans:
+                    - id: mp-abc123
+                      name: Weekend Maintenance
+                      active: false
+                      start: 1713000000
+                      end: 1713086400
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createMaintenancePlan
+      summary: BigPanda Create Maintenance Plan
+      description: Creates a new maintenance plan to suppress alerts during a window.
+      tags:
+      - Maintenance Plans
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MaintenancePlanRequest'
+            examples:
+              CreateMaintenancePlan201Example:
+                summary: Default createMaintenancePlan request example
+                x-microcks-default: true
+                value:
+                  name: Weekend Maintenance
+                  condition: host = "production-database-1"
+                  start: 1713000000
+                  end: 1713086400
+      responses:
+        '201':
+          description: Maintenance plan created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenancePlan'
+              examples:
+                CreateMaintenancePlan201Example:
+                  summary: Default createMaintenancePlan 201 response
+                  x-microcks-default: true
+                  value:
+                    id: mp-abc123
+                    name: Weekend Maintenance
+                    active: false
+                    start: 1713000000
+                    end: 1713086400
+        '400':
+          description: Invalid maintenance plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    MaintenancePlanRequest:
+      title: Maintenance Plan Request
+      description: Payload for creating a maintenance plan.
+      type: object
+      required:
+      - name
+      - condition
+      - start
+      - end
+      properties:
+        name:
+          type: string
+          description: Maintenance plan name.
+          example: Weekend Maintenance
+        condition:
+          type: string
+          description: Filter condition for hosts in maintenance.
+          example: host = "production-database-1"
+        start:
+          type: integer
+          description: Start Unix timestamp.
+          example: 1713000000
+        end:
+          type: integer
+          description: End Unix timestamp.
+          example: 1713086400
+    MaintenancePlansResponse:
+      title: Maintenance Plans Response
+      description: List of maintenance plans.
+      type: object
+      properties:
+        maintenance_plans:
+          type: array
+          description: Array of maintenance plans.
+          items:
+            $ref: '#/components/schemas/MaintenancePlan'
+    MaintenancePlan:
+      title: Maintenance Plan
+      description: A BigPanda maintenance plan for suppressing alerts.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Maintenance plan ID.
+          example: mp-abc123
+        name:
+          type: string
+          description: Maintenance plan name.
+          example: Weekend Maintenance
+        active:
+          type: boolean
+          description: Whether the maintenance plan is currently active.
+          example: false
+        start:
+          type: integer
+          description: Start Unix timestamp.
+          example: 1713000000
+        end:
+          type: integer
+          description: End Unix timestamp.
+          example: 1713086400
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+          example: resource not found
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: BigPanda API Bearer token

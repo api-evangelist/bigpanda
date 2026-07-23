@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: BigPanda Alerts Changes API
+  description: The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.
+  version: v2
+  contact:
+    name: BigPanda Support
+    url: https://docs.bigpanda.io
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-generated-from: documentation
+servers:
+- url: https://api.bigpanda.io
+  description: BigPanda API
+tags:
+- name: Changes
+  description: Ingest change events for correlation
+paths:
+  /data/changes:
+    post:
+      operationId: sendChange
+      summary: BigPanda Send Change
+      description: Ingests a change event (deployment, config change) for alert correlation.
+      tags:
+      - Changes
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeRequest'
+            examples:
+              SendChange201Example:
+                summary: Default sendChange request example
+                x-microcks-default: true
+                value:
+                  summary: Deployed v2.1.0 to production-database-1
+                  status: started
+                  identifier: deploy-20240413-001
+                  hosts:
+                  - production-database-1
+                  timestamp: 1713000000
+      responses:
+        '201':
+          description: Change ingested successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeResponse'
+              examples:
+                SendChange201Example:
+                  summary: Default sendChange 201 response
+                  x-microcks-default: true
+                  value:
+                    _id: chg-abc123
+                    status: ok
+        '400':
+          description: Invalid change payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    ChangeRequest:
+      title: Change Request
+      description: Payload for ingesting a change event.
+      type: object
+      required:
+      - summary
+      - status
+      properties:
+        summary:
+          type: string
+          description: Human-readable change summary.
+          example: Deployed v2.1.0 to production-database-1
+        status:
+          type: string
+          description: Change status.
+          enum:
+          - started
+          - success
+          - failure
+          example: started
+        identifier:
+          type: string
+          description: Unique change identifier.
+          example: deploy-20240413-001
+        hosts:
+          type: array
+          description: Hosts affected by the change.
+          items:
+            type: string
+          example:
+          - production-database-1
+        timestamp:
+          type: integer
+          description: Unix timestamp of the change.
+          example: 1713000000
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+          example: resource not found
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+    ChangeResponse:
+      title: Change Response
+      description: Response after ingesting a change event.
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Internal change ID.
+          example: chg-abc123
+        status:
+          type: string
+          description: Ingestion status.
+          example: ok
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: BigPanda API Bearer token
