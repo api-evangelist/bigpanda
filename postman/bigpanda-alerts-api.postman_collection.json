@@ -1,0 +1,220 @@
+{
+  "info": {
+    "_postman_id": "6f449eef-203b-4d1a-9438-6758ade74f39",
+    "name": "BigPanda Alerts API",
+    "description": "The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.\n\nContact Support:\n Name: BigPanda Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:13:19.000Z",
+    "updatedAt": "2026-07-28T01:13:19.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-6f449eef-203b-4d1a-9438-6758ade74f39"
+  },
+  "item": [
+    {
+      "name": "data",
+      "item": [
+        {
+          "name": "v2",
+          "item": [
+            {
+              "name": "alerts",
+              "item": [
+                {
+                  "name": "BigPanda Send Alert",
+                  "id": "41ddf12c-9db1-4de7-b479-fb25ee3c969b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"app_key\": \"<string>\",\n  \"status\": \"warning\",\n  \"host\": \"<string>\",\n  \"check\": \"<string>\",\n  \"description\": \"<string>\",\n  \"timestamp\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/data/v2/alerts",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "data",
+                        "v2",
+                        "alerts"
+                      ]
+                    },
+                    "description": "Ingests a monitoring alert into BigPanda for correlation and incident management."
+                  },
+                  "response": [
+                    {
+                      "id": "dd904c55-e24c-42f2-a689-501f8091b093",
+                      "name": "Alert ingested successfully.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"app_key\": \"<string>\",\n  \"status\": \"warning\",\n  \"host\": \"<string>\",\n  \"check\": \"<string>\",\n  \"description\": \"<string>\",\n  \"timestamp\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/data/v2/alerts",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "data",
+                            "v2",
+                            "alerts"
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"_id\": \"<string>\",\n  \"status\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:13:19.000Z",
+                      "updatedAt": "2026-07-28T01:13:19.000Z",
+                      "uid": "35240-dd904c55-e24c-42f2-a689-501f8091b093"
+                    },
+                    {
+                      "id": "daafda15-60b0-4091-9f00-d91a8289271c",
+                      "name": "Invalid alert payload.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"app_key\": \"<string>\",\n  \"status\": \"warning\",\n  \"host\": \"<string>\",\n  \"check\": \"<string>\",\n  \"description\": \"<string>\",\n  \"timestamp\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/data/v2/alerts",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "data",
+                            "v2",
+                            "alerts"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                      "createdAt": "2026-07-28T01:13:19.000Z",
+                      "updatedAt": "2026-07-28T01:13:19.000Z",
+                      "uid": "35240-daafda15-60b0-4091-9f00-d91a8289271c"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:13:19.000Z",
+                  "updatedAt": "2026-07-28T01:13:19.000Z",
+                  "uid": "35240-41ddf12c-9db1-4de7-b479-fb25ee3c969b"
+                }
+              ],
+              "id": "ba8ec71b-9df5-4ba4-8e29-808978a1c2ad",
+              "createdAt": "2026-07-28T01:13:19.000Z",
+              "updatedAt": "2026-07-28T01:13:19.000Z",
+              "uid": "35240-ba8ec71b-9df5-4ba4-8e29-808978a1c2ad"
+            }
+          ],
+          "id": "2c8c515d-d711-448f-906c-43f15f22e4cf",
+          "createdAt": "2026-07-28T01:13:19.000Z",
+          "updatedAt": "2026-07-28T01:13:19.000Z",
+          "uid": "35240-2c8c515d-d711-448f-906c-43f15f22e4cf"
+        }
+      ],
+      "id": "4a58513b-2358-4079-b606-36319d67091e",
+      "createdAt": "2026-07-28T01:13:19.000Z",
+      "updatedAt": "2026-07-28T01:13:19.000Z",
+      "uid": "35240-4a58513b-2358-4079-b606-36319d67091e"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.bigpanda.io"
+    }
+  ]
+}

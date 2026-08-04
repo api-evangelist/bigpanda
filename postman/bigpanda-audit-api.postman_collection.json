@@ -1,0 +1,169 @@
+{
+  "info": {
+    "_postman_id": "d771a0f5-4762-4317-b308-78c2b2b7bf56",
+    "name": "BigPanda Alerts Audit API",
+    "description": "The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.\n\nContact Support:\n Name: BigPanda Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:13:20.000Z",
+    "updatedAt": "2026-07-28T01:13:20.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-d771a0f5-4762-4317-b308-78c2b2b7bf56"
+  },
+  "item": [
+    {
+      "name": "resources",
+      "item": [
+        {
+          "name": "v2.0",
+          "item": [
+            {
+              "name": "audit",
+              "item": [
+                {
+                  "name": "logs",
+                  "item": [
+                    {
+                      "name": "BigPanda Get Audit Logs",
+                      "id": "bf95d952-8d16-434f-96c4-e44141bb5f4e",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/resources/v2.0/audit/logs?from=<integer>&to=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "resources",
+                            "v2.0",
+                            "audit",
+                            "logs"
+                          ],
+                          "query": [
+                            {
+                              "description": "Start timestamp for log query.",
+                              "key": "from",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "End timestamp for log query.",
+                              "key": "to",
+                              "value": "<integer>"
+                            }
+                          ]
+                        },
+                        "description": "Returns audit log entries for API and user activity."
+                      },
+                      "response": [
+                        {
+                          "id": "53eaecdd-29d1-4b44-9020-4eaa80c4683d",
+                          "name": "Audit log entries.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/resources/v2.0/audit/logs?from=<integer>&to=<integer>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "resources",
+                                "v2.0",
+                                "audit",
+                                "logs"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Start timestamp for log query.",
+                                  "key": "from",
+                                  "value": "<integer>"
+                                },
+                                {
+                                  "description": "End timestamp for log query.",
+                                  "key": "to",
+                                  "value": "<integer>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"logs\": [\n    {\n      \"id\": \"<string>\",\n      \"user\": \"<string>\",\n      \"action\": \"<string>\",\n      \"timestamp\": \"<integer>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"user\": \"<string>\",\n      \"action\": \"<string>\",\n      \"timestamp\": \"<integer>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-07-28T01:13:20.000Z",
+                          "updatedAt": "2026-07-28T01:13:20.000Z",
+                          "uid": "35240-53eaecdd-29d1-4b44-9020-4eaa80c4683d"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:13:20.000Z",
+                      "updatedAt": "2026-07-28T01:13:20.000Z",
+                      "uid": "35240-bf95d952-8d16-434f-96c4-e44141bb5f4e"
+                    }
+                  ],
+                  "id": "d80aa6b8-bb2d-403f-a730-6971b0ea92d5",
+                  "createdAt": "2026-07-28T01:13:20.000Z",
+                  "updatedAt": "2026-07-28T01:13:20.000Z",
+                  "uid": "35240-d80aa6b8-bb2d-403f-a730-6971b0ea92d5"
+                }
+              ],
+              "id": "ca64d584-5ce8-4911-be46-5a5ce6c4e7cc",
+              "createdAt": "2026-07-28T01:13:20.000Z",
+              "updatedAt": "2026-07-28T01:13:20.000Z",
+              "uid": "35240-ca64d584-5ce8-4911-be46-5a5ce6c4e7cc"
+            }
+          ],
+          "id": "8c137f0c-eaa3-4153-8f70-1de92352063e",
+          "createdAt": "2026-07-28T01:13:20.000Z",
+          "updatedAt": "2026-07-28T01:13:20.000Z",
+          "uid": "35240-8c137f0c-eaa3-4153-8f70-1de92352063e"
+        }
+      ],
+      "id": "edc27c56-d0d0-49ab-954a-c127aa1b61cf",
+      "createdAt": "2026-07-28T01:13:20.000Z",
+      "updatedAt": "2026-07-28T01:13:20.000Z",
+      "uid": "35240-edc27c56-d0d0-49ab-954a-c127aa1b61cf"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.bigpanda.io"
+    }
+  ]
+}

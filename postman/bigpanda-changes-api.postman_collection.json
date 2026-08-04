@@ -1,0 +1,208 @@
+{
+  "info": {
+    "_postman_id": "f3bc379b-1d03-4032-aa03-4fced0737556",
+    "name": "BigPanda Alerts Changes API",
+    "description": "The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.\n\nContact Support:\n Name: BigPanda Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:13:20.000Z",
+    "updatedAt": "2026-07-28T01:13:21.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-f3bc379b-1d03-4032-aa03-4fced0737556"
+  },
+  "item": [
+    {
+      "name": "data",
+      "item": [
+        {
+          "name": "changes",
+          "item": [
+            {
+              "name": "BigPanda Send Change",
+              "id": "ea099ad1-64e2-47a7-b4ea-3b4392b9b376",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"summary\": \"<string>\",\n  \"status\": \"failure\",\n  \"identifier\": \"<string>\",\n  \"hosts\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestamp\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/data/changes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "data",
+                    "changes"
+                  ]
+                },
+                "description": "Ingests a change event (deployment, config change) for alert correlation."
+              },
+              "response": [
+                {
+                  "id": "f82663c0-c3a4-4abe-8d7c-305595215810",
+                  "name": "Change ingested successfully.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"summary\": \"<string>\",\n  \"status\": \"failure\",\n  \"identifier\": \"<string>\",\n  \"hosts\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestamp\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/data/changes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "data",
+                        "changes"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"_id\": \"<string>\",\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:13:21.000Z",
+                  "updatedAt": "2026-07-28T01:13:21.000Z",
+                  "uid": "35240-f82663c0-c3a4-4abe-8d7c-305595215810"
+                },
+                {
+                  "id": "83aef6bf-0f34-4a71-9fca-846acd3baed9",
+                  "name": "Invalid change payload.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"summary\": \"<string>\",\n  \"status\": \"failure\",\n  \"identifier\": \"<string>\",\n  \"hosts\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestamp\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/data/changes",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "data",
+                        "changes"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:13:21.000Z",
+                  "updatedAt": "2026-07-28T01:13:21.000Z",
+                  "uid": "35240-83aef6bf-0f34-4a71-9fca-846acd3baed9"
+                }
+              ],
+              "createdAt": "2026-07-28T01:13:21.000Z",
+              "updatedAt": "2026-07-28T01:13:21.000Z",
+              "uid": "35240-ea099ad1-64e2-47a7-b4ea-3b4392b9b376"
+            }
+          ],
+          "id": "f504f748-50b8-461f-80df-d11104f29286",
+          "createdAt": "2026-07-28T01:13:21.000Z",
+          "updatedAt": "2026-07-28T01:13:21.000Z",
+          "uid": "35240-f504f748-50b8-461f-80df-d11104f29286"
+        }
+      ],
+      "id": "15a9dce6-1eb9-4603-a825-1d43b3f78b96",
+      "createdAt": "2026-07-28T01:13:21.000Z",
+      "updatedAt": "2026-07-28T01:13:21.000Z",
+      "uid": "35240-15a9dce6-1eb9-4603-a825-1d43b3f78b96"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.bigpanda.io"
+    }
+  ]
+}

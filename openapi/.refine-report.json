@@ -1,0 +1,24 @@
+{
+  "provider": "bigpanda",
+  "sources": [
+    "bigpanda-alerts-api-openapi.yml",
+    "bigpanda-audit-api-openapi.yml",
+    "bigpanda-changes-api-openapi.yml",
+    "bigpanda-environments-api-openapi.yml",
+    "bigpanda-incidents-api-openapi.yml",
+    "bigpanda-maintenance-plans-api-openapi.yml"
+  ],
+  "outputs": [
+    "bigpanda-alerts-api-openapi.yml",
+    "bigpanda-audit-api-openapi.yml",
+    "bigpanda-changes-api-openapi.yml",
+    "bigpanda-environments-api-openapi.yml",
+    "bigpanda-incidents-api-openapi.yml",
+    "bigpanda-maintenance-plans-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

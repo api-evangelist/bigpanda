@@ -1,0 +1,611 @@
+{
+  "info": {
+    "_postman_id": "af759904-795a-4d50-8d29-33db919fc921",
+    "name": "BigPanda Alerts Environments API",
+    "description": "The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.\n\nContact Support:\n Name: BigPanda Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:13:29.000Z",
+    "updatedAt": "2026-07-28T01:13:29.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-af759904-795a-4d50-8d29-33db919fc921"
+  },
+  "item": [
+    {
+      "name": "resources",
+      "item": [
+        {
+          "name": "v2.0",
+          "item": [
+            {
+              "name": "environments",
+              "item": [
+                {
+                  "name": "{id}",
+                  "item": [
+                    {
+                      "name": "BigPanda Get Environment",
+                      "id": "a1539426-a467-4c0a-bdc2-d66f77148f8e",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/resources/v2.0/environments/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "resources",
+                            "v2.0",
+                            "environments",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "7eb96cda-74f7-4a47-b2a9-0a130b34be79",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "Returns a single environment by ID."
+                      },
+                      "response": [
+                        {
+                          "id": "78f6077f-784b-4ec9-9369-4e97b5e010d1",
+                          "name": "Environment details.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/resources/v2.0/environments/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "resources",
+                                "v2.0",
+                                "environments",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"condition\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:13:29.000Z",
+                          "updatedAt": "2026-07-28T01:13:29.000Z",
+                          "uid": "35240-78f6077f-784b-4ec9-9369-4e97b5e010d1"
+                        },
+                        {
+                          "id": "175115e6-6c00-4283-be53-89b16b3c6d3e",
+                          "name": "Environment not found.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/resources/v2.0/environments/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "resources",
+                                "v2.0",
+                                "environments",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:13:29.000Z",
+                          "updatedAt": "2026-07-28T01:13:29.000Z",
+                          "uid": "35240-175115e6-6c00-4283-be53-89b16b3c6d3e"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:13:29.000Z",
+                      "updatedAt": "2026-07-28T01:13:29.000Z",
+                      "uid": "35240-a1539426-a467-4c0a-bdc2-d66f77148f8e"
+                    },
+                    {
+                      "name": "BigPanda Delete Environment",
+                      "id": "b96b8d2b-b6fd-49ed-91a2-355cf6a297fb",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/resources/v2.0/environments/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "resources",
+                            "v2.0",
+                            "environments",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "63dd33f7-0fe7-46a7-baa8-5ac220a58cf5",
+                              "key": "id",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "Deletes an environment by ID."
+                      },
+                      "response": [
+                        {
+                          "id": "8e5fb1fc-2c8e-44af-8825-7f35d94fa07b",
+                          "name": "Environment deleted successfully.",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/resources/v2.0/environments/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "resources",
+                                "v2.0",
+                                "environments",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T01:13:29.000Z",
+                          "updatedAt": "2026-07-28T01:13:29.000Z",
+                          "uid": "35240-8e5fb1fc-2c8e-44af-8825-7f35d94fa07b"
+                        },
+                        {
+                          "id": "c2a1b200-dee4-418a-844e-8fd4dc34d2b4",
+                          "name": "Environment not found.",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/resources/v2.0/environments/:id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "resources",
+                                "v2.0",
+                                "environments",
+                                ":id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"error\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                          "createdAt": "2026-07-28T01:13:29.000Z",
+                          "updatedAt": "2026-07-28T01:13:29.000Z",
+                          "uid": "35240-c2a1b200-dee4-418a-844e-8fd4dc34d2b4"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:13:29.000Z",
+                      "updatedAt": "2026-07-28T01:13:29.000Z",
+                      "uid": "35240-b96b8d2b-b6fd-49ed-91a2-355cf6a297fb"
+                    }
+                  ],
+                  "id": "e6b5443e-36ac-4055-bff6-db642d31b760",
+                  "createdAt": "2026-07-28T01:13:29.000Z",
+                  "updatedAt": "2026-07-28T01:13:29.000Z",
+                  "uid": "35240-e6b5443e-36ac-4055-bff6-db642d31b760"
+                },
+                {
+                  "name": "BigPanda List Environments",
+                  "id": "1517db12-e827-485d-b3a0-e44817ae6848",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/resources/v2.0/environments",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "resources",
+                        "v2.0",
+                        "environments"
+                      ]
+                    },
+                    "description": "Returns a list of all BigPanda environments."
+                  },
+                  "response": [
+                    {
+                      "id": "6e980165-1492-4118-9fd0-532991e89edc",
+                      "name": "List of environments.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/resources/v2.0/environments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "resources",
+                            "v2.0",
+                            "environments"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"environments\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"condition\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"condition\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:13:29.000Z",
+                      "updatedAt": "2026-07-28T01:13:29.000Z",
+                      "uid": "35240-6e980165-1492-4118-9fd0-532991e89edc"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:13:29.000Z",
+                  "updatedAt": "2026-07-28T01:13:29.000Z",
+                  "uid": "35240-1517db12-e827-485d-b3a0-e44817ae6848"
+                },
+                {
+                  "name": "BigPanda Create Environment",
+                  "id": "0e4bfbe0-5fd6-449e-b493-35152e58b7d5",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"condition\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/resources/v2.0/environments",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "resources",
+                        "v2.0",
+                        "environments"
+                      ]
+                    },
+                    "description": "Creates a new incident grouping environment."
+                  },
+                  "response": [
+                    {
+                      "id": "454f1eaa-d8f8-45ee-aa4d-bffd0ca8695a",
+                      "name": "Environment created successfully.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"condition\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/resources/v2.0/environments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "resources",
+                            "v2.0",
+                            "environments"
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"condition\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:13:29.000Z",
+                      "updatedAt": "2026-07-28T01:13:29.000Z",
+                      "uid": "35240-454f1eaa-d8f8-45ee-aa4d-bffd0ca8695a"
+                    },
+                    {
+                      "id": "e56cda9c-e811-45b5-a33e-ded2223b8907",
+                      "name": "Invalid environment configuration.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"condition\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/resources/v2.0/environments",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "resources",
+                            "v2.0",
+                            "environments"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                      "createdAt": "2026-07-28T01:13:29.000Z",
+                      "updatedAt": "2026-07-28T01:13:29.000Z",
+                      "uid": "35240-e56cda9c-e811-45b5-a33e-ded2223b8907"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:13:29.000Z",
+                  "updatedAt": "2026-07-28T01:13:29.000Z",
+                  "uid": "35240-0e4bfbe0-5fd6-449e-b493-35152e58b7d5"
+                }
+              ],
+              "id": "449fb3ad-9c26-48b7-992c-666e39454011",
+              "createdAt": "2026-07-28T01:13:29.000Z",
+              "updatedAt": "2026-07-28T01:13:29.000Z",
+              "uid": "35240-449fb3ad-9c26-48b7-992c-666e39454011"
+            }
+          ],
+          "id": "0aa2f619-ad14-4aa4-8681-11385914b257",
+          "createdAt": "2026-07-28T01:13:29.000Z",
+          "updatedAt": "2026-07-28T01:13:29.000Z",
+          "uid": "35240-0aa2f619-ad14-4aa4-8681-11385914b257"
+        }
+      ],
+      "id": "2854a138-f7e6-446a-a814-3de5039d54f3",
+      "createdAt": "2026-07-28T01:13:29.000Z",
+      "updatedAt": "2026-07-28T01:13:29.000Z",
+      "uid": "35240-2854a138-f7e6-446a-a814-3de5039d54f3"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.bigpanda.io"
+    }
+  ]
+}

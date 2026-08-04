@@ -1,0 +1,362 @@
+{
+  "info": {
+    "_postman_id": "86d498b8-704b-4fd7-9d1f-edf0d5454b78",
+    "name": "BigPanda Alerts Incidents API",
+    "description": "The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.\n\nContact Support:\n Name: BigPanda Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:13:30.000Z",
+    "updatedAt": "2026-07-28T01:13:30.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-86d498b8-704b-4fd7-9d1f-edf0d5454b78"
+  },
+  "item": [
+    {
+      "name": "resources",
+      "item": [
+        {
+          "name": "v2.0",
+          "item": [
+            {
+              "name": "environments",
+              "item": [
+                {
+                  "name": "{environment_id}",
+                  "item": [
+                    {
+                      "name": "incidents",
+                      "item": [
+                        {
+                          "name": "{incident_id}",
+                          "item": [
+                            {
+                              "name": "BigPanda Get Incident",
+                              "id": "48ec14dd-4e2d-42c4-ae66-473369582d5f",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "auth": {
+                                  "type": "bearer",
+                                  "bearer": [
+                                    {
+                                      "key": "token",
+                                      "value": "{{bearerToken}}",
+                                      "type": "string"
+                                    }
+                                  ]
+                                },
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/resources/v2.0/environments/:environment_id/incidents/:incident_id",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "resources",
+                                    "v2.0",
+                                    "environments",
+                                    ":environment_id",
+                                    "incidents",
+                                    ":incident_id"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "71b5265f-98cf-46df-bc9a-1f298dd1b014",
+                                      "key": "environment_id",
+                                      "value": "<string>",
+                                      "description": "(Required) "
+                                    },
+                                    {
+                                      "id": "7d8a8c13-c902-4b24-9bc3-93ff156f3aef",
+                                      "key": "incident_id",
+                                      "value": "<string>",
+                                      "description": "(Required) "
+                                    }
+                                  ]
+                                },
+                                "description": "Returns details for a single incident."
+                              },
+                              "response": [
+                                {
+                                  "id": "dcc1f7f1-0c2f-4498-9362-e928332e3453",
+                                  "name": "Incident details.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/resources/v2.0/environments/:environment_id/incidents/:incident_id",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "resources",
+                                        "v2.0",
+                                        "environments",
+                                        ":environment_id",
+                                        "incidents",
+                                        ":incident_id"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "environment_id"
+                                        },
+                                        {
+                                          "key": "incident_id"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"id\": \"<string>\",\n  \"status\": \"resolved\",\n  \"severity\": \"warning\",\n  \"description\": \"<string>\",\n  \"alerts_count\": \"<integer>\",\n  \"started_at\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T01:13:31.000Z",
+                                  "updatedAt": "2026-07-28T01:13:31.000Z",
+                                  "uid": "35240-dcc1f7f1-0c2f-4498-9362-e928332e3453"
+                                },
+                                {
+                                  "id": "748ea9e6-6c33-4867-82b3-0577dfffa479",
+                                  "name": "Incident not found.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/resources/v2.0/environments/:environment_id/incidents/:incident_id",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "resources",
+                                        "v2.0",
+                                        "environments",
+                                        ":environment_id",
+                                        "incidents",
+                                        ":incident_id"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "environment_id"
+                                        },
+                                        {
+                                          "key": "incident_id"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Not Found",
+                                  "code": 404,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"error\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T01:13:31.000Z",
+                                  "updatedAt": "2026-07-28T01:13:31.000Z",
+                                  "uid": "35240-748ea9e6-6c33-4867-82b3-0577dfffa479"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T01:13:31.000Z",
+                              "updatedAt": "2026-07-28T01:13:31.000Z",
+                              "uid": "35240-48ec14dd-4e2d-42c4-ae66-473369582d5f"
+                            }
+                          ],
+                          "id": "8e18f7c1-1e74-4bfe-9b7b-63f510d9c210",
+                          "createdAt": "2026-07-28T01:13:31.000Z",
+                          "updatedAt": "2026-07-28T01:13:31.000Z",
+                          "uid": "35240-8e18f7c1-1e74-4bfe-9b7b-63f510d9c210"
+                        },
+                        {
+                          "name": "BigPanda List Incidents",
+                          "id": "39a81909-a306-47f6-82f2-6a68e9afff8a",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{bearerToken}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/resources/v2.0/environments/:environment_id/incidents?active=<boolean>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "resources",
+                                "v2.0",
+                                "environments",
+                                ":environment_id",
+                                "incidents"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Filter by active incidents.",
+                                  "key": "active",
+                                  "value": "<boolean>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "id": "c2b3f71a-53cf-4589-bee5-88e9d32af9c7",
+                                  "key": "environment_id",
+                                  "value": "<string>",
+                                  "description": "(Required) "
+                                }
+                              ]
+                            },
+                            "description": "Returns a list of incidents for the specified environment."
+                          },
+                          "response": [
+                            {
+                              "id": "4aa41a4c-2bb4-4259-91a1-e268af53049d",
+                              "name": "List of incidents.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/resources/v2.0/environments/:environment_id/incidents?active=<boolean>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "resources",
+                                    "v2.0",
+                                    "environments",
+                                    ":environment_id",
+                                    "incidents"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Filter by active incidents.",
+                                      "key": "active",
+                                      "value": "<boolean>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "environment_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"incidents\": [\n    {\n      \"id\": \"<string>\",\n      \"status\": \"resolved\",\n      \"severity\": \"unknown\",\n      \"description\": \"<string>\",\n      \"alerts_count\": \"<integer>\",\n      \"started_at\": \"<integer>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"status\": \"resolved\",\n      \"severity\": \"unknown\",\n      \"description\": \"<string>\",\n      \"alerts_count\": \"<integer>\",\n      \"started_at\": \"<integer>\"\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T01:13:31.000Z",
+                              "updatedAt": "2026-07-28T01:13:31.000Z",
+                              "uid": "35240-4aa41a4c-2bb4-4259-91a1-e268af53049d"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:13:31.000Z",
+                          "updatedAt": "2026-07-28T01:13:31.000Z",
+                          "uid": "35240-39a81909-a306-47f6-82f2-6a68e9afff8a"
+                        }
+                      ],
+                      "id": "2fdf3443-3f44-4c1f-9074-37cc93ec111f",
+                      "createdAt": "2026-07-28T01:13:31.000Z",
+                      "updatedAt": "2026-07-28T01:13:31.000Z",
+                      "uid": "35240-2fdf3443-3f44-4c1f-9074-37cc93ec111f"
+                    }
+                  ],
+                  "id": "2357604d-fa9e-430f-b67b-d694c20ca498",
+                  "createdAt": "2026-07-28T01:13:31.000Z",
+                  "updatedAt": "2026-07-28T01:13:31.000Z",
+                  "uid": "35240-2357604d-fa9e-430f-b67b-d694c20ca498"
+                }
+              ],
+              "id": "a3d024da-d3d8-4cd7-9014-2a49849ab211",
+              "createdAt": "2026-07-28T01:13:31.000Z",
+              "updatedAt": "2026-07-28T01:13:31.000Z",
+              "uid": "35240-a3d024da-d3d8-4cd7-9014-2a49849ab211"
+            }
+          ],
+          "id": "84ff979f-2876-473d-a9e2-a04ce5deab68",
+          "createdAt": "2026-07-28T01:13:31.000Z",
+          "updatedAt": "2026-07-28T01:13:31.000Z",
+          "uid": "35240-84ff979f-2876-473d-a9e2-a04ce5deab68"
+        }
+      ],
+      "id": "0ab5023e-7233-4287-8e2d-ba5217d705e5",
+      "createdAt": "2026-07-28T01:13:31.000Z",
+      "updatedAt": "2026-07-28T01:13:31.000Z",
+      "uid": "35240-0ab5023e-7233-4287-8e2d-ba5217d705e5"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.bigpanda.io"
+    }
+  ]
+}
