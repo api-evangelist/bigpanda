@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BigPanda Alerts Maintenance Plans API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Maintenance Plans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "BigPanda List Maintenance Plans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bigpanda.io/resources/v2.0/maintenance-plans",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns all maintenance plans."
+        },
+        {
+          "info": {
+            "name": "BigPanda Create Maintenance Plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.bigpanda.io/resources/v2.0/maintenance-plans",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new maintenance plan to suppress alerts during a window."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

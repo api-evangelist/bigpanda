@@ -1,0 +1,146 @@
+{
+  "item": [
+    {
+      "id": "da9ea78f-4081-41d0-bdd9-5a0f5029e7b8",
+      "name": "Audit",
+      "description": {
+        "content": "Access audit logs",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "48497905-de3b-4f72-a55e-93a5471bcafd",
+          "name": "BigPanda Get Audit Logs",
+          "request": {
+            "name": "BigPanda Get Audit Logs",
+            "description": {
+              "content": "Returns audit log entries for API and user activity.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "resources",
+                "v2.0",
+                "audit",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<integer>",
+                  "description": "Start timestamp for log query."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<integer>",
+                  "description": "End timestamp for log query."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9fd068a5-6cf1-433c-a117-c43e56216103",
+              "name": "Audit log entries.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "v2.0",
+                    "audit",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"logs\": [\n    {\n      \"id\": \"log-abc123\",\n      \"user\": \"admin@example.com\",\n      \"action\": \"created_environment\",\n      \"timestamp\": 1713000000\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.bigpanda.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "19b9d46d-ab2a-430d-9ad9-451fbf2f9340",
+    "name": "BigPanda Alerts Audit API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.\n\nContact Support:\n Name: BigPanda Support",
+      "type": "text/plain"
+    }
+  }
+}

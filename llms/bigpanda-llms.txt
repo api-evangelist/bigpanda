@@ -1,0 +1,115 @@
+# BigPanda Documentation
+
+> BigPanda product documentation for onboarding, incident operations, AI-assisted workflows, prevention, configuration, analytics, integrations, release notes, APIs, and support resources.
+> Canonical docs site: https://docs.bigpanda.io/
+> Sitemap reference for full crawl coverage: https://docs.bigpanda.io/sitemap.xml
+
+## Overview
+
+BigPanda documentation covers:
+- Getting started with the platform
+- Incident lifecycle, triage, remediation, and analysis
+- AI Incident Assistant
+- AI Incident Prevention
+- Platform configuration and administration
+- Analytics and data models
+- Integrations and integration management
+- Release notes and new features
+- BigPanda APIs
+- Help, education, and best-practice resources
+
+## Main Sections
+
+### Get Started
+- / — Documentation home and section index
+- /en/get-started-86711 — Get Started with BigPanda
+- Get help, onboarding, ADR overview, AIOps overview, navigation, and best practices
+
+### Work with Incidents
+- Incident concepts and workflows
+- Triage incidents
+- Remediate incidents
+- Events-to-incidents lifecycle
+- Automated incident analysis
+- Root Cause Changes (RCC)
+- Similar incidents
+
+### AI Incident Assistant
+- Introduction to AI Incident Assistant
+- Installation and setup
+- Managing incidents with AI Incident Assistant
+- Web app usage
+- AI Incident Assistant release notes
+
+### AI Incident Prevention
+- Configure AI Incident Prevention
+- Analytics and dashboards
+- AI Incident Prevention release notes
+
+### Configure BigPanda
+- Platform settings
+- Alerts
+- Incidents
+- Access management
+- Administration
+- Analytics-related configuration
+
+### Analytics
+- Unified Analytics
+- Unified Analytics Standard Data Model
+- Open Analytics Hub
+- ETL Sync
+- Live Dashboards
+
+### Integrations
+- Integrate with BigPanda
+- Open Integration Manager
+- ServiceNow
+- Jira
+- Nagios
+- Monitoring integrations
+- Collaboration integrations
+- Change integrations
+- Topology integrations
+
+### Release Notes and New Features
+- Product release notes
+- New feature announcements
+
+### BigPanda APIs
+- API documentation and reference materials
+- Developer-facing product interfaces
+
+### Resources
+- Help and support content
+- Education and training links
+- Best practices and navigation aids
+
+## Suggested Crawl Priorities
+
+1. Documentation home page and main category pages
+2. Get Started and platform onboarding content
+3. Incident operations and workflow content
+4. AI Incident Assistant and AI Incident Prevention content
+5. Configuration and administration guides
+6. Analytics and data model documentation
+7. Integration overview pages and major connector pages
+8. Release notes and new features
+9. API documentation and references
+10. Help and resource pages
+
+## Canonical Sources
+
+- https://docs.bigpanda.io/
+- https://docs.bigpanda.io/sitemap.xml
+- https://api-docs.bigpanda.io/
+
+## Notes for LLM Ingestion
+
+- Prefer canonical documentation pages over search-result pages
+- Use sitemap discovery to enumerate all doc URLs
+- Treat release notes as time-sensitive content
+- Treat API docs as authoritative for request/response details
+- Preserve section hierarchy where possible
+- De-duplicate pages reachable from both navigation and sitemap
+- Exclude login pages and site chrome where possible

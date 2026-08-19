@@ -1,0 +1,286 @@
+{
+  "item": [
+    {
+      "id": "3d519980-c33f-4c5d-b5f7-9f12df6b7e5b",
+      "name": "Maintenance Plans",
+      "description": {
+        "content": "Schedule maintenance windows to suppress alerts",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d9ad99f0-d863-487c-9bde-8e06002a7424",
+          "name": "BigPanda List Maintenance Plans",
+          "request": {
+            "name": "BigPanda List Maintenance Plans",
+            "description": {
+              "content": "Returns all maintenance plans.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "resources",
+                "v2.0",
+                "maintenance-plans"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2cd4ad34-ceda-42cd-bd40-7607472c92e7",
+              "name": "List of maintenance plans.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "v2.0",
+                    "maintenance-plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"maintenance_plans\": [\n    {\n      \"id\": \"mp-abc123\",\n      \"name\": \"Weekend Maintenance\",\n      \"active\": false,\n      \"start\": 1713000000,\n      \"end\": 1713086400\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ac7895d-2b7b-4b4a-8a83-4309baa5475a",
+          "name": "BigPanda Create Maintenance Plan",
+          "request": {
+            "name": "BigPanda Create Maintenance Plan",
+            "description": {
+              "content": "Creates a new maintenance plan to suppress alerts during a window.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "resources",
+                "v2.0",
+                "maintenance-plans"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"condition\": \"<string>\",\n  \"start\": \"<integer>\",\n  \"end\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d70eaf6e-eca2-48c6-8f2c-deec74a1eab9",
+              "name": "Maintenance plan created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "v2.0",
+                    "maintenance-plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Weekend Maintenance\",\n  \"condition\": \"host = \\\"production-database-1\\\"\",\n  \"start\": 1713000000,\n  \"end\": 1713086400\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"mp-abc123\",\n  \"name\": \"Weekend Maintenance\",\n  \"active\": false,\n  \"start\": 1713000000,\n  \"end\": 1713086400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf9ecf7b-8bfd-405c-b555-5563119d555d",
+              "name": "Invalid maintenance plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resources",
+                    "v2.0",
+                    "maintenance-plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Weekend Maintenance\",\n  \"condition\": \"host = \\\"production-database-1\\\"\",\n  \"start\": 1713000000,\n  \"end\": 1713086400\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"resource not found\",\n  \"status\": 404\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.bigpanda.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f21d7789-9847-4533-baed-8a222bac671d",
+    "name": "BigPanda Alerts Maintenance Plans API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.\n\nContact Support:\n Name: BigPanda Support",
+      "type": "text/plain"
+    }
+  }
+}

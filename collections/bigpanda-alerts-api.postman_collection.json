@@ -1,0 +1,196 @@
+{
+  "item": [
+    {
+      "id": "33ab7de0-b070-4b3a-9514-2db26a145c55",
+      "name": "Alerts",
+      "description": {
+        "content": "Ingest and manage monitoring alerts",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b5660cf5-7430-40be-bbc7-b4a14a40cf42",
+          "name": "BigPanda Send Alert",
+          "request": {
+            "name": "BigPanda Send Alert",
+            "description": {
+              "content": "Ingests a monitoring alert into BigPanda for correlation and incident management.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "v2",
+                "alerts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"app_key\": \"<string>\",\n  \"status\": \"<string>\",\n  \"host\": \"<string>\",\n  \"check\": \"<string>\",\n  \"description\": \"<string>\",\n  \"timestamp\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1b8e6f19-80d6-4d1d-87ef-b99cf2d79e3f",
+              "name": "Alert ingested successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v2",
+                    "alerts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"app_key\": \"abc123appkey\",\n  \"status\": \"critical\",\n  \"host\": \"production-database-1\",\n  \"check\": \"CPU overloaded\",\n  \"description\": \"CPU usage above 95% for 5 minutes\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"alert-abc123\",\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c33b436-514c-45b0-b5e0-1ca697b7ed26",
+              "name": "Invalid alert payload.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "v2",
+                    "alerts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"app_key\": \"abc123appkey\",\n  \"status\": \"critical\",\n  \"host\": \"production-database-1\",\n  \"check\": \"CPU overloaded\",\n  \"description\": \"CPU usage above 95% for 5 minutes\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"resource not found\",\n  \"status\": 404\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.bigpanda.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "557c92e3-7eac-4ec7-98be-d109a7abf88d",
+    "name": "BigPanda Alerts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.\n\nContact Support:\n Name: BigPanda Support",
+      "type": "text/plain"
+    }
+  }
+}

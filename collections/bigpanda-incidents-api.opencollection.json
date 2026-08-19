@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BigPanda Alerts Incidents API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Incidents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "BigPanda List Incidents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bigpanda.io/resources/v2.0/environments/:environment_id/incidents",
+            "params": [
+              {
+                "name": "environment_id",
+                "value": "env-abc123",
+                "type": "path"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Filter by active incidents."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of incidents for the specified environment."
+        },
+        {
+          "info": {
+            "name": "BigPanda Get Incident",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bigpanda.io/resources/v2.0/environments/:environment_id/incidents/:incident_id",
+            "params": [
+              {
+                "name": "environment_id",
+                "value": "env-abc123",
+                "type": "path"
+              },
+              {
+                "name": "incident_id",
+                "value": "inc-abc123",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns details for a single incident."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

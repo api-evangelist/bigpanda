@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "BigPanda Alerts Environments API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Environments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "BigPanda List Environments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bigpanda.io/resources/v2.0/environments",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list of all BigPanda environments."
+        },
+        {
+          "info": {
+            "name": "BigPanda Create Environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.bigpanda.io/resources/v2.0/environments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new incident grouping environment."
+        },
+        {
+          "info": {
+            "name": "BigPanda Get Environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bigpanda.io/resources/v2.0/environments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "env-abc123",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a single environment by ID."
+        },
+        {
+          "info": {
+            "name": "BigPanda Delete Environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.bigpanda.io/resources/v2.0/environments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "env-abc123",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes an environment by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
