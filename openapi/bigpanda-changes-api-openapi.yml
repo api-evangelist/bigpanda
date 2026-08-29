@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda Alerts Changes API
   description: The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.
@@ -68,6 +68,32 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    ChangeResponse:
+      title: Change Response
+      description: Response after ingesting a change event.
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Internal change ID.
+          example: chg-abc123
+        status:
+          type: string
+          description: Ingestion status.
+          example: ok
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+          example: resource not found
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
     ChangeRequest:
       title: Change Request
       description: Payload for ingesting a change event.
@@ -103,32 +129,6 @@ components:
           type: integer
           description: Unix timestamp of the change.
           example: 1713000000
-    ErrorResponse:
-      title: Error Response
-      description: Standard error response.
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message.
-          example: resource not found
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 404
-    ChangeResponse:
-      title: Change Response
-      description: Response after ingesting a change event.
-      type: object
-      properties:
-        _id:
-          type: string
-          description: Internal change ID.
-          example: chg-abc123
-        status:
-          type: string
-          description: Ingestion status.
-          example: ok
   securitySchemes:
     bearerAuth:
       type: http

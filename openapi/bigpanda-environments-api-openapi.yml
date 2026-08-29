@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda Alerts Environments API
   description: The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.
@@ -194,19 +194,6 @@ components:
           type: string
           description: Filter condition for grouping incidents.
           example: source = "nagios"
-    ErrorResponse:
-      title: Error Response
-      description: Standard error response.
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message.
-          example: resource not found
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 404
     EnvironmentRequest:
       title: Environment Request
       description: Payload for creating or updating an environment.
@@ -227,6 +214,19 @@ components:
           type: string
           description: Filter condition for grouping incidents.
           example: source = "nagios"
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+          example: resource not found
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
   securitySchemes:
     bearerAuth:
       type: http

@@ -19,6 +19,14 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "bigpanda-alerts-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "bigpanda-audit-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "bigpanda-changes-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "bigpanda-environments-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "bigpanda-incidents-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "bigpanda-maintenance-plans-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

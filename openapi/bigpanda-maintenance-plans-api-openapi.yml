@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda Alerts Maintenance Plans API
   description: The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.
@@ -98,32 +98,19 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    MaintenancePlanRequest:
-      title: Maintenance Plan Request
-      description: Payload for creating a maintenance plan.
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
       type: object
-      required:
-      - name
-      - condition
-      - start
-      - end
       properties:
-        name:
+        error:
           type: string
-          description: Maintenance plan name.
-          example: Weekend Maintenance
-        condition:
-          type: string
-          description: Filter condition for hosts in maintenance.
-          example: host = "production-database-1"
-        start:
+          description: Error message.
+          example: resource not found
+        status:
           type: integer
-          description: Start Unix timestamp.
-          example: 1713000000
-        end:
-          type: integer
-          description: End Unix timestamp.
-          example: 1713086400
+          description: HTTP status code.
+          example: 404
     MaintenancePlansResponse:
       title: Maintenance Plans Response
       description: List of maintenance plans.
@@ -159,19 +146,32 @@ components:
           type: integer
           description: End Unix timestamp.
           example: 1713086400
-    ErrorResponse:
-      title: Error Response
-      description: Standard error response.
+    MaintenancePlanRequest:
+      title: Maintenance Plan Request
+      description: Payload for creating a maintenance plan.
       type: object
+      required:
+      - name
+      - condition
+      - start
+      - end
       properties:
-        error:
+        name:
           type: string
-          description: Error message.
-          example: resource not found
-        status:
+          description: Maintenance plan name.
+          example: Weekend Maintenance
+        condition:
+          type: string
+          description: Filter condition for hosts in maintenance.
+          example: host = "production-database-1"
+        start:
           type: integer
-          description: HTTP status code.
-          example: 404
+          description: Start Unix timestamp.
+          example: 1713000000
+        end:
+          type: integer
+          description: End Unix timestamp.
+          example: 1713086400
   securitySchemes:
     bearerAuth:
       type: http
