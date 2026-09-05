@@ -1,0 +1,108 @@
+generated: '2026-09-04'
+method: searched
+source: https://api-docs.bigpanda.io/mcp
+description: >-
+  BigPanda ships two distinct remote Model Context Protocol surfaces. The product one is the Biggy
+  action-plan server at https://api.biggy.io/mcp, documented in BigPanda's own API reference: a single
+  stateless HTTP POST endpoint speaking JSON-RPC 2.0, where every action plan enabled in a customer's
+  organization becomes an MCP tool whose description is derived from the plan's `description` and
+  `whenToSelect` fields. The second is a WordPress MCP server on the marketing site,
+  https://www.bigpanda.io/wp-json/mcp/mcp-oauth-server, advertised by RFC 8414/9728 discovery documents
+  at https://www.bigpanda.io/.well-known/ and gated by OAuth with the single scope "mcp".
+  BigPanda publishes no MCP install package — there is no stdio server to run locally.
+deployment:
+  mode: remote
+  endpoint: https://api.biggy.io/mcp
+  auth: api-key
+  verified: searched
+  note: >-
+    Established from BigPanda's published API reference (https://api-docs.bigpanda.io/mcp), which gives
+    the endpoint, the JSON-RPC methods and worked curl examples. An anonymous POST of
+    {"jsonrpc":"2.0","method":"tools/list"} to https://api.biggy.io/mcp on 2026-09-04 returned HTTP 403
+    from a Cloudflare bot challenge rather than an MCP response, so the live tool schemas were not read.
+    A second remote endpoint, https://www.bigpanda.io/wp-json/mcp/mcp-oauth-server, WAS probed directly
+    and answered HTTP 401 {"code":"mcp_unauthorized","message":"MCP authentication required."} — an
+    MCP-aware refusal, which verifies the server exists behind OAuth.
+servers:
+  - name: Biggy action plans
+    endpoint: https://api.biggy.io/mcp
+    transport: streamable-http
+    stateless: true
+    protocol_version: '2025-11-25'
+    server_info:
+      name: biggy-action-plans
+      version: 1.0.0
+    auth:
+      type: api-key
+      scheme: Bearer
+      credential: User API Key
+      header: Authorization
+    methods:
+      - initialize
+      - tools/list
+      - tools/call
+    unsupported:
+      - method: GET
+        response: 405 Method Not Allowed
+      - method: DELETE
+        response: 405 Method Not Allowed
+    rate_limit:
+      limit: 100
+      window: minute
+      scope: Biggy API
+      on_exhaustion: 429
+    docs: https://api-docs.bigpanda.io/mcp
+    openapi:
+      file: openapi/bigpanda-agents-api-openapi.yml
+      operationId: use-action-plans-as-mcp
+      path: /mcp
+    probe:
+      url: https://api.biggy.io/mcp
+      method: POST
+      body: '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}'
+      http_status: 403
+      result: cloudflare-bot-challenge
+      checked: '2026-09-04'
+  - name: BigPanda WordPress MCP (marketing site)
+    endpoint: https://www.bigpanda.io/wp-json/mcp/mcp-oauth-server
+    transport: streamable-http
+    auth:
+      type: oauth
+      scopes:
+        - mcp
+      authorization_server: https://www.bigpanda.io
+      authorization_endpoint: https://www.bigpanda.io/oauth/authorize
+      token_endpoint: https://www.bigpanda.io/oauth/token
+      revocation_endpoint: https://www.bigpanda.io/oauth/revoke
+      pkce: S256
+      dynamic_client_registration: client_id_metadata_document_supported
+    discovery:
+      - well-known/bigpanda-oauth-authorization-server.json
+      - well-known/bigpanda-oauth-protected-resource.json
+    also_registered:
+      - path: /wp-json/mcp/mcp-adapter-default-server
+        methods: [POST, GET, DELETE]
+        note: Listed in the /wp-json/mcp route index; a POST to it 301-redirected and was not followed to a JSON-RPC response.
+    probe:
+      url: https://www.bigpanda.io/wp-json/mcp/mcp-oauth-server
+      method: POST
+      body: '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}'
+      http_status: 401
+      response: '{"code":"mcp_unauthorized","message":"MCP authentication required.","data":{"status":401}}'
+      checked: '2026-09-04'
+tools:
+  status: dynamic
+  count: null
+  note: >-
+    The Biggy MCP server exposes no fixed tool catalog. BigPanda states that "each enabled action plan
+    in your organization becomes an MCP tool", so tools/list is tenant-specific and cannot be enumerated
+    without an authenticated key. The tool NAMES and descriptions are therefore customer configuration,
+    not a published surface. No tool list was fabricated. Schemas need authenticated introspection.
+related:
+  a2a:
+    endpoint: https://api.biggy.io/a2a/biggy-agent
+    agent_card: https://api.biggy.io/.well-known/agent-card.json?assistant_id=biggy-agent
+    note: >-
+      The agent card is documented as a live, Bearer-authenticated operation. It returned HTTP 403
+      (Cloudflare challenge) anonymously on 2026-09-04, so no card was captured and no AgentCard
+      artifact is claimed. See a2a-absent note in conformance/bigpanda-conformance.yml.

@@ -1,0 +1,72 @@
+generated: '2026-09-04'
+method: searched
+source: https://api-docs.bigpanda.io/webhooks
+type: Webhooks
+description: >-
+  BigPanda's event surface is an OUTBOUND webhook, not a stream and not a published AsyncAPI. When an
+  incident event occurs, BigPanda sends an HTTP request to a URL the customer configures — the mechanism
+  BigPanda calls "Notifications Webhook v2", which it names as its preferred way of sharing incidents
+  with ticketing, messaging and automation platforms. The webhook is configured THROUGH THE API, not only
+  through the console, so the whole delivery configuration is programmable.
+asyncapi:
+  published: false
+  probed:
+    - url: https://api-docs.bigpanda.io/asyncapi.yaml
+      status: 404
+      checked: '2026-09-04'
+  note: >-
+    No AsyncAPI document is published anywhere on api-docs.bigpanda.io, docs.bigpanda.io or the
+    bigpandaio GitHub org. Recorded as absent; none was authored.
+direction: outbound
+transport: https
+mechanism: Notifications Webhook v2
+features:
+  - Customized headers
+  - Customized URL paths
+  - Dynamic variables resolved from the incident
+  - Field mapping via the dynamic-variables resolver
+configuration_api:
+  spec: openapi/bigpanda-notifications-api-openapi.yml
+  operations:
+    - operationId: create-a-new-webhook-v2-workflow-integration
+      method: post
+      path: /resources/v2.1/integrations
+      purpose: Register a new Webhook v2 destination.
+    - operationId: retrieve-all-existing-webhook-v2-configurations
+      method: get
+      path: /resources/v2.1/integrations
+      purpose: List every configured webhook destination.
+    - operationId: retrieve-an-existing-webhook-v2-configuration
+      method: get
+      path: /resources/v2.1/integrations/{integration_id}
+      purpose: Read one webhook configuration.
+    - operationId: update-an-existing-webhook-v2-workflow-integration
+      method: put
+      path: /resources/v2.1/integrations/{integration_id}
+      purpose: Change a webhook destination, headers, path or variable mapping.
+    - operationId: deleteResourcesV21IntegrationsByAppKey
+      method: delete
+      path: /resources/v2.1/integrations/{app_key}
+      purpose: Remove a webhook integration by app key.
+    - operationId: retrieve-available-dynamic-variables
+      method: get
+      path: /resources/v2.1/fields-resolver/workflows
+      purpose: >-
+        Discover the dynamic variables available to a webhook template. This is the closest thing
+        BigPanda publishes to an event-payload schema — it enumerates the fields that can be interpolated
+        into an outbound webhook body.
+callbacks:
+  supported: true
+  note: >-
+    For long-running or asynchronous operations a caller can configure a callback notification instead of
+    polling the Job resource. See the callback notification configuration endpoints in the reference and
+    conventions/bigpanda-conventions.yml async block.
+  source: https://api-docs.bigpanda.io/asynchronous-operations
+event_catalog:
+  published: false
+  note: >-
+    BigPanda does not publish a named catalog of webhook event types or a schema for the delivered
+    payload. The payload is composed by the customer from the dynamic variables the fields-resolver
+    endpoint returns, which means the event contract is per-tenant configuration rather than a published
+    interface. Nothing was invented to fill this gap.
+product_docs: https://docs.bigpanda.io/en/notifications-webhook.html

@@ -1,0 +1,544 @@
+openapi: 3.0.3
+info:
+  title: BigPanda AI Settings API
+  description: BigPanda AI Settings operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own
+    API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it
+    was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base
+    URL for your region.
+  version: 1.0.0
+  contact:
+    name: BigPanda Support
+    url: https://api-docs.bigpanda.io/
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 6
+servers:
+- url: https://api.bigpanda.io
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
+tags:
+- name: AI Settings
+paths:
+  /resources/v2.1/ai-analysis/configuration:
+    post:
+      summary: Create a new AI Analysis Configuration
+      deprecated: false
+      description: "Create a new AI analysis configuration. \n\n## Authentication\nAll BigPanda APIs require Bearer Token\
+        \ Authorization in the call headers.\nThis API uses the User API Key type of Authorization token. Your User API Key\
+        \ must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_USER_API_KEY]`\n"
+      operationId: create-a-new-ai-analysis-configuration
+      tags:
+      - AI Settings
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/aia_config_object'
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic200response'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770117-run
+      x-source-url: https://api-docs.bigpanda.io/create-a-new-ai-analysis-configuration-37770117e0.md
+      x-source-page: Create a new AI Analysis Configuration
+    get:
+      summary: Retrieve all AI Analysis configurations
+      deprecated: false
+      description: "Retrieves all AI analysis configurations. \n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs\
+        \ require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
+        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n"
+      operationId: retrieve-all-ai-analysis-configurations
+      tags:
+      - AI Settings
+      parameters: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aia_retrieve_200'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770118-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-all-ai-analysis-configurations-37770118e0.md
+      x-source-page: Retrieve all AI Analysis configurations
+  /resources/v2.1/ai-analysis/configuration/{aia_config_id}:
+    delete:
+      summary: Delete an AI Analysis configuration
+      deprecated: false
+      description: "Deletes a specific AI Analysis configuration. \n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
+        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
+        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n"
+      operationId: delete-an-ai-analysis-configuration
+      tags:
+      - AI Settings
+      parameters:
+      - name: aia_config_id
+        in: path
+        description: The system id of the AI Analysis configuration.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 67f3df89886657bfa13913gf
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic200response'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 2
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770121-run
+      x-source-url: https://api-docs.bigpanda.io/delete-an-ai-analysis-configuration-37770121e0.md
+      x-source-page: Delete an AI Analysis configuration
+    get:
+      summary: Retrieve an AI Analysis configuration by ID
+      deprecated: false
+      description: "Retrieve a specific AI analysis configuration by ID. \n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
+        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
+        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n"
+      operationId: retrieve-an-ai-analysis-configuration-by-id
+      tags:
+      - AI Settings
+      parameters:
+      - name: aia_config_id
+        in: path
+        description: The system id of the AI Analysis configuration.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 67f3df89886657bfa13913gf
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aia_retrieve_200'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 2
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770119-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-an-ai-analysis-configuration-by-id-37770119e0.md
+      x-source-page: Retrieve an AI Analysis configuration by ID
+    patch:
+      summary: Update an AI Analysis configuration
+      deprecated: false
+      description: "Updates a specific AI Analysis configuration. \n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
+        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
+        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n"
+      operationId: update-an-ai-analysis-configuration
+      tags:
+      - AI Settings
+      parameters:
+      - name: aia_config_id
+        in: path
+        description: The system id of the AI Analysis configuration.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 67f3df89886657bfa13913gf
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/aia_config_object'
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic200response'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 2
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770120-run
+      x-source-url: https://api-docs.bigpanda.io/update-an-ai-analysis-configuration-37770120e0.md
+      x-source-page: Update an AI Analysis configuration
+  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}/ai/analysis:
+    post:
+      summary: Generate an AI Analysis
+      deprecated: false
+      description: 'Generate or regenerate an AI analysis for a specific incident.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: generate-an-ai-analysis
+      tags:
+      - AI Settings
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic200response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770116-run
+      x-source-url: https://api-docs.bigpanda.io/generate-an-ai-analysis-37770116e0.md
+      x-source-page: Generate an AI Analysis
+components:
+  securitySchemes:
+    BearerUser131:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
+        tool you use to make API calls
+
+        '
+  schemas:
+    aia_config_object:
+      required:
+      - name
+      - enabled
+      - environments
+      - alertTags
+      - isAutoTriggerEnabled
+      - promptAddendum
+      type: object
+      description: Schema for the AIA config object.
+      properties:
+        name:
+          type: string
+          description: The name of the AI Analysis configuration.
+          examples:
+          - Test configuration
+        enabled:
+          type: boolean
+          description: Whether the configuration is enabled or disabled.
+          examples:
+          - true
+        environments:
+          type: array
+          description: The environment(s) that the AI analysis configuration applies to.
+          items:
+            type: string
+            examples:
+            - 63bd568809cb331300f55555
+        alertTags:
+          type: array
+          description: The alert tag(s) used to generate the AI analysis.
+          items:
+            type: string
+            examples:
+            - node, host
+        isAutoTriggerEnabled:
+          type: boolean
+          description: Whether or not the analysis is enabled to auto-generate in the environments.
+          examples:
+          - true
+        promptAddendum:
+          type: string
+          description: Instructions that the LLM will use when generating the analysis.
+          examples:
+          - Write the summary as if you were a pirate.
+      x-apidog-orders:
+      - name
+      - enabled
+      - environments
+      - alertTags
+      - isAutoTriggerEnabled
+      - promptAddendum
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic200response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 200
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 200
+        data: {}
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    aia_retrieve_200:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - 67f3dd71886657bfa1394444
+        name:
+          type: string
+          examples:
+          - Sample config
+        enabled:
+          type: boolean
+          examples:
+          - true
+        environments:
+          type: array
+          items:
+            type: string
+            examples:
+            - 60a2931648bd70995fd77777
+        promptAddendum:
+          type: string
+          examples:
+          - Write the summary as if you were a pirate.
+        alertTags:
+          type: array
+          items:
+            type: string
+            examples:
+            - host
+        selectedRecommendationTags:
+          type: array
+          items:
+            type: string
+            examples:
+            - Assignment_group
+        recommendationScoreThreshold:
+          type: integer
+          examples:
+          - 4
+        updatedAt:
+          type: integer
+          examples:
+          - 1741966296222
+        updatedBy:
+          type: string
+          examples:
+          - 65eb795b7b46b76b1b01f777
+        isDefault:
+          type: boolean
+          examples:
+          - true
+        isAutoTriggerEnabled:
+          type: boolean
+          examples:
+          - true
+      x-apidog-orders:
+      - id
+      - name
+      - enabled
+      - environments
+      - promptAddendum
+      - alertTags
+      - selectedRecommendationTags
+      - recommendationScoreThreshold
+      - updatedAt
+      - updatedBy
+      - isDefault
+      - isAutoTriggerEnabled
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

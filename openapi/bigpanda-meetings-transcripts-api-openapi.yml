@@ -1,0 +1,872 @@
+openapi: 3.0.3
+info:
+  title: BigPanda Meetings & Transcripts API
+  description: BigPanda Meetings & Transcripts operations, assembled verbatim from the OpenAPI fragments BigPanda publishes
+    on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
+    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
+    the base URL for your region.
+  version: 1.0.0
+  contact:
+    name: BigPanda Support
+    url: https://api-docs.bigpanda.io/
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 4
+servers:
+- url: https://api.bigpanda.io
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
+tags:
+- name: Meetings & Transcripts
+paths:
+  /generate:
+    post:
+      summary: Generate a transcript summary
+      deprecated: false
+      description: "Generate a transcript summary by conferenceCallId or meetingUrl in the request body.\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is\
+        \ limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need\
+        \ to be retried.\n\n## Required permissions\n\nTo retrieve transcripts using this API, your account must have permission\
+        \ to execute the Transcribe a Meeting action plan. See the [Manage Biggy Access Controls](https://docs.bigpanda.io/en/manage-biggy-access-controls.html)\
+        \ documentation for more information.\n\n## Multiple matched meeting URLs\n\nIf `meetingUrl` matches more than one\
+        \ of your organization's conference call documents, the API uses the most recent match and returns a `matchedConferenceCallsCount`\
+        \ greater than 1.\n\n## Transcript retention\n \nThe Retrieve Transcripts API cannot retrieve any transcripts that\
+        \ are past the retention period set for your organization. See the [Meeting Retention](https://docs.bigpanda.io/en/biggy-context-and-data.html#indexing-settings)\
+        \ documentation for more information.\n"
+      operationId: generate-summary
+      tags:
+      - Meetings & Transcripts
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                conferenceCallId:
+                  type: string
+                  description: Unique identifier of the conference call.
+                  examples:
+                  - 65f0c8f8d73b2b0012ab3456
+                meetingUrl:
+                  type: string
+                  description: URL of the conference call meeting.
+                  examples:
+                  - https://meet.example.com/abc
+                prompt:
+                  type: string
+                  description: Instructions for generating the call summary. Maximum 20,000 characters.
+                  examples:
+                  - Generate a concise summary geared towards an executive audience.
+                includeRawTranscript:
+                  type: boolean
+                  description: Whether or not the raw transcript should be included in the response.
+                  examples:
+                  - false
+                responseFormat:
+                  type: string
+                  description: Format the response should be returned in. One of `markdown` (default) or `plain-text`.
+              x-apidog-orders:
+              - conferenceCallId
+              - meetingUrl
+              - prompt
+              - includeRawTranscript
+              - responseFormat
+              x-apidog-ignore-properties: []
+            examples: {}
+      responses:
+        '201':
+          x-apidog-ordering: 0
+          description: '201'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generateatranscriptsummary201response'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 2
+          description: '403'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic403response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+        '410':
+          x-apidog-ordering: 4
+          description: '410'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+                x-apidog-orders: []
+                x-apidog-ignore-properties: []
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769989-run
+      x-source-url: https://api-docs.bigpanda.io/generate-a-transcript-summary-37769989e0.md
+      x-source-page: Generate a transcript summary
+  /meetings/join:
+    post:
+      summary: Invite Biggy to Join a Meeting
+      deprecated: false
+      description: "Invite Biggy to join a meeting for transcription and summary purposes. \n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is\
+        \ limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need\
+        \ to be retried.\n\n> \U0001F4D8 **summaryDestination**\n>\n> In the summaryDestination field, click the downward\
+        \ facing arrow symbol (⌄) to select which platform you would like to send the meeting summary to. You can choose from\
+        \ MS Teams or Slack. \n>\n> When omitted, the bot still records and transcribes but does not post to any channel.\
+        \ The transcript is accessible via GET /transcripts endpoints.\n"
+      operationId: join-a-meeting
+      tags:
+      - Meetings & Transcripts
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Biggy-meeting-object'
+            examples: {}
+      responses:
+        '201':
+          x-apidog-ordering: 0
+          description: '201'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/joinameeting201response'
+          headers: {}
+          x-apidog-name: ''
+        '409':
+          x-apidog-ordering: 1
+          description: '409'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/joinameeting409response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769988-run
+      x-source-url: https://api-docs.bigpanda.io/invite-biggy-to-join-a-meeting-37769988e0.md
+      x-source-page: Invite Biggy to Join a Meeting
+  /transcripts:
+    get:
+      summary: List transcripts
+      deprecated: false
+      description: "List all available meetings or calls that Biggy has transcribed for your organization, with pagination\
+        \ and filtering. \n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization in\
+        \ the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\n> ❗ **Rate limitations**\n\
+        > \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will\
+        \ return a 429 response code and the request will need to be retried.\n\n## Required permissions\n\nTo retrieve transcripts\
+        \ using this API, your account must have permission to execute the Transcribe a Meeting action plan. See the [Manage\
+        \ Biggy Access Controls](https://docs.bigpanda.io/en/manage-biggy-access-controls.html) documentation for more information.\n\
+        \n## Transcript retention\n \nThe Retrieve Transcripts API cannot retrieve any transcripts that are past the retention\
+        \ period set for your organization. See the [Meeting Retention](https://docs.bigpanda.io/en/biggy-context-and-data.html#indexing-settings)\
+        \ documentation for more information.\n"
+      operationId: retrieve-transcripts
+      tags:
+      - Meetings & Transcripts
+      parameters:
+      - name: page
+        in: query
+        description: The number of indexed pages to retrieve. Default is 1.
+        required: false
+        example: '1'
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Size of the page. Default is 20, maximum is 100.
+        required: false
+        example: '20'
+        schema:
+          type: string
+      - name: search
+        in: query
+        description: Optional search string.
+        required: false
+        schema:
+          type: string
+      - name: platform
+        in: query
+        description: Filter by meeting platform.
+        required: false
+        example: Zoom
+        schema:
+          type: string
+      - name: from
+        in: query
+        description: Include transcripts starting at this date/time in ISO format.
+        required: false
+        example: '2026-02-02T11:14:16.000Z'
+        schema:
+          type: string
+      - name: to
+        in: query
+        description: Include transcripts up to this date/time in ISO format.
+        required: false
+        example: '2026-02-04T11:14:16.000Z'
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/retrievealltranscripts200response'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 2
+          description: '403'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic403response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+        '410':
+          x-apidog-ordering: 4
+          description: '410'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transcripts410response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769990-run
+      x-source-url: https://api-docs.bigpanda.io/list-transcripts-37769990e0.md
+      x-source-page: List transcripts
+  /transcripts/raw:
+    get:
+      summary: Retrieve raw transcript
+      deprecated: false
+      description: "Retrieve a raw transcript by conference call ID or meeting URL query parameter. \n\nIf meetingUrl matches\
+        \ multiple calls, the most recent is used.\n\nTranscripts are returned as normalized text with the spoken transcript\
+        \ and chat interwoven chronologically. \n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
+        \ Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\n>\
+        \ ❗ **Character limit**\n> \n> Transcripts are capped at 1,000,000 characters. If the transcript exceeds the limit,\
+        \ the API truncates it and sets the `transcriptTruncated` field to true`.\n\n> ❗ **Rate limitations**\n> \n> To maintain\
+        \ quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response\
+        \ code and the request will need to be retried.\n\n## Required permissions\n\nTo retrieve transcripts using this API,\
+        \ your account must have permission to execute the Transcribe a Meeting action plan. See the [Manage Biggy Access\
+        \ Controls](https://docs.bigpanda.io/en/manage-biggy-access-controls.html) documentation for more information.\n\n\
+        ## Transcript retention\n \nThe Retrieve Transcripts API cannot retrieve any transcripts that are past the retention\
+        \ period set for your organization. See the [Meeting Retention](https://docs.bigpanda.io/en/biggy-context-and-data.html#indexing-settings)\
+        \ documentation for more information.\n"
+      operationId: retrieve-raw-transcript
+      tags:
+      - Meetings & Transcripts
+      parameters:
+      - name: conferenceCallId
+        in: query
+        description: Unique identifier of the conference call.
+        required: false
+        example: 65f0c8f8d73b2b0012ab3456
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                meetingUrl:
+                  type: string
+                  description: URL of the meeting.
+                  examples:
+                  - https://meet.example.com/abc
+              x-apidog-orders:
+              - meetingUrl
+              x-apidog-ignore-properties: []
+            examples: {}
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/retrieverawtranscript200response'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 2
+          description: '403'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic403response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+        '410':
+          x-apidog-ordering: 4
+          description: '410'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/transcripts410response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769991-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-raw-transcript-37769991e0.md
+      x-source-page: Retrieve raw transcript
+components:
+  securitySchemes:
+    BearerUser11:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
+
+        headers only in the secure tool you use to make API calls
+
+        '
+  schemas:
+    generateatranscriptsummary201response:
+      type: object
+      properties:
+        conferenceCallId:
+          type: string
+          description: Unique ID of the conference call.
+          examples:
+          - 65f0c8f8d73b2b0012ab3412
+        meetingTitle:
+          type: string
+          description: User-assigned title of the meeting.
+          examples:
+          - Weekly Incident Review
+        summary:
+          type: string
+          description: Generated summary of the meeting.
+          examples:
+          - Summary text...
+        rawTranscript:
+          type: string
+          description: Raw transcript text. Only returned if `includeRawTranscripts` was set to `true`.
+          examples:
+          - Raw transcript text.
+        matchedConferenceCallsCount:
+          type: string
+          description: Number of conference calls that matched the request.
+          examples:
+          - 1
+        transcriptTruncated:
+          type: boolean
+          description: Whether or not the transcript was truncated.
+          examples:
+          - false
+        transcriptCharLimit:
+          type: string
+          description: Character limit of the returned transcript.
+          examples:
+          - 1000000
+        transcriptOriginalCharCount:
+          type: string
+          description: Number of characters in the original raw transcript.
+          examples:
+          - 12345
+        transcriptReturnedCharCount:
+          type: string
+          description: Number of characters returned.
+          examples:
+          - 12345
+      x-apidog-orders:
+      - conferenceCallId
+      - meetingTitle
+      - summary
+      - rawTranscript
+      - matchedConferenceCallsCount
+      - transcriptTruncated
+      - transcriptCharLimit
+      - transcriptOriginalCharCount
+      - transcriptReturnedCharCount
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic403response:
+      type: object
+      description: 'Forbidden
+
+        '
+      properties:
+        statusCode:
+          type: integer
+          examples:
+          - 403
+        error:
+          type: string
+          examples:
+          - Forbidden
+        message:
+          type: string
+          examples:
+          - Forbidden - insufficient permissions
+      x-apidog-orders:
+      - statusCode
+      - error
+      - message
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    Biggy-meeting-object:
+      required:
+      - meetingUrl
+      - summaryDestination
+      type: object
+      properties:
+        meetingUrl:
+          type: string
+          description: The full URL of the meeting. Must be from Zoom, MS Teams, Webex, or Google Meet.
+          examples:
+          - https://exampledomain.zoom.us/j/96583745555
+        summaryDestination:
+          description: Where the meeting summary will be sent.
+          oneOf:
+          - title: MS teams
+            type: object
+            properties:
+              platform:
+                type: string
+                description: The platform hosting the meeting. One of MS Teams, Zoom, Webex, Google Meet.
+                examples:
+                - MS teams
+              tenantId:
+                type: string
+                description: The Microsoft 365 tenant ID where the Teams conversation is located.
+                examples:
+                - 72f988bf-86f1-41af-91ab-2d7cd011ee88
+              conversationType:
+                type: string
+                description: The type of conversation. One of personal, channel, groupChat.
+                examples:
+                - personal
+              channelId:
+                type: string
+                description: The ID of the conversation, channel, or group chat where Biggy will post the summary.
+                examples:
+                - 19%3AlR675j1A7OfrPGfSTqHHHMKdjQ6AkG_uGYEdFXUgYw1%55thread.tacv2
+              groupId:
+                type: string
+                description: The group ID associated with the MS Teams channel. This field is only used if the conversationType
+                  selected was 'channel' or 'groupChat'.
+                examples:
+                - dbb2bf1b-dade-4409-8c48-432ff49dacc7&
+            required:
+            - platform
+            - tenantId
+            - conversationType
+            - channelId
+            x-apidog-orders:
+            - platform
+            - tenantId
+            - conversationType
+            - channelId
+            - groupId
+            x-apidog-ignore-properties: []
+          - title: Slack
+            type: object
+            properties:
+              platform:
+                type: string
+                description: The platform hosting the meeting. One of MS Teams, Zoom, Webex, Google Meet.
+                examples:
+                - MS teams
+              teamId:
+                type: string
+                description: Unique identifier of the Slack team.
+                examples:
+                - TOQ5MEKH5
+              channelId:
+                type: string
+                description: Unique identifier of the Slack channel where Biggy will post the summary.
+                examples:
+                - C05H844GS82
+              threadTs:
+                type: string
+                description: Unique identifier of the Slack thread where Biggy will post the summary.
+                examples:
+                - 12345.1234
+            required:
+            - platform
+            - teamId
+            - channelId
+            x-apidog-orders:
+            - platform
+            - teamId
+            - channelId
+            - threadTs
+            x-apidog-ignore-properties: []
+        options:
+          type: object
+          properties:
+            isScheduledJoin:
+              type: boolean
+              description: Whether or not the meeting is scheduled. If it is not scheduled, Biggy will join the meeting immediately.
+              examples:
+              - true
+            joinTimeInMs:
+              type: string
+              description: The time that Biggy should join the meeting, in Unix epoch time in milliseconds. This field is
+                only required if isScheduledJoin is set to 'true'.
+              examples:
+              - 1734566400000
+          x-apidog-orders:
+          - isScheduledJoin
+          - joinTimeInMs
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - meetingUrl
+      - summaryDestination
+      - options
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    joinameeting201response:
+      type: object
+      properties:
+        conferenceCallId:
+          type: string
+          description: Unique identifier of the conference call.
+          examples:
+          - 650f1a8b2c4b7e89abc12123
+        status:
+          type: string
+          description: The join status of the call.
+          examples:
+          - joining
+      x-apidog-orders:
+      - conferenceCallId
+      - status
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    joinameeting409response:
+      type: object
+      properties:
+        statusCode:
+          type: object
+          properties: {}
+        error:
+          type: string
+        message:
+          type: string
+        existingStatus:
+          type: string
+      x-apidog-orders:
+      - statusCode
+      - error
+      - message
+      - existingStatus
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    retrievealltranscripts200response:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              conferenceCallId:
+                type: string
+                description: Unique ID of the conference call.
+                examples:
+                - 65f0c8f8d73b2b0012ab3412
+              meetingTitle:
+                type: string
+                description: Title of the meeting.
+                examples:
+                - Incident Review
+              meetingUrl:
+                type: string
+                description: URL of the meeting.
+                examples:
+                - https://meet.example.com/abc
+              meetingPlatform:
+                type: string
+                description: Platform where the meeting took place.
+                examples:
+                - Zoom
+              timeStarted:
+                type: string
+                description: The ISO date/time when the meeting started.
+                examples:
+                - '2026-02-01T17:00:00.000Z'
+              timeEnded:
+                type: string
+                description: The ISO date/time when the meeting ended.
+                examples:
+                - '2026-02-01T17:30:00.000Z'
+            x-apidog-orders:
+            - conferenceCallId
+            - meetingTitle
+            - meetingUrl
+            - meetingPlatform
+            - timeStarted
+            - timeEnded
+            x-apidog-ignore-properties: []
+        pagination:
+          type: array
+          items:
+            type: object
+            properties:
+              page:
+                type: string
+                description: The maximum number of pages.
+                examples:
+                - 1
+              limit:
+                type: string
+                description: The maximum page size.
+                examples:
+                - 20
+              hasMore:
+                type: boolean
+                description: Whether or not additional transcripts are available.
+                examples:
+                - true
+            x-apidog-orders:
+            - page
+            - limit
+            - hasMore
+            x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - items
+      - pagination
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    transcripts410response:
+      type: object
+      description: 'Transcript has expired and is no longer available (media retention ended)
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 410
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - 'Transcript has expired and is no longer available (media retention ended)    '
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    retrieverawtranscript200response:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              conferenceCallId:
+                type: string
+                description: Unique ID of the conference call.
+                examples:
+                - 65f0c8f8d73b2b0012ab3412
+              meetingTitle:
+                type: string
+                description: Title of the meeting.
+                examples:
+                - Incident Review
+              meetingUrl:
+                type: string
+                description: URL of the meeting.
+                examples:
+                - https://meet.example.com/abc
+              meetingPlatform:
+                type: string
+                description: Platform where the meeting took place.
+                examples:
+                - Zoom
+              timeStarted:
+                type: string
+                description: The ISO date/time when the meeting started.
+                examples:
+                - '2026-02-01T17:00:00.000Z'
+              timeEnded:
+                type: string
+                description: The ISO date/time when the meeting ended.
+                examples:
+                - '2026-02-01T17:30:00.000Z'
+              transcript:
+                type: string
+                description: Raw transcript of the call.
+                examples:
+                - null
+              matchedConferenceCallsCount:
+                type: string
+                description: Number of conference calls that matched the request.
+                examples:
+                - 1
+              transcriptTruncated:
+                type: boolean
+                description: Whether or not the transcript was truncated.
+                examples:
+                - false
+              transcriptCharLimit:
+                type: string
+                description: Character limit of the returned transcript.
+                examples:
+                - 1000000
+              transcriptOriginalCharCount:
+                type: string
+                description: Number of characters in the original raw transcript.
+                examples:
+                - 12345
+              transcriptReturnedCharCount:
+                type: string
+                description: Number of characters returned.
+                examples:
+                - 12345
+            x-apidog-orders:
+            - conferenceCallId
+            - meetingTitle
+            - meetingUrl
+            - meetingPlatform
+            - timeStarted
+            - timeEnded
+            - transcript
+            - matchedConferenceCallsCount
+            - transcriptTruncated
+            - transcriptCharLimit
+            - transcriptOriginalCharCount
+            - transcriptReturnedCharCount
+            x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - items
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

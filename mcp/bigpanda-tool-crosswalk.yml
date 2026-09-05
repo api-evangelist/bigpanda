@@ -1,0 +1,119 @@
+generated: '2026-09-04'
+method: derived
+source: >-
+  Derived by binding BigPanda's documented MCP and A2A surfaces (https://api-docs.bigpanda.io/mcp,
+  https://api-docs.bigpanda.io/a2a) to the 263 REST operations harvested into openapi/.
+description: >-
+  The crosswalk between BigPanda's agent surfaces and its REST API. It is deliberately thin on the tool
+  side and that is the finding: BigPanda's MCP server exposes no fixed tool catalog. Every tool is an
+  "action plan" a customer enables in their own organization, so tools/list is tenant-specific and cannot
+  be enumerated without an authenticated key. There is therefore no published tool whose inputSchema can
+  be bound to an operationId. What CAN be crosswalked is the other direction — the three agent endpoints
+  themselves are documented REST operations, and the 260 remaining operations are all rest_only.
+surfaces:
+  openapi:
+    files: 27
+    operations: 263
+    location: openapi/
+    gated: false
+    note: Assembled from the per-endpoint OpenAPI fragments BigPanda publishes on its own reference.
+  mcp:
+    url: https://api.biggy.io/mcp
+    gated: true
+    gate: Bearer User API Key, plus a Cloudflare bot challenge on anonymous requests (HTTP 403 observed 2026-09-04).
+    tools_enumerable: false
+  a2a:
+    url: https://api.biggy.io/a2a/biggy-agent
+    gated: true
+    agent_card: https://api.biggy.io/.well-known/agent-card.json?assistant_id=biggy-agent
+    agent_card_status: 403
+  graphql:
+    present: false
+  wordpress_mcp:
+    url: https://www.bigpanda.io/wp-json/mcp/mcp-oauth-server
+    gated: true
+    gate: OAuth, scope "mcp" (HTTP 401 mcp_unauthorized observed 2026-09-04)
+    tools_enumerable: false
+    note: Marketing-site content MCP, unrelated to the product API.
+crosswalk:
+  - tool: mcp/tools-list
+    category: agent-transport
+    rest: [use-action-plans-as-mcp]
+    binding: identity
+    confidence: high
+    note: >-
+      The MCP endpoint is itself a documented REST operation in BigPanda's reference
+      (POST /mcp, operationId use-action-plans-as-mcp, in openapi/bigpanda-agents-api-openapi.yml). The
+      operation IS the transport, not a wrapper around another operation.
+  - tool: a2a/message-send
+    category: agent-transport
+    rest: [use-the-a2a-protocol]
+    binding: identity
+    confidence: high
+    note: POST /a2a/biggy-agent, operationId use-the-a2a-protocol. Carries message/send, message/stream and tasks/get as JSON-RPC methods on one path.
+  - tool: a2a/agent-card
+    category: agent-discovery
+    rest: [retrieve-agent-card]
+    binding: identity
+    confidence: high
+    note: GET /.well-known/agent-card.json?assistant_id=biggy-agent, operationId retrieve-agent-card. Bearer-authenticated, so not discoverable by an anonymous agent.
+  - tool: biggy/query
+    category: assistant
+    rest: [send-a-query, get-a-response]
+    binding: semantic
+    confidence: medium
+    note: >-
+      Biggy's natural-language query pair is the closest published analogue of a general-purpose agent
+      tool: send-a-query routes a natural-language question to an action plan and get-a-response
+      collects the async result by requestId. Bound by semantics from the docs, not from a tools/list
+      response.
+mcp_only:
+  - tool: '<customer action plans>'
+    reason: >-
+      "Each enabled action plan in your organization becomes an MCP tool. Tool descriptions are derived
+      from the action plan's description and whenToSelect fields." The tool set is per-tenant
+      configuration. No names, no schemas, no count could be recorded without an authenticated
+      tools/list, and none was invented.
+rest_only_summary:
+  count: 260
+  note: >-
+    Every operation in openapi/ other than the three agent-transport operations above has no
+    corresponding published MCP tool. Notably the whole write surface an agent would actually want —
+    resolve-incident-1, assign-incident, snooze-incident, merge-incidents-1, split-incident,
+    comment-on-incident, maintenance-plan-v2-create-plan, create-or-update-a-change, alerts (ingest) —
+    is reachable over REST but is not a documented MCP tool unless a customer has built an action plan
+    that wraps it.
+rest_only_examples:
+  - alerts
+  - oim-send-alert
+  - resolve-alerts
+  - search-incidents
+  - retrieve-incident-by-id
+  - resolve-incident-1
+  - assign-incident
+  - unassign-incident
+  - snooze-incident
+  - unsnooze-incident
+  - merge-incidents-1
+  - split-incident
+  - comment-on-incident
+  - create-an-environment
+  - retrieve-all-environments
+  - create-or-update-a-change
+  - create-related-change-rcc
+  - maintenance-plan-v2-create-plan
+  - maintenance-plan-v2-stop-plan
+  - create-a-new-webhook-v2-workflow-integration
+  - createGroupSCIM
+  - createUserSCIM
+coverage:
+  rest_operations: 263
+  mcp_tools_published: 0
+  mcp_tools_bound: 0
+  rest_operations_with_a_tool: 3
+  rest_only: 260
+  mcp_only: 0
+  note: >-
+    A coverage number of 3/263 is not a criticism of the MCP server's quality — it reflects that BigPanda
+    built a CONFIGURABLE agent surface rather than a mirror of the REST API. It does mean an agent cannot
+    know in advance what BigPanda can do for it; discovery requires a key and a tenant.

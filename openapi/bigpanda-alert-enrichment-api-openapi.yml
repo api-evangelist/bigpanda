@@ -1,0 +1,3996 @@
+openapi: 3.0.3
+info:
+  title: BigPanda Alert Tags & Enrichment API
+  description: BigPanda Alert Tags & Enrichment operations, assembled verbatim from the OpenAPI fragments BigPanda publishes
+    on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
+    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
+    the base URL for your region.
+  version: 1.0.0
+  contact:
+    name: BigPanda Support
+    url: https://api-docs.bigpanda.io/
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 45
+servers:
+- url: https://api.bigpanda.io
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
+tags:
+- name: Alert Tags & Enrichment
+paths:
+  /resources/v2.0/alerts-enrichments-jobs/{job_id}:
+    get:
+      summary: Check Status of Upload Job
+      deprecated: false
+      description: "Checks the status of an asynchronous job to upload or update a mapping\nenrichment table (Enrichment V2)\n\
+        \n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n\
+        >\n> This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header,\
+        \ prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n"
+      operationId: check-status-of-upload-job
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: job_id
+        in: path
+        description: System id of the upload job.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 262762hh2
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enrichment_item'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38346154-run
+      x-source-url: https://api-docs.bigpanda.io/check-status-of-upload-job-38346154e0.md
+      x-source-page: Check Status of Upload Job
+  /resources/alert-enricher/schemas:
+    post:
+      summary: Create Advanced Mapping Schema
+      deprecated: false
+      description: 'Creates an advanced mapping enrichment schema.
+
+
+        Rate limit: 5 requests per second.
+
+
+        **Limits:** up to 200 mapping enrichment result tags per map.
+
+
+        **Manual migration required**
+
+
+        The advanced capabilities of the Alert Enricher conflict with previous alert enrichment schemas. Reach out to your
+        account team and ensure your organization is ready for the Alert Enricher before using these endpoints.'
+      tags:
+      - Alert Tags & Enrichment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/advanced_mapping_schema'
+            example:
+              type: advanced_mapping
+              execution_order: '6'
+              name: map-schema 5
+              config:
+                fields:
+                - type: query_tag
+                  tag_name: offset
+                - type: query_tag
+                  tag_name: agent
+                - type: result_tag
+                  tag_name: region
+                - type: result_tag
+                  tag_name: email
+                  groups:
+                  - fields:
+                    - type: group_tag
+                      tag_name: alert_group
+                    - type: group_tag
+                      tag_name: ticket_active
+                    order: 1
+                    name: alert_group_ticket_active
+                    method: union
+                  - fields:
+                    - type: group_tag
+                      tag_name: alert_group
+                    order: 2
+                    name: alert_group
+                    method: first_match
+      responses:
+        '201':
+          description: Schema created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/advanced_mapping_schema'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          description: Bad request — malformed body or parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized — missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-39127781-run
+      x-source-url: https://api-docs.bigpanda.io/create-advanced-mapping-schema-39127781e0.md
+      x-source-page: Create Advanced Mapping Schema
+    get:
+      summary: Retrieve All Advanced Mapping Schemas
+      deprecated: false
+      description: 'Lists all advanced mapping enrichment schemas in BigPanda.
+
+
+        Rate limit: 5 requests per second.'
+      tags:
+      - Alert Tags & Enrichment
+      parameters: []
+      responses:
+        '200':
+          description: List of schemas.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/advanced_mapping_schema'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized — missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-39127782-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-all-advanced-mapping-schemas-39127782e0.md
+      x-source-page: Retrieve All Advanced Mapping Schemas
+  /resources/v2.0/alert-enrichments:
+    post:
+      summary: Create Alert Enrichment Item
+      deprecated: false
+      description: "Creates a new alert enrichment item (Enrichment V2)\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
+        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
+        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: create-enrichment-1
+      tags:
+      - Alert Tags & Enrichment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/enrichment_item'
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enrichment_item'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770004-run
+      x-source-url: https://api-docs.bigpanda.io/create-alert-enrichment-item-37770004e0.md
+      x-source-page: Create Alert Enrichment Item
+  /resources/v2.1/enrichments-config/tags:
+    post:
+      summary: Create Alert Tag
+      deprecated: false
+      description: "Creates a new tag.\n\n## Authentication\nAll BigPanda APIs require Bearer Token Authorization in the call\
+        \ headers.\n\nThis API uses the User API Key type of Authorization token. Your User API Key must be provided in the\
+        \ header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_USER_API_KEY]`\n\n> \U0001F6A7\
+        \ **Config object required**\n> \n> The config object is required when creating an enrichment item. When adding your\
+        \ array of enrichment items, make sure to expand the config object and include all required parameters.\n>\n> Different\
+        \ fields are required for composition and extraction type enrichments.\n\n## Composition enrichment items\nComposition\
+        \ enrichment items are created by defining a value template. The Composition template is a simple formula to populate\
+        \ tag value using strings and other tag values.\n\nUse any tag value as a variable, using the format `${<tag_name>}`.\
+        \ For example:\n`mywiki.com/${host}/${check}`\n\nSpecial formatting is required for tag values that contain encoded\
+        \ characters for URLs. If the tag value contains encoded values for the characters `%`, `+`, or a space, use the format\
+        \ `${exact(<tagname>)}` to protect the values from being re-encoded.\n\nComposition configs must include the `source`,\
+        \ `destination`, and `value` properties.\n## Extraction enrichment items\n\nExtraction enrichment items are created\
+        \ by defining a regular expression (regex formula).\n\nExtraction Regex: The [Regular expression](https://regex101.com/)\
+        \ to extract the new tag value from the source tag value.\n- Use a caret `^` to indicate starts with and a dollar\
+        \ sign `$` to indicate ends with.\n- Use parentheses to surround the capture group for the extraction. BigPanda uses\
+        \ the contents of the first capture group to create the value of the alert enrichment tag.\n- Use a [non-capturing\
+        \ group](https://stackoverflow.com/questions/3512471/what-is-a-non-capturing-group-in-regular-expressions) to ignore\
+        \ part of the contents.\n\nIf a tag value doesn't match the pattern, the alert is not enriched with the alert enrichment\
+        \ item.\n\nExtraction configs must include the `source`, `destination`, and `regex` properties.\n\n**Rate limit:**\
+        \ 5 requests per second."
+      operationId: create-tag
+      tags:
+      - Alert Tags & Enrichment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/alert_tag_object'
+            examples:
+              extraction:
+                value:
+                  name: service_name
+                  active: true
+                  description: Extract service from host
+                  enrichments:
+                  - type: extraction
+                    active: true
+                    when:
+                      AND:
+                      - '=':
+                        - status
+                        - warning
+                      - IN:
+                        - source_system
+                        - - oim.integration_mcs
+                    config:
+                      source: host
+                      selected_source_system: oim.integration_mcs
+                      destination: service_name
+                      regex: ^([^-]+)-.*$
+                summary: New tag with an extraction rule
+              composition:
+                value:
+                  name: new_service_name
+                  active: true
+                  description: Set service from a fixed value
+                  enrichments:
+                  - type: composition
+                    active: true
+                    when:
+                      IN:
+                      - source_system
+                      - - type: regex
+                          value: '*'
+                    config:
+                      source: oim.feb_oim
+                      destination: new_service_name
+                      value: somefixedvalue
+                    note: Populate a fixed service value
+                summary: New tag with a composition rule
+      responses:
+        '201':
+          x-apidog-ordering: 0
+          description: '201'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/alert_tag_response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770009-run
+      x-source-url: https://api-docs.bigpanda.io/create-alert-tag-37770009e0.md
+      x-source-page: Create Alert Tag
+    get:
+      summary: Retrieve All Alert Tags
+      deprecated: false
+      description: 'List all alert tags configured in BigPanda.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: retrieve-all-tags
+      tags:
+      - Alert Tags & Enrichment
+      parameters: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/alert_tag_response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770008-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-all-alert-tags-37770008e0.md
+      x-source-page: Retrieve All Alert Tags
+  /resources/v2.1/enrichments-config/tags/{alerttag_name}/enrichments:
+    post:
+      summary: Create Enrichment
+      deprecated: false
+      description: "Creates a new composition or extraction enrichment item for the tag.\n\n## Authentication\nAll BigPanda\
+        \ APIs require Bearer Token Authorization in the call headers.\n\nThis API uses the User API Key type of Authorization\
+        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n\n> \U0001F6A7 **Config object required**\n> \n> The config object is required when\
+        \ creating an enrichment item. When adding your array of enrichment items, make sure to expand the config object and\
+        \ include all required parameters.\n>\n> Different fields are required for composition and extraction type enrichments.\n\
+        \n## Composition enrichment items\nComposition enrichment items are created by defining a value template. The Composition\
+        \ template is a simple formula to populate tag value using strings and other tag values.\n\nUse any tag value as a\
+        \ variable, using the format `${<tag_name>}`. For example:\n`mywiki.com/${host}/${check}`\n\nSpecial formatting is\
+        \ required for tag values that contain encoded characters for URLs. If the tag value contains encoded values for the\
+        \ characters `%`, `+`, or a space, use the format `${exact(<tagname>)}` to protect the values from being re-encoded.\n\
+        \nComposition configs must include the `source`, `destination`, and `value` properties.\n## Extraction enrichment\
+        \ items\n\nExtraction enrichment items are created by defining a regular expression (regex formula).\n\nExtraction\
+        \ Regex: The [Regular expression](https://regex101.com/) to extract the new tag value from the source tag value.\n\
+        - Use a caret `^` to indicate starts with and a dollar sign `$` to indicate ends with.\n- Use parentheses to surround\
+        \ the capture group for the extraction. BigPanda uses the contents of the first capture group to create the value\
+        \ of the alert enrichment tag.\n- Use a [non-capturing group](https://stackoverflow.com/questions/3512471/what-is-a-non-capturing-group-in-regular-expressions)\
+        \ to ignore part of the contents.\n\nIf a tag value doesn't match the pattern, the alert is not enriched with the\
+        \ alert enrichment item.\n\nExtraction configs must include the `source`, `destination`, and `regex` properties.\n\
+        \n**Rate limit:** 5 requests per second."
+      operationId: create-tag-rule
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: alerttag_name
+        in: path
+        description: Tag name in BigPanda. May be a normalized tag name.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - host
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enrichments:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/enrichment_item'
+              x-apidog-orders:
+              - enrichments
+              x-apidog-ignore-properties: []
+            examples:
+              extraction:
+                value:
+                  enrichments:
+                  - type: extraction
+                    active: true
+                    when:
+                      AND:
+                      - '=':
+                        - status
+                        - warning
+                      - IN:
+                        - source_system
+                        - - oim.datadog_prod
+                    config:
+                      source: host
+                      selected_source_system: oim.datadog_prod
+                      destination: service_name
+                      regex: ^([^-]+)-.*$
+                    note: Extract service from host
+                summary: Add an extraction rule
+              composition:
+                value:
+                  enrichments:
+                  - type: composition
+                    active: true
+                    when:
+                      IN:
+                      - source_system
+                      - - type: regex
+                          value: '*'
+                    config:
+                      source: All Systems
+                      destination: service_name
+                      value: fixedvalue
+                    note: Set a fixed service value
+                summary: Add a composition rule
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enrichment_itemresponse'
+          headers: {}
+          x-apidog-name: ''
+        '201':
+          x-apidog-ordering: 1
+          description: '201'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enrichment_itemresponse'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 2
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770013-run
+      x-source-url: https://api-docs.bigpanda.io/create-enrichment-37770013e0.md
+      x-source-page: Create Enrichment
+    delete:
+      summary: Delete Enrichment Item
+      deprecated: false
+      description: "Deletes a composition or extraction enrichment item for the tag.\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\
+        >\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: delete-tag-rule
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: alerttag_name
+        in: path
+        description: Tag name in BigPanda. May be a normalized tag name.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - host
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enrichments_ids:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - enrichments_ids
+              x-apidog-orders:
+              - enrichments_ids
+              x-apidog-ignore-properties: []
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic204response'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 2
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770014-run
+      x-source-url: https://api-docs.bigpanda.io/delete-enrichment-item-37770014e0.md
+      x-source-page: Delete Enrichment Item
+    patch:
+      summary: Update Enrichment Item
+      deprecated: false
+      description: "Updates a composition or extraction enrichment item for the tag.\n\n## Authentication\nAll BigPanda APIs\
+        \ require Bearer Token Authorization in the call headers.\n\nThis API uses the User API Key type of Authorization\
+        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n\n> \U0001F6A7 **Config object required**\n> \n> The config object is required when\
+        \ creating an enrichment item. When adding your array of enrichment items, make sure to expand the config object and\
+        \ include all required parameters.\n>\n> Different fields are required for composition and extraction type enrichments.\n\
+        \n## Composition enrichment items\nComposition enrichment items are created by defining a value template. The Composition\
+        \ template is a simple formula to populate tag value using strings and other tag values.\n\nUse any tag value as a\
+        \ variable, using the format `${<tag_name>}`. For example:\n`mywiki.com/${host}/${check}`\n\nSpecial formatting is\
+        \ required for tag values that contain encoded characters for URLs. If the tag value contains encoded values for the\
+        \ characters `%`, `+`, or a space, use the format `${exact(<tagname>)}` to protect the values from being re-encoded.\n\
+        \nComposition configs must include the `source`, `destination`, and `value` properties.\n## Extraction enrichment\
+        \ items\n\nExtraction enrichment items are created by defining a regular expression (regex formula).\n\nExtraction\
+        \ Regex: The [Regular expression](https://regex101.com/) to extract the new tag value from the source tag value.\n\
+        - Use a caret `^` to indicate starts with and a dollar sign `$` to indicate ends with.\n- Use parentheses to surround\
+        \ the capture group for the extraction. BigPanda uses the contents of the first capture group to create the value\
+        \ of the alert enrichment tag.\n- Use a [non-capturing group](https://stackoverflow.com/questions/3512471/what-is-a-non-capturing-group-in-regular-expressions)\
+        \ to ignore part of the contents.\n\nIf a tag value doesn't match the pattern, the alert is not enriched with the\
+        \ alert enrichment item.\n\nExtraction configs must include the `source`, `destination`, and `regex` properties.\n\
+        \n**Rate limit:** 5 requests per second."
+      operationId: update-tag-rule
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: alerttag_name
+        in: path
+        description: Tag name in BigPanda. May be a normalized tag name.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - host
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enrichments:
+                  type: array
+                  items:
+                    allOf:
+                    - $ref: '#/components/schemas/enrichment_item'
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                          description: ID of the existing enrichment rule to update.
+                      x-apidog-orders:
+                      - id
+                      required:
+                      - id
+                      x-apidog-ignore-properties: []
+              x-apidog-orders:
+              - enrichments
+              x-apidog-ignore-properties: []
+            examples:
+              extraction:
+                value:
+                  enrichments:
+                  - id: 2bf54f9a-2ab8-4357-b318-6f9ca722cf5e
+                    type: extraction
+                    active: true
+                    when:
+                      IN:
+                      - status
+                      - - critical
+                    config:
+                      source: host
+                      selected_source_system: emailparser.ciena_mcs
+                      destination: ash_service_name
+                      regex: ^([^-]+)-.*$
+                    note: Extract service from host
+                summary: Update a rule by id
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enrichment_itemresponse'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 2
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770015-run
+      x-source-url: https://api-docs.bigpanda.io/update-enrichment-item-37770015e0.md
+      x-source-page: Update Enrichment Item
+  /resources/v2.1/mapping-enrichment:
+    post:
+      summary: Create Mapping Enrichment Schema
+      deprecated: false
+      description: "Creates a mapping enrichment schema.\n\n## Authentication\nAll BigPanda APIs require Bearer Token Authorization\
+        \ in the call headers.\n\nThis API uses the User API Key type of Authorization token. Your User API Key must be provided\
+        \ in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_USER_API_KEY]`\n\n> \U0001F6A7\
+        \ **override_existing**\n> \n> If ​​`override_existing`​​ is set to false, mapping values will not be added to any\
+        \ alert where the field is already populated, even if the field is populated with a `null`.\n\n**Rate limit:** 5 requests\
+        \ per second."
+      operationId: create-mapping-enrichment-rule
+      tags:
+      - Alert Tags & Enrichment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/mapping_enrichment'
+      responses:
+        '201':
+          x-apidog-ordering: 0
+          description: '201'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/mapping_config_response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770024-run
+      x-source-url: https://api-docs.bigpanda.io/create-mapping-enrichment-schema-37770024e0.md
+      x-source-page: Create Mapping Enrichment Schema
+    get:
+      summary: Retrieve All Mapping Enrichment Schemas
+      deprecated: false
+      description: 'Lists all mapping enrichment schemas in BigPanda.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: retrieve-all-mapping-enrichment-rule
+      tags:
+      - Alert Tags & Enrichment
+      parameters: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: object
+                  properties: {}
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770023-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-all-mapping-enrichment-schemas-37770023e0.md
+      x-source-page: Retrieve All Mapping Enrichment Schemas
+  /resources/alert-enricher/schemas/{schema_id}/rules:
+    post:
+      summary: Create Mapping Enrichment Table
+      deprecated: false
+      description: 'Creates a new map table or replaces an existing one by uploading the complete table as a CSV file. Processing
+        is asynchronous; use the returned job to track status.
+
+
+        Rate limit: 5 requests per second.'
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: schema_id
+        in: path
+        description: ID of the advanced mapping schema.
+        required: true
+        example: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                csvdata:
+                  type: string
+                  format: binary
+                  description: The complete mapping table as a CSV file.
+                  example: ''
+              required:
+              - csvdata
+      responses:
+        '202':
+          description: Upload accepted; returns a job to track processing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/job_status'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          description: Bad request — malformed body or parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized — missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-39127786-run
+      x-source-url: https://api-docs.bigpanda.io/create-mapping-enrichment-table-39127786e0.md
+      x-source-page: Create Mapping Enrichment Table
+    put:
+      summary: Create or Update Map Rows
+      deprecated: false
+      description: 'Adds or updates rows for an existing map. Every row must include an `id`; to insert a new row, generate
+        a new UUID.
+
+
+        Rate limit: 5 requests per second.'
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: schema_id
+        in: path
+        description: ID of the advanced mapping schema.
+        required: true
+        example: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/advanced_mapping_row'
+      responses:
+        '200':
+          description: Rows upserted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/job_status'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          description: Bad request — malformed body or parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized — missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-39127788-run
+      x-source-url: https://api-docs.bigpanda.io/create-or-update-map-rows-39127788e0.md
+      x-source-page: Create or Update Map Rows
+    delete:
+      summary: Delete Map Rows
+      deprecated: false
+      description: 'Deletes rows from a map.
+
+
+        Rate limit: 5 requests per second.'
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: schema_id
+        in: path
+        description: ID of the advanced mapping schema.
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Rows deleted.
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized — missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-39127789-run
+      x-source-url: https://api-docs.bigpanda.io/delete-map-rows-39127789e0.md
+      x-source-page: Delete Map Rows
+    get:
+      summary: Retrieve Map Rows
+      deprecated: false
+      description: 'Retrieves specific rows (via `rule_ids`) or all rows for a map. When sending a comma-separated `rule_ids`
+        list, your tool may require URL encoding.
+
+
+        Rate limit: 5 requests per second.'
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: schema_id
+        in: path
+        description: ID of the advanced mapping schema.
+        required: true
+        example: ''
+        schema:
+          type: string
+      - name: rule_ids
+        in: query
+        description: Comma-separated list of row IDs to fetch. Omit to retrieve all rows.
+        required: false
+        example: row_id_1,row_id_2
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page number.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 1
+      - name: per_page
+        in: query
+        description: Rows per page. Maximum 100.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 5
+          maximum: 100
+      responses:
+        '200':
+          description: Matching map rows.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/advanced_mapping_row'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized — missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-39127787-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-map-rows-39127787e0.md
+      x-source-page: Retrieve Map Rows
+  /resources/v2.0/alert-enrichments/{mapschema_id}/map:
+    post:
+      summary: Create Mapping Enrichment Table Rows
+      deprecated: false
+      description: "Adds specific rows to an existing mapping enrichment table (Enrichment\nV2)\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\
+        >\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: create-mapping-enrichment-table-rows
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: mapschema_id
+        in: path
+        description: System id of the enrichment map.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 66aa513a31000065007b5555
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/map_row_change'
+      responses:
+        '202':
+          x-apidog-ordering: 0
+          description: '202'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/mapping_enrichment_response'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38346150-run
+      x-source-url: https://api-docs.bigpanda.io/create-mapping-enrichment-table-rows-38346150e0.md
+      x-source-page: Create Mapping Enrichment Table Rows
+    get:
+      summary: Retrieve Mapping Enrichment
+      deprecated: false
+      description: "Retrieves a specific enrichment map (Enrichment V2)\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
+        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
+        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: retrieve-mapping-enrichment-1
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: mapschema_id
+        in: path
+        description: System id of the enrichment map.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 66aa513a31000065007b5555
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/map_object_return'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38346148-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-mapping-enrichment-38346148e0.md
+      x-source-page: Retrieve Mapping Enrichment
+    patch:
+      summary: Update Mapping Enrichment Table Rows
+      deprecated: false
+      description: "Updates specific rows of an existing mapping enrichment table\n(Enrichment V2)\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\
+        >\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: update-mapping-enrichment-table-rows-1
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: mapschema_id
+        in: path
+        description: System id of the enrichment map.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 66aa513a31000065007b5555
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/map_row_change'
+      responses:
+        '202':
+          x-apidog-ordering: 0
+          description: '202'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/mapping_enrichment_response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38346152-run
+      x-source-url: https://api-docs.bigpanda.io/update-mapping-enrichment-table-rows-38346152e0.md
+      x-source-page: Update Mapping Enrichment Table Rows
+  /resources/v2.1/mapping-enrichment/{mapschema_id}/map:
+    post:
+      summary: Create mapping enrichment table using CSV
+      deprecated: false
+      description: 'Uploads an enrichment map.
+
+
+        Mapping Enrichment Tables are initially uploaded as CSV files. When managing individual map rows or retrieving mapping
+        enrichment tables, the results will be returned as a JSON object.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: create-map-using-csv
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: mapschema_id
+        in: path
+        description: System id of the enrichment map.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 66aa513a31000065007b5555
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - text/csv; charset=utf8
+      requestBody:
+        content:
+          text/csv:
+            schema:
+              type: string
+      responses:
+        '202':
+          x-apidog-ordering: 0
+          description: '202'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/job_status'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770029-run
+      x-source-url: https://api-docs.bigpanda.io/create-mapping-enrichment-table-using-csv-37770029e0.md
+      x-source-page: Create mapping enrichment table using CSV
+    patch:
+      summary: Create, Update, or Delete Mapping Enrichment Row
+      deprecated: false
+      description: 'Create, update, or delete a specific map row.
+
+
+        Mapping Enrichment Tables are initially uploaded as CSV files. When managing individual map rows or retrieving mapping
+        enrichment tables, the results will be returned as a JSON object.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: patch-map-row
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: mapschema_id
+        in: path
+        description: System id of the enrichment map.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 66aa513a31000065007b5555
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/map_row_change'
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/mapping_enrichment_response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770030-run
+      x-source-url: https://api-docs.bigpanda.io/create-update-or-delete-mapping-enrichment-row-37770030e0.md
+      x-source-page: Create, Update, or Delete Mapping Enrichment Row
+    get:
+      summary: Retrieve Mapping Enrichment Table
+      deprecated: false
+      description: 'Retrieve a specific enrichment map.
+
+
+        Mapping Enrichment Tables are initially uploaded as CSV files. When managing individual map rows or retrieving mapping
+        enrichment tables, the results will be returned as a JSON object.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: retrieve-map
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: mapschema_id
+        in: path
+        description: System id of the enrichment map.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 66aa513a31000065007b5555
+      - name: page
+        in: query
+        description: Which set of results to return.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 1
+          examples:
+          - 4
+      - name: per_page
+        in: query
+        description: Number of results to show for each page.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 100
+          examples:
+          - 30
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/map_object_return'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770028-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-mapping-enrichment-table-37770028e0.md
+      x-source-page: Retrieve Mapping Enrichment Table
+  /resources/alert-enricher/schemas/{schema_id}:
+    delete:
+      summary: Delete Advanced Mapping Schema
+      deprecated: false
+      description: 'Deletes an advanced mapping enrichment schema.
+
+
+        Rate limit: 5 requests per second.'
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: schema_id
+        in: path
+        description: ID of the advanced mapping schema.
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Schema deleted.
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized — missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-39127785-run
+      x-source-url: https://api-docs.bigpanda.io/delete-advanced-mapping-schema-39127785e0.md
+      x-source-page: Delete Advanced Mapping Schema
+    get:
+      summary: Retrieve Advanced Mapping Schema
+      deprecated: false
+      description: 'Retrieves a specific advanced mapping enrichment schema.
+
+
+        Rate limit: 5 requests per second.'
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: schema_id
+        in: path
+        description: ID of the advanced mapping schema.
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The schema.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/advanced_mapping_schema'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized — missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-39127783-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-advanced-mapping-schema-39127783e0.md
+      x-source-page: Retrieve Advanced Mapping Schema
+    put:
+      summary: Update Advanced Mapping Schema
+      deprecated: false
+      description: 'Updates an advanced mapping enrichment schema.
+
+
+        Rate limit: 5 requests per second.'
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: schema_id
+        in: path
+        description: ID of the advanced mapping schema.
+        required: true
+        example: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/advanced_mapping_schema'
+            example:
+              type: advanced_mapping
+              execution_order: '6'
+              name: map-schema 5
+              config:
+                fields:
+                - type: query_tag
+                  tag_name: offset
+                - type: query_tag
+                  tag_name: agent
+                - type: result_tag
+                  tag_name: region
+                - type: result_tag
+                  tag_name: email
+                  groups:
+                  - fields:
+                    - type: group_tag
+                      tag_name: alert_group
+                    - type: group_tag
+                      tag_name: ticket_active
+                    order: 1
+                    name: alert_group_ticket_active
+                    method: union
+                  - fields:
+                    - type: group_tag
+                      tag_name: alert_group
+                    order: 2
+                    name: alert_group
+                    method: first_match
+      responses:
+        '200':
+          description: The updated schema.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/advanced_mapping_schema'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          description: Bad request — malformed body or parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized — missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-39127784-run
+      x-source-url: https://api-docs.bigpanda.io/update-advanced-mapping-schema-39127784e0.md
+      x-source-page: Update Advanced Mapping Schema
+  /resources/v2.0/alert-enrichments/{enrichment_id}:
+    delete:
+      summary: Delete Alert Enrichment Item
+      deprecated: false
+      description: "Deletes a specific enrichment item (Enrichment V2)\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
+        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
+        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: delete-enrichment-1
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: enrichment_id
+        in: path
+        description: System id of a BigPanda enrichment rule.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 7a649631-1cf7-4dbc-9c9b-64cdc067c555
+      responses:
+        '202':
+          x-apidog-ordering: 0
+          description: '202'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic202response'
+          headers: {}
+          x-apidog-name: ''
+        '204':
+          x-apidog-ordering: 1
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic204response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 2
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770006-run
+      x-source-url: https://api-docs.bigpanda.io/delete-alert-enrichment-item-37770006e0.md
+      x-source-page: Delete Alert Enrichment Item
+    get:
+      summary: Retrieve Alert Enrichment Item
+      deprecated: false
+      description: "> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization in the call\
+        \ headers.\n>\n> This API uses the User API Key type of Authorization token. Your User API Key must be provided in\
+        \ the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate\
+        \ limit:** 5 requests per second."
+      operationId: retrieve-enrichment-1
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: enrichment_id
+        in: path
+        description: System id of a BigPanda enrichment rule.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 7a649631-1cf7-4dbc-9c9b-64cdc067c555
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enrichment_item'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770005-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-alert-enrichment-item-37770005e0.md
+      x-source-page: Retrieve Alert Enrichment Item
+    patch:
+      summary: Update Alert Enrichment Item
+      deprecated: false
+      description: "Update parameters for a specific enrichment item (Enrichment V2)\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\
+        >\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: update-enrichment-1
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: enrichment_id
+        in: path
+        description: System id of a BigPanda enrichment rule.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 7a649631-1cf7-4dbc-9c9b-64cdc067c555
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/enrichment_item'
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enrichment_item'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770007-run
+      x-source-url: https://api-docs.bigpanda.io/update-alert-enrichment-item-37770007e0.md
+      x-source-page: Update Alert Enrichment Item
+  /resources/v2.1/enrichments-config/tags/{alerttag_name}:
+    delete:
+      summary: Delete Alert Tag
+      deprecated: false
+      description: "Deletes an alert tag.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token\
+        \ Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token. Your User API\
+        \ Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\
+        \n**Rate limit:** 5 requests per second."
+      operationId: delete-tag
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: alerttag_name
+        in: path
+        description: Tag name in BigPanda. May be a normalized tag name.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - host
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/alert_tag_response2'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response2'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 2
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response2'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770011-run
+      x-source-url: https://api-docs.bigpanda.io/delete-alert-tag-37770011e0.md
+      x-source-page: Delete Alert Tag
+    get:
+      summary: Retrieve Alert Tag
+      deprecated: false
+      description: "Retrieves a specific alert tag.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
+        \ Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token. Your\
+        \ User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer\
+        \ [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: retrieve-tag
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: alerttag_name
+        in: path
+        description: Tag name in BigPanda. May be a normalized tag name.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - host
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/alert_tag_response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770010-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-alert-tag-37770010e0.md
+      x-source-page: Retrieve Alert Tag
+    patch:
+      summary: Update Alert Tag Data
+      deprecated: false
+      description: "Updates tag fields for name, active state, or description.\n\n> \U0001F6A7 **Authentication**\n> \n> All\
+        \ BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type\
+        \ of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n\
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: update-tag-data
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: alerttag_name
+        in: path
+        description: Tag name in BigPanda. May be a normalized tag name.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - host
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                active:
+                  type: boolean
+                description:
+                  type: string
+              x-apidog-orders:
+              - active
+              - description
+              x-apidog-ignore-properties: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/alert_tag_response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770012-run
+      x-source-url: https://api-docs.bigpanda.io/update-alert-tag-data-37770012e0.md
+      x-source-page: Update Alert Tag Data
+  /resources/alert-enricher/schemas/{schema_id}/rules/{row_id}:
+    delete:
+      summary: Delete Mapping Enrichment Row
+      deprecated: false
+      description: 'Deletes a specific row from a specific map.
+
+
+        Rate limit: 5 requests per second.'
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: schema_id
+        in: path
+        description: ID of the advanced mapping schema.
+        required: true
+        example: ''
+        schema:
+          type: string
+      - name: row_id
+        in: path
+        description: ID of the map row.
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Row deleted.
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized — missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-39127791-run
+      x-source-url: https://api-docs.bigpanda.io/delete-mapping-enrichment-row-39127791e0.md
+      x-source-page: Delete Mapping Enrichment Row
+    patch:
+      summary: Update Mapping Enrichment Row
+      deprecated: false
+      description: 'Updates a single existing row of an enrichment map.
+
+
+        Rate limit: 5 requests per second.'
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: schema_id
+        in: path
+        description: ID of the advanced mapping schema.
+        required: true
+        example: ''
+        schema:
+          type: string
+      - name: row_id
+        in: path
+        description: ID of the map row.
+        required: true
+        example: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/advanced_mapping_row'
+            example:
+              id: 955056f6-c7bf-4733-a3ad-d3b23f06f173
+              created_by: null
+              created_at: '2024-11-28T15:08:03.272+00:00'
+              updated_by: null
+              updated_at: '2024-11-28T15:08:03.303+00:00'
+              metadata: null
+              session_id: S129
+              location: Chicago
+              threat_score: '90'
+              vulnerability_score: '85'
+              action_type: Alert
+              escalation_level: Critical
+              risk_level: P1
+              remediation_action: Block
+      responses:
+        '200':
+          description: The updated row.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/advanced_mapping_row'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          description: Bad request — malformed body or parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized — missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-39127790-run
+      x-source-url: https://api-docs.bigpanda.io/update-mapping-enrichment-row-39127790e0.md
+      x-source-page: Update Mapping Enrichment Row
+  /resources/v2.1/mapping-enrichment/{mapschema_id}:
+    delete:
+      summary: Delete Mapping Enrichment Schema
+      deprecated: false
+      description: "Deletes a mapping enrichment schema.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
+        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\
+        \ Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: delete-mapping-enrichment-rule
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: mapschema_id
+        in: path
+        description: System id of the enrichment map.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 66aa513a31000065007b5555
+      responses:
+        '202':
+          x-apidog-ordering: 0
+          description: '202'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic204response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770026-run
+      x-source-url: https://api-docs.bigpanda.io/delete-mapping-enrichment-schema-37770026e0.md
+      x-source-page: Delete Mapping Enrichment Schema
+    get:
+      summary: Retrieve Mapping Enrichment Schema
+      deprecated: false
+      description: 'Retrieves a specific mapping enrichment schema.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: retrieve-mapping-enrichment-rule
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: mapschema_id
+        in: path
+        description: System id of the enrichment map.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 66aa513a31000065007b5555
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/mapping_config_response2'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770025-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-mapping-enrichment-schema-37770025e0.md
+      x-source-page: Retrieve Mapping Enrichment Schema
+    patch:
+      summary: Update Mapping Enrichment Schema
+      deprecated: false
+      description: "Updates a mapping enrichment schema.\n\nThe only fields that can be modified in the update request are\
+        \ the `active`, `when`, and `note` parameters. The mapping schema config cannot be edited. Any other fields that are\
+        \ changed in the Patch call will be ignored.\n\n## Authentication\nAll BigPanda APIs require Bearer Token Authorization\
+        \ in the call headers.\n\nThis API uses the User API Key type of Authorization token. Your User API Key must be provided\
+        \ in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_USER_API_KEY]`\n\n> \U0001F6A7\
+        \ **override_existing**\n> \n> If ​​`override_existing`​​ is set to false, mapping values will not be added to any\
+        \ alert where the field is already populated, even if the field is populated with a `null`.\n\n**Rate limit:** 5 requests\
+        \ per second."
+      operationId: update-mapping-enrichment-rule
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: mapschema_id
+        in: path
+        description: System id of the enrichment map.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 66aa513a31000065007b5555
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/update_mapping_enrichment'
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/mapping_config_response2'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770027-run
+      x-source-url: https://api-docs.bigpanda.io/update-mapping-enrichment-schema-37770027e0.md
+      x-source-page: Update Mapping Enrichment Schema
+  /resources/v2.0/enrichments-config/tags:
+    get:
+      summary: List All Alert Tags
+      deprecated: false
+      description: "Lists all alert tags in the organization (Enrichment V2)\n\n> \U0001F6A7 **Authentication**\n> \n> All\
+        \ BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type\
+        \ of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n\
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: list-all-alert-tags
+      tags:
+      - Alert Tags & Enrichment
+      parameters: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/alert_tag_object'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769999-run
+      x-source-url: https://api-docs.bigpanda.io/list-all-alert-tags-37769999e0.md
+      x-source-page: List All Alert Tags
+  /resources/v2.0/enrichments-config/tags/{alerttag_name}:
+    get:
+      summary: List All Enrichment Items of a Tag
+      deprecated: false
+      description: "Lists all enrichment items for a tag (Enrichment V2)\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
+        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
+        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: list-all-enrichments-2
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: alerttag_name
+        in: path
+        description: Tag name in BigPanda. May be a normalized tag name.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - host
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enrichment_item'
+          headers: {}
+          x-apidog-name: ''
+        '204':
+          x-apidog-ordering: 1
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic204response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 2
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769998-run
+      x-source-url: https://api-docs.bigpanda.io/list-all-enrichment-items-of-a-tag-37769998e0.md
+      x-source-page: List All Enrichment Items of a Tag
+  /resources/v2.1/alert-enrichments-jobs/{job_id}:
+    get:
+      summary: Retrieve Mapping Table Job Status
+      deprecated: false
+      description: "Retrieves the status of a previous enrichment change.\n        \n## Authentication\nAll BigPanda APIs\
+        \ require Bearer Token Authorization in the call headers.\n\nThis API uses the User API Key type of Authorization\
+        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n\n## Asynchronous upload\nBecause it is a potentially long-running action, the table\
+        \ upload is performed asynchronously. Therefore, the immediate response indicates only whether the request was properly\
+        \ formatted and, if it was, provides a URL for checking the status of the upload.\n\nThe entire table upload must\
+        \ complete successfully for the changes to take effect; the API does not support partial success.\n\nA typical asynchronous\
+        \ upload negotiation consists of these steps:\n1. Upload the table: A Job object is created and a ​location​​ URL\
+        \ for checking the status is returned.\n2. Use the URL to periodically check the job status until it is set to done\
+        \ or failed.\n3. If the job was not successful, you can retry the request. If necessary, debug any connectivity issues\
+        \ or data formatting issues that may have contributed to the failed upload. For example, ensure the CSV file follows\
+        \ the enrichment schema definition.\n\n**Rate limit:** 5 requests per second."
+      operationId: retrieve-job-status
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: job_id
+        in: path
+        description: System id of the upload job.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 262762hh2
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/job_status'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770031-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-mapping-table-job-status-37770031e0.md
+      x-source-page: Retrieve Mapping Table Job Status
+  /resources/alert-enricher/jobs/{job_id}:
+    get:
+      summary: Retrieve Upload Job Status
+      deprecated: false
+      description: 'Retrieves the upload status of a specific map upload.
+
+
+        Rate limit: 5 requests per second.'
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: job_id
+        in: path
+        description: ID of the map upload job.
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The job status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/job_status'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized — missing or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-39127792-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-upload-job-status-39127792e0.md
+      x-source-page: Retrieve Upload Job Status
+  /resources/v2.0/enrichments-config/tags/{alerttag_name}/order:
+    get:
+      summary: Retrieve enrichment item order
+      deprecated: false
+      description: "Retrieves the execution order of a tag's enrichment items (Enrichment\nV2)\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\
+        >\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: retrieve-tags-order_2
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: alerttag_name
+        in: path
+        description: Tag name in BigPanda. May be a normalized tag name.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - host
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enrichment_order'
+          headers: {}
+          x-apidog-name: ''
+        '204':
+          x-apidog-ordering: 1
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enrichment_order'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770002-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-enrichment-item-order-37770002e0.md
+      x-source-page: Retrieve enrichment item order
+    put:
+      summary: Update Enrichment Items Order
+      deprecated: false
+      description: "Updates the execution order of a tag's enrichment items. By default this\nlist is empty and the execution\
+        \ order runs based on the creation time,\nany update to the tag items order will be added automatically to the\n'enrichment_order'\
+        \ list (Enrichment V2)\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization\
+        \ in the call headers.\n>\n> This API uses the User API Key type of Authorization token. Your User API Key must be\
+        \ provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\
+        \n**Rate limit:** 5 requests per second."
+      operationId: update-enrichment-items-order-of-a-tag
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: alerttag_name
+        in: path
+        description: Tag name in BigPanda. May be a normalized tag name.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - host
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/enrichment_order'
+            example:
+            - 49ff0d51-8e73-43a7-9cdd-6ffff242666
+            - 5036032b-eb0c-461e-ff17-74a05785777
+            - d987df48-83f6-40ff-a985-ad6f8927888
+            - 6cff549b-7c14-43f9-950f-3f73706ff99
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enrichment_order'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response2'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770003-run
+      x-source-url: https://api-docs.bigpanda.io/update-enrichment-items-order-37770003e0.md
+      x-source-page: Update Enrichment Items Order
+  /resources/v2.0/enrichments-config:
+    get:
+      summary: Retrieve tags order
+      deprecated: false
+      description: "Retrieves the execution order of tags (Enrichment V2)\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
+        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
+        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: retrieve-tags-order
+      tags:
+      - Alert Tags & Enrichment
+      parameters: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/alert_tags_order'
+          headers: {}
+          x-apidog-name: ''
+        '204':
+          x-apidog-ordering: 1
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/alert_tags_order'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770000-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-tags-order-37770000e0.md
+      x-source-page: Retrieve tags order
+    put:
+      summary: Update tag order
+      deprecated: false
+      description: "Changes the order tags appear in the 'alert_tags_order' array\n(Enrichment V2)\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\
+        >\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: update-tags-order
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: alert_tags_order
+        in: query
+        description: ''
+        required: false
+        example: ''
+        schema:
+          $ref: '#/components/schemas/alert_tags_order'
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/alert_tags_order'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser13: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770001-run
+      x-source-url: https://api-docs.bigpanda.io/update-tag-order-37770001e0.md
+      x-source-page: Update tag order
+  /resources/v2.1/enrichments-config:
+    put:
+      summary: Update Alert Tag Order
+      deprecated: false
+      description: "Updates tag run order.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token\
+        \ Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token. Your User API\
+        \ Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\
+        \n**Rate limit:** 5 requests per second."
+      operationId: update-tag-order
+      tags:
+      - Alert Tags & Enrichment
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                alert_tags_order:
+                  $ref: '#/components/schemas/alert_tags_order'
+              required:
+              - alert_tags_order
+              x-apidog-orders:
+              - alert_tags_order
+              x-apidog-ignore-properties: []
+            example:
+            - 49ff0d51-8e73-43a7-9cdd-6ffff242666
+            - 5036032b-eb0c-461e-ff17-74a05785777
+            - d987df48-83f6-40ff-a985-ad6f8927888
+            - 6cff549b-7c14-43f9-950f-3f73706ff99
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enrichment_order_response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770016-run
+      x-source-url: https://api-docs.bigpanda.io/update-alert-tag-order-37770016e0.md
+      x-source-page: Update Alert Tag Order
+  /resources/v2.1/enrichments-config/tags/{alerttag_name}/order:
+    put:
+      summary: Update Enrichment Item Order for an Alert Tag
+      deprecated: false
+      description: "Updates enrichment item order for a composition or extraction tag.\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\
+        >\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: update-rule-order-for-a-tag
+      tags:
+      - Alert Tags & Enrichment
+      parameters:
+      - name: alerttag_name
+        in: path
+        description: Tag name in BigPanda. May be a normalized tag name.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - host
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enrichment_order:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - enrichment_order
+              x-apidog-orders:
+              - enrichment_order
+              x-apidog-ignore-properties: []
+            example:
+            - 49ff0d51-8e73-43a7-9cdd-6ffff242666
+            - 5036032b-eb0c-461e-ff17-74a05785777
+            - d987df48-83f6-40ff-a985-ad6f8927888
+            - 6cff549b-7c14-43f9-950f-3f73706ff99
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/enrichment_order_response'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770017-run
+      x-source-url: https://api-docs.bigpanda.io/update-enrichment-item-order-for-an-alert-tag-37770017e0.md
+      x-source-page: Update Enrichment Item Order for an Alert Tag
+components:
+  securitySchemes:
+    BearerUser13:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
+        tool you use to make API calls
+
+        '
+    BearerUser131:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
+        tool you use to make API calls
+
+        '
+  schemas:
+    enrichment_item:
+      type: object
+      description: Schema for an enrichment item.
+      properties:
+        type:
+          type: string
+          description: 'Type of enrichment item. One of: `composition`, `extraction`,  `mapping`
+
+            '
+        active:
+          type: boolean
+          description: Whether enrichment is active.
+        when:
+          $ref: '#/components/schemas/when'
+        config:
+          oneOf:
+          - $ref: '#/components/schemas/enrichment_config_composition'
+          - $ref: '#/components/schemas/enrichment_config_extraction'
+          - $ref: '#/components/schemas/enrichment_config_mapping'
+        note:
+          type: string
+          description: Optional notes about the enrichment.
+          nullable: true
+      x-apidog-orders:
+      - type
+      - active
+      - when
+      - config
+      - note
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    enrichment_config_mapping:
+      type: object
+      description: Schema for a  mapping enrichment rule.
+      properties:
+        name:
+          type: string
+          description: ''
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/enrichment_field'
+      x-apidog-orders:
+      - name
+      - fields
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    enrichment_field:
+      type: object
+      description: Definition for an individual enrichment field.
+      properties:
+        title:
+          type: string
+          description: Column name on the mapping table.
+          examples:
+          - application
+        type:
+          type: string
+          description: Whether the column is a `query_tag` or `result_tag`.
+          examples:
+          - query_tag
+        tag_name:
+          type: string
+          description: (Optional) The name of the tag in BigPanda.
+          examples:
+          - very_cool
+        override_existing:
+          type: boolean
+          description: (Optional) If a value has been populated for this tag by another map or enrichment rule, whether this
+            value should replace that value
+          examples:
+          - false
+        optional:
+          type: boolean
+          description: (Optional) Whether the tag can be skipped if no matching value for incoming alerts. Default is false.
+          examples:
+          - true
+        original_name:
+          type: string
+          description: The name of the column in the original map.
+          examples:
+          - null
+      x-apidog-orders:
+      - title
+      - type
+      - tag_name
+      - override_existing
+      - optional
+      - original_name
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    enrichment_config_extraction:
+      type: object
+      description: Configuration for an extraction enrichment item.
+      properties:
+        source:
+          type: string
+          description: Field from which to extract the value.
+        selected_source_system:
+          type: string
+          description: Restricts the extraction to a specific source system / integration key (for example `oim.genalertsapi`
+            or `emailparser.ciena_mcs`). Omit to apply across all source systems.
+        destination:
+          type: string
+          description: Destination tag for extracted value.
+        regex:
+          type: string
+          description: Regex pattern for value extraction.
+        template:
+          type: string
+          description: (System field) Extracted value template.
+      required:
+      - source
+      - destination
+      - regex
+      x-apidog-orders:
+      - source
+      - selected_source_system
+      - destination
+      - regex
+      - template
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    enrichment_config_composition:
+      type: object
+      description: Configuration for a composition enrichment item.
+      properties:
+        source:
+          type: string
+          description: Optional filter for event source.
+        destination:
+          type: string
+          description: Destination tag to populate.
+        value:
+          type: string
+          description: Template value to apply to destination tag.
+      required:
+      - source
+      - destination
+      - value
+      x-apidog-orders:
+      - source
+      - destination
+      - value
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    when:
+      type: object
+      description: 'A [​BPQL object query](https://api-docs.bigpanda.io/en#description/bpql-object-syntax)​​ to filter incoming
+        alerts. Only matched alerts will receive a value based on the enrichment item.
+
+        '
+      x-apidog-folder: ''
+      additionalProperties: true
+      x-apidog-orders: []
+      examples:
+      - IN:
+        - source_system
+        - - type: regex
+            value: '*'
+      properties: {}
+      x-apidog-ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    advanced_mapping_schema:
+      type: object
+      description: An advanced mapping enrichment schema. Advanced mapping creates dynamic map rules that account for variable
+        inbound fields across monitoring tools, with optional grouping of result columns.
+      required:
+      - type
+      - name
+      - config
+      properties:
+        type:
+          type: string
+          enum:
+          - advanced_mapping
+          description: Schema type. Use `advanced_mapping`.
+        execution_order:
+          type: string
+          description: Run order of this schema relative to other enrichment schemas.
+          examples:
+          - '6'
+        name:
+          type: string
+          description: Name of the mapping schema.
+          examples:
+          - map-schema 5
+        active:
+          type: boolean
+          description: Whether the schema is active.
+          default: true
+        config:
+          $ref: '#/components/schemas/advanced_mapping_config'
+      x-apidog-orders:
+      - type
+      - execution_order
+      - name
+      - active
+      - config
+      x-apidog-folder: ''
+      examples:
+      - type: advanced_mapping
+        execution_order: '6'
+        name: map-schema 5
+        config:
+          fields:
+          - type: query_tag
+            tag_name: offset
+          - type: query_tag
+            tag_name: agent
+          - type: result_tag
+            tag_name: region
+          - type: result_tag
+            tag_name: email
+            groups:
+            - fields:
+              - type: group_tag
+                tag_name: alert_group
+              - type: group_tag
+                tag_name: ticket_active
+              order: 1
+              name: alert_group_ticket_active
+              method: union
+            - fields:
+              - type: group_tag
+                tag_name: alert_group
+              order: 2
+              name: alert_group
+              method: first_match
+      x-apidog-ignore-properties: []
+    advanced_mapping_config:
+      type: object
+      required:
+      - fields
+      description: 'Advanced mapping configuration: the ordered set of map columns.'
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/advanced_mapping_field'
+          description: Column definitions for the map.
+      x-apidog-orders:
+      - fields
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    advanced_mapping_field:
+      type: object
+      required:
+      - type
+      - tag_name
+      description: A column definition in an advanced mapping schema.
+      properties:
+        type:
+          type: string
+          enum:
+          - query_tag
+          - result_tag
+          - group_tag
+          description: 'Column type: `query_tag` (matched against the alert), `result_tag` (value applied to the alert), or
+            `group_tag` (a column used within a group).'
+        tag_name:
+          type: string
+          description: Column name. Must exactly match the column name in the uploaded map (and the BigPanda tag name).
+          examples:
+          - email
+        groups:
+          type: array
+          description: (Optional, `result_tag` only) Rules that cluster result columns together. The first group with matched
+            columns applies as the tag value.
+          items:
+            $ref: '#/components/schemas/advanced_mapping_group'
+      x-apidog-orders:
+      - type
+      - tag_name
+      - groups
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    advanced_mapping_group:
+      type: object
+      required:
+      - fields
+      - order
+      - name
+      - method
+      description: A rule that clusters result columns together.
+      properties:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/advanced_mapping_group_field'
+          description: The columns to group together.
+        order:
+          type: integer
+          description: Where in the run order this group runs. The first group with matched columns applies as the tag value.
+          examples:
+          - 1
+        name:
+          type: string
+          description: The name of the group.
+          examples:
+          - alert_group_ticket_active
+        method:
+          type: string
+          enum:
+          - first_match
+          - union
+          description: Whether the field values within the group resolve to a single matched value (`first_match`) or an array
+            of values (`union`).
+      x-apidog-orders:
+      - fields
+      - order
+      - name
+      - method
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    advanced_mapping_group_field:
+      type: object
+      required:
+      - type
+      - tag_name
+      description: A grouped column reference.
+      properties:
+        type:
+          type: string
+          enum:
+          - group_tag
+          description: Column type within a group. Use `group_tag`.
+        tag_name:
+          type: string
+          description: Column name. Must exactly match the column name in the uploaded map.
+          examples:
+          - alert_group
+      x-apidog-orders:
+      - type
+      - tag_name
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    http-status-code-v1:
+      type: number
+      enum:
+      - 100
+      - 101
+      - 102
+      - 103
+      - 200
+      - 201
+      - 202
+      - 203
+      - 204
+      - 205
+      - 206
+      - 207
+      - 300
+      - 301
+      - 302
+      - 303
+      - 304
+      - 305
+      - 307
+      - 308
+      - 400
+      - 401
+      - 402
+      - 403
+      - 404
+      - 405
+      - 406
+      - 407
+      - 408
+      - 409
+      - 410
+      - 411
+      - 412
+      - 413
+      - 414
+      - 415
+      - 416
+      - 417
+      - 418
+      - 421
+      - 422
+      - 423
+      - 424
+      - 426
+      - 428
+      - 429
+      - 431
+      - 451
+      - 500
+      - 501
+      - 502
+      - 503
+      - 504
+      - 505
+      - 507
+      - 511
+      description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+      x-apidog-folder: ''
+    alert_tag_object:
+      type: object
+      description: Schema representing a BigPanda alert tag with optional enrichments.
+      properties:
+        name:
+          type: string
+          description: Tag name in BigPands.
+        description:
+          $ref: '#/components/schemas/description'
+        active:
+          $ref: '#/components/schemas/active'
+        enrichments:
+          type: array
+          items:
+            $ref: '#/components/schemas/enrichment_item'
+          description: IDs of automatic enrichment items configured for this tag. Items are listed in their run order.
+      required:
+      - name
+      - active
+      x-apidog-orders:
+      - name
+      - description
+      - active
+      - enrichments
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    active:
+      type: boolean
+      description: Whether the new configuration should apply to future data.
+      default: true
+      x-apidog-folder: ''
+      examples:
+      - false
+    description:
+      type: string
+      x-apidog-folder: ''
+    alert_tag_response:
+      type: object
+      description: Schema representing a BigPanda alert tag with optional enrichments.
+      properties:
+        name:
+          type: string
+          description: Name of the alert tag.
+        created_by:
+          $ref: '#/components/schemas/created_by'
+        created_at:
+          $ref: '#/components/schemas/created_at'
+        updated_by:
+          $ref: '#/components/schemas/updated_by'
+        updated_at:
+          $ref: '#/components/schemas/updated_at'
+        description:
+          $ref: '#/components/schemas/description'
+        active:
+          $ref: '#/components/schemas/active'
+        enrichments:
+          type: array
+          items:
+            $ref: '#/components/schemas/enrichment_item'
+          description: Array of enrichment items tied to the tag.
+      x-apidog-orders:
+      - name
+      - created_by
+      - created_at
+      - updated_by
+      - updated_at
+      - description
+      - active
+      - enrichments
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    updated_at:
+      type: integer
+      description: The time the resource was last updated(in Unix epoch seconds).
+      x-apidog-folder: ''
+      examples:
+      - 1613252381
+    updated_by:
+      type: string
+      description: System id of the user or tool that last updated the resource.
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
+    created_at:
+      type: integer
+      description: The time the resource was created(in Unix epoch seconds).
+      x-apidog-folder: ''
+      examples:
+      - 1613252381
+    created_by:
+      description: System id of the user or tool that created the resource.
+      type: string
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
+    enrichment_itemresponse:
+      type: object
+      description: Schema for an enrichment item, including composition and extraction types.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the enrichment item.
+        type:
+          type: string
+          description: Type of enrichment (composition or extraction).
+        active:
+          type: boolean
+          description: Whether enrichment is active.
+        when:
+          $ref: '#/components/schemas/when'
+        version:
+          type: integer
+          description: Internal system version of the schema. This number is incremented automatically each time the item
+            is updated.
+        config:
+          oneOf:
+          - $ref: '#/components/schemas/enrichment_config_composition'
+          - $ref: '#/components/schemas/enrichment_config_extraction'
+        created_by:
+          type: string
+          description: ID of user who created the enrichment.
+        updated_by:
+          type: string
+          description: ID of user who last updated the enrichment.
+        note:
+          type: string
+          description: Optional notes about the enrichment.
+          nullable: true
+      x-apidog-orders:
+      - id
+      - type
+      - active
+      - when
+      - version
+      - config
+      - created_by
+      - updated_by
+      - note
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    mapping_enrichment:
+      type: object
+      description: Definition for a mapping enrichment schema.
+      properties:
+        type:
+          type: string
+          description: Enrichment function type. Must be "mapping".
+          examples:
+          - mapping
+        active:
+          type: boolean
+          description: Whether the mapping enrichment is active.
+          examples:
+          - true
+        config:
+          $ref: '#/components/schemas/mapping_config'
+        when:
+          type: object
+          additionalProperties: true
+          description: Freeform object (dynamic/JSON-logic structure).
+          x-apidog-orders: []
+          properties: {}
+          x-apidog-ignore-properties: []
+        note:
+          type: string
+      x-apidog-orders:
+      - type
+      - active
+      - config
+      - when
+      - note
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    mapping_config:
+      type: object
+      description: Rules for mapping tag values to event data.
+      properties:
+        name:
+          type: string
+          description: A system name for the mapping table. This name will appear in the UI.
+          examples:
+          - mapping_rule
+        fields:
+          type: array
+          description: Settings for each field included in the mapping table.
+          items:
+            $ref: '#/components/schemas/enrichment_field'
+            properties:
+              title:
+                type: string
+              type:
+                type: string
+              tag_name:
+                type: string
+              override_existing:
+                type: boolean
+        case_insensitive:
+          type: boolean
+        id_generation_function:
+          type: string
+          description: e.g. use_md5. [VERIFY] enum with engineering.
+      x-apidog-orders:
+      - name
+      - fields
+      - case_insensitive
+      - id_generation_function
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    mapping_config_response:
+      type: object
+      description: Rules for mapping tag values to event data.
+      properties:
+        name:
+          type: string
+          description: A system name for the mapping table. This name will appear in the UI.
+          examples:
+          - mapping_rule
+        fields:
+          type: array
+          description: Settings for each field included in the mapping table.
+          items:
+            $ref: '#/components/schemas/enrichment_field'
+            properties:
+              title:
+                type: string
+              type:
+                type: string
+              tag_name:
+                type: string
+              override_existing:
+                type: boolean
+        id_generation_function:
+          type: string
+          description: (System field) Method for ID creation in system.
+          examples:
+          - uuid
+        case_insensitive:
+          type: boolean
+          description: Whether the field names for this configuration take character case into consideration.
+          examples:
+          - false
+        note:
+          $ref: '#/components/schemas/note'
+      x-apidog-orders:
+      - name
+      - fields
+      - id_generation_function
+      - case_insensitive
+      - note
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    note:
+      type: string
+      description: An optional comment or short description.
+      x-apidog-folder: ''
+      examples:
+      - Marking for regional similarity
+    job_status:
+      type: object
+      description: Status of a background job.
+      properties:
+        status:
+          type: string
+          description: Status of the job.
+          examples:
+          - done
+        job_id:
+          $ref: '#/components/schemas/job_id'
+        trigger_uri:
+          type: string
+          description: The url to query for job status updates.
+          examples:
+          - /alert-enrichments-jobs/bc236964-d6e1-4175-86bd-44aaa628e100_1747258250435_update
+      x-apidog-orders:
+      - status
+      - job_id
+      - trigger_uri
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    job_id:
+      type: string
+      description: System id of the asynchronous job.
+      x-apidog-folder: ''
+      examples:
+      - c750243a-39dd-4666-bf0c-f8715e19eb96_1662894455_indexcsv
+    map_row_change:
+      type: object
+      description: The details of the map change.
+      properties:
+        op:
+          type: string
+          description: 'The type of action to perform. One of: `update`, `delete`, `create`.
+
+            '
+          enum:
+          - create
+          - update
+          - delete
+          examples:
+          - update
+        value:
+          type: object
+          description: The details of the map row in key-value pairs.
+          properties:
+            assoc_incoming:
+              type: string
+              description: null
+              examples:
+              - Eastern
+            assoc_db:
+              type: string
+              description: null
+              examples:
+              - null
+            runbook_link:
+              type: string
+              description: null
+              examples:
+              - https://wikispace.runbook.com/x/RYaaet4w
+            app_status:
+              type: string
+              description: null
+              examples:
+              - Active
+            workgroup:
+              type: string
+              description: null
+              examples:
+              - Eastern
+            app_priority:
+              type: string
+              description: null
+              examples:
+              - P1
+            app:
+              type: string
+              description: null
+              examples:
+              - East - AWS
+            assoc_outgoing:
+              type: string
+              description: null
+              examples:
+              - Eastern
+          x-apidog-orders:
+          - assoc_incoming
+          - assoc_db
+          - runbook_link
+          - app_status
+          - workgroup
+          - app_priority
+          - app
+          - assoc_outgoing
+          additionalProperties: true
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - op
+      - value
+      x-apidog-folder: ''
+      required:
+      - op
+      - value
+      x-apidog-ignore-properties: []
+    mapping_enrichment_response:
+      type: object
+      description: Definition for a mapping enrichment schema.
+      properties:
+        id:
+          type: string
+          description: System-generated unique identifier.
+          examples:
+          - b8b8c23a-39dd-4666-bf0c-f8715e19eb96
+        type:
+          type: string
+          description: Enrichment function type. Must be "mapping".
+          examples:
+          - mapping
+        active:
+          type: boolean
+          description: Whether the mapping enrichment is active.
+          examples:
+          - true
+        when:
+          $ref: '#/components/schemas/when'
+        version:
+          type: integer
+          description: Internal system version of the schema. This number is incremented automatically each time the item
+            is updated.
+          examples:
+          - 1
+        config:
+          $ref: '#/components/schemas/mapping_config'
+        created_by:
+          type: string
+          description: User ID who created the mapping.
+          examples:
+          - 565ee8e0dab117512da3c411
+        updated_by:
+          type: string
+          description: User ID who updated the mapping.
+          examples:
+          - 58d77efa5eafe459163f4211
+        note:
+          type: string
+          description: Notes about the mapping rule.
+          examples:
+          - Latest as of Oct 3
+      x-apidog-orders:
+      - id
+      - type
+      - active
+      - when
+      - version
+      - config
+      - created_by
+      - updated_by
+      - note
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    advanced_mapping_row:
+      type: object
+      description: A map row. Must include an `id` (UUID); the remaining keys are the map columns and must follow the schema's
+        `config`. To insert a new row, generate a new UUID.
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the row.
+      additionalProperties: true
+      x-apidog-orders:
+      - id
+      x-apidog-folder: ''
+      examples:
+      - id: 955056f6-c7bf-4733-a3ad-d3b23f06f173
+        created_by: null
+        created_at: '2024-11-28T15:08:03.272+00:00'
+        updated_by: null
+        updated_at: '2024-11-28T15:08:03.303+00:00'
+        metadata: null
+        session_id: S129
+        location: Chicago
+        threat_score: '90'
+        vulnerability_score: '85'
+        action_type: Alert
+        escalation_level: Critical
+        risk_level: P1
+        remediation_action: Block
+      x-apidog-ignore-properties: []
+    generic202response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 202
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 202
+        data: {}
+      x-apidog-ignore-properties: []
+    generic204response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
+      x-apidog-ignore-properties: []
+    alert_tag_response2:
+      type: object
+      description: Schema representing a BigPanda alert tag with optional enrichments.
+      properties:
+        name:
+          type: string
+          description: Name of the alert tag.
+        created_by:
+          $ref: '#/components/schemas/created_by'
+        created_at:
+          $ref: '#/components/schemas/created_at'
+        updated_by:
+          $ref: '#/components/schemas/updated_by'
+        updated_at:
+          $ref: '#/components/schemas/updated_at'
+        description:
+          $ref: '#/components/schemas/description'
+        active:
+          $ref: '#/components/schemas/active'
+        enrichments:
+          type: array
+          items:
+            $ref: '#/components/schemas/enrichment_item2'
+          description: Array of enrichment items tied to the tag.
+      x-apidog-orders:
+      - name
+      - created_by
+      - created_at
+      - updated_by
+      - updated_at
+      - description
+      - active
+      - enrichments
+      x-apidog-folder: ''
+      x--orders:
+      - name
+      - created_by
+      - created_at
+      - updated_by
+      - updated_at
+      - description
+      - active
+      - enrichments
+      x--ignore-properties: []
+    enrichment_item2:
+      type: object
+      description: Schema for an enrichment item.
+      properties:
+        type:
+          type: string
+          description: 'Type of enrichment item. One of: `composition`, `extraction`,  `mapping`
+
+            '
+        active:
+          type: boolean
+          description: Whether enrichment is active.
+        when:
+          $ref: '#/components/schemas/when2'
+        config:
+          oneOf:
+          - $ref: '#/components/schemas/enrichment_config_composition2'
+          - $ref: '#/components/schemas/enrichment_config_extraction2'
+          - $ref: '#/components/schemas/enrichment_config_mapping2'
+        note:
+          type: string
+          description: Optional notes about the enrichment.
+          nullable: true
+      x-apidog-orders:
+      - type
+      - active
+      - when
+      - config
+      - note
+      x-apidog-folder: ''
+      x--orders:
+      - type
+      - active
+      - when
+      - config
+      - note
+      x--ignore-properties: []
+    enrichment_config_mapping2:
+      type: object
+      description: Schema for a  mapping enrichment rule.
+      properties:
+        name:
+          type: string
+          description: ''
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/enrichment_field2'
+      x-apidog-orders:
+      - name
+      - fields
+      x-apidog-folder: ''
+      x--orders:
+      - name
+      - fields
+      x--ignore-properties: []
+    enrichment_field2:
+      type: object
+      description: Definition for an individual enrichment field.
+      properties:
+        title:
+          type: string
+          description: Column name on the mapping table.
+          examples:
+          - application
+        type:
+          type: string
+          description: Whether the column is a `query_tag` or `result_tag`.
+          examples:
+          - query_tag
+        tag_name:
+          type: string
+          description: (Optional) The name of the tag in BigPanda.
+          examples:
+          - very_cool
+        override_existing:
+          type: boolean
+          description: (Optional) If a value has been populated for this tag by another map or enrichment rule, whether this
+            value should replace that value
+          examples:
+          - false
+        optional:
+          type: boolean
+          description: (Optional) Whether the tag can be skipped if no matching value for incoming alerts. Default is false.
+          examples:
+          - true
+        original_name:
+          type: string
+          description: The name of the column in the original map.
+          examples:
+          - null
+      x-apidog-orders:
+      - title
+      - type
+      - tag_name
+      - override_existing
+      - optional
+      - original_name
+      x-apidog-folder: ''
+      x--orders:
+      - title
+      - type
+      - tag_name
+      - override_existing
+      - optional
+      - original_name
+      x--ignore-properties: []
+    enrichment_config_extraction2:
+      type: object
+      description: Configuration for an extraction enrichment item.
+      properties:
+        source:
+          type: string
+          description: Field from which to extract the value.
+        destination:
+          type: string
+          description: Destination tag for extracted value.
+        regex:
+          type: string
+          description: Regex pattern for value extraction.
+        template:
+          type: string
+          description: (System field) Extracted value template.
+        selected_source_system:
+          type: string
+          description: Restricts the extraction to a specific source system / integration key (for example `oim.genalertsapi`
+            or `emailparser.ciena_mcs`). Omit to apply across all source systems.
+      required:
+      - source
+      - destination
+      - regex
+      x-apidog-orders:
+      - source
+      - selected_source_system
+      - destination
+      - regex
+      - template
+      x-apidog-folder: ''
+      x--orders:
+      - source
+      - destination
+      - regex
+      - template
+      - selected_source_system
+      x--ignore-properties: []
+    enrichment_config_composition2:
+      type: object
+      description: Configuration for a composition enrichment item.
+      properties:
+        source:
+          type: string
+          description: Optional filter for event source.
+        destination:
+          type: string
+          description: Destination tag to populate.
+        value:
+          type: string
+          description: Template value to apply to destination tag.
+      required:
+      - source
+      - destination
+      - value
+      x-apidog-orders:
+      - source
+      - destination
+      - value
+      x-apidog-folder: ''
+      x--orders:
+      - source
+      - destination
+      - value
+      x--ignore-properties: []
+    when2:
+      type: object
+      description: 'A [​BPQL object query](https://api-docs.bigpanda.io/en#description/bpql-object-syntax)​​ to filter incoming
+        alerts. Only matched alerts will receive a value based on the enrichment item.
+
+        '
+      x-apidog-folder: ''
+      additionalProperties: true
+      x-apidog-orders: []
+      examples:
+      - IN:
+        - source_system
+        - - type: regex
+            value: '*'
+      x--orders: []
+      properties: {}
+      x--ignore-properties: []
+    generic400response2:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x--orders:
+      - status
+      - errors
+      x--ignore-properties: []
+      x-apidog-folder: ''
+    generic404response2:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x--orders:
+      - status
+      - errors
+      x--ignore-properties: []
+    map_object_return:
+      type: object
+      description: Enrichment map in json key value pairs.
+      properties:
+        total_results:
+          type: integer
+          description: The total number of map fields returned.
+          examples:
+          - 100
+        items:
+          type: array
+          description: Each row of the enrichment map in a set of key value pairs where the key is the column name, and the
+            value is the row value.
+          items:
+            type: object
+            x-apidog-orders: []
+            properties: {}
+            examples:
+            - "{\n    \"assoc_incoming\": \"emea\",\n    \"assoc_db\": \"null\",\n    \"runbook_link\": \"https://wikispace.runbook.com/x/c4atewqB\"\
+              ,\n    \"app_status\": \"Active\",\n    \"workgroup\": \"emea\",\n    \"app_priority\": \"P2\",\n    \"app\"\
+              : \"Active Directory - East group\",\n    \"assoc_outgoing\": \"emea\"\n},\n{\n    \"assoc_incoming\": \"sudost\"\
+              ,\n    \"assoc_db\": \"0q253qjF-aja\",\n    \"runbook_link\": \"https://wikispace.runbook.com/x/gJqtwgQ\",\n\
+              \    \"app_status\": \"Testing\",\n    \"workgroup\": \"sudost\",\n    \"app_priority\": \"P1\",\n    \"app\"\
+              : \"Sudost - AWS\",\n    \"assoc_outgoing\": \"sudost\"\n}\n"
+            x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - total_results
+      - items
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    mapping_config_response2:
+      type: object
+      description: Rules for mapping tag values to event data.
+      properties:
+        name:
+          type: string
+          description: A system name for the mapping table. This name will appear in the UI.
+          examples:
+          - mapping_rule
+        fields:
+          type: array
+          description: Settings for each field included in the mapping table.
+          items:
+            $ref: '#/components/schemas/enrichment_field'
+        id_generation_function:
+          type: string
+          description: (System field) Method for ID creation in system.
+          examples:
+          - uuid
+        case_insensitive:
+          type: boolean
+          description: Whether the field names for this configuration take character case into consideration.
+          examples:
+          - false
+        note:
+          $ref: '#/components/schemas/note'
+      x-apidog-orders:
+      - name
+      - fields
+      - id_generation_function
+      - case_insensitive
+      - note
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    enrichment_order:
+      type: array
+      description: List of enrichment IDs in the order they should run. By default, items are ordered by creation time.
+      items:
+        type: string
+      x-apidog-folder: ''
+      examples:
+      - - 49ff0d51-8e73-43a7-9cdd-6ffff242666
+        - 5036032b-eb0c-461e-ff17-74a05785777
+        - d987df48-83f6-40ff-a985-ad6f8927888
+        - 6cff549b-7c14-43f9-950f-3f73706ff99
+    alert_tags_order:
+      type: array
+      description: List of tag names in the order they should be run.
+      items:
+        type: string
+      x-apidog-folder: ''
+      examples:
+      - - wiki
+        - tagwith2rules
+    enrichment_order_response:
+      type: object
+      description: Schema for specifying the order of enrichment items.
+      properties:
+        created_by:
+          type: string
+          description: The user who created the enrichment item order.
+          examples:
+          - 58d77efa5eafe459163f4111
+        enrichment_order:
+          $ref: '#/components/schemas/enrichment_order'
+      x-apidog-orders:
+      - created_by
+      - enrichment_order
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    update_mapping_enrichment:
+      type: object
+      description: Definition for a updating a mapping enrichment schema. After a schema has been created, only the schema
+        status, condition, and description can be edited. To change mapping fields, you must create a new schema.
+      properties:
+        active:
+          type: boolean
+          description: Whether the mapping enrichment is active.
+          examples:
+          - true
+        when:
+          $ref: '#/components/schemas/when'
+        note:
+          $ref: '#/components/schemas/note'
+      x-apidog-orders:
+      - active
+      - when
+      - note
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

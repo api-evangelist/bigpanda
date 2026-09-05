@@ -1,0 +1,119 @@
+generated: '2026-09-04'
+method: searched
+source: https://api-docs.bigpanda.io/responses
+description: >-
+  BigPanda's published response-code catalog, cross-checked against the responses declared by the 263
+  operations harvested into openapi/. BigPanda uses conventional HTTP status codes with a plain JSON error
+  body; it does not publish RFC 9457 problem types, does not use the application/problem+json media type,
+  and does not publish a machine-readable error-code registry beyond the status codes themselves.
+format: http-status
+rfc9457: false
+media_type: application/json
+envelope:
+  note: >-
+    "When a request fails, BigPanda returns a non-2xx code and, where applicable, a JSON body describing
+    the error." The shape of that body is documented per endpoint, not centrally. The one error envelope
+    observed live on an unauthenticated probe of api.bigpanda.io is
+    {"status": <int>, "errors": ["<message>"]}.
+  observed_example: '{"status":404,"errors":["Route /.well-known/agent-card.json is not found"]}'
+  observed_at: https://api.bigpanda.io/.well-known/agent-card.json
+  observed_on: '2026-09-04'
+docs:
+  - https://api-docs.bigpanda.io/responses
+  - https://api-docs.bigpanda.io/errors-and-troubleshooting
+problem_types:
+  - status: 200
+    title: OK
+    kind: success
+    meaning: Success.
+  - status: 201
+    title: Created
+    kind: success
+    meaning: Resource created.
+  - status: 202
+    title: Accepted
+    kind: success
+    meaning: Request accepted for asynchronous processing. Check the Job resource named by the Location header for results.
+    remediation: Poll the Job URL with a spaced interval; see conventions/bigpanda-conventions.yml async block.
+  - status: 204
+    title: No Content
+    kind: success
+    meaning: Success with no response body.
+  - status: 400
+    title: Bad Request
+    kind: client
+    meaning: A required field is missing or a value is invalid.
+    remediation: Read the error message and check the payload against the endpoint reference.
+  - status: 401
+    title: Unauthorized
+    kind: client
+    meaning: The token is missing, malformed, or invalid.
+    remediation: Confirm the Authorization header is set to "Bearer <your_api_key>" and the key is active.
+  - status: 403
+    title: Forbidden
+    kind: client
+    meaning: The token is valid but the user's role lacks the permission.
+    remediation: Ask an administrator to grant the required role permission. See https://docs.bigpanda.io/en/roles-management.html
+  - status: 404
+    title: Not Found
+    kind: client
+    meaning: The endpoint path or resource ID is wrong, or the request went to the wrong region.
+    remediation: Verify the path, the resource ID, and the regional base URL. See https://api-docs.bigpanda.io/regions
+  - status: 409
+    title: Conflict
+    kind: client
+    meaning: The request conflicts with the current state — for example resolving an already-resolved incident.
+    remediation: Check the current state of the resource before retrying.
+    note: >-
+      This is the closest thing BigPanda has to replay protection. Because there is no idempotency key, a
+      duplicate mutation is distinguishable from the first only where the resulting state transition is
+      illegal and returns 409.
+  - status: 410
+    title: Gone
+    kind: client
+    meaning: The resource has been removed permanently.
+  - status: 429
+    title: Too Many Requests
+    kind: client
+    meaning: The endpoint's rate limit was exceeded.
+    remediation: >-
+      Retry after the interval indicated in the response, using exponential backoff. No rate-limit
+      response header is documented, so the interval is not machine-readable.
+    cross_link: rate-limits/bigpanda-rate-limits.yml
+  - status: 500
+    title: Internal Server Error
+    kind: server
+    meaning: A server-side problem.
+    remediation: Retry after a short wait. If it persists, contact BigPanda Support.
+  - status: 501
+    title: Not Implemented
+    kind: server
+    meaning: The endpoint does not support that method.
+jsonrpc_errors:
+  note: >-
+    The Biggy A2A endpoint (https://api.biggy.io/a2a/biggy-agent) does NOT use HTTP status codes for
+    errors — the HTTP status is always 200 and the failure is carried in the JSON-RPC error object.
+    An agent that reads only the HTTP status will read every A2A failure as a success.
+  source: https://api-docs.bigpanda.io/a2a
+  codes:
+    - code: -32600
+      meaning: Invalid request (missing or wrong jsonrpc version).
+    - code: -32601
+      meaning: Method not found (unsupported method value).
+    - code: -32602
+      meaning: Invalid params (validation failure, bad input).
+    - code: -32000
+      meaning: Server error (unexpected internal failure).
+mcp_errors:
+  - code: mcp_unauthorized
+    status: 401
+    surface: https://www.bigpanda.io/wp-json/mcp/mcp-oauth-server
+    message: MCP authentication required.
+    observed_on: '2026-09-04'
+diagnostics:
+  - name: Troubleshooting logs
+    note: >-
+      Integration delivery failures, parsing errors and upstream issues are retrieved through the
+      Troubleshooting logs endpoints rather than from an error body.
+    spec: openapi/bigpanda-reporting-api-openapi.yml
+    source: https://api-docs.bigpanda.io/errors-and-troubleshooting

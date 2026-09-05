@@ -1,0 +1,868 @@
+openapi: 3.0.3
+info:
+  title: BigPanda SSO & JIT Provisioning API
+  description: BigPanda SSO & JIT Provisioning operations, assembled verbatim from the OpenAPI fragments BigPanda publishes
+    on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
+    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
+    the base URL for your region.
+  version: 1.0.0
+  contact:
+    name: BigPanda Support
+    url: https://api-docs.bigpanda.io/
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 10
+servers:
+- url: https://api.bigpanda.io
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
+tags:
+- name: SSO & JIT Provisioning
+paths:
+  /resources/v2.1/sso-config/{provider}/configure:
+    post:
+      summary: Configure SSO for provider
+      deprecated: false
+      description: Configure single sign-on for a specific identity provider. Supply the provider's metadata; pair with the
+        SAML debug endpoint to validate assertions during setup.
+      operationId: postSsoConfig
+      tags:
+      - SSO & JIT Provisioning
+      parameters:
+      - name: provider
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      - name: x-bp-auth-details
+        in: header
+        description: 'Authentication Header Token
+
+          '
+        required: true
+        example: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+              x-apidog-ignore-properties: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 3
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770180-run
+      x-source-url: https://api-docs.bigpanda.io/configure-sso-for-provider-37770180e0.md
+      x-source-page: Configure SSO for provider
+  /resources/v2.1/jit-domains/{jit_domain_name}:
+    delete:
+      summary: Delete jit-domain
+      deprecated: false
+      description: Delete a just-in-time domain rule by domain name.
+      operationId: deleteJitDomain
+      tags:
+      - SSO & JIT Provisioning
+      parameters:
+      - name: jit_domain_name
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: No Content
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345861-run
+      x-source-url: https://api-docs.bigpanda.io/delete-jit-domain-38345861e0.md
+      x-source-page: Delete jit-domain
+  /resources/v2.1/jit-roles/{jit_role_id}:
+    delete:
+      summary: Delete jit-role
+      deprecated: false
+      description: Delete a just-in-time role rule by ID.
+      operationId: deleteJitRole
+      tags:
+      - SSO & JIT Provisioning
+      parameters:
+      - name: jit_role_id
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: No Content
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 3
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345860-run
+      x-source-url: https://api-docs.bigpanda.io/delete-jit-role-38345860e0.md
+      x-source-page: Delete jit-role
+  /resources/v2.1/saml-debug:
+    get:
+      summary: Get SAML debug
+      deprecated: false
+      description: Get SAML debug information
+      operationId: getSamlDebug
+      tags:
+      - SSO & JIT Provisioning
+      parameters:
+      - name: x-bp-auth-details
+        in: header
+        description: 'Authentication Header Token
+
+          '
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
+                    spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+                  x-apidog-ignore-properties: []
+                - $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 1
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 2
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 3
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770177-run
+      x-source-url: https://api-docs.bigpanda.io/get-saml-debug-37770177e0.md
+      x-source-page: Get SAML debug
+  /resources/v2.1/sso-config:
+    get:
+      summary: Get SSO config
+      deprecated: false
+      description: Get SSO config of organization
+      operationId: getSsoConfig
+      tags:
+      - SSO & JIT Provisioning
+      parameters:
+      - name: x-bp-auth-details
+        in: header
+        description: 'Authentication Header Token
+
+          '
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+                x-apidog-ignore-properties: []
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 1
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 2
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 3
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770178-run
+      x-source-url: https://api-docs.bigpanda.io/get-sso-config-37770178e0.md
+      x-source-page: Get SSO config
+    put:
+      summary: Update SSO config
+      deprecated: false
+      description: This endpoint is used to enable / disable SSO, change SSO provider or update SSO status
+      operationId: putSsoConfig
+      tags:
+      - SSO & JIT Provisioning
+      parameters:
+      - name: x-bp-auth-details
+        in: header
+        description: 'Authentication Header Token
+
+          '
+        required: true
+        example: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+              x-apidog-ignore-properties: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 3
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770179-run
+      x-source-url: https://api-docs.bigpanda.io/update-sso-config-37770179e0.md
+      x-source-page: Update SSO config
+  /resources/v2.1/jit-domains:
+    post:
+      summary: create jit-domain
+      deprecated: false
+      description: Create a just-in-time domain rule allowing an email domain to auto-provision accounts on first SSO login.
+      operationId: createJitDomain
+      tags:
+      - SSO & JIT Provisioning
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+              x-apidog-ignore-properties: []
+      responses:
+        '201':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
+                    spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+                  x-apidog-ignore-properties: []
+                - $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '409':
+          x-apidog-ordering: 4
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 5
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770175-run
+      x-source-url: https://api-docs.bigpanda.io/create-jit-domain-37770175e0.md
+      x-source-page: create jit-domain
+    get:
+      summary: get jit domains
+      deprecated: false
+      description: Retrieve the just-in-time domain rules — the email domains allowed to auto-provision accounts on first
+        SSO login.
+      operationId: getJitDomains
+      tags:
+      - SSO & JIT Provisioning
+      parameters: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
+                    spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+                  x-apidog-ignore-properties: []
+                - $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 3
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770174-run
+      x-source-url: https://api-docs.bigpanda.io/get-jit-domains-37770174e0.md
+      x-source-page: get jit domains
+  /resources/v2.1/jit-roles:
+    post:
+      summary: create jit-role
+      deprecated: false
+      description: Create a just-in-time role rule. JIT roles assign a role automatically when a user's account is created
+        on first SSO login.
+      operationId: createJitRole
+      tags:
+      - SSO & JIT Provisioning
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+              x--orders: []
+              x--ignore-properties: []
+      responses:
+        '201':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
+                    spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+                  x--orders: []
+                  x--ignore-properties: []
+                - $ref: '#/components/schemas/success-response-v12'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v12'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v12'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v12'
+          headers: {}
+          x-apidog-name: ''
+        '409':
+          x-apidog-ordering: 4
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v12'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 5
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v12'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770172-run
+      x-source-url: https://api-docs.bigpanda.io/create-jit-role-37770172e0.md
+      x-source-page: create jit-role
+    get:
+      summary: get jit-roles by organization
+      deprecated: false
+      description: Retrieve the just-in-time role rules for your organization — the rules that decide which role a user receives
+        when their account is created on first SSO login.
+      operationId: getJitRolesByOrg
+      tags:
+      - SSO & JIT Provisioning
+      parameters: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
+                    spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+                  x-apidog-ignore-properties: []
+                - $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 3
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770171-run
+      x-source-url: https://api-docs.bigpanda.io/get-jit-roles-by-organization-37770171e0.md
+      x-source-page: get jit-roles by organization
+components:
+  schemas:
+    success-response-v1:
+      title: success-response-v1
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        data:
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          x-apidog-ignore-properties: []
+      required:
+      - status
+      - data
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    http-status-code-v1:
+      type: number
+      enum:
+      - 100
+      - 101
+      - 102
+      - 103
+      - 200
+      - 201
+      - 202
+      - 203
+      - 204
+      - 205
+      - 206
+      - 207
+      - 300
+      - 301
+      - 302
+      - 303
+      - 304
+      - 305
+      - 307
+      - 308
+      - 400
+      - 401
+      - 402
+      - 403
+      - 404
+      - 405
+      - 406
+      - 407
+      - 408
+      - 409
+      - 410
+      - 411
+      - 412
+      - 413
+      - 414
+      - 415
+      - 416
+      - 417
+      - 418
+      - 421
+      - 422
+      - 423
+      - 424
+      - 426
+      - 428
+      - 429
+      - 431
+      - 451
+      - 500
+      - 501
+      - 502
+      - 503
+      - 504
+      - 505
+      - 507
+      - 511
+      description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+      x-apidog-folder: ''
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    success-response-v12:
+      title: success-response-v1
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        data:
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          x--orders: []
+          x--ignore-properties: []
+      required:
+      - status
+      - data
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x--orders:
+      - status
+      - data
+      x--ignore-properties: []
+    error-response-v12:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x--orders:
+      - status
+      - errors
+      x--ignore-properties: []
+      x-apidog-folder: ''
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

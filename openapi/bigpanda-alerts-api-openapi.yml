@@ -1,138 +1,462 @@
-openapi: 3.2.0
+openapi: 3.0.3
 info:
   title: BigPanda Alerts API
-  description: The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.
-  version: v2
+  description: BigPanda Alerts operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API
+    reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was
+    read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL
+    for your region.
+  version: 1.0.0
   contact:
     name: BigPanda Support
-    url: https://docs.bigpanda.io
+    url: https://api-docs.bigpanda.io/
   license:
     name: Proprietary
     url: https://www.bigpanda.io/legal/
-  x-generated-from: documentation
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 4
 servers:
 - url: https://api.bigpanda.io
-  description: BigPanda API
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
 tags:
 - name: Alerts
-  description: Ingest and manage monitoring alerts
 paths:
-  /data/v2/alerts:
+  /oim/api/alerts:
     post:
-      operationId: sendAlert
-      summary: BigPanda Send Alert
-      description: Ingests a monitoring alert into BigPanda for correlation and incident management.
+      summary: OIM Send Normalized Alert(s)
+      deprecated: false
+      description: Send alert monitoring events to BigPanda through the Open Integration Manager (OIM). Uses Org Token authorization.
+      operationId: oim-send-alert
       tags:
       - Alerts
-      security:
-      - bearerAuth: []
+      parameters: []
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AlertRequest'
-            examples:
-              SendAlert201Example:
-                summary: Default sendAlert request example
-                x-microcks-default: true
-                value:
-                  app_key: abc123appkey
-                  status: critical
-                  host: production-database-1
-                  check: CPU overloaded
-                  description: CPU usage above 95% for 5 minutes
+              type: object
+              properties:
+                app_key:
+                  type: string
+                  description: The OIM integration App Key.
+                status:
+                  type: string
+                  examples:
+                  - critical
+                host:
+                  type: string
+                  examples:
+                  - production-database-1
+                check:
+                  type: string
+                  examples:
+                  - CPU overloaded
+                timestamp:
+                  type: integer
+                  description: UNIX timestamp in seconds.
+                application:
+                  type: string
+                regions:
+                  type: array
+                  items:
+                    type: string
+                description:
+                  type: string
+              required:
+              - app_key
+              - status
+              - host
+              x-apidog-orders:
+              - app_key
+              - status
+              - host
+              - check
+              - timestamp
+              - application
+              - regions
+              - description
+            examples: {}
       responses:
         '201':
-          description: Alert ingested successfully.
+          x-apidog-ordering: 0
+          description: '201'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AlertResponse'
-              examples:
-                SendAlert201Example:
-                  summary: Default sendAlert 201 response
-                  x-microcks-default: true
-                  value:
-                    _id: alert-abc123
-                    status: ok
-        '400':
-          description: Invalid alert payload.
+                type: string
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerOrg121: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345844-run
+      x-source-url: https://api-docs.bigpanda.io/oim-send-normalized-alerts-38345844e0.md
+      x-source-page: OIM Send Normalized Alert(s)
+  /resources/v2.0/environments/{environment_id}/batch-resolve/alerts:
+    post:
+      summary: Resolve Alerts
+      deprecated: false
+      description: "Sets the alert status to \"OK\" for a list of alerts.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
+        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
+        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 1 call per second; up to 500 alerts per request."
+      operationId: resolve-alerts
+      tags:
+      - Alerts
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resolve_alerts'
+      responses:
+        '202':
+          x-apidog-ordering: 0
+          description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
+                $ref: '#/components/schemas/generic202response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769996-run
+      x-source-url: https://api-docs.bigpanda.io/resolve-alerts-37769996e0.md
+      x-source-page: Resolve Alerts
+  /resources/v2.0/tags:
+    get:
+      summary: Retrieve destination tags
+      deprecated: false
+      description: 'Retrieves destination tags in reverse order by most recent received time
+
+        in BigPanda.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+        '
+      operationId: get-destination-tags
+      tags:
+      - Alerts
+      parameters:
+      - name: source_system
+        in: query
+        description: The ID of the integration that sent the tag.
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Which set of results to return.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 1
+          examples:
+          - 4
+      - name: per_page
+        in: query
+        description: Number of results to show for each page.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 100
+          examples:
+          - 30
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/destination_tags'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770018-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-destination-tags-37770018e0.md
+      x-source-page: Retrieve destination tags
+  /data/v2/alerts:
+    post:
+      summary: Send alert monitoring events to BigPanda
+      deprecated: false
+      description: "> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization in the call\
+        \ headers.\n>\n> This API uses the User API Key type of Authorization token. Your user API key must be provided in\
+        \ the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n"
+      operationId: alerts
+      tags:
+      - Alerts
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/standard_alert'
+              - type: object
+                properties:
+                  app_key:
+                    type: string
+                  alerts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/standard_alert'
+                required:
+                - app_key
+                - alerts
+                x-apidog-orders:
+                - app_key
+                - alerts
+                x-apidog-ignore-properties: []
+              description: Accepts either a single flat alert (standard_alert) or a batch wrapper {app_key, alerts:[...]}.
+      responses:
+        '201':
+          x-apidog-ordering: 0
+          description: '201'
+          content:
+            application/json:
+              schema:
+                type: string
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerOrg121: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769997-run
+      x-source-url: https://api-docs.bigpanda.io/send-alert-monitoring-events-to-bigpanda-37769997e0.md
+      x-source-page: Send alert monitoring events to BigPanda
 components:
+  securitySchemes:
+    BearerOrg121:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
+        tool you use to make API calls
+
+        '
+    BearerUser131:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
+        tool you use to make API calls
+
+        '
   schemas:
-    AlertResponse:
-      title: Alert Response
-      description: Response after ingesting an alert.
+    resolve_alerts:
+      required:
+      - ids
       type: object
       properties:
+        comments:
+          description: An optional comment to add to the resolve action. **May not be longer than 1000 characters.**
+          $ref: '#/components/schemas/comments'
+        ids:
+          type: array
+          description: A list of the unique identifiers for each alert to resolve
+          items:
+            type: string
+          examples:
+          - - 5d09d221aebaec1c43ccd448
+            - 5cff623a21169351a82cb5e2
+      x-apidog-orders:
+      - comments
+      - ids
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    comments:
+      type: string
+      description: An optional comment or short description.
+      x-apidog-folder: ''
+      examples:
+      - Marking for regional similarity
+    generic202response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 202
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 202
+        data: {}
+      x-apidog-ignore-properties: []
+    destination_tags:
+      type: array
+      description: List of tags in the reverse order from when they were received by BigPanda.
+      items:
+        $ref: '#/components/schemas/destination_tag'
+      x-apidog-folder: ''
+    destination_tag:
+      type: object
+      description: Schema representing a BigPanda alert tag as ingested through alert processing.
+      properties:
+        name:
+          type: string
+          description: Name of the alert tag.
         _id:
           type: string
-          description: Internal alert ID.
-          example: alert-abc123
-        status:
+          description: System id for the tag in BigPanda
+        parent_source_system:
           type: string
-          description: Ingestion status.
-          example: ok
-    AlertRequest:
-      title: Alert Request
-      description: Payload for ingesting a monitoring alert.
+          description: The integration tool sending the associated event.
+        source_system:
+          type: string
+          description: The name of the specific integration that processed the event.
+        last update:
+          type: integer
+          description: The time the event was last updated, in unix epoch seconds.
+        total_hits:
+          type: string
+          description: The total number of times the alert has been processed in BigPanda.
+      x-apidog-orders:
+      - name
+      - _id
+      - parent_source_system
+      - source_system
+      - last update
+      - total_hits
+      x-apidog-folder: ''
+      x--orders:
+      - name
+      - _id
+      - parent_source_system
+      - source_system
+      - last update
+      - total_hits
+      x--ignore-properties: []
+    standard_alert:
       type: object
-      required:
-      - app_key
-      - status
-      - host
+      description: Standard alert payload schema.
       properties:
         app_key:
           type: string
-          description: BigPanda application key for routing.
-          example: abc123appkey
+          description: Unique identifier of the integration.
+          examples:
+          - <APP KEY>
         status:
           type: string
-          description: Alert status.
-          enum:
+          description: 'Status of the event. One of: `ok`, `critical`, `warning`, `unknown`, `acknowledged`.
+
+            '
+          examples:
           - critical
-          - warning
-          - ok
-          - acknowledged
-          example: critical
-        host:
-          type: string
-          description: Hostname associated with the alert.
-          example: production-database-1
-        check:
-          type: string
-          description: Check or metric name that triggered the alert.
-          example: CPU overloaded
-        description:
-          type: string
-          description: Human-readable alert description.
-          example: CPU usage above 95% for 5 minutes
         timestamp:
           type: integer
-          description: Unix timestamp of the alert.
-          example: 1713000000
-    ErrorResponse:
-      title: Error Response
-      description: Standard error response.
-      type: object
-      properties:
-        error:
+          description: Time the event occurred (Unix epoch, seconds).
+          examples:
+          - 1402303570
+        host:
           type: string
-          description: Error message.
-          example: resource not found
-        status:
+          description: Event property to tag the alert.
+          examples:
+          - production-database-1
+        check:
+          type: string
+          description: Event property to tag the alert.
+          examples:
+          - CPU overloaded
+        application:
+          type: string
+          description: Event property to tag the alert.
+          examples:
+          - Billing
+        regions:
+          type: array
+          description: Custom event property as a list.
+          items:
+            type: string
+          examples:
+          - - US1
+            - US2
+            - EMEA
+        count:
           type: integer
-          description: HTTP status code.
-          example: 404
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      description: BigPanda API Bearer token
+          description: Event property to tag the alert.
+          examples:
+          - 47
+        description:
+          type: string
+          description: Brief summary of the alert.
+          examples:
+          - CPU is above warning limit (40%)
+        primary_property:
+          type: string
+          description: Primary tag field.
+          examples:
+          - application
+        secondary_property:
+          type: string
+          description: Secondary tag field.
+          examples:
+          - host
+      x-apidog-orders:
+      - app_key
+      - status
+      - timestamp
+      - host
+      - check
+      - application
+      - regions
+      - count
+      - description
+      - primary_property
+      - secondary_property
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

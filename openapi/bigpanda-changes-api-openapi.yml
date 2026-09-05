@@ -1,136 +1,575 @@
-openapi: 3.2.0
+openapi: 3.0.3
 info:
-  title: BigPanda Alerts Changes API
-  description: The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.
-  version: v2
+  title: BigPanda Changes & Root Cause API
+  description: BigPanda Changes & Root Cause operations, assembled verbatim from the OpenAPI fragments BigPanda publishes
+    on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
+    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
+    the base URL for your region.
+  version: 1.0.0
   contact:
     name: BigPanda Support
-    url: https://docs.bigpanda.io
+    url: https://api-docs.bigpanda.io/
   license:
     name: Proprietary
     url: https://www.bigpanda.io/legal/
-  x-generated-from: documentation
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 7
 servers:
 - url: https://api.bigpanda.io
-  description: BigPanda API
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
 tags:
-- name: Changes
-  description: Ingest change events for correlation
+- name: Changes & Root Cause
 paths:
-  /data/changes:
+  /resources/v2.0/rcc:
     post:
-      operationId: sendChange
-      summary: BigPanda Send Change
-      description: Ingests a change event (deployment, config change) for alert correlation.
+      summary: Create an RCC Relation
+      deprecated: false
+      description: "Creates a new schema definition for creating a new RCC relation.\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\
+        >\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 400 changes per minute; 50,000 per\
+        \ week (contractual)."
+      operationId: create-related-change-rcc
       tags:
-      - Changes
-      security:
-      - bearerAuth: []
+      - Changes & Root Cause
+      parameters: []
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ChangeRequest'
-            examples:
-              SendChange201Example:
-                summary: Default sendChange request example
-                x-microcks-default: true
-                value:
-                  summary: Deployed v2.1.0 to production-database-1
-                  status: started
-                  identifier: deploy-20240413-001
-                  hosts:
-                  - production-database-1
-                  timestamp: 1713000000
+              $ref: '#/components/schemas/Change-relation-object'
       responses:
         '201':
-          description: Change ingested successfully.
+          x-apidog-ordering: 0
+          description: '201'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ChangeResponse'
-              examples:
-                SendChange201Example:
-                  summary: Default sendChange 201 response
-                  x-microcks-default: true
-                  value:
-                    _id: chg-abc123
-                    status: ok
+                type: string
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770081-run
+      x-source-url: https://api-docs.bigpanda.io/create-an-rcc-relation-37770081e0.md
+      x-source-page: Create an RCC Relation
+    get:
+      summary: Retrieve All RCC Relations (for an incident or change)
+      deprecated: false
+      description: "Retrieves the schema definitions for all RCC relations.\n\n> \U0001F6A7 **Authentication**\n> \n> All\
+        \ BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type\
+        \ of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n\
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 400 changes per minute; 50,000 per week (contractual)."
+      operationId: retrieve-rcc-relations
+      tags:
+      - Changes & Root Cause
+      parameters:
+      - name: incident_id
+        in: query
+        description: 'The incident to query. Required if retrieving RCC relations for an
+
+          incident.
+
+          '
+        required: false
+        example: {}
+        schema:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      - name: include
+        in: query
+        description: (Retrieve for Incident) Whether or not to include the change object in the response. Use only if retrieving
+          RCC relations for an incident.
+        required: false
+        example: ''
+        schema:
+          type: string
+          default: change
+      - name: change_id
+        in: query
+        description: System id of the change in BigPanda. Required if retrieving RCC relations for a change.
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: include_history
+        in: query
+        description: (Retrieve for Change) Whether to include a record of historical change relations.
+        required: false
+        example: ''
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/related_change'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770080-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-all-rcc-relations-for-an-incident-or-change-37770080e0.md
+      x-source-page: Retrieve All RCC Relations (for an incident or change)
+  /data/changes:
+    post:
+      summary: Create or Update a Change
+      deprecated: false
+      description: "Creates or updates a single change.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
+        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\
+        \ Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 400 changes per minute; 50,000 per week (contractual)."
+      operationId: create-or-update-a-change
+      tags:
+      - Changes & Root Cause
+      parameters:
+      - name: x-bp-app-key
+        in: header
+        description: The app key for the associated integration.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 45h43j43y
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/change_object'
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/change_object'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770077-run
+      x-source-url: https://api-docs.bigpanda.io/create-or-update-a-change-37770077e0.md
+      x-source-page: Create or Update a Change
+  /resources/v2.0/changes:
+    get:
+      summary: Retrieve All Changes
+      deprecated: false
+      description: "Retrieves all change records.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
+        \ Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token. Your\
+        \ User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer\
+        \ [YOUR_USER_API_KEY]`\n\n**Rate limit:** 400 changes per minute; 50,000 per week (contractual)."
+      operationId: retrieve-all-changes
+      tags:
+      - Changes & Root Cause
+      parameters:
+      - name: start_time_frame
+        in: query
+        description: Retrieves all the changes starting after this timeframe. Default is set to 4 hours before end timeframe.
+          Unix epoch time (in seconds).
+        required: true
+        example: ''
+        schema:
+          type: string
+      - name: end_time_frame
+        in: query
+        description: Retrieves all the changes starting after this timeframe. Unix epoch time (in seconds).
+        required: true
+        example: ''
+        schema:
+          type: string
+      - name: search
+        in: query
+        description: Search text within one of three 3 fields (identifier, summary, status). The search term should be enclosed
+          in double quotes "
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of results to be returned.
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: Used to query a new page of results, provided by the Link header in the previous call.
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: incident_id
+        in: query
+        description: Whether to return related metadata for a specific incident
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: The field to sort results by. One of (start_time_frame, end_time_frame)
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: include
+        in: query
+        description: Whether or not to include the change object in the response
+        required: false
+        example: ''
+        schema:
+          type: string
+          default: change
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/change_object'
+          headers: {}
+          x-apidog-name: ''
         '400':
-          description: Invalid change payload.
+          x-apidog-ordering: 1
+          description: '400'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770079-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-all-changes-37770079e0.md
+      x-source-page: Retrieve All Changes
+  /resources/v2.0/changes/{change_id}:
+    get:
+      summary: Retrieve a Change
+      deprecated: false
+      description: "Retrieve a specific change record.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
+        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\
+        \ Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 400 changes per minute; 50,000 per week (contractual)."
+      operationId: retrieve-a-change
+      tags:
+      - Changes & Root Cause
+      parameters:
+      - name: change_id
+        in: path
+        description: System id of the change in BigPanda.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - null
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/change_object'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770078-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-a-change-37770078e0.md
+      x-source-page: Retrieve a Change
+  /resources/v2.0/rcc/{related_change_id}:
+    get:
+      summary: Retrieve an RCC Relation
+      deprecated: false
+      description: "Retrieves the schema definition for a specific RCC relation.\n\n> \U0001F6A7 **Authentication**\n> \n\
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type\
+        \ of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n\
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 400 changes per minute; 50,000 per week (contractual)."
+      operationId: retrieve-an-rcc-change
+      tags:
+      - Changes & Root Cause
+      parameters:
+      - name: related_change_id
+        in: path
+        description: System id of the RCC relation.
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/related_change'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770082-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-an-rcc-relation-37770082e0.md
+      x-source-page: Retrieve an RCC Relation
+    put:
+      summary: Update an RCC Relation
+      deprecated: false
+      description: "Updates a specific RCC relation.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
+        \ Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token. Your\
+        \ User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer\
+        \ [YOUR_USER_API_KEY]`\n\n**Rate limit:** 400 changes per minute; 50,000 per week (contractual)."
+      operationId: update-related-change-rcc
+      tags:
+      - Changes & Root Cause
+      parameters:
+      - name: related_change_id
+        in: path
+        description: System id of the RCC relation.
+        required: true
+        example: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+                match_certainty:
+                  type: string
+              x-apidog-orders:
+              - comment
+              - match_certainty
+              x-apidog-ignore-properties: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/related_change'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770083-run
+      x-source-url: https://api-docs.bigpanda.io/update-an-rcc-relation-37770083e0.md
+      x-source-page: Update an RCC Relation
 components:
-  schemas:
-    ChangeResponse:
-      title: Change Response
-      description: Response after ingesting a change event.
-      type: object
-      properties:
-        _id:
-          type: string
-          description: Internal change ID.
-          example: chg-abc123
-        status:
-          type: string
-          description: Ingestion status.
-          example: ok
-    ErrorResponse:
-      title: Error Response
-      description: Standard error response.
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message.
-          example: resource not found
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 404
-    ChangeRequest:
-      title: Change Request
-      description: Payload for ingesting a change event.
-      type: object
-      required:
-      - summary
-      - status
-      properties:
-        summary:
-          type: string
-          description: Human-readable change summary.
-          example: Deployed v2.1.0 to production-database-1
-        status:
-          type: string
-          description: Change status.
-          enum:
-          - started
-          - success
-          - failure
-          example: started
-        identifier:
-          type: string
-          description: Unique change identifier.
-          example: deploy-20240413-001
-        hosts:
-          type: array
-          description: Hosts affected by the change.
-          items:
-            type: string
-          example:
-          - production-database-1
-        timestamp:
-          type: integer
-          description: Unix timestamp of the change.
-          example: 1713000000
   securitySchemes:
-    bearerAuth:
+    BearerUser131:
       type: http
       scheme: bearer
-      description: BigPanda API Bearer token
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
+        tool you use to make API calls
+
+        '
+  schemas:
+    Change-relation-object:
+      required:
+      - change_id
+      - incident_id
+      - match_certainty
+      type: object
+      properties:
+        change_id:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+        incident_id:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+        match_certainty:
+          type: string
+          description: 'What the relationship is between the suspected change and the incident. One of: [MATCH, SUSPECT, NONE]
+
+            '
+          examples:
+          - MATCH
+        comment:
+          $ref: '#/components/schemas/comment'
+      x-apidog-orders:
+      - change_id
+      - incident_id
+      - match_certainty
+      - comment
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    comment:
+      type: string
+      description: An optional comment or short description.
+      x-apidog-folder: ''
+      examples:
+      - Marking for regional similarity
+    change_object:
+      required:
+      - identifier
+      - status
+      - summary
+      - start
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: The change's unique identifier from its original change system
+          examples:
+          - CNG-166146
+        status:
+          type: string
+          description: '''Status of the change. One of: [Planned,In Progress,Done,Canceled]''
+
+            '
+          examples:
+          - Planned
+        summary:
+          type: string
+          description: Short summary/title of the change
+          examples:
+          - Update to Contrail configuration for CAP to reduce network processing overhead
+        start:
+          type: integer
+          description: Unix epoch time when the start time of the change (or any start time specified by the user in the integration)
+            occurred (in seconds).
+          format: timestamp
+          examples:
+          - 1879723984
+        end:
+          type: integer
+          description: Unix epoch time when the end time of the change (or any end time specified by the user in the integration)
+            occurred (in seconds).
+          format: timestamp
+          examples:
+          - 1979723984
+        ticket_url:
+          type: string
+          description: The URL of the record in the change system
+          examples:
+          - https://jira.link.com/ticket?change=chng123
+        tags:
+          type: object
+          description: 'JSON list of all change object tags. Visible in the UI in the
+
+            Related Changes tab.
+
+            '
+          properties:
+            <tag name>:
+              type: string
+              examples:
+              - '"<tag value>"
+
+                '
+          x-apidog-orders:
+          - <tag name>
+          x-apidog-ignore-properties: []
+        metadata:
+          type: object
+          description: JSON object with change data.
+          properties:
+            opened_by:
+              type: string
+              examples:
+              - userID123
+          x-apidog-orders:
+          - opened_by
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - identifier
+      - status
+      - summary
+      - start
+      - end
+      - ticket_url
+      - tags
+      - metadata
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    related_change:
+      type: object
+      properties:
+        change_id:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+        incident_id:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+        comment:
+          $ref: '#/components/schemas/comment'
+        match_certainty:
+          type: string
+          examples:
+          - SUSPECT
+      x-apidog-orders:
+      - change_id
+      - incident_id
+      - comment
+      - match_certainty
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

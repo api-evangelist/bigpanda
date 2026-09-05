@@ -1,0 +1,411 @@
+openapi: 3.0.3
+info:
+  title: BigPanda Change Risk API
+  description: BigPanda Change Risk operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own
+    API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it
+    was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base
+    URL for your region.
+  version: 1.0.0
+  contact:
+    name: BigPanda Support
+    url: https://api-docs.bigpanda.io/
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 2
+servers:
+- url: https://api.bigpanda.io
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
+tags:
+- name: Change Risk
+paths:
+  /change-risk-assessments/{change_number}:
+    post:
+      summary: Request a Change Risk Rating
+      deprecated: false
+      description: "Request a risk rating for a specific change.\n\nAfter sending the API call, the risk rated change will\
+        \ appear in the [Change Risk Dashboard](https://docs.bigpanda.io/en/ai-incident-prevention-analytics-and-dashboards.html#change-risk-dashboard-156577),\
+        \ or you can use the Retrieve a Risk Rated Change API call to view the change. \n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token.\n\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API\
+        \ is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will\
+        \ need to be retried.\n\n> \U0001F4D8 **profileId**\n>\n> The profileId can be found on the [Change Risk Configuration](https://docs.bigpanda.io/en/configure-ai-incident-prevention#change-risk-156592)\
+        \ page within the web app.\n"
+      operationId: request-a-risk-rating
+      tags:
+      - Change Risk
+      parameters:
+      - name: change_number
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      - name: profileId
+        in: query
+        description: Risk profile name.
+        required: true
+        example: 6219dbf6066877283dc0c222
+        schema:
+          type: string
+      responses:
+        '202':
+          x-apidog-ordering: 0
+          description: '202'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/changerating202response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769975-run
+      x-source-url: https://api-docs.bigpanda.io/request-a-change-risk-rating-37769975e0.md
+      x-source-page: Request a Change Risk Rating
+    get:
+      summary: Retrieve a Risk Rated Change
+      deprecated: false
+      description: "Retrieve a risk rated change.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
+        \ Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\n\n\
+        > ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute.\
+        \ Additional requests will return a 429 response code and the request will need to be retried.\n\n> \U0001F4D8 **profileId**\n\
+        >\n> The profileId can be found on the [Change Risk Configuration](https://docs.bigpanda.io/en/configure-ai-incident-prevention#change-risk-156592)\
+        \ page within the web app.\n"
+      operationId: get-a-change
+      tags:
+      - Change Risk
+      parameters:
+      - name: change_number
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      - name: profileId
+        in: query
+        description: 'Risk profile ID. '
+        required: true
+        example: 6219dbf6066877283dc0c222
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/changerisk200response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769976-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-a-risk-rated-change-37769976e0.md
+      x-source-page: Retrieve a Risk Rated Change
+components:
+  securitySchemes:
+    BearerUser11:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
+
+        headers only in the secure tool you use to make API calls
+
+        '
+  schemas:
+    changerating202response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 202
+        data:
+          type: object
+          properties:
+            changeNumber:
+              type: string
+              description: The unique ID of the change.
+              examples:
+              - CHG0004053111
+            status:
+              type: string
+              description: The status of the risk rating request.
+              examples:
+              - accepted
+            message:
+              type: string
+              description: The processing message.
+              examples:
+              - Change risk assessment queued for processing.
+          x-apidog-orders:
+          - changeNumber
+          - status
+          - message
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    changerisk200response:
+      type: object
+      description: "Call was successful. \n"
+      properties:
+        status:
+          type: integer
+          examples:
+          - 200
+        data:
+          type: object
+          properties:
+            changeNumber:
+              type: string
+              description: The unique ID of the risk rated change.
+              examples:
+              - CHG0004053111
+            firstAssessed:
+              type: string
+              description: The date and time of when the change risk was first assessed.
+              examples:
+              - '2025-07-04T23:13:00.000Z'
+            lastAssessed:
+              type: string
+              description: The date and time of when the change risk was last assessed.
+              examples:
+              - '2025-07-13T05:29:00.000Z'
+            changeDetails:
+              type: object
+              description: Details about the change.
+              properties:
+                description:
+                  type: string
+                  description: Full description of the change.
+                  examples:
+                  - Installing Microsoft Security Critical Patches for May 2025 on production servers to address vulnerabilities
+                    and ensure compliance. Brief downtime (~5 minutes) for reboots is expected during off-peak hours.
+                shortDescription:
+                  type: string
+                  description: Brief description of the change.
+                  examples:
+                  - Security patch updates
+                createdOn:
+                  type: string
+                  description: The date and time when the change was created.
+                  examples:
+                  - '2025-07-04T23:13:00.000Z'
+                updatedOn:
+                  type: string
+                  description: The date and time when the change was last updated.
+                  examples:
+                  - '2025-07-13T05:29:00.000Z'
+                scheduledStart:
+                  type: string
+                  description: The date and time when the change is scheduled to start.
+                  examples:
+                  - '2025-07-29T12:15:00.000Z'
+                scheduledEnd:
+                  type: string
+                  description: The date and time when the change is scheduled to end.
+                  examples:
+                  - '2025-07-29T16:15:00.000Z'
+                assignmentGroup:
+                  type: string
+                  description: The assignment group responsible for the change.
+                  examples:
+                  - AWS-Infrastructure-T1
+                assignedTo:
+                  type: string
+                  description: The person who the change is assigned to.
+                  examples:
+                  - Alex Smith
+              x-apidog-orders:
+              - description
+              - shortDescription
+              - createdOn
+              - updatedOn
+              - scheduledStart
+              - scheduledEnd
+              - assignmentGroup
+              - assignedTo
+              x-apidog-ignore-properties: []
+            riskPredictionOutputs:
+              type: object
+              description: Risk prediction ratings and scores.
+              properties:
+                riskRating:
+                  type: string
+                  description: The risk rating that AI Incident Prevention assigned to the change.
+                  examples:
+                  - 1
+                riskRatingHumanReadable:
+                  type: string
+                  description: The human-readable risk rating that AI Incident Prevention assigned to the change.
+                  examples:
+                  - Critical
+                riskScores:
+                  type: object
+                  description: List of risk scores.
+                  properties:
+                    implementationComplexity:
+                      type: string
+                      description: Rating of how complex implementation of the change is predicted to be. Score is based on
+                        the documented change plan quality, implementation complexity, and the nature of the change itself.
+                      examples:
+                      - 80
+                    topologicalImpact:
+                      type: string
+                      description: Rating of the change's predicted topological impact. Score is based on which parts of the
+                        environment will be affected and how critical they are.
+                      examples:
+                      - 90
+                    historicalIncidentRisk:
+                      type: string
+                      description: The risk score based on historical incidents. Score is based on the likelihood of causing
+                        an incident based on historically similar changes causing incidents
+                      examples:
+                      - 76
+                    teamAndIndividualRisk:
+                      type: string
+                      description: Predicted risk impact of the team and individual. Score is based on the calculated experience
+                        and reliability of the team and individual performing the change
+                      examples:
+                      - 81
+                    blendedScore:
+                      type: string
+                      description: The combined average of all risk score types.
+                      examples:
+                      - 83.75
+                  x-apidog-orders:
+                  - implementationComplexity
+                  - topologicalImpact
+                  - historicalIncidentRisk
+                  - teamAndIndividualRisk
+                  - blendedScore
+                  x-apidog-ignore-properties: []
+                riskWeightingsApplied:
+                  type: object
+                  description: null
+                  properties:
+                    implementationComplexity:
+                      type: string
+                      description: The weighting impact of the implementationComplexity category on the overall risk score.
+                      examples:
+                      - null
+                    topologicalImpact:
+                      type: string
+                      description: The weighting impact of the topologicalImpact category on the overall risk score.
+                      examples:
+                      - null
+                    historicalIncidentRisk:
+                      type: string
+                      description: The weighting impact of the historicalIncidentRisk category on the overall risk score.
+                      examples:
+                      - null
+                    teamAndIndividualRisk:
+                      type: string
+                      description: The weighting impact of the teamAndIndividualRisk category on the overall risk score.
+                      examples:
+                      - null
+                  x-apidog-orders:
+                  - implementationComplexity
+                  - topologicalImpact
+                  - historicalIncidentRisk
+                  - teamAndIndividualRisk
+                  x-apidog-ignore-properties: []
+              x-apidog-orders:
+              - riskRating
+              - riskRatingHumanReadable
+              - riskScores
+              - riskWeightingsApplied
+              x-apidog-ignore-properties: []
+            riskReasoning:
+              type: string
+              description: AI Incident Prevention's reasoning behind why the risk score was applied.
+              examples:
+              - Implementation complexity is low, given the well-documented patching process used many times before.
+            suggestedMitigations:
+              type: string
+              description: Suggestions for mitigating risk related to the change.
+              examples:
+              - Keep the rollback plan handy and ensure relevant teams are notified.
+          x-apidog-orders:
+          - changeNumber
+          - firstAssessed
+          - lastAssessed
+          - changeDetails
+          - riskPredictionOutputs
+          - riskReasoning
+          - suggestedMitigations
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

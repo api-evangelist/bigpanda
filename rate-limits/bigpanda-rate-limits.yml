@@ -3,88 +3,165 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: BigPanda
 providerId: bigpanda
+generated: '2026-09-04'
+method: searched
+source: https://api-docs.bigpanda.io/rate-limits
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-04'
 tags:
   - Incidents
   - Monitoring
   - Platform
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the BigPanda API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
+description: >-
+  BigPanda's published rate-limit posture. This file replaces a 2026-05-04 scaffold whose tiers and header
+  names were invented defaults; every value below is now either quoted from BigPanda's docs or recorded as
+  absent. The short version: limits are per-endpoint and are documented on each endpoint rather than
+  centrally, exactly one numeric limit is published platform-wide (the Biggy API's 100 requests per
+  minute), and NO rate-limit response header is documented anywhere.
+limit_count: 5
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  documented: false
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+  note: >-
+    BigPanda documents no X-RateLimit-*, no RateLimit-* and no Retry-After header. The rate-limits page
+    tells callers to "retry after the interval indicated in the response" without naming the field that
+    carries the interval. For an agent this is the material gap: the only machine-readable exhaustion
+    signal is the 429 status code itself, and the backoff interval has to be guessed.
 responseCodes:
   throttled: 429
   quotaExceeded: 429
-  serviceUnavailable: 503
+policy:
+  uniform: false
+  documented_per_endpoint: true
+  statement: >-
+    "BigPanda enforces rate limits to keep the platform healthy for every organization. Limits are not
+    uniform across the API — each endpoint defines its own limit, and some endpoints add further caps
+    such as a maximum number of items per request."
+  what_to_check_per_endpoint:
+    - The request rate limit, for example requests per second or per minute.
+    - Any per-request cap, for example the maximum number of items in a single call.
+    - Any longer-window limit, for example a weekly cap.
+  on_exhaustion:
+    - Retry after the interval indicated in the response.
+    - Use exponential backoff rather than retrying immediately.
+    - Slow the request or polling rate to stay under the limit.
+  general_guidance:
+    - Spread requests over time instead of sending them in bursts.
+    - Use filtering and pagination to reduce call count.
+    - Wait between status checks when polling an asynchronous job.
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
+  - name: Default REST endpoint limit
+    scope: endpoint
+    metric: requests_per_second
+    limit: 5
+    timeFrame: second
+    on_exhaustion: 429
+    statement: '**Rate limit:** 5 requests per second.'
+    operations: 94
+    applies:
+      - openapi/bigpanda-incidents-api-openapi.yml
+      - openapi/bigpanda-environments-api-openapi.yml
+      - openapi/bigpanda-alert-enrichment-api-openapi.yml
+      - openapi/bigpanda-alert-filters-api-openapi.yml
+      - openapi/bigpanda-correlation-patterns-api-openapi.yml
+      - openapi/bigpanda-maintenance-plans-api-openapi.yml
+      - openapi/bigpanda-topology-api-openapi.yml
+      - openapi/bigpanda-audit-api-openapi.yml
+      - openapi/bigpanda-oim-configuration-api-openapi.yml
+      - openapi/bigpanda-reporting-api-openapi.yml
+      - openapi/bigpanda-ai-settings-api-openapi.yml
+    note: >-
+      The most common published limit, carried verbatim in the description of 94 of the 263 operations in
+      the reference. It is per endpoint, not per key or per account.
+    source: https://api-docs.bigpanda.io/
+  - name: SCIM route limit
+    scope: route
+    metric: requests_per_second
+    limit: 2
+    timeFrame: second
+    on_exhaustion: 429
+    statement: '**Rate limit:** 2 requests per route per second.'
+    operations: 11
+    applies:
+      - openapi/bigpanda-users-api-openapi.yml
+    paths:
+      - /scim/v2/Users
+      - /scim/v2/Users/{user_id}
+      - /scim/v2/Groups
+      - /scim/v2/Groups/{group_id}
+    note: Tighter than the platform default; note it is per ROUTE per second, so paged SCIM sync must throttle per path.
+    source: https://api-docs.bigpanda.io/create-scim-group-37770146e0.md
+  - name: Changes API limit
+    scope: account
+    metric: changes_per_minute
+    limit: 400
     timeFrame: minute
+    secondary:
+      metric: changes_per_week
+      limit: 50000
+      timeFrame: week
+      contractual: true
+    on_exhaustion: 429
+    statement: '**Rate limit:** 400 changes per minute; 50,000 per week (contractual).'
+    operations: 7
     applies:
-      - BigPanda
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
+      - openapi/bigpanda-changes-api-openapi.yml
+    note: >-
+      The only published limit with a long-window cap, and the only one BigPanda marks as contractual —
+      the weekly ceiling is a commercial term, not just a throttle.
+    source: https://api-docs.bigpanda.io/create-or-update-a-change.md
+  - name: Batch alert resolution limit
+    scope: endpoint
+    metric: requests_per_second
+    limit: 1
+    timeFrame: second
+    per_request_cap:
+      metric: alerts_per_request
+      limit: 500
+    on_exhaustion: 429
+    statement: '**Rate limit:** 1 call per second; up to 500 alerts per request.'
+    operations: 1
     applies:
-      - BigPanda
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
+      - openapi/bigpanda-alerts-api-openapi.yml
+    paths:
+      - /resources/v2.0/environments/{environment_id}/batch-resolve/alerts
+    note: The strictest limit in the surface, and the clearest example of the per-request item cap BigPanda warns about.
+    source: https://api-docs.bigpanda.io/resolve-alerts-37769996e0.md
+  - name: Biggy API
+    scope: api
+    applies:
+      - https://api.biggy.io/mcp
+      - https://api.biggy.io/a2a/biggy-agent
+      - openapi/bigpanda-biggy-query-api-openapi.yml
+      - openapi/bigpanda-mim-api-openapi.yml
+      - openapi/bigpanda-agents-api-openapi.yml
+      - openapi/bigpanda-meetings-transcripts-api-openapi.yml
     metric: requests_per_minute
     limit: 100
-    burst: 200
     timeFrame: minute
-    applies:
-      - BigPanda
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - BigPanda
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - BigPanda
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+    burst: null
+    on_exhaustion: 429
+    statement: >-
+      "To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional
+      requests will return a 429 response code and the request will need to be retried."
+    source: https://api-docs.bigpanda.io/mcp
+    note: >-
+      The only limit stated in the narrative docs rather than on individual endpoints. It applies to the
+      whole AI Incident Assistant surface including the MCP and A2A endpoints.
+undocumented:
+  note: >-
+    No published limit was found for the inbound alert-ingestion paths (/data/v2/alerts and
+    /oim/api/alerts) — the highest-volume surface BigPanda has — nor for the users, roles, API-keys,
+    service-accounts, SSO, data-connectors or email-parser routes. 158 of the 263 operations carry no
+    rate-limit statement at all. Those limits exist (BigPanda says each endpoint defines its own) but are
+    not published, and none was estimated here.
+  operations_without_a_published_limit: 158
+docs:
+  - https://api-docs.bigpanda.io/rate-limits
+  - https://api-docs.bigpanda.io/best-practices
+cross_link: conventions/bigpanda-conventions.yml

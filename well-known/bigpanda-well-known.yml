@@ -1,0 +1,213 @@
+generated: '2026-09-04'
+method: probed
+source: live probes of every host this record knows — registrable domain + www, each API baseURL host,
+  every OpenAPI servers[] host, the docs host, the API-reference host, the Biggy agent host, the status
+  host and the trust host.
+description: >-
+  Well-known discovery documents served by BigPanda. Two real documents were found, both on the
+  WordPress marketing site (www.bigpanda.io): an RFC 8414 OAuth authorization-server metadata document
+  and an RFC 9728 OAuth protected-resource document, which together advertise a WordPress MCP server at
+  https://www.bigpanda.io/wp-json/mcp/mcp-oauth-server with the scope "mcp". No security.txt is served
+  on any BigPanda-operated host. The 200s on docs.bigpanda.io and trust.bigpanda.io are SPA catch-all
+  shells (an identical HTML body is returned for every /.well-known/ path) and are recorded as misses.
+  The security.txt on status.bigpanda.io is Atlassian Statuspage's own vendor document (Contact
+  atlassian.com, Canonical https://www.atlassian.com/.well-known/security.txt), not BigPanda's, so no
+  SecurityTxt pointer is claimed for BigPanda from it.
+hosts:
+  - host: bigpanda.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: well-known/bigpanda-oauth-authorization-server.json
+        content_type: application/json
+        note: RFC 8414 authorization server metadata. issuer https://www.bigpanda.io, PKCE S256, scopes_supported [mcp].
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        file: well-known/bigpanda-oauth-protected-resource.json
+        content_type: application/json
+        note: RFC 9728 protected resource metadata naming https://www.bigpanda.io/wp-json/mcp/mcp-oauth-server.
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: www.bigpanda.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: well-known/bigpanda-oauth-authorization-server.json
+        content_type: application/json
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        file: well-known/bigpanda-oauth-protected-resource.json
+        content_type: application/json
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: api.bigpanda.io
+    note: Every path on the US API host answers 401 Authorization Required at the edge; nothing is served anonymously.
+    documents:
+      - path: /.well-known/security.txt
+        status: 401
+      - path: /.well-known/openid-configuration
+        status: 401
+      - path: /.well-known/oauth-authorization-server
+        status: 401
+      - path: /.well-known/oauth-protected-resource
+        status: 401
+      - path: /.well-known/api-catalog
+        status: 401
+      - path: /.well-known/ai-plugin.json
+        status: 401
+  - host: api.eu.bigpanda.io
+    note: >-
+      The EU base URL BigPanda publishes at https://api-docs.bigpanda.io/regions. It does not resolve in
+      DNS (NXDOMAIN, checked 2026-09-04), so no path could be probed. The live EU host observed is
+      eu-api.bigpanda.io.
+    documents: []
+  - host: eu-api.bigpanda.io
+    note: Live EU API host observed 2026-09-04 (401 Authorization Required at the root, same edge as api.bigpanda.io).
+    documents:
+      - path: /.well-known/agent-card.json
+        status: 404
+  - host: docs.bigpanda.io
+    note: >-
+      Paligo docs site. Every /.well-known/ path returns HTTP 200 with the same 12,728-byte HTML shell —
+      a soft-404, not a document. Recorded as misses.
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        result: soft-404-html-shell
+      - path: /.well-known/openid-configuration
+        status: 200
+        result: soft-404-html-shell
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        result: soft-404-html-shell
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        result: soft-404-html-shell
+      - path: /.well-known/api-catalog
+        status: 200
+        result: soft-404-html-shell
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        result: soft-404-html-shell
+  - host: api-docs.bigpanda.io
+    note: Apidog-hosted API reference. Serves a real llms.txt and sitemap.xml but no /.well-known/ documents.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /llms.txt
+        status: 200
+        note: Not a /.well-known/ path; recorded here because it is the machine-readable index for the API reference.
+  - host: api.biggy.io
+    note: >-
+      Host of the documented Biggy MCP (/mcp), A2A (/a2a/biggy-agent) and agent-card endpoints. Every
+      anonymous request is answered by a Cloudflare bot challenge (HTTP 403), so no document could be
+      read without credentials.
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/oauth-protected-resource
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+      - path: /.well-known/agent-card.json?assistant_id=biggy-agent
+        status: 403
+        note: Documented as a live operation (operationId retrieve-agent-card) but Bearer-authenticated and Cloudflare-challenged.
+  - host: status.bigpanda.io
+    note: Atlassian Statuspage tenant.
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: well-known/bigpanda-status-security.txt
+        content_type: text/plain
+        third_party: true
+        note: >-
+          Atlassian's own PGP-signed security.txt served by Statuspage. Contact
+          https://www.atlassian.com/trust/security/report-a-vulnerability, Canonical
+          https://www.atlassian.com/.well-known/security.txt. Saved as evidence; NOT credited to BigPanda.
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: trust.bigpanda.io
+    note: SafeBase-style trust center SPA. Every /.well-known/ path returns HTTP 200 with the same 5,435-byte app shell — soft-404s.
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        result: soft-404-html-shell
+      - path: /.well-known/openid-configuration
+        status: 200
+        result: soft-404-html-shell
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        result: soft-404-html-shell
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        result: soft-404-html-shell
+      - path: /.well-known/api-catalog
+        status: 200
+        result: soft-404-html-shell
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        result: soft-404-html-shell
+  - host: eu-docs.bigpanda.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: support.bigpanda.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404

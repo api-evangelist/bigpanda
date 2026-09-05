@@ -1,0 +1,2917 @@
+openapi: 3.0.3
+info:
+  title: BigPanda Users API
+  description: BigPanda Users operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API
+    reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was
+    read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL
+    for your region.
+  version: 1.0.0
+  contact:
+    name: BigPanda Support
+    url: https://api-docs.bigpanda.io/
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 26
+servers:
+- url: https://api.bigpanda.io
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
+tags:
+- name: Users
+paths:
+  /resources/v2.1/users/activate:
+    post:
+      summary: Activate User
+      deprecated: false
+      description: Activate an invited user account, completing the invitation flow.
+      operationId: postUserActivate
+      tags:
+      - Users
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+              x-apidog-ignore-properties: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
+                    spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+                  x-apidog-ignore-properties: []
+                - $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '409':
+          x-apidog-ordering: 4
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 5
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770168-run
+      x-source-url: https://api-docs.bigpanda.io/activate-user-37770168e0.md
+      x-source-page: Activate User
+  /resources/v2.1/users/change-password:
+    post:
+      summary: Change user password
+      deprecated: false
+      description: Change a user's password. Requires admin permissions or a self-service flow with the user's current credentials.
+      operationId: changeUserPassword
+      tags:
+      - Users
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+              x-apidog-ignore-properties: []
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: No Content
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 3
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 4
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '409':
+          x-apidog-ordering: 5
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 6
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770167-run
+      x-source-url: https://api-docs.bigpanda.io/change-user-password-37770167e0.md
+      x-source-page: Change user password
+  /scim/v2/Groups:
+    post:
+      summary: Create SCIM Group
+      deprecated: false
+      description: 'Create a new group via SCIM
+
+
+        **Rate limit:** 2 requests per route per second.'
+      operationId: createGroupSCIM
+      tags:
+      - Users
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+      responses:
+        '201':
+          x-apidog-ordering: 0
+          description: Group created
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 3
+          description: Internal Server Error
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770146-run
+      x-source-url: https://api-docs.bigpanda.io/create-scim-group-37770146e0.md
+      x-source-page: Create SCIM Group
+    get:
+      summary: Get SCIM Groups
+      deprecated: false
+      description: 'Get groups response list by given SCIM Query Parameters
+
+
+        **Rate limit:** 2 requests per route per second.'
+      operationId: getGroupsBySCIMQueryParams
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 3
+          description: Internal Server Error
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770145-run
+      x-source-url: https://api-docs.bigpanda.io/get-scim-groups-37770145e0.md
+      x-source-page: Get SCIM Groups
+  /scim/v2/Users:
+    post:
+      summary: Create SCIM User
+      deprecated: false
+      description: 'Create a new user via SCIM
+
+
+        **Rate limit:** 2 requests per route per second.'
+      operationId: createUserSCIM
+      tags:
+      - Users
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: User created
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '201':
+          x-apidog-ordering: 1
+          description: User created
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 2
+          description: Bad Request
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 3
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: Internal Server Error
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770144-run
+      x-source-url: https://api-docs.bigpanda.io/create-scim-user-37770144e0.md
+      x-source-page: Create SCIM User
+    get:
+      summary: Get SCIM Users
+      deprecated: false
+      description: 'Get users response list by a given SCIM Query Parameters
+
+
+        **Rate limit:** 2 requests per route per second.'
+      operationId: getUsersBySCIMQueryParams
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 3
+          description: Internal Server Error
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770143-run
+      x-source-url: https://api-docs.bigpanda.io/get-scim-users-37770143e0.md
+      x-source-page: Get SCIM Users
+  /scim/v2/Groups/{group_id}:
+    delete:
+      summary: Delete SCIM Group by ID
+      deprecated: false
+      description: 'Delete Group by ID via SCIM
+
+
+        **Rate limit:** 2 requests per route per second.'
+      operationId: deleteGroupByIdSCIM
+      tags:
+      - Users
+      parameters:
+      - name: group_id
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: No Content
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 3
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345855-run
+      x-source-url: https://api-docs.bigpanda.io/delete-scim-group-by-id-38345855e0.md
+      x-source-page: Delete SCIM Group by ID
+    get:
+      summary: Get SCIM Group by ID
+      deprecated: false
+      description: 'Retrieve group details by ID via SCIM
+
+
+        **Rate limit:** 2 requests per route per second.'
+      operationId: getGroupByIdSCIM
+      tags:
+      - Users
+      parameters:
+      - name: group_id
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not Found
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: Internal Server Error
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345852-run
+      x-source-url: https://api-docs.bigpanda.io/get-scim-group-by-id-38345852e0.md
+      x-source-page: Get SCIM Group by ID
+    patch:
+      summary: Patch SCIM Group by ID
+      deprecated: false
+      description: 'Partially update group details by ID via SCIM
+
+
+        **Rate limit:** 2 requests per route per second.'
+      operationId: patchGroupByIdSCIM
+      tags:
+      - Users
+      parameters:
+      - name: group_id
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: Group patched
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not Found
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: Internal Server Error
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345854-run
+      x-source-url: https://api-docs.bigpanda.io/patch-scim-group-by-id-38345854e0.md
+      x-source-page: Patch SCIM Group by ID
+    put:
+      summary: Update SCIM Group by ID
+      deprecated: false
+      description: 'Update group details by ID via SCIM
+
+
+        **Rate limit:** 2 requests per route per second.'
+      operationId: updateGroupByIdSCIM
+      tags:
+      - Users
+      parameters:
+      - name: group_id
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: Group updated
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not Found
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: Internal Server Error
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345853-run
+      x-source-url: https://api-docs.bigpanda.io/update-scim-group-by-id-38345853e0.md
+      x-source-page: Update SCIM Group by ID
+  /resources/v2.1/users/{user_id}:
+    delete:
+      summary: Delete User by Id
+      deprecated: false
+      description: Delete user by a given user Id
+      operationId: deleteUserById
+      tags:
+      - Users
+      parameters:
+      - name: user_id
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
+                    spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+                  x-apidog-ignore-properties: []
+                - $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '409':
+          x-apidog-ordering: 4
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 5
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345858-run
+      x-source-url: https://api-docs.bigpanda.io/delete-user-by-id-38345858e0.md
+      x-source-page: Delete User by Id
+    get:
+      summary: Get User by Id
+      deprecated: false
+      description: Get single user by a given user Id
+      operationId: getUserById
+      tags:
+      - Users
+      parameters:
+      - name: user_id
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
+                    spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+                  x-apidog-ignore-properties: []
+                - $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345856-run
+      x-source-url: https://api-docs.bigpanda.io/get-user-by-id-38345856e0.md
+      x-source-page: Get User by Id
+    patch:
+      summary: Patch User by Id
+      deprecated: false
+      description: Modify user by a given user Id and request body params
+      operationId: patchUserById
+      tags:
+      - Users
+      parameters:
+      - name: user_id
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+              x-apidog-ignore-properties: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
+                    spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+                  x-apidog-ignore-properties: []
+                - $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345857-run
+      x-source-url: https://api-docs.bigpanda.io/patch-user-by-id-38345857e0.md
+      x-source-page: Patch User by Id
+  /resources/v2.1/users/{user_id}/permissions:
+    get:
+      summary: Get User Permissions By Product
+      deprecated: false
+      description: Returns the target user's flat permissions within the requested product scope, sourced from Central IAM
+        (RDS). Gated by the `biggy_central_iam` feature toggle - returns 403 when the organization is still on the legacy
+        (Mongo) permissions regime.
+      operationId: getUserPermissionsByProduct
+      tags:
+      - Users
+      parameters:
+      - name: user_id
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled).
+                    Replace once the bundled spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled).
+                    Replace once the bundled spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request (missing/invalid product query parameter)
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled).
+                  Replace once the bundled spec is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 3
+          description: Forbidden (Biggy Central IAM not enabled for this organization)
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled).
+                  Replace once the bundled spec is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled).
+                  Replace once the bundled spec is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345859-run
+      x-source-url: https://api-docs.bigpanda.io/get-user-permissions-by-product-38345859e0.md
+      x-source-page: Get User Permissions By Product
+  /resources/v2.1/users:
+    get:
+      summary: Get Users by Query Params
+      deprecated: false
+      description: Get multiple users list by a given Query Parameters Filter
+      operationId: getUsersByQueryParams
+      tags:
+      - Users
+      parameters:
+      - name: since
+        in: query
+        description: The timestamp to start the filter
+        required: false
+        example: 0
+        schema:
+          type: number
+          title: UNIX Timestamp
+          description: UNIX Timestamp
+          examples:
+          - 1597290898886
+      - name: until
+        in: query
+        description: The timestamp to end the filter
+        required: false
+        example: 0
+        schema:
+          type: number
+          title: UNIX Timestamp
+          description: UNIX Timestamp
+          examples:
+          - 1597290898886
+      - name: ids
+        in: query
+        description: Resource id's list
+        required: false
+        example: ''
+        schema:
+          type: array
+          minItems: 1
+          maxItems: 100
+          items:
+            type: string
+            title: ID
+            pattern: ^[a-f\d]{24}$
+            description: Object's ID
+            minLength: 24
+            maxLength: 24
+            examples:
+            - 60c5238222fa63633d93d52f
+          uniqueItems: true
+      - name: page
+        in: query
+        description: Which set of results to return.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 1
+          examples:
+          - 4
+      - name: per_page
+        in: query
+        description: Number of results to show for each page.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 100
+          examples:
+          - 30
+      - name: direction
+        in: query
+        description: The direction to sort results by
+        required: false
+        example: ''
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+          examples:
+          - desc
+      - name: sort
+        in: query
+        description: The field to sort results by
+        required: false
+        example: ''
+        schema:
+          type: string
+          enum:
+          - id
+          - name
+          - created_at
+          default: name
+          examples:
+          - name
+      - name: state
+        in: query
+        description: User State
+        required: false
+        example: ''
+        schema:
+          $ref: '#/components/schemas/UserStateFilter-enum'
+      - name: name
+        in: query
+        description: User Name
+        required: false
+        example: ''
+        schema:
+          $ref: '#/components/schemas/UserName'
+      - name: attributesToRetrieve
+        in: query
+        description: User attributes to retrieve
+        required: false
+        example: ''
+        schema:
+          type: array
+          minItems: 1
+          maxItems: 11
+          items:
+            type: string
+            enum:
+            - username
+            - name
+            - organization
+            - measure
+            - createdAt
+            - firstLoginAt
+            - lastLoginAt
+            - state
+            - roles
+          uniqueItems: true
+      - name: roleId
+        in: query
+        description: Role id
+        required: false
+        example: ''
+        schema:
+          $ref: '#/components/schemas/id-v1'
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
+                    spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+                  x-apidog-ignore-properties: []
+                - $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 3
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770163-run
+      x-source-url: https://api-docs.bigpanda.io/get-users-by-query-params-37770163e0.md
+      x-source-page: Get Users by Query Params
+    post:
+      summary: Post New User
+      deprecated: false
+      description: Create new user based on request body params
+      operationId: postUser
+      tags:
+      - Users
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+              x-apidog-ignore-properties: []
+      responses:
+        '201':
+          x-apidog-ordering: 0
+          description: Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
+                    spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+                  x-apidog-ignore-properties: []
+                - $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '409':
+          x-apidog-ordering: 3
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770164-run
+      x-source-url: https://api-docs.bigpanda.io/post-new-user-37770164e0.md
+      x-source-page: Post New User
+  /scim/v2/Users/{user_id}:
+    get:
+      summary: Get user by ID
+      deprecated: false
+      description: 'Retrieve user details by ID via SCIM
+
+
+        **Rate limit:** 2 requests per route per second.'
+      operationId: getUserByIdSCIM
+      tags:
+      - Users
+      parameters:
+      - name: user_id
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not Found
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: Internal Server Error
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345851-run
+      x-source-url: https://api-docs.bigpanda.io/get-user-by-id-38345851e0.md
+      x-source-page: Get user by ID
+    patch:
+      summary: Patch user by ID
+      deprecated: false
+      description: 'Partially update user details by ID via SCIM
+
+
+        **Rate limit:** 2 requests per route per second.'
+      operationId: patchUserByIdSCIM
+      tags:
+      - Users
+      parameters:
+      - name: user_id
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: User patched
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not Found
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: Internal Server Error
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345850-run
+      x-source-url: https://api-docs.bigpanda.io/patch-user-by-id-38345850e0.md
+      x-source-page: Patch user by ID
+    put:
+      summary: SCIM Update user by ID
+      deprecated: false
+      description: 'Update user details by ID via SCIM
+
+
+        **Rate limit:** 2 requests per route per second.'
+      operationId: updateUserByIdSCIM
+      tags:
+      - Users
+      parameters:
+      - name: user_id
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: User updated
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not Found
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: Internal Server Error
+          content:
+            application/scim+json:
+              schema:
+                type: object
+                additionalProperties: true
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                  is provided.'
+                x-apidog-orders: []
+                properties: {}
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38345849-run
+      x-source-url: https://api-docs.bigpanda.io/scim-update-user-by-id-38345849e0.md
+      x-source-page: SCIM Update user by ID
+  /resources/v2.1/users/invite:
+    post:
+      summary: Invite User
+      deprecated: false
+      description: Invite a user to your BigPanda organization by email. The user receives an invitation to set credentials
+        and activate; pair with the resend endpoint if the invitation lapses.
+      operationId: postUserInvitation
+      tags:
+      - Users
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+              x-apidog-ignore-properties: []
+      responses:
+        '201':
+          x-apidog-ordering: 0
+          description: Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  additionalProperties: true
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
+                    spec is provided.'
+                  x-apidog-orders: []
+                  properties: {}
+                  x-apidog-ignore-properties: []
+                - $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '409':
+          x-apidog-ordering: 4
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 5
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770165-run
+      x-source-url: https://api-docs.bigpanda.io/invite-user-37770165e0.md
+      x-source-page: Invite User
+  /resources/v2.1/users/invite/resend:
+    post:
+      summary: Resend invite User
+      deprecated: false
+      description: Resend a pending invitation to a user who has not yet activated their account.
+      operationId: postUserResendInvitation
+      tags:
+      - Users
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
+                is provided.'
+              x-apidog-orders: []
+              properties: {}
+              x-apidog-ignore-properties: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '409':
+          x-apidog-ordering: 4
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 5
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-schema-pending: true
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770166-run
+      x-source-url: https://api-docs.bigpanda.io/resend-invite-user-37770166e0.md
+      x-source-page: Resend invite User
+  /users:
+    get:
+      summary: Retrieve All Users
+      deprecated: false
+      description: "Retrieve all users in your organization. \n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs\
+        \ require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
+        \ token.\n\n> \U0001F4D8 **Required permissions**\n>\n>  Your account must have the `User Management` permission set\
+        \ to `View` to use this endpoint.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API\
+        \ is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will\
+        \ need to be retried."
+      operationId: get-all-users
+      tags:
+      - Users
+      parameters:
+      - name: page
+        in: query
+        description: Which page of results to return. Default is 1, maximum is 1000.
+        required: false
+        example: 1
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Page size to return. Default is 50, maximum is 100.
+        required: false
+        example: 50
+        schema:
+          type: integer
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Unique identifier of the user.
+                      fullName:
+                        type: string
+                        description: User's full name.
+                      email:
+                        type: string
+                        description: Email address of the user.
+                      title:
+                        type: string
+                        description: 'User''s job title. '
+                      avatar:
+                        type: string
+                        description: 'User''s avatar. '
+                      hasUsedBiggy:
+                        type: boolean
+                        description: 'Whether or not the user has used AI Incident Assistant. '
+                      roles:
+                        type: array
+                        items:
+                          type: string
+                        description: 'Unique identifier(s) of the role(s) associated with the user. '
+                      createdAt:
+                        type: string
+                        description: ISO date-time when the user was created.
+                      updatedAt:
+                        type: string
+                        description: ISO date-time when the user was last updated.
+                      lastActiveAt:
+                        type: string
+                        description: ISO date-time when the user was last active.
+                    x-apidog-orders:
+                    - id
+                    - fullName
+                    - email
+                    - title
+                    - avatar
+                    - hasUsedBiggy
+                    - roles
+                    - createdAt
+                    - updatedAt
+                    - lastActiveAt
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: string
+                        description: Page number.
+                      limit:
+                        type: string
+                        description: Maximum number of pages.
+                      hasMore:
+                        type: boolean
+                        description: Whether or not more pages are available.
+                      total:
+                        type: string
+                        description: Total number of pages.
+                    x-apidog-orders:
+                    - page
+                    - limit
+                    - hasMore
+                    - total
+                required:
+                - pagination
+                - user
+                x-apidog-orders:
+                - user
+                - pagination
+              example: "{\r\n    {\r\n        \"users\": [\r\n            {\r\n                \"id\": \"65f0c8f8d73b2b0012ab3456\"\
+                ,\r\n                \"fullName\": \"Jane Doe\",\r\n                \"email\": \"jane@example.com\",\r\n \
+                \               \"title\": \"Site Reliability Engineer\",\r\n                \"avatar\": null,\r\n       \
+                \         \"hasUsedBiggy\": true,\r\n                \"roles\": [\r\n                    \"65f0c8f8d73b2b0012ab1111\"\
+                \r\n                ],\r\n                \"createdAt\": \"2025-06-01T10:00:00.000Z\",\r\n               \
+                \ \"updatedAt\": \"2026-01-15T14:30:00.000Z\"\r\n            }\r\n        ],\r\n        \"pagination\": {\r\
+                \n            \"page\": 1,\r\n            \"limit\": 50,\r\n            \"hasMore\": false,\r\n          \
+                \  \"total\": 1\r\n        }\r\n    }\r\n}"
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 1
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    examples:
+                    - 403
+                  error:
+                    type: string
+                    examples:
+                    - Forbidden
+                  message:
+                    type: string
+                    examples:
+                    - Forbidden - insufficient permissions
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37904800-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-all-users-37904800e0.md
+      x-source-page: Retrieve All Users
+  /users/activity:
+    get:
+      summary: Retrieve User Activity
+      deprecated: false
+      description: "Query to see which users were active or inactive during a specified time period. Activity is determined\
+        \ by the use of the AI Incident Assistant (queries, chats, etc.).\n\n> \U0001F6A7 **Default lookback period**\n> \n\
+        >  If the `days` or `from`/`to` fields are not provided, the results will default to the last 30 days. \n\n> \U0001F6A7\
+        \ **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API\
+        \ uses the User API Key type of Authorization token.\n\n> \U0001F4D8 **Required permissions**\n>\n>  Your account\
+        \ must have the `User Management` permission set to `View` to use this endpoint.\n\n> ❗ **Rate limitations**\n> \n\
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return\
+        \ a 429 response code and the request will need to be retried."
+      operationId: get-user-activity
+      tags:
+      - Users
+      parameters:
+      - name: from
+        in: query
+        description: 'Start of the time range in ISO date-time format. '
+        required: false
+        example: '2025-11-27 18:00:00.000'
+        schema:
+          type: string
+      - name: to
+        in: query
+        description: 'End of the time range, in ISO date-time format. If not provided, defaults to current time. '
+        required: false
+        example: '2026-1-27 18:00:00.000'
+        schema:
+          type: string
+      - name: days
+        in: query
+        description: 'Number of days to look back. If this field is provided, it overrides `from` and `to`. '
+        required: false
+        example: 20
+        schema:
+          type: integer
+      - name: active
+        in: query
+        description: 'Whether the users returned are active or inactive. Select `true` to return active users, `false` to
+          return inactive users. '
+        required: false
+        example: 'true'
+        schema:
+          type: boolean
+      - name: page
+        in: query
+        description: Which page of the results to return. Default is 1.
+        required: false
+        example: '1'
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: 'Page size to return. Default is 50, maximum is 100. '
+        required: false
+        example: '50'
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Unique identifier of the user.
+                      fullName:
+                        type: string
+                        description: User's full name.
+                      email:
+                        type: string
+                        description: Email address of the user.
+                      title:
+                        type: string
+                        description: 'User''s job title. '
+                      avatar:
+                        type: string
+                        description: 'User''s avatar. '
+                      hasUsedBiggy:
+                        type: boolean
+                        description: 'Whether or not the user has used AI Incident Assistant. '
+                      roles:
+                        type: array
+                        items:
+                          type: string
+                        description: 'Unique identifier(s) of the role(s) associated with the user. '
+                      createdAt:
+                        type: string
+                        description: ISO date-time when the user was created.
+                      updatedAt:
+                        type: string
+                        description: ISO date-time when the user was last updated.
+                      lastActiveAt:
+                        type: string
+                        description: ISO date-time when the user was last active.
+                    x-apidog-orders:
+                    - id
+                    - fullName
+                    - email
+                    - title
+                    - avatar
+                    - hasUsedBiggy
+                    - roles
+                    - createdAt
+                    - updatedAt
+                    - lastActiveAt
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: string
+                        description: Page number.
+                      limit:
+                        type: string
+                        description: Maximum number of pages.
+                      hasMore:
+                        type: boolean
+                        description: Whether or not more pages are available.
+                      total:
+                        type: string
+                        description: Total number of pages.
+                    x-apidog-orders:
+                    - page
+                    - limit
+                    - hasMore
+                    - total
+                  filters:
+                    type: object
+                    properties:
+                      from:
+                        type: string
+                        description: ISO date-time when the lookback period began.
+                      to:
+                        type: string
+                        description: ISO date-time when the lookback period ended.
+                      active:
+                        type: string
+                        description: Whether or not the users are active.
+                    x-apidog-orders:
+                    - from
+                    - to
+                    - active
+                required:
+                - user
+                - pagination
+                x-apidog-orders:
+                - user
+                - pagination
+                - filters
+              examples:
+                '1':
+                  summary: Success
+                  value:
+                    users:
+                    - id: 65f0c8f8d73b2b0012ab3456
+                      fullName: Jane Doe
+                      email: jane@example.com
+                      title: SRE
+                      avatar: null
+                      hasUsedBiggy: true
+                      roles:
+                      - 65f0c8f8d73b2b0012ab1111
+                      createdAt: '2025-06-01T10:00:00.000Z'
+                      updatedAt: '2026-01-15T14:30:00.000Z'
+                      lastActiveAt: '2026-02-28T09:12:00.000Z'
+                    pagination:
+                      page: 1
+                      limit: 50
+                      hasMore: false
+                      total: 1
+                    filters:
+                      from: '2026-02-03T00:00:00.000Z'
+                      to: '2026-03-05T00:00:00.000Z'
+                      active: true
+                '2':
+                  summary: Success
+                  value:
+                    users:
+                    - id: 65f0c8f8d73b2b0012ab3456
+                      fullName: Jane Doe
+                      email: jane@example.com
+                      title: SRE
+                      avatar: null
+                      hasUsedBiggy: true
+                      roles:
+                      - 65f0c8f8d73b2b0012ab1111
+                      createdAt: '2025-06-01T10:00:00.000Z'
+                      updatedAt: '2026-01-15T14:30:00.000Z'
+                      lastActiveAt: '2026-02-28T09:12:00.000Z'
+                    pagination:
+                      page: 1
+                      limit: 50
+                      hasMore: false
+                      total: 1
+                    filters:
+                      from: '2026-02-03T00:00:00.000Z'
+                      to: '2026-03-05T00:00:00.000Z'
+                      active: true
+                '3':
+                  summary: Success
+                  value:
+                    users:
+                    - id: 65f0c8f8d73b2b0012ab3456
+                      fullName: Jane Doe
+                      email: jane@example.com
+                      title: SRE
+                      avatar: null
+                      hasUsedBiggy: true
+                      roles:
+                      - 65f0c8f8d73b2b0012ab1111
+                      createdAt: '2025-06-01T10:00:00.000Z'
+                      updatedAt: '2026-01-15T14:30:00.000Z'
+                      lastActiveAt: '2026-02-28T09:12:00.000Z'
+                    pagination:
+                      page: 1
+                      limit: 50
+                      hasMore: false
+                      total: 1
+                    filters:
+                      from: '2026-02-03T00:00:00.000Z'
+                      to: '2026-03-05T00:00:00.000Z'
+                      active: true
+                '4':
+                  summary: Success
+                  value:
+                    users:
+                    - id: 65f0c8f8d73b2b0012ab3456
+                      fullName: Jane Doe
+                      email: jane@example.com
+                      title: SRE
+                      avatar: null
+                      hasUsedBiggy: true
+                      roles:
+                      - 65f0c8f8d73b2b0012ab1111
+                      createdAt: '2025-06-01T10:00:00.000Z'
+                      updatedAt: '2026-01-15T14:30:00.000Z'
+                      lastActiveAt: '2026-02-28T09:12:00.000Z'
+                    pagination:
+                      page: 1
+                      limit: 50
+                      hasMore: false
+                      total: 1
+                    filters:
+                      from: '2026-02-03T00:00:00.000Z'
+                      to: '2026-03-05T00:00:00.000Z'
+                      active: true
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 1
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    examples:
+                    - 403
+                  error:
+                    type: string
+                    examples:
+                    - Forbidden
+                  message:
+                    type: string
+                    examples:
+                    - Forbidden - insufficient permissions
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37904801-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-user-activity-37904801e0.md
+      x-source-page: Retrieve User Activity
+  /users/{userId}/roles:
+    get:
+      summary: Retrieve User Roles
+      deprecated: false
+      description: "Retrieve the roles and permissions assigned to a specific user.\n\n> \U0001F6A7 **Authentication**\n>\
+        \ \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token.\n\n> \U0001F4D8 **Required permissions**\n>\n>  Your account must have the `User Management`\
+        \ permission set to `View` to use this endpoint.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service,\
+        \ the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the\
+        \ request will need to be retried."
+      operationId: get-user-roles
+      tags:
+      - Users
+      parameters:
+      - name: userId
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  roles:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Unique identifier of the role.
+                      name:
+                        type: string
+                        description: Name of the role.
+                      type:
+                        type: string
+                        description: 'Role type. '
+                      permissions:
+                        type: object
+                        properties:
+                          resourceType:
+                            type: string
+                            description: The resource type the permission gives access to.
+                          resourceName:
+                            type: string
+                            description: Name of the resource the permission gives access to.
+                          actions:
+                            type: array
+                            items:
+                              type: string
+                            description: Actions that the user can take with the permission. (i.e., view, edit)
+                        x-apidog-orders:
+                        - resourceType
+                        - resourceName
+                        - actions
+                    x-apidog-orders:
+                    - id
+                    - name
+                    - type
+                    - permissions
+                required:
+                - roles
+                x-apidog-orders:
+                - roles
+              examples:
+                '1':
+                  summary: Success
+                  value:
+                    roles:
+                    - id: 65f0c8f8d73b2b0012ab1111
+                      name: System Admin
+                      type: system
+                      permissions:
+                      - resourceType: user_mgmt
+                        resourceName: '*'
+                        actions:
+                        - view
+                        - edit
+                '2':
+                  summary: Success
+                  value:
+                    roles:
+                    - id: 65f0c8f8d73b2b0012ab1111
+                      name: System Admin
+                      type: system
+                      permissions:
+                      - resourceType: user_mgmt
+                        resourceName: '*'
+                        actions:
+                        - view
+                        - edit
+                '3':
+                  summary: Success
+                  value:
+                    roles:
+                    - id: 65f0c8f8d73b2b0012ab1111
+                      name: System Admin
+                      type: system
+                      permissions:
+                      - resourceType: user_mgmt
+                        resourceName: '*'
+                        actions:
+                        - view
+                        - edit
+                '4':
+                  summary: Success
+                  value:
+                    roles:
+                    - id: 65f0c8f8d73b2b0012ab1111
+                      name: System Admin
+                      type: system
+                      permissions:
+                      - resourceType: user_mgmt
+                        resourceName: '*'
+                        actions:
+                        - view
+                        - edit
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 1
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    examples:
+                    - 403
+                  error:
+                    type: string
+                    examples:
+                    - Forbidden
+                  message:
+                    type: string
+                    examples:
+                    - Forbidden - insufficient permissions
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37904802-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-user-roles-37904802e0.md
+      x-source-page: Retrieve User Roles
+    patch:
+      summary: Update User Roles
+      deprecated: false
+      description: "Adjust a user's role assignments. Supports adding, removing, or\nreplacing roles.\n\n`set` replaces the\
+        \ entire role list. `add` appends without duplicates. `remove` removes the specified roles.\n\nIf all roles are removed,\
+        \ the Standard User role is automatically assigned as a fallback.\n\nAll `roleId`s must belong to valid roles within\
+        \ your organization.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization\
+        \ in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\n> \U0001F4D8 **Required\
+        \ permissions**\n>\n>  Your account must have the `User Management` permission set to `Edit` to use this endpoint.\n\
+        \n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute.\
+        \ Additional requests will return a 429 response code and the request will need to be retried.\n"
+      operationId: update-user-roles
+      tags:
+      - Users
+      parameters:
+      - name: userId
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  description: Action to take on the user account roles. One of `set` (replace all roles), `add` (add roles),
+                    or `remove` (delete roles).
+                  type: string
+                  examples:
+                  - add
+                roleIds:
+                  type: array
+                  items:
+                    type: string
+                  description: 'Array of role IDs set, add, or remove. '
+                  examples:
+                  - 65f0c8f8d73b2b0012ab1123
+              required:
+              - action
+              - roleIds
+              x-apidog-orders:
+              - action
+              - roleIds
+            examples: {}
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Unique identifier of the user account.
+                      fullName:
+                        type: string
+                        description: Full name of the user.
+                      email:
+                        type: string
+                        description: Email address of the user account.
+                      roles:
+                        type: array
+                        items:
+                          type: string
+                        description: Unique identifier(s) of the role(s) associated with the user account.
+                    x-apidog-orders:
+                    - id
+                    - fullName
+                    - email
+                    - roles
+                  roles:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Unique identifier of the role.
+                      name:
+                        type: string
+                        description: Name of the role.
+                      type:
+                        type: string
+                        description: Role type.
+                      permissions:
+                        type: string
+                        description: Permissions associated with the role.
+                    x-apidog-orders:
+                    - id
+                    - name
+                    - type
+                    - permissions
+                required:
+                - user
+                - roles
+                x-apidog-orders:
+                - user
+                - roles
+              examples:
+                '1':
+                  summary: Success
+                  value:
+                    user:
+                      id: 65f0c8f8d73b2b0012ab3456
+                      fullName: Jane Doe
+                      email: jane@example.com
+                      roles:
+                      - 65f0c8f8d73b2b0012ab1111
+                      - 65f0c8f8d73b2b0012ab2222
+                    roles:
+                    - id: 65f0c8f8d73b2b0012ab1111
+                      name: System Admin
+                      type: system
+                      permissions: []
+                    - id: 65f0c8f8d73b2b0012ab2222
+                      name: Analyst
+                      type: organization
+                      permissions: []
+                '2':
+                  summary: Success
+                  value:
+                    user:
+                      id: 65f0c8f8d73b2b0012ab3456
+                      fullName: Jane Doe
+                      email: jane@example.com
+                      roles:
+                      - 65f0c8f8d73b2b0012ab1111
+                      - 65f0c8f8d73b2b0012ab2222
+                    roles:
+                    - id: 65f0c8f8d73b2b0012ab1111
+                      name: System Admin
+                      type: system
+                      permissions: []
+                    - id: 65f0c8f8d73b2b0012ab2222
+                      name: Analyst
+                      type: organization
+                      permissions: []
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 1
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    examples:
+                    - 403
+                  error:
+                    type: string
+                    examples:
+                    - Forbidden
+                  message:
+                    type: string
+                    examples:
+                    - Forbidden - insufficient permissions
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37904803-run
+      x-source-url: https://api-docs.bigpanda.io/update-user-roles-37904803e0.md
+      x-source-page: Update User Roles
+  /users/{userId}:
+    get:
+      summary: Retrieve a User
+      deprecated: false
+      description: "Retrieve a single user by user ID, including their last activity timestamp.\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token.\n\n> \U0001F4D8 **Required permissions**\n>\n>  Your account must have the `User Management`\
+        \ permission set to `View` to use this endpoint.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service,\
+        \ the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the\
+        \ request will need to be retried."
+      operationId: get-a-user
+      tags:
+      - Users
+      parameters:
+      - name: userId
+        in: path
+        description: Unique identifier of the user.
+        required: true
+        example: 65f0c8f8d73b2b0012ab3123
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Unique identifier of the user.
+                      fullName:
+                        type: string
+                        description: User's full name.
+                      email:
+                        type: string
+                        description: Email address of the user.
+                      title:
+                        type: string
+                        description: 'User''s job title. '
+                      avatar:
+                        type: string
+                        description: 'User''s avatar. '
+                      hasUsedBiggy:
+                        type: boolean
+                        description: 'Whether or not the user has used AI Incident Assistant. '
+                      roles:
+                        type: array
+                        items:
+                          type: string
+                        description: 'Unique identifier(s) of the role(s) associated with the user. '
+                      createdAt:
+                        type: string
+                        description: ISO date-time when the user was created.
+                      updatedAt:
+                        type: string
+                        description: ISO date-time when the user was last updated.
+                      lastActiveAt:
+                        type: string
+                        description: ISO date-time when the user was last active.
+                    x-apidog-orders:
+                    - id
+                    - fullName
+                    - email
+                    - title
+                    - avatar
+                    - hasUsedBiggy
+                    - roles
+                    - createdAt
+                    - updatedAt
+                    - lastActiveAt
+                required:
+                - user
+                x-apidog-orders:
+                - user
+              examples:
+                '1':
+                  summary: Success
+                  value:
+                    user:
+                      id: 65f0c8f8d73b2b0012ab3456
+                      fullName: Jane Doe
+                      email: jane@example.com
+                      title: Site Reliability Engineer
+                      avatar: null
+                      hasUsedBiggy: true
+                      roles:
+                      - 65f0c8f8d73b2b0012ab1111
+                      createdAt: '2025-06-01T10:00:00.000Z'
+                      updatedAt: '2026-01-15T14:30:00.000Z'
+                      lastActiveAt: '2026-02-28T09:12:00.000Z'
+                '2':
+                  summary: Success
+                  value:
+                    user:
+                      id: 65f0c8f8d73b2b0012ab3456
+                      fullName: Jane Doe
+                      email: jane@example.com
+                      title: Site Reliability Engineer
+                      avatar: null
+                      hasUsedBiggy: true
+                      roles:
+                      - 65f0c8f8d73b2b0012ab1111
+                      createdAt: '2025-06-01T10:00:00.000Z'
+                      updatedAt: '2026-01-15T14:30:00.000Z'
+                      lastActiveAt: '2026-02-28T09:12:00.000Z'
+                '3':
+                  summary: Success
+                  value:
+                    user:
+                      id: 65f0c8f8d73b2b0012ab3456
+                      fullName: Jane Doe
+                      email: jane@example.com
+                      title: Site Reliability Engineer
+                      avatar: null
+                      hasUsedBiggy: true
+                      roles:
+                      - 65f0c8f8d73b2b0012ab1111
+                      createdAt: '2025-06-01T10:00:00.000Z'
+                      updatedAt: '2026-01-15T14:30:00.000Z'
+                      lastActiveAt: '2026-02-28T09:12:00.000Z'
+                '4':
+                  summary: Success
+                  value:
+                    user:
+                      id: 65f0c8f8d73b2b0012ab3456
+                      fullName: Jane Doe
+                      email: jane@example.com
+                      title: Site Reliability Engineer
+                      avatar: null
+                      hasUsedBiggy: true
+                      roles:
+                      - 65f0c8f8d73b2b0012ab1111
+                      createdAt: '2025-06-01T10:00:00.000Z'
+                      updatedAt: '2026-01-15T14:30:00.000Z'
+                      lastActiveAt: '2026-02-28T09:12:00.000Z'
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 1
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    examples:
+                    - 403
+                  error:
+                    type: string
+                    examples:
+                    - Forbidden
+                  message:
+                    type: string
+                    examples:
+                    - Forbidden - insufficient permissions
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37904799-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-a-user-37904799e0.md
+      x-source-page: Retrieve a User
+components:
+  securitySchemes:
+    BearerUser11:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
+
+        headers only in the secure tool you use to make API calls
+
+        '
+  schemas:
+    success-response-v1:
+      title: success-response-v1
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        data:
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          x-apidog-ignore-properties: []
+      required:
+      - status
+      - data
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    http-status-code-v1:
+      type: number
+      enum:
+      - 100
+      - 101
+      - 102
+      - 103
+      - 200
+      - 201
+      - 202
+      - 203
+      - 204
+      - 205
+      - 206
+      - 207
+      - 300
+      - 301
+      - 302
+      - 303
+      - 304
+      - 305
+      - 307
+      - 308
+      - 400
+      - 401
+      - 402
+      - 403
+      - 404
+      - 405
+      - 406
+      - 407
+      - 408
+      - 409
+      - 410
+      - 411
+      - 412
+      - 413
+      - 414
+      - 415
+      - 416
+      - 417
+      - 418
+      - 421
+      - 422
+      - 423
+      - 424
+      - 426
+      - 428
+      - 429
+      - 431
+      - 451
+      - 500
+      - 501
+      - 502
+      - 503
+      - 504
+      - 505
+      - 507
+      - 511
+      description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+      x-apidog-folder: ''
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    UserStateFilter-enum:
+      type: string
+      description: User state
+      enum:
+      - valid
+      - initial
+      - welcome
+      x-examples:
+        example-1: valid
+      x-apidog-folder: ''
+    UserName:
+      title: Name
+      description: Resource name
+      type: string
+      pattern: ^(?!\s*$).+
+      x-apidog-folder: ''
+      examples:
+      - Jim Smith
+    id-v1:
+      type: string
+      title: ID
+      pattern: ^[a-f\d]{24}$
+      description: Object's ID
+      minLength: 24
+      maxLength: 24
+      x-apidog-folder: ''
+      examples:
+      - 60c5238222fa63633d93d52f
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

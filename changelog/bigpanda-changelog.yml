@@ -1,0 +1,80 @@
+generated: '2026-09-04'
+method: searched
+source: https://docs.bigpanda.io/en/release-notes
+description: >-
+  BigPanda publishes a dated, month-grouped release-notes page covering the whole platform — product,
+  console, integrations and API. It is prose, not a machine-readable feed, and it is where BigPanda says
+  deprecations are announced. Recent window only; see the source page for the full history.
+url: https://docs.bigpanda.io/en/release-notes
+canonical_link: https://docs.bigpanda.io/docs/release-notes
+scheme: calendar-month
+machine_readable: false
+subscribe: Email notification signup offered on the release-notes page.
+current_version: '2026-08'
+months_present:
+  - '2026-08'
+  - '2026-07'
+  - '2026-06'
+  - '2026-05'
+  - '2026-04'
+  - '2026-03'
+  - '2026-02'
+  - '2026-01'
+  - '2025-11'
+  - '2025-09'
+  - '2025-01'
+  - '2024-06'
+entries:
+  - version: '2026-08'
+    date: '2026-08'
+    breaking: false
+    highlights:
+      - Biggy Agent available directly inside the AI Detection and Response console and the Incident Feed (requires both ADR and AI Incident Assistant).
+      - ServiceNow store app 3.1 — block-resolve-on-tags, expanded transform rules engine (boolean tag expressions, presence matching, not-equals), governed CMDB auto-create, CMDB dot-walk enrichment, Affected CIs on incidents, email-based assignment. All new options default off.
+      - Improved Jira Service Management integration — field mapping, status mapping and sync, bidirectional resolve, Jira issue URL posted back, summary/description templates, correlated alerts table.
+      - Health Dashboard environment filters.
+      - New Dashboards navigation tab consolidating real-time and environment views.
+  - version: '2026-07'
+    date: '2026-07'
+    breaking: false
+    highlights:
+      - Monthly platform release; see the release-notes page for the itemised list.
+  - version: '2026-06'
+    date: '2026-06'
+    breaking: false
+  - version: '2026-05'
+    date: '2026-05'
+    breaking: false
+  - version: '2026-04'
+    date: '2026-04'
+    breaking: true
+    highlights:
+      - Unified Analytics Problem Identification dashboard retired on 2026-04-30.
+  - version: '2026-03'
+    date: '2026-03'
+    breaking: true
+    highlights:
+      - End of life for older BigPanda ServiceNow app versions on 2026-03-01; v3 introduces new security roles and deprecated API patterns.
+  - version: '2026-02'
+    date: '2026-02'
+    breaking: false
+  - version: '2026-01'
+    date: '2026-01'
+    breaking: false
+  - version: '2025-11'
+    date: '2025-11'
+    breaking: true
+    highlights:
+      - API Keys 2.0 endpoint deprecated 2025-11-05; organizations must migrate to 2.1 before end of life. The current reference documents only the /resources/v2.1/ API-key routes.
+  - version: '2025-09'
+    date: '2025-09'
+    breaking: true
+    highlights:
+      - Legacy ETL data platform backed by Redshift deprecated 2025-09-10.
+api_reference_changelog:
+  published: false
+  note: >-
+    The Apidog-hosted API reference (https://api-docs.bigpanda.io/) carries no changelog of its own. API
+    changes surface only inside the platform-wide release notes on docs.bigpanda.io, mixed with console
+    and integration changes, so an API consumer has to read the whole page to find what moved.
+cross_link: lifecycle/bigpanda-lifecycle.yml

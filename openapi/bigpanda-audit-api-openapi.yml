@@ -1,99 +1,544 @@
-openapi: 3.2.0
+openapi: 3.0.3
 info:
-  title: BigPanda Alerts Audit API
-  description: The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.
-  version: v2
+  title: BigPanda Audit Log API
+  description: BigPanda Audit Log operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own
+    API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it
+    was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base
+    URL for your region.
+  version: 1.0.0
   contact:
     name: BigPanda Support
-    url: https://docs.bigpanda.io
+    url: https://api-docs.bigpanda.io/
   license:
     name: Proprietary
     url: https://www.bigpanda.io/legal/
-  x-generated-from: documentation
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 3
 servers:
 - url: https://api.bigpanda.io
-  description: BigPanda API
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
 tags:
-- name: Audit
-  description: Access audit logs
+- name: Audit Log
 paths:
-  /resources/v2.0/audit/logs:
+  /audit-logs:
     get:
-      operationId: getAuditLogs
-      summary: BigPanda Get Audit Logs
-      description: Returns audit log entries for API and user activity.
+      summary: Retrieve Audit Log
+      deprecated: false
+      description: "Retrieve paginated audit log entries with optional filtering by time range, entity, change type, and user.\n\
+        \n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n\
+        >\n> This API uses the User API Key type of Authorization token.\n\n> \U0001F6A7 **Required permission**\n> \n> This\
+        \ API requires the AuditLogs:view permission.\n        \n> \U0001F4D8 **Redaction**\n>\n> Sensitive information found\
+        \ in the `oldValue` and `newValue` fields is redacted and returned as `\"[REDACTED]\"`. \n\n> ❗ **Rate limitations**\n\
+        > \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will\
+        \ return a 429 response code and the request will need to be retried.\n\n\n"
+      operationId: get-an-audit-log
       tags:
-      - Audit
-      security:
-      - bearerAuth: []
+      - Audit Log
       parameters:
       - name: from
         in: query
+        description: The earliest date and time audit logs should come from.
         required: false
+        example: '2025-01-01T00:00:00.000Z'
         schema:
-          type: integer
-        description: Start timestamp for log query.
+          type: string
       - name: to
         in: query
+        description: The latest date and time audit logs should come from.
         required: false
+        example: '2025-01-31T23:59:59.999Z'
         schema:
-          type: integer
-        description: End timestamp for log query.
+          type: string
+      - name: changeType
+        in: query
+        description: The type of change that should be retrieved. One of [create, update, delete].
+        required: false
+        example: delete
+        schema:
+          type: string
       responses:
         '200':
-          description: Audit log entries.
+          x-apidog-ordering: 0
+          description: '200'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuditLogsResponse'
-              examples:
-                GetAuditLogs200Example:
-                  summary: Default getAuditLogs 200 response
-                  x-microcks-default: true
-                  value:
-                    logs:
-                    - id: log-abc123
-                      user: admin@example.com
-                      action: created_environment
-                      timestamp: 1713000000
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
-components:
-  schemas:
-    AuditLogsResponse:
-      title: Audit Logs Response
-      description: List of audit log entries.
-      type: object
-      properties:
-        logs:
-          type: array
-          description: Array of log entries.
-          items:
-            $ref: '#/components/schemas/AuditLogEntry'
-    AuditLogEntry:
-      title: Audit Log Entry
-      description: A single audit log entry.
-      type: object
-      properties:
-        id:
+                $ref: '#/components/schemas/auditlog200response'
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 1
+          description: '403'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic403response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37904797-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-audit-log-37904797e0.md
+      x-source-page: Retrieve Audit Log
+  /audit-logs/metadata:
+    get:
+      summary: Retrieve Audit Log Metadata
+      deprecated: false
+      description: "Retrieve audit log metadata to discover valid values for audit log filters. \n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token.\n\n> \U0001F6A7 **Admin only**\n> \n> This API requires a user API key created by a\
+        \ System Admin user. Non-admin keys receive a 403 Forbidden response.\n\n> ❗ **Rate limitations**\n> \n> To maintain\
+        \ quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response\
+        \ code and the request will need to be retried.\n"
+      operationId: get-audit-log-metadata
+      tags:
+      - Audit Log
+      parameters: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/auditlogmetadata200response'
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 1
+          description: '403'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic403response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37904798-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-audit-log-metadata-37904798e0.md
+      x-source-page: Retrieve Audit Log Metadata
+  /resources/v2.0/audit/logs:
+    get:
+      summary: Search Audit Logs
+      deprecated: false
+      description: "Retrieve a subset of audit logs.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
+        \ Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token. Your\
+        \ User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer\
+        \ [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: retrieve-all-audit-logs
+      tags:
+      - Audit Log
+      parameters:
+      - name: resource_type
+        in: query
+        description: Comma separated list of resource types.
+        required: false
+        example: ''
+        schema:
           type: string
-          description: Log entry ID.
-          example: log-abc123
-        user:
+      - name: action_type
+        in: query
+        description: Comma separated list of action types.
+        required: false
+        example: ''
+        schema:
           type: string
-          description: User who performed the action.
-          example: admin@example.com
-        action:
+      - name: start
+        in: query
+        description: The earliest time audit logs should come from. Unix epoch time (in seconds).
+        required: false
+        example: ''
+        schema:
           type: string
-          description: Action performed.
-          example: created_environment
-        timestamp:
+      - name: end
+        in: query
+        description: The latest time audit logs should come from. Unix epoch time (in seconds).
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Which set of results to return.
+        required: false
+        example: 0
+        schema:
           type: integer
-          description: Unix timestamp.
-          example: 1713000000
+          default: 1
+          examples:
+          - 4
+      - name: per_page
+        in: query
+        description: Number of results to show for each page.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 100
+          examples:
+          - 30
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/audit_log'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770122-run
+      x-source-url: https://api-docs.bigpanda.io/search-audit-logs-37770122e0.md
+      x-source-page: Search Audit Logs
+components:
   securitySchemes:
-    bearerAuth:
+    BearerUser11:
       type: http
       scheme: bearer
-      description: BigPanda API Bearer token
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
+
+        headers only in the secure tool you use to make API calls
+
+        '
+    BearerUser131:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
+        tool you use to make API calls
+
+        '
+  schemas:
+    auditlog200response:
+      type: object
+      properties:
+        status:
+          type: integer
+          examples:
+          - 200
+        auditLogs:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique ID of the audit log entry.
+              examples:
+              - 66f0c8f8d73b2b0012ab3456
+            timestamp:
+              type: string
+              description: Date and time of when the activity took place.
+              examples:
+              - '2025-01-15T18:24:31.123Z'
+            entityName:
+              type: string
+              description: Name of the entity that was changed. One of [general_settings, integration, action_plan, workflow,
+                role, team, api_key, user].
+              examples:
+              - api_key
+            entityId:
+              type: string
+              description: Unique identifier of the entity that was changed.
+              examples:
+              - 66f0c8f8d73b2b0012ab7777
+            changeType:
+              type: string
+              description: The type of change that occurred. One of [create, update, delete].
+              examples:
+              - Update
+            actorType:
+              type: string
+              description: The type of entity that made the change.
+              examples:
+              - User
+            userFullName:
+              type: string
+              description: The full name of the user who made the change.
+              examples:
+              - Jane Smith
+            userId:
+              type: string
+              description: The unique identifier of the user who made the change.
+              examples:
+              - 89abcdef0123456701234555
+            metadata:
+              type: object
+              description: Metadata related to the action that took place.
+              properties:
+                description:
+                  type: string
+                  description: Description of the action that took place.
+                  examples:
+                  - Updated API key details
+              x-apidog-orders:
+              - description
+              x-apidog-ignore-properties: []
+            changes:
+              type: array
+              description: An array of objects detailing the changes that took place.
+              items:
+                type: object
+                properties:
+                  propertyPath:
+                    type: string
+                    description: The part of the property that was changed.
+                    examples:
+                    - name
+                  changeType:
+                    type: string
+                    description: The type of change that took place. One of [added, modified, removed].
+                    examples:
+                    - modified
+                  oldValue:
+                    type: string
+                    description: The value prior to the change.
+                    examples:
+                    - Prod API Key
+                  newValue:
+                    type: string
+                    description: The value after the change.
+                    examples:
+                    - Production API Key
+                x-apidog-orders:
+                - propertyPath
+                - changeType
+                - oldValue
+                - newValue
+                x-apidog-ignore-properties: []
+          x-apidog-orders:
+          - id
+          - timestamp
+          - entityName
+          - entityId
+          - changeType
+          - actorType
+          - userFullName
+          - userId
+          - metadata
+          - changes
+          x-apidog-ignore-properties: []
+        pagination:
+          type: object
+          properties:
+            page:
+              type: string
+              description: The set of results that was returned.
+              examples:
+              - 1
+            limit:
+              type: string
+              description: The number of results to show for each page.
+              examples:
+              - 20
+            hasMore:
+              type: boolean
+              description: Whether or not there are additional pages available in the audit log.
+              examples:
+              - true
+          x-apidog-orders:
+          - page
+          - limit
+          - hasMore
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - auditLogs
+      - pagination
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic403response:
+      type: object
+      description: 'Forbidden
+
+        '
+      properties:
+        statusCode:
+          type: integer
+          examples:
+          - 403
+        error:
+          type: string
+          examples:
+          - Forbidden
+        message:
+          type: string
+          examples:
+          - Forbidden - insufficient permissions
+      x-apidog-orders:
+      - statusCode
+      - error
+      - message
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    auditlogmetadata200response:
+      type: object
+      properties:
+        status:
+          type: integer
+          examples:
+          - 200
+        entityNames:
+          type: array
+          items:
+            type: string
+          examples:
+          - - general_settings
+            - integration
+            - action_plan
+            - workflow
+            - role
+            - team
+            - api_key
+            - user
+        changeTypes:
+          type: array
+          items:
+            type: string
+          examples:
+          - - create
+            - update
+            - delete
+        propertyChangeTypes:
+          type: array
+          items:
+            type: string
+          examples:
+          - - added
+            - modified
+            - removed
+      x-apidog-orders:
+      - status
+      - entityNames
+      - changeTypes
+      - propertyChangeTypes
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    audit_log:
+      type: object
+      description: Schema for a BigPanda audit log entry.
+      properties:
+        actor:
+          $ref: '#/components/schemas/audit_actor'
+        action_type:
+          type: string
+          description: 'The action that was made. `init_state`, `create`, `update`, `delete`.
+
+            '
+          examples:
+          - update
+        context:
+          $ref: '#/components/schemas/audit_context'
+        timestamp:
+          type: integer
+          description: Unix epoch time when the event occurred.
+          examples:
+          - 1662284339
+        resource_id:
+          type: string
+          description: The system id of the resource that was changed.
+          examples:
+          - 631471d494528700126ca555
+        resource_type:
+          type: string
+          description: The resource type that was changed.
+          examples:
+          - users
+        object:
+          type: object
+          description: The resource object after the change. When deleted, object is null.
+          x-apidog-orders: []
+          properties: {}
+          examples:
+          - id: 631471d494528700126a5559
+            name: Nataly
+            state: valid
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - actor
+      - action_type
+      - context
+      - timestamp
+      - resource_id
+      - resource_type
+      - object
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    audit_context:
+      type: object
+      properties:
+        actor_access:
+          type: object
+          properties:
+            user_agent:
+              type: string
+              examples:
+              - axios/0.24.0
+            ip_address:
+              type: string
+              examples:
+              - ::ffff:10.12.55.55
+          x-apidog-orders:
+          - user_agent
+          - ip_address
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - actor_access
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    audit_actor:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Whether the change was made by a user or the system.
+          examples:
+          - user
+        user:
+          type: object
+          description: User details if applicable.
+          properties:
+            id:
+              type: string
+              examples:
+              - 62f0ec2d95918d0012bba5553
+            email:
+              type: string
+              examples:
+              - user@test.io
+            name:
+              type: string
+              examples:
+              - Test User
+          x-apidog-orders:
+          - id
+          - email
+          - name
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - type
+      - user
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

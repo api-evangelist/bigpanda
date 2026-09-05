@@ -1,0 +1,108 @@
+generated: '2026-09-04'
+method: searched
+source: https://api-docs.bigpanda.io/versioning-and-deprecation
+description: >-
+  Versioning, deprecation and operational-status posture for the BigPanda API, read from BigPanda's own
+  API reference and release notes and cross-checked against the 263 operations in openapi/.
+versioning:
+  scheme: path
+  policy_published: true
+  policy_url: https://api-docs.bigpanda.io/versioning-and-deprecation
+  current_versions:
+    - '/data/v2/'
+    - '/resources/v2.0/'
+    - '/resources/v2.1/'
+    - '/scim/v2/'
+    - '/oim/api/'
+  guidance: >-
+    "When an endpoint exists in more than one version, prefer the newest version for new work. Older
+    versions remain available so existing automations keep working until they are retired."
+  migration_steps:
+    - Update the base URL if it changed between versions.
+    - Validate the authentication type — all current APIs require a User API Key, not an Org Token.
+    - Validate body fields and values; payload shapes change to make space for new functionality.
+    - Set pagination or filter rules; some endpoints paginate or filter by default.
+    - Test sample calls against the new endpoint before cutting over.
+  concurrent_versions_in_reference:
+    - resource: Alert Filters
+      note: v1 Routes documented alongside current routes (10 operations each).
+    - resource: Mapping enrichments
+      note: v2.0 Routes and v2.1 Routes documented side by side.
+    - resource: Users
+      note: A separate "v2 Routes" group of 11 operations documented alongside the /resources/v2.1/users routes.
+deprecation:
+  policy_published: true
+  announcement_channel: https://docs.bigpanda.io/en/release-notes.html
+  policy_note: >-
+    BigPanda states "Upcoming deprecations can be found on the Release Notes." There is no separate,
+    dated deprecation policy page, no stated minimum notice period, and no machine-readable deprecation
+    surface — the announcements are prose inside monthly release notes.
+  http_signaling:
+    sunset_header: false
+    deprecation_header: false
+    rfc8594: false
+    note: >-
+      No Sunset or Deprecation response header is documented anywhere, and no operation in the 263
+      harvested from the reference carries `deprecated: true`. Every retirement below was announced in
+      prose only; a client calling a doomed endpoint receives no runtime signal.
+  announced:
+    - item: API Keys 2.0 endpoint
+      kind: api
+      deprecated_on: '2025-11-05'
+      replacement: API Keys 2.1
+      note: >-
+        "The API Keys version 2.0 endpoint will be deprecated on November 5, 2025. All organizations using
+        the 2.0 endpoint will need to migrate to 2.1 before the end-of-life date." The current reference
+        documents only the /resources/v2.1/ API-key routes.
+      source: https://docs.bigpanda.io/en/release-notes.html
+    - item: Legacy ETL data platform backed by Redshift
+      kind: data-platform
+      deprecated_on: '2025-09-10'
+      source: https://docs.bigpanda.io/en/release-notes.html
+    - item: Unified Analytics Problem Identification dashboard
+      kind: product
+      retires_on: '2026-04-30'
+      source: https://docs.bigpanda.io/en/release-notes.html
+    - item: Older BigPanda ServiceNow app versions
+      kind: integration
+      end_of_life: '2026-03-01'
+      note: The ServiceNow v3 app introduces new security roles and deprecated API patterns; the upgrade must be planned with the account team.
+      source: https://docs.bigpanda.io/en/release-notes.html
+    - item: Classic Incident Console
+      kind: product
+      note: Announced as deprecated; no date recorded in the release notes text read on 2026-09-04.
+      source: https://docs.bigpanda.io/en/release-notes.html
+    - item: Office 365 connectors
+      kind: integration
+      replacement: Automate Workflows
+      source: https://docs.bigpanda.io/en/release-notes.html
+  deprecated_operations_in_spec: 0
+status_page:
+  url: https://status.bigpanda.io/
+  provider: Atlassian Statuspage
+  machine_readable: true
+  api:
+    summary: https://status.bigpanda.io/api/v2/summary.json
+    status: https://status.bigpanda.io/api/v2/status.json
+    components: https://status.bigpanda.io/api/v2/components.json
+    incidents: https://status.bigpanda.io/api/v2/incidents.json
+    verified: '2026-09-04'
+    http_status: 200
+  page_id: q8ly4x9j5x75
+  components_observed:
+    - Inbound Integrations and Event Processing
+  note: >-
+    A real machine-readable status feed, not just an HTML page — an agent can poll
+    /api/v2/summary.json to decide whether a failure is BigPanda's or its own.
+sla:
+  published: false
+  note: >-
+    No public SLA document was found. BigPanda sells annual credit subscriptions with one- to three-year
+    commitments; availability terms are contractual rather than published.
+support:
+  url: https://support.bigpanda.io/bigpanda/login
+  note: Login-gated support portal; the API reference sends unresolved errors there.
+release_cadence:
+  observed: monthly
+  note: Release notes are grouped by calendar month; entries observed for every month from January 2026 through August 2026.
+  cross_link: changelog/bigpanda-changelog.yml

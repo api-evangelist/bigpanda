@@ -1,0 +1,61 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for BigPanda Alerts API
+  version: 1.0.0
+extends: ../openapi/bigpanda-alerts-api-openapi.yml
+x-provenance:
+  generated: '2026-09-04'
+  method: generated
+  source: https://api-docs.bigpanda.io/llms.txt
+  note: Captures every change API Evangelist made while assembling this document from the 4 per-endpoint OpenAPI 3.0.1 fragments
+    BigPanda publishes on its own reference. The fragments are the provider's; the assembly is ours, and this overlay is the
+    record of exactly what the assembly touched. Applying these actions to the raw fragments reproduces the document in openapi/.
+    Nothing here invents an operation, a parameter or a schema.
+actions:
+- target: $.info
+  description: Give the assembled document a title, a description, a contact and a licence. BigPanda's fragments each carry
+    an empty info.title and info.description.
+  update:
+    title: BigPanda Alerts API
+    contact:
+      name: BigPanda Support
+      url: https://api-docs.bigpanda.io/
+    license:
+      name: Proprietary
+      url: https://www.bigpanda.io/legal/
+- target: $.servers
+  description: Declare both regional base URLs from https://api-docs.bigpanda.io/regions. The fragments name https://api.bigpanda.io
+    and https://eu-api.biggy.io; the latter does not resolve in DNS, so the published Regions value is used and the discrepancy
+    is recorded in x-server-notes rather than silently corrected.
+  update:
+  - url: https://api.bigpanda.io
+    description: US Region
+  - url: https://api.eu.bigpanda.io
+    description: EU Region
+- target: $.components.securitySchemes[?(@.type=='bearer')]
+  description: 'Correct BigPanda''s securityScheme declarations: Apidog emits type "bearer", which is not a valid OpenAPI
+    security scheme type. Rewritten to type http / scheme bearer. The description text is left verbatim.'
+  update:
+    type: http
+    scheme: bearer
+- target: $.paths.*.*.security[*]
+  description: Strip the Apidog-internal x-apidog key from security requirement objects. It carries editor scheme-group bookkeeping
+    (schemeGroups, use, scopes ids), not an OpenAPI security requirement, and it makes the security array unreadable to a
+    standard client.
+  remove: true
+- target: $.paths.*.*
+  description: Stamp every operation with x-source-url and x-source-page naming the exact BigPanda reference page the operation
+    object was read from, so any claim in this document can be checked against the provider in one fetch.
+  update:
+    x-source-url: <per-operation>
+    x-source-page: <per-operation>
+- target: $.paths.*.*.tags
+  description: Replace the Apidog folder-path tags (for example "AI Incident Assistant and Prevention/Actions and Execution/Query",
+    plus publication-status tags like "live") with the single resource tag this document covers.
+  update:
+  - Alerts
+- target: $.components.schemas
+  description: Merge the components.schemas blocks of every fragment in this resource group, suffixing a name only where two
+    fragments define the same name with different content, and rewriting the $refs in the affected fragment to match. Schemas
+    not reachable from any operation in this document are pruned.
+  update: {}

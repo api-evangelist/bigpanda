@@ -1,0 +1,51 @@
+generated: '2026-09-04'
+method: generated
+source: >-
+  openapi/ (263 first-party operations harvested from https://api-docs.bigpanda.io/) plus the
+  "Using BigPanda APIs" conventions set on the same reference.
+description: >-
+  Packaged Agent Skills for the marquee BigPanda flows. Every operationId named in these skills was
+  grepped out of the specs in openapi/ before being written down; none was invented. BigPanda publishes
+  no skills or AGENTS.md of its own — https://api-docs.bigpanda.io/AGENTS.md and /skills both 404, and
+  the 200 at https://docs.bigpanda.io/AGENTS.md is the Paligo soft-404 shell, not a document.
+provider_published_skills: false
+probes:
+  - url: https://api-docs.bigpanda.io/AGENTS.md
+    status: 404
+  - url: https://api-docs.bigpanda.io/skills
+    status: 404
+  - url: https://docs.bigpanda.io/AGENTS.md
+    status: 200
+    result: soft-404-html-shell
+skills:
+  - name: triage-and-resolve-an-incident
+    file: skills/bigpanda-triage-and-resolve-an-incident.md
+    api: bigpanda:bigpanda-incidents-api
+    operations: 10
+    summary: The core L1 flow — search, read history, assign, comment, tag, snooze, resolve.
+  - name: ingest-alerts-and-changes
+    file: skills/bigpanda-ingest-alerts-and-changes.md
+    api: bigpanda:bigpanda-alerts-api
+    operations: 8
+    summary: Push monitoring alerts and deployment changes in so correlation can link a spike to its cause.
+  - name: schedule-a-maintenance-window
+    file: skills/bigpanda-schedule-a-maintenance-window.md
+    api: bigpanda:bigpanda-maintenance-plans-api
+    operations: 6
+    summary: Create, adjust, stop and remove a maintenance plan that suppresses expected alerts.
+  - name: provision-users-with-scim
+    file: skills/bigpanda-provision-users-with-scim.md
+    api: bigpanda:bigpanda-users-api
+    operations: 11
+    summary: Standards-based user and group provisioning over the SCIM 2.0 surface.
+  - name: configure-an-outbound-webhook
+    file: skills/bigpanda-configure-an-outbound-webhook.md
+    api: bigpanda:bigpanda-notifications-api
+    operations: 6
+    summary: Register and manage a Notifications Webhook v2 destination, starting from the dynamic-variable vocabulary.
+cross_cutting_rules_every_skill_repeats:
+  - No idempotency key exists anywhere in the BigPanda API; a retried POST is a second write.
+  - Rate limits are per endpoint (5/sec default, 2/sec per SCIM route, 1/sec for batch alert resolve, 400/min for changes, 100/min for Biggy) and no rate-limit response header is documented.
+  - Errors are conventional HTTP status codes with a {"status", "errors"[]} JSON body; 403 means the role lacks a permission, not that the key is bad.
+  - An organization lives in exactly one region and must use that region's base URL.
+  - Incidents are addressed through their environment, so an incident_id alone is not enough to act.

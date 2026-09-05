@@ -3,140 +3,104 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: BigPanda
 providerId: bigpanda
+generated: '2026-09-04'
+method: searched
+source: https://www.bigpanda.io/pricing/
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-04'
 tags:
   - Incidents
   - Monitoring
   - Platform
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
-plans:
-  - id: bigpanda-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the BigPanda API surface. Intended for evaluation, prototyping, and
-      low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: BigPanda
-  - id: bigpanda-pro
-    name: Professional
-    type: paid
-    description: Production tier for BigPanda. Provides higher quotas, priority support, and access to
-      the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: BigPanda
-  - id: bigpanda-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for BigPanda. Includes dedicated capacity, contractual SLAs, security
-      review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: BigPanda
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+  - Pricing
+description: >-
+  BigPanda's published pricing model. This file replaces a 2026-05-04 scaffold that invented Free /
+  Professional / Enterprise tiers with made-up quotas and prices — BigPanda has no such tiers and no free
+  tier. What BigPanda actually publishes is a value-based, credit-metered enterprise subscription: four
+  products drawing on one shared credit currency, tiered annual credit plans starting at 20,000 credits,
+  one- to three-year commitments, and no list price anywhere on the page. Every plan is quoted by sales.
+model: value-based-credit-subscription
+currency_note: One universal credit currency spans all four products; credits can be moved between products as operational needs change, without renegotiation.
+plan_count: 0
+public_prices: false
+free_tier: false
+self_serve_purchase: false
+trial: not-published
+pricing_url: https://www.bigpanda.io/pricing/
+quote_cta: Request pricing
+plans: []
+plans_note: >-
+  plan_count is 0 because BigPanda publishes no named, priced tier. The commercial units below are the
+  metered PRODUCTS a credit plan is spent against, not plans with prices.
+commercial_terms:
+  minimum_purchase:
+    credits: 20000
+    statement: >-
+      "BigPanda offers enterprise organizations tiered credit plans, starting at 20,000 credits, with a
+      one- to three-year commitment."
+  commitment_options:
+    - 1 year
+    - 2 years
+    - 3 years
+  capacity_model: >-
+    "Each plan provides annual capacity up to your tier's credit limit — not a fixed balance that counts
+    down to zero." Usage is metered against capacity through the year with checkpoints to right-size.
+  rollover: false
+  rollover_statement: Unused credits do not carry forward, but remaining credits can be spent on any BigPanda platform product.
+  usage_visibility: Usage metrics are exposed to the customer through the unified analytics dashboard.
+  migration: Existing customers on a non-credit pricing model can move to the credit model via their account manager.
+  pov: Proof-of-value assessments available on request.
+products:
+  - name: AI Incident Prevention
+    purpose: Predict and prevent incidents
+    standalone: true
+    metering_events:
+      - name: Change risk assessments
+        description: Change records evaluated by the AI-powered change risk engine
+      - name: Problem discovery analyses
+        description: Background pattern analyses run across historical incidents to surface recurring problems
+    api_surface:
+      - openapi/bigpanda-change-risk-api-openapi.yml
+  - name: AI Detection and Response
+    purpose: Detect and triage incidents
+    standalone: true
+    metering_events:
+      - name: Processed events
+        description: Events from monitoring, observability and other tools ingested by the event intelligence platform
+      - name: Actioned incidents
+        description: AI-enriched incidents the team takes action on
+    api_surface:
+      - openapi/bigpanda-alerts-api-openapi.yml
+      - openapi/bigpanda-alert-ingestion-oim-api-openapi.yml
+      - openapi/bigpanda-incidents-api-openapi.yml
+      - openapi/bigpanda-environments-api-openapi.yml
+  - name: L1 Agent
+    purpose: Automate L1 operations
+    standalone: false
+    requires: AI Detection and Response
+    metering_events:
+      - name: Agent recommendations
+        description: Determinations produced by the AI agent, including any investigation it ran
+      - name: Agent actions
+        description: Operations the AI agent executes on the customer's behalf, from noise suppression and routing through to autonomous resolution
+  - name: AI Incident Assistant
+    purpose: Automate incident and SRE ops
+    standalone: true
+    metering_events:
+      - name: AI activity
+        description: Work the AI assistant performs — investigating active incidents, orchestrating major incident response, generating artifacts, optimizing day-to-day operations
+    api_surface:
+      - openapi/bigpanda-biggy-query-api-openapi.yml
+      - openapi/bigpanda-mim-api-openapi.yml
+      - openapi/bigpanda-agents-api-openapi.yml
+      - openapi/bigpanda-meetings-transcripts-api-openapi.yml
+api_metering:
+  note: >-
+    BigPanda meters product outcomes (events processed, incidents actioned, agent actions, AI activity),
+    NOT API calls. There is no per-request price and no API-call quota in the pricing model; API access
+    is a property of the subscription. The practical limit on an API consumer is the rate limit, not a
+    billing meter. See rate-limits/bigpanda-rate-limits.yml.
+evidence:
+  - url: https://www.bigpanda.io/pricing/
+    status: 200
+    checked: '2026-09-04'

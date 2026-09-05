@@ -1,0 +1,266 @@
+generated: '2026-09-04'
+method: searched
+source: https://api-docs.bigpanda.io/using-bigpanda-apis
+description: >-
+  Cross-cutting runtime semantics for the BigPanda API, read from the "Using BigPanda APIs" section of
+  BigPanda's own API reference and cross-checked against the 263 operations harvested into openapi/.
+docs:
+  - https://api-docs.bigpanda.io/using-bigpanda-apis
+  - https://api-docs.bigpanda.io/authentication-and-headers
+  - https://api-docs.bigpanda.io/making-requests-2215274m0
+  - https://api-docs.bigpanda.io/responses
+  - https://api-docs.bigpanda.io/pagination
+  - https://api-docs.bigpanda.io/rate-limits
+  - https://api-docs.bigpanda.io/asynchronous-operations
+  - https://api-docs.bigpanda.io/expandable-objects
+  - https://api-docs.bigpanda.io/bpql-object-syntax
+  - https://api-docs.bigpanda.io/versioning-and-deprecation
+  - https://api-docs.bigpanda.io/regions
+  - https://api-docs.bigpanda.io/webhooks
+  - https://api-docs.bigpanda.io/best-practices
+  - https://api-docs.bigpanda.io/errors-and-troubleshooting
+
+auth:
+  style: bearer
+  header: Authorization
+  format: Bearer <token>
+  token_types:
+    - name: User API Key
+      scope: per user, limited by that user's role permissions
+      applies_to: all current APIs
+      creation: User menu > API Keys in the BigPanda UI; the value is shown once
+      docs: https://docs.bigpanda.io/en/api-key-management.html
+    - name: Org Token
+      scope: organization-wide
+      applies_to: the inbound Alerts API and a small number of legacy endpoints only
+      note: Found in the Integrations tab example headers for any Alerts API integration.
+  oauth:
+    present: true
+    surface: WordPress MCP server on www.bigpanda.io only — not the product API
+    metadata: well-known/bigpanda-oauth-authorization-server.json
+  cross_link: authentication/bigpanda-authentication.yml
+  source: https://api-docs.bigpanda.io/api-credentials
+
+headers:
+  required:
+    - name: Authorization
+      value: Bearer <your_api_key>
+      when: every request
+    - name: Accept
+      value: application/json
+      when: most requests
+    - name: Content-Type
+      value: application/json; charset=utf8
+      when: POST and PUT requests with a body
+  source: https://api-docs.bigpanda.io/authentication-and-headers
+
+base_urls:
+  regional: true
+  note: >-
+    An organization lives in exactly one data management region and must send every request to that
+    region's base URL. There is no per-request region switch; a request to the wrong region will not
+    find the data.
+  regions:
+    - region: US
+      base_url: https://api.bigpanda.io
+      verified: '2026-09-04'
+      observed_status: 401
+    - region: EU
+      base_url: https://api.eu.bigpanda.io
+      published: true
+      resolves: false
+      note: >-
+        Published in the Regions page but NXDOMAIN on 2026-09-04. The live EU host observed on that date
+        is https://eu-api.bigpanda.io (401 Authorization Required). A third value, https://eu-api.biggy.io,
+        appears in the servers[] block of the per-endpoint OpenAPI fragments and also does not resolve.
+        Three published EU hosts, one of which answers. Recorded, not corrected.
+  source: https://api-docs.bigpanda.io/regions
+
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  scope: []
+  note: >-
+    BigPanda documents no replay-protection mechanism. There is no Idempotency-Key header anywhere in the
+    263 harvested operations, and no idempotency section in the "Using BigPanda APIs" conventions set.
+    A retried POST — an alert ingest, an incident comment, a MIM execution — is a second write. The one
+    partial mitigation is domain-level, not protocol-level: /data/changes is documented as
+    "create or update a change" (operationId create-or-update-a-change), an upsert keyed on the caller's
+    own identifier, and the alert ingest path dedupes on alert identity rather than on a request key.
+    Neither is a general idempotency key and neither covers the mutating surface.
+  evidence:
+    - method: grep for /idempotenc/i across all 27 files in openapi/
+      result: no match
+    - source: https://api-docs.bigpanda.io/using-bigpanda-apis
+      result: no idempotency topic in the conventions index
+
+reversibility:
+  grade: verified
+  note: >-
+    BigPanda's write surface is unusually reversible for an incident platform — nearly every state change
+    on an incident has a documented inverse operation, and two of the operations state their own window.
+    Graded `verified` because at least one reversal path carries a stated window from the provider's docs
+    (MIM execution cancel/resolve are bounded to an ACTIVE execution; a maintenance plan can be stopped
+    only while it is running). Reversals are operations, not a generic undo: there is no transactional
+    rollback and no soft-delete restore for configuration objects other than integration configuration
+    versions.
+  surfaces:
+    - write: assign-incident
+      reversal: unassign-incident
+      operationId: unassign-incident
+      path: /resources/v2.0/environments/{environment_id}/incidents/{incident_id}/assignment
+      window: unbounded — assignment can be removed at any time while the incident exists
+      spec: openapi/bigpanda-incidents-api-openapi.yml
+    - write: snooze-incident
+      reversal: unsnooze-incident
+      operationId: unsnooze-incident
+      path: /resources/v2.0/environments/{environment_id}/incidents/{incident_id}/snooze
+      window: unbounded — an incident can be unsnoozed while snoozed
+      spec: openapi/bigpanda-incidents-api-openapi.yml
+    - write: merge-incidents-1
+      reversal: split-incident
+      operationId: split-incident
+      path: /resources/v2.0/environments/{environment_id}/incidents/{incident_id}/split
+      window: not stated
+      note: Split is the documented inverse of merge, but BigPanda does not state a window inside which a merge can be split back apart.
+      spec: openapi/bigpanda-incidents-api-openapi.yml
+    - write: resolve-incident-1
+      reversal: null
+      window: null
+      note: >-
+        Resolving an incident has no documented un-resolve operation. The docs state that re-resolving an
+        already-resolved incident returns 409 Conflict, which confirms resolve is terminal from the API's
+        point of view.
+      source: https://api-docs.bigpanda.io/errors-and-troubleshooting
+    - write: POST /mim/execute (Execute a MIM Workflow From a Template)
+      reversal: POST /mim/executions/{executionId}/cancel (Cancel a MIM Execution)
+      operationId: null
+      operationId_note: BigPanda publishes no operationId for any of the seven MIM operations; they are addressable only by method and path.
+      window: while the execution is ACTIVE — "Cancels an active execution without resolving it."
+      spec: openapi/bigpanda-mim-api-openapi.yml
+      source: https://api-docs.bigpanda.io/cancel-a-mim-execution-37769968e0.md
+    - write: POST /mim/execute (Execute a MIM Workflow From a Template)
+      reversal: POST /mim/executions/{executionId}/resolve (Resolve a MIM execution)
+      operationId: null
+      window: >-
+        while the execution is ACTIVE. "Marks an active execution as resolved. The execution transitions
+        to pending_resolution status while the MIM orchestrator performs closing-out work."
+      spec: openapi/bigpanda-mim-api-openapi.yml
+      source: https://api-docs.bigpanda.io/resolve-a-mim-execution-37769967e0.md
+    - write: maintenance-plan-v2-create-plan
+      reversal: maintenance-plan-v2-stop-plan
+      path: /resources/v2.0/maintenance-plans/{maintenance_id}/stop
+      window: while the plan is running — stop ends an active maintenance window early
+      spec: openapi/bigpanda-maintenance-plans-api-openapi.yml
+    - write: any integration configuration change
+      reversal: restore-configuration-version
+      path: /configurations/alerts/{integration}/{app_key_p}/versions/{version}/restore
+      window: any retained version — versions are listed by list-configuration-versions and compared by diff-configuration-versions
+      spec: openapi/bigpanda-oim-configuration-api-openapi.yml
+      note: The strongest reversal in the surface — versioned configuration with diff and restore.
+    - write: create-multiple-incident-tags
+      reversal: delete-all-incident-tags
+      window: unbounded
+      spec: openapi/bigpanda-incidents-api-openapi.yml
+  not_reversible:
+    - resolve-incident-1
+    - alerts (alert ingestion is append-only; resolve-alerts closes alerts but does not un-ingest them)
+
+dry_run_mode:
+  supported: partial
+  note: >-
+    No generic dry-run flag. Two adjacent facilities exist: /resources/v2.1/saml-debug (operationId
+    getSamlDebug) validates an SSO configuration without committing it, and the OIM configuration surface
+    lets a caller compare a candidate version against the live one
+    (diff-configuration-versions) before restoring. Neither is a request-level dry run.
+
+pagination:
+  style: per-endpoint
+  uniform: false
+  note: >-
+    BigPanda explicitly does not have one pagination convention: "Pagination behavior is not uniform
+    across the API — the parameters and the shape of the pagination metadata vary by route and endpoint."
+    The reference tells callers to read the paging parameters, default and maximum page size, the
+    more-pages signal and any total-results cap off each individual endpoint. That is an honest statement
+    of a real inconsistency, and it is the single largest agent-facing cost in this API: a client cannot
+    learn paging once.
+  source: https://api-docs.bigpanda.io/pagination
+
+filtering:
+  name: BPQL object syntax
+  note: JSON filter syntax used by the incident query endpoints; combine with paging to narrow before paging.
+  source: https://api-docs.bigpanda.io/bpql-object-syntax
+
+expansion:
+  supported: true
+  name: Expandable objects
+  note: Related objects can be inlined in a response rather than fetched with a second call.
+  source: https://api-docs.bigpanda.io/expandable-objects
+
+async:
+  supported: true
+  pattern: 202-accepted-plus-job-resource
+  response: 202 Accepted
+  location_header: true
+  note: >-
+    Asynchronous endpoints (for example a mapping-enrichment table upload) return 202 Accepted with a
+    Location header pointing at a Job resource. The caller GETs the job URL until it reports complete.
+    BigPanda tells callers to space polls and to treat a 429 as a signal to slow down.
+  example: GET https://api.bigpanda.io/resources/v2.1/enrichments/<id>/map/<job_id>
+  callbacks: Callback notification configuration endpoints push a result instead of requiring a poll.
+  source: https://api-docs.bigpanda.io/asynchronous-operations
+
+versioning:
+  style: path
+  note: >-
+    Versions appear in the path (/resources/v2.0/, /resources/v2.1/, /data/v2/, /oim/api/, /scim/v2/).
+    Several resources are documented in more than one version at once — alert filters carry v1 Routes
+    alongside current routes, mapping enrichments carry v2.0 and v2.1 Routes, and users carry a v2 Routes
+    group. BigPanda's guidance is to prefer the newest version for new work; older versions stay
+    available until retired.
+  source: https://api-docs.bigpanda.io/versioning-and-deprecation
+  cross_link: lifecycle/bigpanda-lifecycle.yml
+
+errors:
+  envelope: json
+  rfc9457: false
+  note: >-
+    Conventional HTTP status codes with a JSON body "where applicable". No application/problem+json media
+    type appears in any of the 263 operations, and no RFC 9457 problem-type registry is published. The
+    per-code meanings are documented centrally; the per-endpoint error bodies are documented on each
+    endpoint.
+  cross_link: errors/bigpanda-problem-types.yml
+  source: https://api-docs.bigpanda.io/responses
+
+rate_limits:
+  signaling: undocumented-headers
+  note: >-
+    Limits are per-endpoint and documented on each endpoint rather than centrally, and BigPanda does NOT
+    document any rate-limit response headers — no X-RateLimit-*, no RateLimit-*, no Retry-After is named
+    anywhere in the conventions set. The runtime signal an agent needs is therefore absent from the docs;
+    the only documented signal is the 429 status itself plus prose telling the caller to "retry after the
+    interval indicated in the response".
+  cross_link: rate-limits/bigpanda-rate-limits.yml
+  source: https://api-docs.bigpanda.io/rate-limits
+
+request_id_tracing:
+  supported: partial
+  note: >-
+    No general request-id header is documented. The Biggy Query API does return a requestId on an async
+    202 which is then used to retrieve the response (operationId get-a-response), but that is a job
+    handle, not a trace id.
+
+metadata:
+  supported: true
+  note: Alert and incident tags plus mapping/enrichment items are the metadata surface; see openapi/bigpanda-alert-enrichment-api-openapi.yml and the incident tag operations.
+
+webhooks:
+  direction: outbound
+  mechanism: Notifications Webhook v2
+  note: >-
+    BigPanda pushes incident events to tools with no native integration. Webhook v2 supports custom
+    headers, URL paths and dynamic variables, and is configured through the API
+    (create-a-new-webhook-v2-workflow-integration and siblings) rather than only through the UI.
+  cross_link: asyncapi/bigpanda-webhooks.yml
+  source: https://api-docs.bigpanda.io/webhooks

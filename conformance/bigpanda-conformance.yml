@@ -1,0 +1,178 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  https://api-docs.bigpanda.io/ (BigPanda's own API reference), the 263 operations harvested into
+  openapi/, and live probes of the discovery documents on www.bigpanda.io.
+description: >-
+  Cross-cutting and domain-standard conformance for BigPanda, asserted only where the CONTRACT or a
+  fetched document shows it. Each entry carries the evidence it was read from.
+conformance:
+  - id: scim2
+    name: SCIM 2.0 (System for Cross-domain Identity Management, RFC 7643 / RFC 7644)
+    domain_standard: true
+    domain: identity-and-provisioning
+    conforms: true
+    evidence: >-
+      openapi/bigpanda-users-api-openapi.yml declares the canonical SCIM 2.0 resource paths
+      /scim/v2/Users, /scim/v2/Users/{user_id}, /scim/v2/Groups and /scim/v2/Groups/{group_id} with the
+      full RFC 7644 method set (POST create, GET query, GET by id, PUT replace, PATCH modify, DELETE),
+      and returns the SCIM media type application/scim+json on 37 responses. operationIds are explicitly
+      SCIM-named (createGroupSCIM, getGroupsBySCIMQueryParams, deleteGroupByIdSCIM, patchGroupByIdSCIM).
+    source: https://api-docs.bigpanda.io/create-scim-group-37770146e0.md
+    note: >-
+      This is the buyer-facing distinction the domain-standard check exists for: an enterprise already
+      running Okta, Entra ID or OneLogin provisions BigPanda users and groups with its existing SCIM
+      connector and writes no code. BigPanda does not publish the SCIM schema URNs
+      (urn:ietf:params:scim:schemas:core:2.0:User) in the contract — the request and response schemas are
+      marked "Schema pending: definition lives in unbundled source-repo files", so the shape is asserted
+      by path, method and media type rather than by schema.
+  - id: jsonrpc2
+    name: JSON-RPC 2.0
+    conforms: true
+    evidence: >-
+      Both agent endpoints speak JSON-RPC 2.0 over a single POST path — https://api.biggy.io/mcp
+      (initialize, tools/list, tools/call) and https://api.biggy.io/a2a/biggy-agent (message/send,
+      message/stream, tasks/get) — with the standard error codes -32600, -32601, -32602 and -32000
+      documented.
+    source: https://api-docs.bigpanda.io/a2a
+  - id: mcp
+    name: Model Context Protocol
+    conforms: true
+    version: '2025-11-25'
+    evidence: >-
+      https://api-docs.bigpanda.io/mcp documents protocolVersion 2025-11-25, serverInfo
+      {"name":"biggy-action-plans","version":"1.0.0"}, capabilities {tools, logging}, stateless HTTP POST
+      transport with 405 on GET/DELETE, and the initialize / tools/list / tools/call lifecycle. A second
+      MCP server on www.bigpanda.io answered an anonymous tools/list with a protocol-aware
+      401 {"code":"mcp_unauthorized"}.
+    cross_link: mcp/bigpanda-mcp.yml
+  - id: a2a
+    name: Agent2Agent (A2A) protocol
+    conforms: partial
+    evidence: >-
+      https://api-docs.bigpanda.io/a2a documents message/send, message/stream (SSE with start/delta/final/
+      error events) and tasks/get against https://api.biggy.io/a2a/biggy-agent, plus an agent-card
+      retrieval operation (operationId retrieve-agent-card) at
+      /.well-known/agent-card.json?assistant_id=biggy-agent.
+    note: >-
+      Marked partial, not conformant. A2A's discovery contract is an anonymously fetchable agent card;
+      BigPanda's card is behind Bearer authentication AND behind a Cloudflare bot challenge — an
+      anonymous GET returned HTTP 403 on 2026-09-04 — so no agent can discover this agent without first
+      being a customer. Deviations from A2A 1.0.0 that are visible from the docs: the card is served at a
+      query-parameterised path rather than the canonical /.well-known/agent-card.json; threading uses a
+      BigPanda-specific `thread.threadId` parameter rather than A2A contextId; and only text parts are
+      supported. No agent card was captured, so no AgentCard artifact is claimed.
+    probe:
+      url: https://api.biggy.io/.well-known/agent-card.json?assistant_id=biggy-agent
+      status: 403
+      checked: '2026-09-04'
+  - id: oauth2
+    name: OAuth 2.0 with PKCE
+    conforms: true
+    scope: marketing-site MCP only
+    evidence: >-
+      https://www.bigpanda.io/.well-known/oauth-authorization-server (HTTP 200) declares
+      authorization_code and refresh_token grants, response_type code, code_challenge_methods_supported
+      [S256] and token_endpoint_auth_methods_supported [none] — a public client with PKCE.
+    file: well-known/bigpanda-oauth-authorization-server.json
+    note: The product API at api.bigpanda.io does NOT use OAuth; it uses a static Bearer API key.
+  - id: rfc8414
+    name: RFC 8414 OAuth 2.0 Authorization Server Metadata
+    conforms: true
+    evidence: /.well-known/oauth-authorization-server served with HTTP 200 and a valid metadata document on bigpanda.io and www.bigpanda.io.
+    file: well-known/bigpanda-oauth-authorization-server.json
+  - id: rfc9728
+    name: RFC 9728 OAuth 2.0 Protected Resource Metadata
+    conforms: true
+    evidence: >-
+      /.well-known/oauth-protected-resource served with HTTP 200, naming resource
+      https://www.bigpanda.io/wp-json/mcp/mcp-oauth-server, authorization_servers
+      [https://www.bigpanda.io], bearer_methods_supported [header] and scopes_supported [mcp].
+    file: well-known/bigpanda-oauth-protected-resource.json
+  - id: openapi
+    name: OpenAPI
+    conforms: true
+    version: 3.0.1
+    evidence: >-
+      BigPanda publishes an OpenAPI 3.0.1 fragment on every one of the 263 endpoint pages of its Apidog
+      reference (https://api-docs.bigpanda.io/<endpoint>.md). It does NOT publish a single bundled
+      document — no /openapi.json, /openapi.yaml or /swagger.json exists on api-docs.bigpanda.io
+      (all 404) and api.bigpanda.io answers 401 on every path. The specs in openapi/ are those fragments
+      assembled per resource.
+  - id: rfc9457
+    name: RFC 9457 Problem Details for HTTP APIs
+    conforms: false
+    evidence: >-
+      No application/problem+json media type appears in any of the 263 operations, and the documented
+      error body is a plain JSON object ({"status": int, "errors": [string]}) rather than a problem
+      document.
+    cross_link: errors/bigpanda-problem-types.yml
+  - id: idempotency
+    name: Idempotency keys
+    conforms: false
+    evidence: >-
+      No Idempotency-Key header and no idempotency topic anywhere in the reference or in the 263
+      operations. See conventions/bigpanda-conventions.yml idempotency.coverage = none.
+  - id: pagination
+    name: Consistent pagination
+    conforms: false
+    evidence: >-
+      BigPanda states outright that "Pagination behavior is not uniform across the API — the parameters
+      and the shape of the pagination metadata vary by route and endpoint" and directs callers to read
+      the paging contract off each endpoint.
+    source: https://api-docs.bigpanda.io/pagination
+  - id: rfc8594
+    name: RFC 8594 Sunset HTTP Header
+    conforms: false
+    evidence: >-
+      No Sunset or Deprecation response header is documented, and no operation carries deprecated: true,
+      even though four dated retirements are announced in prose in the release notes.
+    cross_link: lifecycle/bigpanda-lifecycle.yml
+  - id: llmstxt
+    name: llms.txt
+    conforms: true
+    evidence: >-
+      Two llms.txt files are served — https://docs.bigpanda.io/llms.txt (product documentation index) and
+      https://api-docs.bigpanda.io/llms.txt (a 338-line index of the whole API reference with a .md
+      address for every one of the 263 endpoints). Both returned HTTP 200 on 2026-09-04.
+  - id: saml2
+    name: SAML 2.0 single sign-on
+    conforms: true
+    domain_standard: true
+    domain: identity-and-provisioning
+    evidence: >-
+      openapi/bigpanda-sso-provisioning-api-openapi.yml exposes /resources/v2.1/sso-config,
+      /resources/v2.1/sso-config/{provider}/configure and a /resources/v2.1/saml-debug endpoint
+      (operationId getSamlDebug), alongside JIT domain and JIT role provisioning routes.
+  - id: soc2
+    name: SOC 2
+    conforms: true
+    kind: compliance-program
+    evidence: Named on BigPanda's trust center at https://trust.bigpanda.io/.
+    cross_link: security/bigpanda-trust-center.yml
+  - id: iso27001
+    name: ISO/IEC 27001
+    conforms: true
+    kind: compliance-program
+    evidence: Named on BigPanda's trust center at https://trust.bigpanda.io/.
+    cross_link: security/bigpanda-trust-center.yml
+  - id: gdpr-eu-residency
+    name: EU data residency
+    conforms: true
+    kind: compliance-program
+    evidence: >-
+      BigPanda operates a separate EU data management region and states that "EU data is processed
+      entirely within the EU" (https://api-docs.bigpanda.io/regions, linking
+      https://docs.bigpanda.io/en/bigpanda-in-the-eu.html). Recorded with the caveat that the EU base URL
+      BigPanda publishes, api.eu.bigpanda.io, did not resolve on 2026-09-04.
+not_applicable:
+  - id: fhir
+    reason: Not a healthcare API.
+  - id: fapi
+    reason: Not a financial-grade API; BigPanda is an IT operations platform.
+  - id: psd2
+    reason: Not a payments provider.
+  - id: odata
+    reason: No $metadata surface; the query language is BigPanda's own BPQL object syntax.
+  - id: ogc
+    reason: No geospatial surface.

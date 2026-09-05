@@ -1,0 +1,657 @@
+openapi: 3.0.3
+info:
+  title: BigPanda Agents (MCP & A2A) API
+  description: BigPanda Agents (MCP & A2A) operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on
+    its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
+    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
+    the base URL for your region.
+  version: 1.0.0
+  contact:
+    name: BigPanda Support
+    url: https://api-docs.bigpanda.io/
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 3
+servers:
+- url: https://api.bigpanda.io
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
+tags:
+- name: Agents (MCP & A2A)
+paths:
+  /.well-known/agent-card.json?assistant_id=biggy-agent:
+    get:
+      summary: Retrieve the agent card
+      deprecated: false
+      description: 'Returns the agent card describing Biggy''s capabilities, supported input/output modes, and skills.
+
+        '
+      operationId: retrieve-agent-card
+      tags:
+      - Agents (MCP & A2A)
+      parameters:
+      - name: assistant_id
+        in: query
+        description: ''
+        required: true
+        example: biggy-agent
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/agentcard200'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769994-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-the-agent-card-37769994e0.md
+      x-source-page: Retrieve the agent card
+  /mcp:
+    post:
+      summary: Use Biggy action plans via a remote MCP
+      deprecated: false
+      description: "Initialize the MCP session. Stateless transport over HTTP POST with JSON-RPC 2.0.\n\nGET and DELETE return\
+        \ 405 Method Not Allowed (stateless mode).\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
+        \ Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\n>\
+        \ ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute.\
+        \ Additional requests will return a 429 response code and the request will need to be retried."
+      operationId: use-action-plans-as-mcp
+      tags:
+      - Agents (MCP & A2A)
+      parameters:
+      - name: Accept
+        in: header
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - application/json, text/event-stream
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/mcp-initialize-config'
+              - $ref: '#/components/schemas/mcp-toolslist-config'
+              - $ref: '#/components/schemas/mcp-calltool-config'
+            examples: {}
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/mcp200response'
+          headers: {}
+          x-apidog-name: Server info and capabilities
+        '405':
+          x-apidog-ordering: 1
+          description: '405'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/mcp405response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37991762-run
+      x-source-url: https://api-docs.bigpanda.io/use-biggy-action-plans-via-a-remote-mcp-37991762e0.md
+      x-source-page: Use Biggy action plans via a remote MCP
+  /a2a/biggy-agent:
+    post:
+      summary: Use the A2A protocol
+      deprecated: false
+      description: "Use Biggy's Alpha agent via the [A2A protocol](https://google.github.io/A2A/) so your own AI agents can\
+        \ send messages, stream responses, and poll task status using a standard JSON-RPC 2.0 interface.\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token.\n\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API\
+        \ is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will\
+        \ need to be retried.\n\n## Methods\n\nAll interactions use JSON-RPC 2.0 over the single `/a2a/biggy-agent` endpoint.\
+        \ The `method` field determines the operation.\n\nThe following methods are available:\n\n| Method           | Description\
+        \                                                                     |\n| ---------------- | -------------------------------------------------------------------------------\
+        \ |\n| `message/send`   | Send a message and receive the full response synchronously                      |\n| `message/stream`\
+        \ | Send a message and stream the response as server-sent events (SSE).             |\n| `tasks/get`      | Poll the\
+        \ status and result of a previous task                                   |        \n\n## Message format\n\nMessages\
+        \ are composed of parts. Currently only `text` parts are supported.\n\n| Field                          | Type   |\
+        \ Required | Description                          |\n| ------------------------------ | ------ | -------- | ------------------------------------\
+        \ |\n| `params.message.parts`         | array  | Yes      | Array of message parts               |\n| `params.message.parts[].kind`\
+        \  | string | Yes      | Must be `\"text\"`                     |\n| `params.message.parts[].text`  | string | Yes\
+        \      | The text content                     |\n| `params.thread.threadId`       | string | No       | Thread ID\
+        \ to continue a conversation |\n\n## Threading\n\nA2A supports multi-turn conversations via threads.\n\n- **New conversation**:\
+        \ Omit `thread` or pass `\"threadId\": \"\"`. The response will include a generated `threadId`.\n- **Continue conversation**:\
+        \ Pass the `threadId` from a previous response to carry forward conversation history.\n- **Thread IDs**: Alphanumeric,\
+        \ hyphens, and underscores only. Max 128 characters.\n\nThe server retains up to 100 messages per thread.\n\n### Message\
+        \ and thread limits\n\n| Constraint             | Value             |\n| ---------------------- | -----------------\
+        \ |\n| Max message parts      | 10                |\n| Max text per part      | 5,000 characters  |\n| Max total query\
+        \ length | 20,000 characters |\n| Max thread ID length   | 128 characters    |        \n\n## Error response format\n\
+        \nErrors are returned as JSON-RPC error objects, not HTTP status codes (the HTTP status is always 200 for JSON-RPC\
+        \ responses).\n\n| Code   | Description                                          |\n| ------ | ----------------------------------------------------\
+        \ |\n| -32600 | Invalid request (missing or wrong `jsonrpc` version) |\n| -32601 | Method not found (unsupported `method`\
+        \ value)        |\n| -32602 | Invalid params (validation failure, bad input)       |\n| -32000 | Server error (unexpected\
+        \ internal failure)           |\n\n## message/send (synchronous) example\n\nSends a message to the agent and blocks\
+        \ until the full response is ready.\n\n**Request**\n\n```bash\ncurl -sS -X POST \"https://api.biggy.io/a2a/biggy-agent\"\
+        \ \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer your-api-key\" \\\n  -d '{\n    \"\
+        jsonrpc\": \"2.0\",\n    \"id\": \"1\",\n    \"method\": \"message/send\",\n    \"params\": {\n      \"message\":\
+        \ {\n        \"parts\": [{ \"kind\": \"text\", \"text\": \"What alerts fired for auth-api in the last 24 hours?\"\
+        \ }]\n      },\n      \"thread\": { \"threadId\": \"\" }\n    }\n  }'\n```\n\n**Response**\n\n```json\n{\n    \"jsonrpc\"\
+        : \"2.0\",\n    \"id\": \"1\",\n    \"result\": {\n        \"thread\": { \"threadId\": \"a1b2c3d4\" },\n        \"\
+        taskId\": \"6830f1a2e3b4c5d6e7f80001\",\n        \"artifacts\": [\n            {\n                \"parts\": [{ \"\
+        kind\": \"text\", \"text\": \"Based on the historical data...\" }]\n            }\n        ]\n    }\n}\n```\n### message/stream\
+        \ (SSE) example\n\nSends a message and streams the response as server-sent (SSE) Events. This method is useful for\
+        \ long-running queries where you want incremental output.\n\n**Request**\n\n```bash\ncurl -sS -X POST \"https://api.biggy.io/a2a/biggy-agent\"\
+        \ \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer your-api-key\" \\\n  -d '{\n    \"\
+        jsonrpc\": \"2.0\",\n    \"id\": \"1\",\n    \"method\": \"message/stream\",\n    \"params\": {\n      \"message\"\
+        : {\n        \"parts\": [{ \"kind\": \"text\", \"text\": \"What alerts fired for auth-api in the last 24 hours?\"\
+        \ }]\n      },\n      \"thread\": { \"threadId\": \"\" }\n    }\n  }'\n```\n\n#### SSE Events\n\nThe response is a\
+        \ `text/event-stream` with the following event types:\n\n| Event   | Description                                 \
+        \                                              |\n| ------- | -----------------------------------------------------------------------------------------\
+        \ |\n| `start` | Emitted once at the beginning. Contains `thread`, `taskId`, and the JSON-RPC envelope.    |\n| `delta`\
+        \ | Emitted as chunks arrive. Contains `{ \"text\": \"...\" }` with the incremental text.         |\n| `final` | Emitted\
+        \ once when complete. Contains the full JSON-RPC success response with `artifacts`. |\n| `error` | Emitted if an error\
+        \ occurs. Contains a JSON-RPC error response.                           |\n\n**Start event**\n\n```json\n{\n    \"\
+        jsonrpc\": \"2.0\",\n    \"id\": \"1\",\n    \"thread\": { \"threadId\": \"a1b2c3d4\" },\n    \"taskId\": \"6830f1a2e3b4c5d6e7f80001\"\
+        \n}\n```\n\n**Delta event**\n\n```json\n{ \"text\": \"Based on the \" }\n```\n\n**Final event**\n\n```json\n{\n  \
+        \  \"jsonrpc\": \"2.0\",\n    \"id\": \"1\",\n    \"result\": {\n        \"thread\": { \"threadId\": \"a1b2c3d4\"\
+        \ },\n        \"taskId\": \"6830f1a2e3b4c5d6e7f80001\",\n        \"artifacts\": [\n            {\n               \
+        \ \"parts\": [{ \"kind\": \"text\", \"text\": \"Based on the historical data...\" }]\n            }\n        ]\n \
+        \   }\n}\n```\n\n### tasks/get (polling) example\n\nRetrieves the status and result of a previously created task by\
+        \ its `taskId`.\n\nThe following are the possible task statuses:\n\n| Status      | Meaning                      \
+        \                   |\n| ----------- | ----------------------------------------------- |\n| `running`   | Task is\
+        \ still in progress                       |\n| `completed` | Task finished successfully (artifacts included) |\n|\
+        \ `failed`    | Task failed (error details included)            |\n| `not_found` | No task found with the given ID\
+        \                 |\n\n**Request**\n\n```bash\ncurl -sS -X POST \"https://api.biggy.io/a2a/biggy-agent\" \\\n  -H\
+        \ \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer your-api-key\" \\\n  -d '{\n    \"jsonrpc\"\
+        : \"2.0\",\n    \"id\": \"1\",\n    \"method\": \"tasks/get\",\n    \"params\": { \"taskId\": \"6830f1a2e3b4c5d6e7f80001\"\
+        \ }\n  }'\n```\n\n**Response (completed)**\n\n```json\n{\n    \"jsonrpc\": \"2.0\",\n    \"id\": \"1\",\n    \"result\"\
+        : {\n        \"taskId\": \"6830f1a2e3b4c5d6e7f80001\",\n        \"status\": \"completed\",\n        \"artifacts\"\
+        : [\n            {\n                \"parts\": [{ \"kind\": \"text\", \"text\": \"Based on the historical data...\"\
+        \ }]\n            }\n        ]\n    }\n}\n```\n\n**Response (still running)**\n\n```json\n{\n    \"jsonrpc\": \"2.0\"\
+        ,\n    \"id\": \"1\",\n    \"result\": {\n        \"taskId\": \"6830f1a2e3b4c5d6e7f80001\",\n        \"status\": \"\
+        running\"\n    }\n}\n```\n"
+      operationId: use-the-a2a-protocol
+      tags:
+      - Agents (MCP & A2A)
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - type: object
+                properties: {}
+              - type: object
+                properties: {}
+              - $ref: '#/components/schemas/a2a-tasksget-config'
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/a2a200response'
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 1
+          description: '404'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic404response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-38058759-run
+      x-source-url: https://api-docs.bigpanda.io/use-the-a2a-protocol-38058759e0.md
+      x-source-page: Use the A2A protocol
+components:
+  securitySchemes:
+    BearerUser11:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
+
+        headers only in the secure tool you use to make API calls
+
+        '
+  schemas:
+    agentcard200:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 200
+        data:
+          type: object
+          properties:
+            assistant_id:
+              type: string
+              description: Identifier of the agent.
+              examples:
+              - biggy-agent
+            name:
+              type: string
+              description: Name of the agent.
+              examples:
+              - Biggy Agent
+            description:
+              type: string
+              description: Description of the agent.
+              examples:
+              - Biggy Alpha agent exposed via the A2A protocol.
+            input_modes:
+              type: array
+              description: Input modes.
+              examples:
+              - text
+              items:
+                type: string
+            output_modes:
+              type: array
+              description: Output modes.
+              examples:
+              - text
+              items:
+                type: string
+            skills:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the skill.
+                  examples:
+                  - general-aiops-qa
+                description:
+                  type: string
+                  description: Description of the skill.
+                  examples:
+                  - General IT ops Q&A
+              x-apidog-orders:
+              - name
+              - description
+              x-apidog-ignore-properties: []
+            a2a_endpoint:
+              type: string
+              description: Agent 2 Agent endpoint.
+              examples:
+              - /a2a/biggy-agent
+          x-apidog-orders:
+          - assistant_id
+          - name
+          - description
+          - input_modes
+          - output_modes
+          - skills
+          - a2a_endpoint
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    mcp-calltool-config:
+      type: object
+      title: tools/call
+      properties:
+        jsonRpc:
+          type: string
+          description: JSON RPC version. Must be 2.0.
+          examples:
+          - 2
+        id:
+          type: string
+          description: Identifier established by the client.
+          examples:
+          - 1
+        method:
+          type: string
+          description: Method used for this request. One of `initialize`, `tools/list`, or `tools/call`.
+          examples:
+          - tools/call
+        params:
+          type: object
+          description: Parameter values to be used during the invocation of the method.
+          properties:
+            name:
+              type: string
+              description: Full name of the action plan.
+              examples:
+              - TroubleshootHistoricalAnalysis
+            arguments:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The prompt used to invoke the action plan.
+                  examples:
+                  - What alerts fired for the payments service in the last 24 hours?
+              x-apidog-orders:
+              - query
+              x-apidog-ignore-properties: []
+          x-apidog-orders:
+          - name
+          - arguments
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - jsonRpc
+      - id
+      - method
+      - params
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    mcp-toolslist-config:
+      type: object
+      title: tools/list
+      properties:
+        jsonRpc:
+          type: string
+          description: JSON RPC version. Must be 2.0.
+          examples:
+          - 2
+        id:
+          type: string
+          description: Identifier established by the client.
+          examples:
+          - 1
+        method:
+          type: string
+          description: Method used for this request. One of `initialize`, `tools/list`, or `tools/call`.
+          examples:
+          - tools/list
+        params:
+          type: array
+          description: Parameter values to be used during the invocation of the method.
+          examples:
+          - null
+          items:
+            type: string
+      x-apidog-orders:
+      - jsonRpc
+      - id
+      - method
+      - params
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    mcp-initialize-config:
+      type: object
+      title: initialize
+      properties:
+        jsonRpc:
+          type: string
+          description: JSON RPC version. Must be 2.0.
+          examples:
+          - 2
+        id:
+          type: string
+          description: Identifier established by the client.
+          examples:
+          - 1
+        method:
+          type: string
+          description: Method used for this request. One of `initialize`, `tools/list`, or `tools/call`.
+          examples:
+          - initialize
+        params:
+          type: object
+          description: Parameter values to be used during the invocation of the method.
+          properties:
+            protocolVersion:
+              type: string
+              description: MCP protocol version.
+              examples:
+              - '2025-11-25T00:00:00.000Z'
+            capabilities:
+              type: string
+              description: Client capabilities.
+              examples:
+              - null
+            clientInfo:
+              type: array
+              description: Information about the MCP client.
+              examples:
+              - name
+              items:
+                type: string
+          x-apidog-orders:
+          - protocolVersion
+          - capabilities
+          - clientInfo
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - jsonRpc
+      - id
+      - method
+      - params
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    mcp200response:
+      type: object
+      properties:
+        jsonRPC:
+          type: string
+          description: JSON RPC version.
+          examples:
+          - 2
+        id:
+          type: string
+          description: Identifier established by the client.
+          examples:
+          - 1
+        result:
+          type: object
+          properties:
+            protocolVersion:
+              type: string
+              description: MCP protocol version.
+              examples:
+              - '2025-11-25T00:00:00.000Z'
+            capabilities:
+              type: array
+              description: Client capabilities.
+              examples:
+              - tools
+              items:
+                type: string
+            serverInfo:
+              type: array
+              description: Information about the connected server.
+              examples:
+              - name
+              items:
+                type: string
+          x-apidog-orders:
+          - protocolVersion
+          - capabilities
+          - serverInfo
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - jsonRPC
+      - id
+      - result
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    mcp405response:
+      type: object
+      description: 'Method not allowed (GET/DELETE on stateless endpoint)
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 405
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - 'Method not allowed (GET/DELETE on stateless endpoint)    '
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    a2a-tasksget-config:
+      type: object
+      title: tasks/get (polling)
+      properties:
+        json-rpc:
+          type: string
+          description: JSON RPC version. Must be 2.0.
+          examples:
+          - 2
+        id:
+          type: string
+          description: Identifier established by the client.
+          examples:
+          - 1
+        method:
+          type: string
+          description: The operation that will take place over this endpoint. One of `message/send`, `message/stream`, or
+            `task/get`.
+          examples:
+          - tasks/get
+        params:
+          type: object
+          items:
+            type: object
+            properties: {}
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - json-rpc
+      - id
+      - method
+      - params
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    a2a200response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 200
+        data:
+          type: object
+          properties:
+            jsonRPC:
+              type: string
+              description: JSON RPC version.
+              examples:
+              - 2
+            id:
+              type: string
+              description: Identifier established by the client.
+              examples:
+              - 1
+            result:
+              type: object
+              properties:
+                taskId:
+                  type: string
+                  description: Unique identifier of the task.
+                  examples:
+                  - 6830f1a2e3b4c5d6e7f80001
+                status:
+                  type: string
+                  description: Status of the task. One of `running`, `completed`, `failed`, or `not_found`.
+                artifacts:
+                  type: object
+                  properties:
+                    parts:
+                      type: array
+                      description: Parts of the message.
+                      examples:
+                      - text
+                      items:
+                        type: string
+                  x-apidog-orders:
+                  - parts
+                  x-apidog-ignore-properties: []
+              x-apidog-orders:
+              - taskId
+              - status
+              - artifacts
+              x-apidog-ignore-properties: []
+          x-apidog-orders:
+          - jsonRPC
+          - id
+          - result
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

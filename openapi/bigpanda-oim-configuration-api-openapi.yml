@@ -1,0 +1,1877 @@
+openapi: 3.0.3
+info:
+  title: BigPanda OIM Configuration API
+  description: BigPanda OIM Configuration operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on
+    its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
+    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
+    the base URL for your region.
+  version: 1.0.0
+  contact:
+    name: BigPanda Support
+    url: https://api-docs.bigpanda.io/
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 7
+servers:
+- url: https://api.bigpanda.io
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
+tags:
+- name: OIM Configuration
+paths:
+  /configurations/alerts/{integration}/{app_key_p}/versions/diff:
+    get:
+      summary: Compare Configuration Versions
+      deprecated: false
+      description: 'Return a diff between two saved versions of the integration configuration. The response highlights the
+        fields that have been added, removed, or modified between the `from` and `to` versions.
+
+
+        > 📘 **Version History Availability**
+
+        >
+
+        > Configuration version history begins at May 5 2026. Records of configurations saved prior to history start cannot
+        be retrieved.
+
+
+        ## Authentication
+
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+
+        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+        '
+      operationId: diff-configuration-versions
+      tags:
+      - OIM Configuration
+      parameters:
+      - name: integration
+        in: path
+        description: The integration type. Use `oim` for Open Integration Manager v2 or `emailparser` for the Email Parser.
+        required: true
+        example: ''
+        schema:
+          type: string
+          enum:
+          - oim
+          - emailparser
+          examples:
+          - oim
+      - name: app_key
+        in: path
+        description: The app key for the associated integration.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - gag342351qgb
+      - name: app_key_p
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      - name: from
+        in: query
+        description: The base version identifier to compare from. Minimum 1.
+        required: true
+        schema:
+          type: integer
+          examples:
+          - 1
+      - name: to
+        in: query
+        description: The target version identifier to compare to. Minimum 1.
+        required: true
+        schema:
+          type: integer
+          examples:
+          - 2
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  from:
+                    type: string
+                    description: The base version identifier provided in the request.
+                  to:
+                    type: string
+                    description: The target version identifier provided in the request.
+                  diff:
+                    type: array
+                    description: List of field-level differences between the two versions.
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          description: JSON path of the field that changed.
+                        old_value:
+                          type: string
+                        new_value:
+                          type: string
+                      x-apidog-orders:
+                      - key
+                      - old_value
+                      - new_value
+                      x-apidog-ignore-properties: []
+                x-apidog-orders:
+                - from
+                - to
+                - diff
+                x-apidog-ignore-properties: []
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerOrg5: []
+      x-publication-status: internal
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-41913636-run
+      x-source-url: https://api-docs.bigpanda.io/compare-configuration-versions.md
+      x-source-page: Compare Configuration Versions
+  /configurations/alerts/oim/{app_key_p}:
+    post:
+      summary: Create/Update OIM Configuration
+      deprecated: false
+      description: "## Authentication\n\nAll BigPanda APIs require Bearer Token Authorization in the call headers.\n\nThis\
+        \ API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed\
+        \ by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_ORG_TOKEN]`\n\n> \U0001F6A7 **Incorrect URL in Builder**\n\
+        > \n> This endpoint is accessed at the https://integrations.bigpanda.io url, not https://api.bigpanda.io\n\n## New\
+        \ default\nAs of October 2024, new OIM integrations will not flatten arrays by default. Existing integrations will\
+        \ not be affected by this change. If you would like to turn off array flattening for an integration created before\
+        \ October 2024, please reach out to support to update the array flattening setting.\n\n## Sample payload object\n\
+        For field validation, BigPanda checks against an existing sample JSON payload from the integration. For all create\
+        \ and update calls to the API, a sample must be included in the body of all calls.\n\nAll payload fields referenced\
+        \ in configuration settings must be included in the sample.\n\nTo generate a sample payload:\n- Send a test or sample\
+        \ event to BigPanda after integration installation, but before configuration.\n- Generate an event preview in your\
+        \ tool.\n- Manually enter payload field values into the interactive code generator on the BigPanda docs site.\n\n\
+        When included in the API body, the sample payload should be JSON formatted with double quotes. The payload can include\
+        \ nested objects.\n\n```JSON sample payload\n\"sample_payload\": {\n\"alerts\": [\n    {\n        \"generatorURL\"\
+        : \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n            \"description\"\
+        : \"This alert is used to check the CPU utilization of this non-existent server\",\n            \"runbook_url\": \"\
+        https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\"\
+        : \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n            \"severity\": \"\
+        page\",\n            \"instance\": \"bigpanda-server\",\n            \"alertname\": \"BigPanda Test\",\n         \
+        \   \"team\": \"metrics\",\n            \"env\": \"test\",\n            \"job\": \"CPU Check\",\n            \"locale\"\
+        : \"ca\",\n            \"timestamp\": \"1.657051103137505e+09\"\n                }\n            }\n        ],\n  \
+        \      \"commonLabels\": {\n            \"instance\": \"bigpanda-server\",\n            \"alertname\": \"BigPanda\
+        \ Test\",\n            \"team\": \"metrics\",\n            \"env\": \"test\",\n            \"job\": \"CPU Check\"\
+        ,\n            \"locale\": \"ca\",\n            \"timestamp\": \"1.657051103137505e+09\"\n        },\n        \"externalURL\"\
+        : \"https://external-url.io\",\n        \"groupLabels\": {\n            \"instance\": \"bigpanda-server\",\n     \
+        \       \"alertname\": \"BigPanda Test\",\n            \"team\": \"metrics\",\n            \"env\": \"test\",\n  \
+        \          \"job\": \"CPU Check\",\n            \"locale\": \"ca\",\n            \"timestamp\": \"1.657051103137505e+09\"\
+        \n        },\n        \"receiver\": \"bigpanda\",\n        \"version\": \"4\",\n        \"commonAnnotations\": {\n\
+        \            \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n \
+        \           \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"status\": \"firing\"\n    }\n\
+        \    ```\n\n**Rate limit:** 5 requests per second."
+      operationId: create-update-oim-configuration-v2
+      tags:
+      - OIM Configuration
+      parameters:
+      - name: app_key_p
+        in: path
+        description: The app key for the associated integration.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - gag342351qgb
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/oim_v2_config'
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oim_v2_config'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerOrg22: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770209-run
+      x-source-url: https://api-docs.bigpanda.io/create-update-oim-configuration.md
+      x-source-page: Create/Update OIM Configuration
+    get:
+      summary: Retrieve OIM Configuration
+      deprecated: false
+      description: "## Authentication\n\nAll BigPanda APIs require Bearer Token Authorization in the call headers.\n\nThis\
+        \ API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed\
+        \ by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_ORG_TOKEN]`\n\n> \U0001F6A7 **Incorrect URL in Builder**\n\
+        > \n> This endpoint is accessed at the https://integrations.bigpanda.io url, not https://api.bigpanda.io\n\n**Rate\
+        \ limit:** 5 requests per second."
+      operationId: retrieve-oim-configuration-v2
+      tags:
+      - OIM Configuration
+      parameters:
+      - name: app_key_p
+        in: path
+        description: The app key for the associated integration.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - gag342351qgb
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/oim_v2_config3'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerOrg22: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770208-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-oim-configuration.md
+      x-source-page: Retrieve OIM Configuration
+  /configurations/alerts/{integration}/{app_key_p}/versions:
+    get:
+      summary: List Configuration Versions
+      deprecated: false
+      description: 'Retrieve the list of saved configuration versions for the specified integration. Each entry represents
+        a previously saved configuration, ordered from oldest to most recent.
+
+
+        > 📘 **Version History Availability**
+
+        >
+
+        > Configuration version history begins at May 5 2026. Records of configurations saved prior to history start cannot
+        be retrieved.
+
+
+        ## Authentication
+
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+
+        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+        '
+      operationId: list-configuration-versions
+      tags:
+      - OIM Configuration
+      parameters:
+      - name: integration
+        in: path
+        description: The integration type. Use `oim` for Open Integration Manager v2 or `emailparser` for the Email Parser.
+        required: true
+        example: ''
+        schema:
+          type: string
+          enum:
+          - oim
+          - emailparser
+          examples:
+          - oim
+      - name: app_key
+        in: path
+        description: The app key for the associated integration.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - gag342351qgb
+      - name: app_key_p
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/versions'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerOrg5: []
+      x-publication-status: internal
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-41913633-run
+      x-source-url: https://api-docs.bigpanda.io/list-configuration-version.md
+      x-source-page: List Configuration Versions
+  /configurations/alerts/{integration}/{app_key_p}/versions/{version}/restore:
+    post:
+      summary: Restore Configuration Version
+      deprecated: false
+      description: 'Restore the integration configuration to a previously saved version. The restored configuration becomes
+        the active configuration and a new version entry is created in the history.
+
+
+        > 📘 **Version History Availability**
+
+        >
+
+        > Configuration version history begins at May 5 2026. Records of configurations saved prior to history start cannot
+        be retrieved.
+
+
+        ## Authentication
+
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+
+        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+        '
+      operationId: restore-configuration-version
+      tags:
+      - OIM Configuration
+      parameters:
+      - name: integration
+        in: path
+        description: The integration type. Use `oim` for Open Integration Manager v2 or `emailparser` for the Email Parser.
+        required: true
+        example: ''
+        schema:
+          type: string
+          enum:
+          - oim
+          - emailparser
+          examples:
+          - oim
+      - name: app_key
+        in: path
+        description: The app key for the associated integration.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - gag342351qgb
+      - name: version
+        in: path
+        description: The identifier of the configuration version to restore. Minimum 1.
+        required: true
+        example: 0
+        schema:
+          type: integer
+          examples:
+          - 1
+      - name: app_key_p
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/oim_v2_config2'
+                - $ref: '#/components/schemas/email_parser_config'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerOrg5: []
+      x-publication-status: internal
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-41913635-run
+      x-source-url: https://api-docs.bigpanda.io/restore-configuration-version.md
+      x-source-page: Restore Configuration Version
+  /configurations/alerts/{integration}/{app_key_p}/versions/{version}:
+    get:
+      summary: Retrieve Configuration Version
+      deprecated: false
+      description: 'Retrieve a specific saved version of the integration configuration.
+
+
+        > 📘 **Version History Availability**
+
+        >
+
+        > Configuration version history begins at May 5 2026. Records of configurations saved prior to history start cannot
+        be retrieved.
+
+
+        ## Authentication
+
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+
+        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+        '
+      operationId: retrieve-configuration-version
+      tags:
+      - OIM Configuration
+      parameters:
+      - name: integration
+        in: path
+        description: The integration type. Use `oim` for Open Integration Manager v2 or `emailparser` for the Email Parser.
+        required: true
+        example: ''
+        schema:
+          type: string
+          enum:
+          - oim
+          - emailparser
+          examples:
+          - oim
+      - name: app_key
+        in: path
+        description: The app key for the associated integration.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - gag342351qgb
+      - name: version
+        in: path
+        description: The identifier of the configuration version to retrieve. Minimum 1.
+        required: true
+        example: 0
+        schema:
+          type: integer
+          examples:
+          - 1
+      - name: app_key_p
+        in: path
+        description: ''
+        required: true
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  org:
+                    type: string
+                  resource_type:
+                    type: string
+                  resource_id:
+                    type: string
+                  version:
+                    type: integer
+                  payload:
+                    type: object
+                    properties:
+                      oneOf:
+                        type: string
+                    x-apidog-orders:
+                    - oneOf
+                    x-apidog-ignore-properties: []
+                  saved_at:
+                    type: string
+                x-apidog-orders:
+                - org
+                - resource_type
+                - resource_id
+                - version
+                - payload
+                - saved_at
+                x-apidog-ignore-properties: []
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerOrg5: []
+      x-publication-status: internal
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-41913634-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-configuration-version.md
+      x-source-page: Retrieve Configuration Version
+  /configurations/alerts/oim/{app_key}/preprocessor:
+    post:
+      summary: Update Config with Preprocessor Function
+      deprecated: false
+      description: 'Update an OIM integration configuration with preprocessor functions (for example, URL shortening). Preprocessing
+        functions run on incoming payloads before parsing rules are applied.
+
+        Replace `{app_key}` in the path with the `appKey` of the target integration.
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: postConfigurationsAlertsOimByAppKeyPreprocessor
+      tags:
+      - OIM Configuration
+      parameters:
+      - name: app_key
+        in: path
+        description: The integration app key that identifies the target OIM integration.
+        required: true
+        example: ''
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: ''
+        required: true
+        example: Bearer {{ORG_BEARER_TOKEN}}
+        schema:
+          type: string
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        example: application/json
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                config:
+                  type: object
+                  properties:
+                    preprocessing:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          order:
+                            type: integer
+                          tags:
+                            type: array
+                            items:
+                              type: string
+                          params:
+                            type: object
+                            properties:
+                              delimiter:
+                                type: string
+                            required:
+                            - delimiter
+                            x-apidog-orders:
+                            - delimiter
+                        x-apidog-orders:
+                        - id
+                        - order
+                        - tags
+                        - params
+                    map_remaining:
+                      type: boolean
+                    is_array:
+                      type: boolean
+                    secondary_property:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                        x-apidog-orders:
+                        - name
+                    map_remaining_flatten_arrays:
+                      type: boolean
+                    primary_property:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                        x-apidog-orders:
+                        - name
+                    version:
+                      type: string
+                    force_lowercase:
+                      type: boolean
+                    additional_attributes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          source:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - name
+                        - source
+                        x-apidog-orders:
+                        - name
+                        - source
+                    status:
+                      type: object
+                      properties:
+                        default_to:
+                          type: string
+                        status_map:
+                          type: object
+                          properties:
+                            warning:
+                              type: array
+                              items:
+                                type: string
+                            acknowledged:
+                              type: array
+                              items:
+                                type: string
+                            critical:
+                              type: array
+                              items:
+                                type: string
+                            ok:
+                              type: array
+                              items:
+                                type: string
+                            unknown:
+                              type: array
+                              items:
+                                type: string
+                          required:
+                          - warning
+                          - acknowledged
+                          - critical
+                          - ok
+                          - unknown
+                          x-apidog-orders:
+                          - warning
+                          - acknowledged
+                          - critical
+                          - ok
+                          - unknown
+                        source:
+                          type: array
+                          items:
+                            type: string
+                      required:
+                      - default_to
+                      - status_map
+                      - source
+                      x-apidog-orders:
+                      - default_to
+                      - status_map
+                      - source
+                    timestamp:
+                      type: object
+                      properties:
+                        source:
+                          type: array
+                          items:
+                            type: string
+                      required:
+                      - source
+                      x-apidog-orders:
+                      - source
+                  required:
+                  - preprocessing
+                  - map_remaining
+                  - is_array
+                  - secondary_property
+                  - map_remaining_flatten_arrays
+                  - primary_property
+                  - version
+                  - force_lowercase
+                  - additional_attributes
+                  - status
+                  - timestamp
+                  x-apidog-orders:
+                  - preprocessing
+                  - map_remaining
+                  - is_array
+                  - secondary_property
+                  - map_remaining_flatten_arrays
+                  - primary_property
+                  - version
+                  - force_lowercase
+                  - additional_attributes
+                  - status
+                  - timestamp
+                sample_payload:
+                  type: string
+              required:
+              - config
+              - sample_payload
+              x-apidog-orders:
+              - config
+              - sample_payload
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+                x-apidog-orders: []
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: ''
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: ''
+          headers: {}
+          x-apidog-name: ''
+        '429':
+          x-apidog-ordering: 3
+          description: ''
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: ''
+          headers: {}
+          x-apidog-name: ''
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770210-run
+      x-source-url: https://api-docs.bigpanda.io/update-config-with-preprocessor-function.md
+      x-source-page: Update Config with Preprocessor Function
+components:
+  securitySchemes:
+    BearerOrg22:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
+        tool you use to make API calls
+
+        '
+    BearerOrg5:
+      type: apiKey
+      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
+        headers only in the secure tool you use to make API calls'
+      name: Authorization
+      in: header
+  schemas:
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    http-status-code-v1:
+      type: number
+      enum:
+      - 100
+      - 101
+      - 102
+      - 103
+      - 200
+      - 201
+      - 202
+      - 203
+      - 204
+      - 205
+      - 206
+      - 207
+      - 300
+      - 301
+      - 302
+      - 303
+      - 304
+      - 305
+      - 307
+      - 308
+      - 400
+      - 401
+      - 402
+      - 403
+      - 404
+      - 405
+      - 406
+      - 407
+      - 408
+      - 409
+      - 410
+      - 411
+      - 412
+      - 413
+      - 414
+      - 415
+      - 416
+      - 417
+      - 418
+      - 421
+      - 422
+      - 423
+      - 424
+      - 426
+      - 428
+      - 429
+      - 431
+      - 451
+      - 500
+      - 501
+      - 502
+      - 503
+      - 504
+      - 505
+      - 507
+      - 511
+      description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+      x-apidog-folder: ''
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    oim_v2_config:
+      type: object
+      properties:
+        config:
+          type: object
+          description: The schema for the integration configuration.
+          properties:
+            additional_attributes:
+              type: array
+              description: Array of payload mapping rules for additional tags.
+              items:
+                $ref: '#/components/schemas/additional_attributes'
+            array_source:
+              type: string
+              description: Defines which payload property contains the tag values if is_array=true.
+              examples:
+              - alerts
+            is_array:
+              type: boolean
+              description: Whether the payloads sent to the integration should be treated as single alerts, or multiple.
+              examples:
+              - true
+            map_remaining:
+              type: boolean
+              description: Whether to create tags from fields not included in the mapping rules.
+              examples:
+              - false
+            map_remaining_flatten_array:
+              type: boolean
+              description: Whether to flatten arrays to map remaining.
+              examples:
+              - false
+            primary_property:
+              type: array
+              description: Mapping rule for the primary property.
+              items:
+                $ref: '#/components/schemas/tag_properties'
+              examples:
+              - - name: host
+                - name: application
+                - name: service
+            secondary_property:
+              type: array
+              description: Mapping rule for the secondary property.
+              items:
+                $ref: '#/components/schemas/tag_properties'
+              examples:
+              - - name: check
+                - name: description
+            status:
+              $ref: '#/components/schemas/status_mapping'
+            bp_timestamp:
+              type: object
+              description: Defines an optional tag to add a human-readable timestamp.
+              properties:
+                is_selected:
+                  type: boolean
+                  examples:
+                  - true
+              x-apidog-orders:
+              - is_selected
+              x--orders:
+              - is_selected
+              x--ignore-properties: []
+            timestamp:
+              type: object
+              description: Object that defines mapping rules for the timestamp property.
+              properties:
+                source:
+                  type: array
+                  items:
+                    type: string
+                  examples:
+                  - - '@alert.annotations.timestamp'
+                    - '@alert.startsat'
+                    - '@alert.endsat'
+                  description: The field(s) that contain the timestamp value.
+              x-apidog-orders:
+              - source
+              x--orders:
+              - source
+              x--ignore-properties: []
+            event_filter:
+              type: string
+              description: A BPQL statement that dictates which events should be dropped upon initial ingestion (using Source
+                Tags).
+              examples:
+              - '@alert.search_name = "OSS -- MINT Core -- *"'
+            incident_identifier:
+              type: array
+              description: Optional override for the incident identifier.
+              items:
+                type: string
+              examples:
+              - - application
+                - cluster
+            version:
+              type: string
+              description: The version of the OIM API.
+              examples:
+              - '2.0'
+            is_default:
+              type: boolean
+              examples:
+              - true
+          x-apidog-orders:
+          - additional_attributes
+          - array_source
+          - is_array
+          - map_remaining
+          - map_remaining_flatten_array
+          - primary_property
+          - secondary_property
+          - status
+          - bp_timestamp
+          - timestamp
+          - event_filter
+          - incident_identifier
+          - version
+          - is_default
+          x--orders:
+          - additional_attributes
+          - array_source
+          - is_array
+          - map_remaining
+          - map_remaining_flatten_array
+          - primary_property
+          - secondary_property
+          - status
+          - bp_timestamp
+          - timestamp
+          - event_filter
+          - incident_identifier
+          - version
+          - is_default
+          x--ignore-properties: []
+        sample_payload:
+          $ref: '#/components/schemas/sample_payload'
+      x-apidog-orders:
+      - config
+      - sample_payload
+      x--orders:
+      - config
+      - sample_payload
+      x--ignore-properties: []
+      x-apidog-folder: ''
+    sample_payload:
+      type: object
+      description: An example event payload from the tool that includes all tags that need to be normalized or referred to
+        in the schema.
+      x-apidog-orders: []
+      properties: {}
+      x-apidog-folder: ''
+      examples:
+      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n      \
+        \  \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to\
+        \ check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\
+        \n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n\
+        \        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\"\
+        : \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"\
+        env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\
+        \n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\"\
+        : \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n    \
+        \  \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\"\
+        ,\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n   \
+        \   \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n \
+        \     \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n\
+        \    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent\
+        \ server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
+      x--orders: []
+      x--ignore-properties: []
+    status_mapping:
+      type: object
+      properties:
+        default_to:
+          type: string
+          examples:
+          - critical
+          description: The value to populate if no matches are found. `​Critical​​` is default setting.
+        source:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.status'
+            - '@alert.labels.severity'
+          description: Is the value in the body or subject?
+        status_map:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          x-apidog-orders: []
+          examples:
+          - critical:
+            - page
+            - critical
+            warning:
+            - warn
+            - warning
+            acknowledged:
+            - acknowledged
+            ok:
+            - resolved
+          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first
+            match. One of [`critical`, `warning`, `ok`, `acknowledged`]
+          x--orders: []
+          properties: {}
+          x--ignore-properties: []
+      x-apidog-orders:
+      - default_to
+      - source
+      - status_map
+      description: null
+      x--orders:
+      - default_to
+      - source
+      - status_map
+      x--ignore-properties: []
+      x-apidog-folder: ''
+    tag_properties:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Optional tag name to use in BigPanda.
+          examples:
+          - host
+      x-apidog-orders:
+      - name
+      x-apidog-folder: ''
+      x--orders:
+      - name
+      x--ignore-properties: []
+    additional_attributes:
+      type: object
+      properties:
+        isDestinationAccepted:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the destination tag was accepted.
+        isSourceAccepted:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the source tag was accepted.
+        isSuggestion:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the tag was suggested by BigPanda Tag Normalization.
+        name:
+          type: string
+          examples:
+          - check
+          description: (Optional) Set a name for the tag in BigPanda.
+        source:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.labels.alertname'
+            - '@alert.labels.check'
+          description: Array of payload fields to match.
+        suggestedDestination:
+          type: string
+          examples:
+          - check
+          description: Suggested Destination tag name.
+        suggestedSources:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.labels.alertname'
+            - '@alert.labels.check'
+          description: Array of payload fields to match for suggested tags.
+        flatten:
+          type: boolean
+          examples:
+          - false
+          description: (Optional) Whether or not to flatten a nested object for improved mapping.
+      x-apidog-orders:
+      - isDestinationAccepted
+      - isSourceAccepted
+      - isSuggestion
+      - name
+      - source
+      - suggestedDestination
+      - suggestedSources
+      - flatten
+      x--orders:
+      - isDestinationAccepted
+      - isSourceAccepted
+      - isSuggestion
+      - name
+      - source
+      - suggestedDestination
+      - suggestedSources
+      - flatten
+      x--ignore-properties: []
+      x-apidog-folder: ''
+    versions:
+      type: array
+      description: List of version changes
+      items:
+        type: object
+        properties:
+          version:
+            type: string
+            description: The unique identifier of the saved configuration version.
+            examples:
+            - '2026-04-29T15:42:11Z'
+          saved_at:
+            type: string
+            format: date-time
+            description: The timestamp when the version was saved.
+        x-apidog-orders:
+        - version
+        - saved_at
+        x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    email_parser_config:
+      type: object
+      description: Configuration object schema for the email parser integration.
+      properties:
+        config:
+          type: object
+          description: Parsing rules for the email copy.
+          properties:
+            email_format:
+              type: string
+              description: Format of the email content. Options are `plain_text` or `html`.
+              examples:
+              - plain_text
+            allow_list:
+              type: array
+              items:
+                type: string
+              description: An array of allowed sender emails. Use a wildcard to allow for a range of email addresses. If no
+                address is provided, the parser will accept emails from any source and may lead to false alarms or issues.
+              examples:
+              - - '*@example.com'
+            status:
+              $ref: '#/components/schemas/status_mapping2'
+            primary_property:
+              type: object
+              description: Mapping rule for the primary property.
+              properties:
+                name:
+                  type: string
+                  examples:
+                  - host
+                  description: Title of property. Default is `​alert_title`​
+                source:
+                  type: string
+                  examples:
+                  - body
+                  description: Is the value in the body or subject? Default is ​`subject`​​
+                extraction:
+                  type: string
+                  examples:
+                  - host is (.*)
+                  description: Regex rule to extract value
+                default_to:
+                  type: string
+                  examples:
+                  - general issue
+                  description: Value if nothing is extracted
+              x-apidog-orders:
+              - name
+              - source
+              - extraction
+              - default_to
+              x-apidog-ignore-properties: []
+            secondary_property:
+              type: object
+              description: Mapping rule for the secondary property.
+              properties:
+                name:
+                  type: string
+                  examples:
+                  - region
+                  description: Title of property
+                source:
+                  type: string
+                  examples:
+                  - body
+                  description: Is the value in the body or subject?
+                extraction:
+                  type: string
+                  examples:
+                  - region (.*)
+                  description: Regex rule to extract value
+                default_to:
+                  type: string
+                  examples:
+                  - us-west-1
+                  description: Value if nothing is extracted
+              x-apidog-orders:
+              - name
+              - source
+              - extraction
+              - default_to
+              x-apidog-ignore-properties: []
+            additional_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    examples:
+                    - region
+                    description: Title of property
+                  source:
+                    type: string
+                    examples:
+                    - body
+                    description: Is the value in the body or subject?
+                  extraction:
+                    type: string
+                    examples:
+                    - 'region: (.*)'
+                    description: Regex rule to extract value
+                  default_to:
+                    type: string
+                    examples:
+                    - us-west-2
+                    description: Value if nothing is extracted
+                x-apidog-orders:
+                - name
+                - source
+                - extraction
+                - default_to
+                x-apidog-ignore-properties: []
+              description: Array of payload field objects to set mapping rules for additional tags. Each object must be defined.
+          x-apidog-orders:
+          - email_format
+          - allow_list
+          - status
+          - primary_property
+          - secondary_property
+          - additional_attributes
+          x-apidog-ignore-properties: []
+        sample_payload:
+          $ref: '#/components/schemas/sample_payload2'
+      x-apidog-orders:
+      - config
+      - sample_payload
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    sample_payload2:
+      type: object
+      description: An example event payload from the tool that includes all tags that need to be normalized or referred to
+        in the schema.
+      x-apidog-orders: []
+      properties: {}
+      x-apidog-folder: ''
+      examples:
+      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n      \
+        \  \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to\
+        \ check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\
+        \n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n\
+        \        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\"\
+        : \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"\
+        env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\
+        \n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\"\
+        : \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n    \
+        \  \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\"\
+        ,\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n   \
+        \   \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n \
+        \     \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n\
+        \    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent\
+        \ server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
+      x-apidog-ignore-properties: []
+    status_mapping2:
+      type: object
+      properties:
+        default_to:
+          type: string
+          examples:
+          - critical
+          description: The value to populate if no matches are found. `​Critical​​` is default setting.
+        source:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.status'
+            - '@alert.labels.severity'
+          description: Is the value in the body or subject?
+        status_map:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          x-apidog-orders: []
+          examples:
+          - critical:
+            - page
+            - critical
+            warning:
+            - warn
+            - warning
+            acknowledged:
+            - acknowledged
+            ok:
+            - resolved
+          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first
+            match. One of [`critical`, `warning`, `ok`, `acknowledged`]
+          properties: {}
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - default_to
+      - source
+      - status_map
+      description: null
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    oim_v2_config2:
+      type: object
+      properties:
+        config:
+          type: object
+          description: The schema for the integration configuration.
+          properties:
+            additional_attributes:
+              type: array
+              description: Array of payload mapping rules for additional tags.
+              items:
+                $ref: '#/components/schemas/additional_attributes2'
+            array_source:
+              type: string
+              description: Defines which payload property contains the tag values if is_array=true.
+              examples:
+              - alerts
+            is_array:
+              type: boolean
+              description: Whether the payloads sent to the integration should be treated as single alerts, or multiple.
+              examples:
+              - true
+            map_remaining:
+              type: boolean
+              description: Whether to create tags from fields not included in the mapping rules.
+              examples:
+              - false
+            map_remaining_flatten_array:
+              type: boolean
+              description: Whether to flatten arrays to map remaining.
+              examples:
+              - false
+            primary_property:
+              type: array
+              description: Mapping rule for the primary property.
+              items:
+                $ref: '#/components/schemas/tag_properties2'
+              examples:
+              - - name: host
+                - name: application
+                - name: service
+            secondary_property:
+              type: array
+              description: Mapping rule for the secondary property.
+              items:
+                $ref: '#/components/schemas/tag_properties2'
+              examples:
+              - - name: check
+                - name: description
+            status:
+              $ref: '#/components/schemas/status_mapping2'
+            bp_timestamp:
+              type: object
+              description: Defines an optional tag to add a human-readable timestamp.
+              properties:
+                is_selected:
+                  type: boolean
+                  examples:
+                  - true
+              x-apidog-orders:
+              - is_selected
+              x-apidog-ignore-properties: []
+            timestamp:
+              type: object
+              description: Object that defines mapping rules for the timestamp property.
+              properties:
+                source:
+                  type: array
+                  items:
+                    type: string
+                  examples:
+                  - - '@alert.annotations.timestamp'
+                    - '@alert.startsat'
+                    - '@alert.endsat'
+                  description: The field(s) that contain the timestamp value.
+              x-apidog-orders:
+              - source
+              x-apidog-ignore-properties: []
+            event_filter:
+              type: string
+              description: A BPQL statement that dictates which events should be dropped upon initial ingestion (using Source
+                Tags).
+              examples:
+              - '@alert.search_name = "OSS -- MINT Core -- *"'
+            incident_identifier:
+              type: array
+              description: Optional override for the incident identifier.
+              items:
+                type: string
+              examples:
+              - - application
+                - cluster
+            version:
+              type: string
+              description: The version of the OIM API.
+              examples:
+              - '2.0'
+            is_default:
+              type: boolean
+              examples:
+              - true
+          x-apidog-orders:
+          - additional_attributes
+          - array_source
+          - is_array
+          - map_remaining
+          - map_remaining_flatten_array
+          - primary_property
+          - secondary_property
+          - status
+          - bp_timestamp
+          - timestamp
+          - event_filter
+          - incident_identifier
+          - version
+          - is_default
+          x-apidog-ignore-properties: []
+        sample_payload:
+          $ref: '#/components/schemas/sample_payload2'
+      x-apidog-orders:
+      - config
+      - sample_payload
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    tag_properties2:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Optional tag name to use in BigPanda.
+          examples:
+          - host
+      x-apidog-orders:
+      - name
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    additional_attributes2:
+      type: object
+      properties:
+        isDestinationAccepted:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the destination tag was accepted.
+        isSourceAccepted:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the source tag was accepted.
+        isSuggestion:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the tag was suggested by BigPanda Tag Normalization.
+        name:
+          type: string
+          examples:
+          - check
+          description: (Optional) Set a name for the tag in BigPanda.
+        source:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.labels.alertname'
+            - '@alert.labels.check'
+          description: Array of payload fields to match.
+        suggestedDestination:
+          type: string
+          examples:
+          - check
+          description: Suggested Destination tag name.
+        suggestedSources:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.labels.alertname'
+            - '@alert.labels.check'
+          description: Array of payload fields to match for suggested tags.
+        flatten:
+          type: boolean
+          examples:
+          - false
+          description: (Optional) Whether or not to flatten a nested object for improved mapping.
+      x-apidog-orders:
+      - isDestinationAccepted
+      - isSourceAccepted
+      - isSuggestion
+      - name
+      - source
+      - suggestedDestination
+      - suggestedSources
+      - flatten
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    oim_v2_config3:
+      type: object
+      properties:
+        config:
+          type: object
+          description: The schema for the integration configuration.
+          properties:
+            additional_attributes:
+              type: array
+              description: Array of payload mapping rules for additional tags.
+              items:
+                $ref: '#/components/schemas/additional_attributes2'
+            array_source:
+              type: string
+              description: Defines which payload property contains the tag values if is_array=true.
+              examples:
+              - alerts
+            is_array:
+              type: boolean
+              description: Whether the payloads sent to the integration should be treated as single alerts, or multiple.
+              examples:
+              - true
+            map_remaining:
+              type: boolean
+              description: Whether to create tags from fields not included in the mapping rules.
+              examples:
+              - false
+            map_remaining_flatten_array:
+              type: boolean
+              description: Whether to flatten arrays to map remaining.
+              examples:
+              - false
+            primary_property:
+              type: array
+              description: Mapping rule for the primary property.
+              items:
+                $ref: '#/components/schemas/tag_properties2'
+              examples:
+              - - name: host
+                - name: application
+                - name: service
+            secondary_property:
+              type: array
+              description: Mapping rule for the secondary property.
+              items:
+                $ref: '#/components/schemas/tag_properties2'
+              examples:
+              - - name: check
+                - name: description
+            status:
+              $ref: '#/components/schemas/status_mapping2'
+            bp_timestamp:
+              type: object
+              description: Defines an optional tag to add a human-readable timestamp.
+              properties:
+                is_selected:
+                  type: boolean
+                  examples:
+                  - true
+              x-apidog-orders:
+              - is_selected
+              x-apidog-ignore-properties: []
+            timestamp:
+              type: object
+              description: Object that defines mapping rules for the timestamp property.
+              properties:
+                source:
+                  type: array
+                  items:
+                    type: string
+                  examples:
+                  - - '@alert.annotations.timestamp'
+                    - '@alert.startsat'
+                    - '@alert.endsat'
+                  description: The field(s) that contain the timestamp value.
+              x-apidog-orders:
+              - source
+              x-apidog-ignore-properties: []
+            event_filter:
+              type: string
+              description: A BPQL statement that dictates which events should be dropped upon initial ingestion (using Source
+                Tags).
+              examples:
+              - '@alert.search_name = "OSS -- MINT Core -- *"'
+            incident_identifier:
+              type: array
+              description: Optional override for the incident identifier.
+              items:
+                type: string
+              examples:
+              - - application
+                - cluster
+            version:
+              type: string
+              description: The version of the OIM API.
+              examples:
+              - '2.0'
+            is_default:
+              type: boolean
+              examples:
+              - true
+          x-apidog-orders:
+          - additional_attributes
+          - array_source
+          - is_array
+          - map_remaining
+          - map_remaining_flatten_array
+          - primary_property
+          - secondary_property
+          - status
+          - bp_timestamp
+          - timestamp
+          - event_filter
+          - incident_identifier
+          - version
+          - is_default
+          x-apidog-ignore-properties: []
+        sample_payload:
+          $ref: '#/components/schemas/sample_payload2'
+      x-apidog-orders:
+      - config
+      - sample_payload
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

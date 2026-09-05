@@ -1,179 +1,2004 @@
-openapi: 3.2.0
+openapi: 3.0.3
 info:
-  title: BigPanda Alerts Incidents API
-  description: The BigPanda API enables IT operations teams to programmatically manage incidents, alerts, environments, enrichments, maintenance plans, and correlation patterns. BigPanda uses AI to correlate alerts from multiple monitoring systems into actionable incidents.
-  version: v2
+  title: BigPanda Incidents API
+  description: BigPanda Incidents operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own
+    API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it
+    was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base
+    URL for your region.
+  version: 1.0.0
   contact:
     name: BigPanda Support
-    url: https://docs.bigpanda.io
+    url: https://api-docs.bigpanda.io/
   license:
     name: Proprietary
     url: https://www.bigpanda.io/legal/
-  x-generated-from: documentation
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 21
 servers:
 - url: https://api.bigpanda.io
-  description: BigPanda API
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
 tags:
 - name: Incidents
-  description: View and manage correlated incidents
 paths:
-  /resources/v2.0/environments/{environment_id}/incidents:
-    get:
-      operationId: listIncidents
-      summary: BigPanda List Incidents
-      description: Returns a list of incidents for the specified environment.
+  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}/tags:
+    post:
+      summary: Add Multiple Incident Tags to an Incident
+      deprecated: false
+      description: "Create or update multiple incident tags for a single incident.\n\n## Authentication\nAll BigPanda APIs\
+        \ require Bearer Token Authorization in the call headers.\nThis API uses the User API Key type of Authorization token.\
+        \ Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer\
+        \ [YOUR_USER_API_KEY]`\n\n> \U0001F6A7 **Tag value format**\n> \n> Incident tag values are generally a single string.\
+        \ When this value is for an incident tag with a fixed list type, the value must be encased in brackets '[]'\n\n**Rate\
+        \ limit:** 5 requests per second."
+      operationId: create-multiple-incident-tags
       tags:
       - Incidents
-      security:
-      - bearerAuth: []
       parameters:
       - name: environment_id
         in: path
+        description: The system id of a BigPanda environment
         required: true
+        example: ''
         schema:
           type: string
-        example: env-abc123
-      - name: active
-        in: query
-        required: false
-        schema:
-          type: boolean
-        description: Filter by active incidents.
-      responses:
-        '200':
-          description: List of incidents.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IncidentsResponse'
-              examples:
-                ListIncidents200Example:
-                  summary: Default listIncidents 200 response
-                  x-microcks-default: true
-                  value:
-                    incidents:
-                    - id: inc-abc123
-                      status: active
-                      severity: critical
-                      description: CPU overload on production-database-1
-                      alerts_count: 3
-                      started_at: 1713000000
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
-  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}:
-    get:
-      operationId: getIncident
-      summary: BigPanda Get Incident
-      description: Returns details for a single incident.
-      tags:
-      - Incidents
-      security:
-      - bearerAuth: []
-      parameters:
-      - name: environment_id
-        in: path
-        required: true
-        schema:
-          type: string
-        example: env-abc123
+          examples:
+          - 63bd568809cb331300ffa555
       - name: incident_id
         in: path
+        description: The system id of a BigPanda incident
         required: true
+        example: ''
         schema:
           type: string
-        example: inc-abc123
+          examples:
+          - 681102f731824249f48df555
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tag_array'
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: '204'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/incident_tag_return'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770110-run
+      x-source-url: https://api-docs.bigpanda.io/add-multiple-incident-tags-to-an-incident-37770110e0.md
+      x-source-page: Add Multiple Incident Tags to an Incident
+    delete:
+      summary: Delete All Tags for an Incident
+      deprecated: false
+      description: "Delete all incident tags for a single incident by ID.\n\n## Authentication\nAll BigPanda APIs require\
+        \ Bearer Token Authorization in the call headers.\nThis API uses the User API Key type of Authorization token. Your\
+        \ User API Key must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer\
+        \ [YOUR_USER_API_KEY]`\n\n> \U0001F6A7 **Tag value format**\n> \n> Incident tag values are generally a single string.\
+        \ When this value is for an incident tag with a fixed list type, the value must be encased in brackets '[]'\n\n**Rate\
+        \ limit:** 5 requests per second."
+      operationId: delete-all-incident-tags
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic204response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770111-run
+      x-source-url: https://api-docs.bigpanda.io/delete-all-tags-for-an-incident-37770111e0.md
+      x-source-page: Delete All Tags for an Incident
+    get:
+      summary: Retrieve All Tags for an Incident
+      deprecated: false
+      description: "Retrieve all incident tags from a single incident.\n\n## Authentication\nAll BigPanda APIs require Bearer\
+        \ Token Authorization in the call headers.\nThis API uses the User API Key type of Authorization token. Your User\
+        \ API Key must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_USER_API_KEY]`\n\
+        \n> \U0001F6A7 **Tag value format**\n> \n> Incident tag values are generally a single string. When this value is for\
+        \ an incident tag with a fixed list type, the value must be encased in brackets '[]'\n\n**Rate limit:** 5 requests\
+        \ per second."
+      operationId: retrieve-multiple-incident-tags-from-a-single-incident
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
       responses:
         '200':
-          description: Incident details.
+          x-apidog-ordering: 0
+          description: '200'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Incident'
-              examples:
-                GetIncident200Example:
-                  summary: Default getIncident 200 response
-                  x-microcks-default: true
-                  value:
-                    id: inc-abc123
-                    status: active
-                    severity: critical
-                    description: CPU overload on production-database-1
-                    alerts_count: 3
-                    started_at: 1713000000
-        '404':
-          description: Incident not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-      x-microcks-operation:
-        delay: 0
-        dispatcher: FALLBACK
-components:
-  schemas:
-    IncidentsResponse:
-      title: Incidents Response
-      description: List of incidents for an environment.
-      type: object
-      properties:
-        incidents:
-          type: array
-          description: Array of incidents.
-          items:
-            $ref: '#/components/schemas/Incident'
-    ErrorResponse:
-      title: Error Response
-      description: Standard error response.
-      type: object
-      properties:
-        error:
+                type: array
+                items:
+                  $ref: '#/components/schemas/incident_tag'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770109-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-all-tags-for-an-incident-37770109e0.md
+      x-source-page: Retrieve All Tags for an Incident
+  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}/tags/{incidenttag_id}:
+    post:
+      summary: Add an Incident Tag to an Incident
+      deprecated: false
+      description: "Create or update an incident tag for a single incident.\n\n## Authentication\nAll BigPanda APIs require\
+        \ Bearer Token Authorization in the call headers.\nThis API uses the User API Key type of Authorization token. Your\
+        \ User API Key must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer\
+        \ [YOUR_USER_API_KEY]`\n\n> \U0001F6A7 **Tag value format**\n> \n> Incident tag values are generally a single string.\
+        \ When this value is for an incident tag with a fixed list type, the value must be encased in brackets '[]'\n\n**Rate\
+        \ limit:** 5 requests per second."
+      operationId: create-an-incident-tag
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
           type: string
-          description: Error message.
-          example: resource not found
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      - name: incidenttag_id
+        in: path
+        description: The ID of the incident tag.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 1611g13t1461
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tag_value_post'
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/incident_tag_return'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770107-run
+      x-source-url: https://api-docs.bigpanda.io/add-an-incident-tag-to-an-incident-37770107e0.md
+      x-source-page: Add an Incident Tag to an Incident
+    delete:
+      summary: Delete an Incident Tag from an Incident
+      deprecated: false
+      description: 'Delete a single incident tag of a single incident by ID.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: delete-an-incident-tag
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      - name: incidenttag_id
+        in: path
+        description: The ID of the incident tag.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 1611g13t1461
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic204response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770108-run
+      x-source-url: https://api-docs.bigpanda.io/delete-an-incident-tag-from-an-incident-37770108e0.md
+      x-source-page: Delete an Incident Tag from an Incident
+    get:
+      summary: Retrieve an Incident Tag from an Incident
+      deprecated: false
+      description: "Retrieve a single incident tag of a single incident by ID.\n\n## Authentication\nAll BigPanda APIs require\
+        \ Bearer Token Authorization in the call headers.\nThis API uses the User API Key type of Authorization token. Your\
+        \ User API Key must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer\
+        \ [YOUR_USER_API_KEY]`\n\n> \U0001F6A7 **Tag value format**\n> \n> Incident tag values are generally a single string.\
+        \ When this value is for an incident tag with a fixed list type, the value must be encased in brackets '[]'\n\n**Rate\
+        \ limit:** 5 requests per second."
+      operationId: retrieve-an-incident-tag-from-a-single-incident
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      - name: incidenttag_id
+        in: path
+        description: The ID of the incident tag.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 1611g13t1461
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/incident_tag_return'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770106-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-an-incident-tag-from-an-incident-37770106e0.md
+      x-source-page: Retrieve an Incident Tag from an Incident
+  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}/assignment:
+    put:
+      summary: Assign Incident
+      deprecated: false
+      description: 'Assign a user to be responsible for an incident.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: assign-incident
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/assign_incident'
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic204response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770102-run
+      x-source-url: https://api-docs.bigpanda.io/assign-incident-37770102e0.md
+      x-source-page: Assign Incident
+    delete:
+      summary: Unassign Incident
+      deprecated: false
+      description: 'Unassign a user from an incident.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: unassign-incident
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic204response'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770103-run
+      x-source-url: https://api-docs.bigpanda.io/unassign-incident-37770103e0.md
+      x-source-page: Unassign Incident
+  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}/comments:
+    post:
+      summary: Comment on Incident
+      deprecated: false
+      description: 'Add a comment to a BigPanda incident.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: comment-on-incident
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/incident_comments'
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic204response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770099-run
+      x-source-url: https://api-docs.bigpanda.io/comment-on-incident-37770099e0.md
+      x-source-page: Comment on Incident
+  /resources/v2.0/incidents/tags/definitions:
+    post:
+      summary: Create an Incident Tag Definition
+      deprecated: false
+      description: "Create an incident tag definition.\n\n## Authentication\nAll BigPanda APIs require Bearer Token Authorization\
+        \ in the call headers.\nThis API uses the User API Key type of Authorization token. Your User API Key must be provided\
+        \ in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_USER_API_KEY]`\n\n> \U0001F6A7\
+        \ **Tag value format**\n> \n> Incident tag values are generally a single string. When this value is for an incident\
+        \ tag with a fixed list type, the value must be encased in brackets '[]'\n\n**Rate limit:** 5 requests per second."
+      operationId: create-an-incident-tag-definition
+      tags:
+      - Incidents
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/incident_tag_schema'
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/incident_tag_schema_response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770113-run
+      x-source-url: https://api-docs.bigpanda.io/create-an-incident-tag-definition-37770113e0.md
+      x-source-page: Create an Incident Tag Definition
+    get:
+      summary: Get All Incident Tags Definitions
+      deprecated: false
+      description: "Get all incident tags definitions.\n\n## Authentication\nAll BigPanda APIs require Bearer Token Authorization\
+        \ in the call headers.\nThis API uses the User API Key type of Authorization token. Your User API Key must be provided\
+        \ in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_USER_API_KEY]`\n\n> \U0001F6A7\
+        \ **Tag value format**\n> \n> Incident tag values are generally a single string. When this value is for an incident\
+        \ tag with a fixed list type, the value must be encased in brackets '[]'\n\n**Rate limit:** 5 requests per second."
+      operationId: get-all-incident-tags-definitions
+      tags:
+      - Incidents
+      parameters:
+      - name: active
+        in: query
+        description: Whether to filter results to only active items.
+        required: false
+        example: ''
+        schema:
+          type: boolean
+          default: true
+          examples:
+          - false
+      - name: type
+        in: query
+        description: 'Incident tag definition''s type. One of [`Text`, `MultiValue`, `Priority`, `ClosedListValuesMulti`,
+          `ClosedListValuesSingle`].
+
+          '
+        required: false
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/incident_tag_schema_response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770112-run
+      x-source-url: https://api-docs.bigpanda.io/get-all-incident-tags-definitions-37770112e0.md
+      x-source-page: Get All Incident Tags Definitions
+  /resources/v2.0/incidents/{incident_id}/activities:
+    get:
+      summary: Get Incident Activities
+      deprecated: false
+      description: "Retrieve a list of enrichment actions taken on an incident.\n\n## Authentication\nAll BigPanda APIs require\
+        \ Bearer Token Authorization in the call headers.\nThis API uses the User API Key type of Authorization token. Your\
+        \ User API Key must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer\
+        \ [YOUR_USER_API_KEY]`\n\n## Filter by activity\nIncident Activities can be filtered by activity type, using a comma\
+        \ separated query string of one or more activity types with the call.\n\nExample queries:\n- `​/activities?page=5`​​\
+        \ - will return results from the 5th set of results\n- ​​`/activities?per_page=40​​` - will return 40 results per\
+        \ page instead of the default 20\n- ​`/activities?types=incident_commented,incident_snoozed​​` - will return only\
+        \ comment and snooze activity\n- `/activities?types=incident_created,incident_resolved_ui_manually,incident_resolved_api,incident_resolved_by_alerts,incident_reopen`​​\
+        \ - will return only opening and closing activity for the incident.\n\nActivities available for retrieval are:​\n\
+        \    - incident_created​\n    - incident_assigned​\n    - incident_unassigned\n    - incident_become_flapping\n  \
+        \  - incident_commented​\n    - incident_resolved_ui_manually​\n    - incident_resolved_api\n    - incident_alerts_resolved\n\
+        \    - incident_tag_removed\n    - incident_tag_updated​\n    - incident_merged_destination\n    - incident_merged_source\n\
+        \    - incident_rcc_update\n    - incident_shared\n    - incident_splitted_destination\n    - incident_splitted_source\n\
+        \    - incident_snoozed\n    - incident_unsnoozed\n    - incident_opened\n    - incident_reopen\n    - incident_resolved_by_alerts\n\
+        \n## Return order\nActivities are returned in reverse timestamp order, most recent activities to oldest.\n\n## Time-based\
+        \ alert resolution activity type\nStale incident resolution through time-based alert resolution is included under\
+        \ the ​`incident_resolved_api`​​ activity type.\n"
+      operationId: get-incident-activities
+      tags:
+      - Incidents
+      parameters:
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      - name: page
+        in: query
+        description: Which set of results to return.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 1
+          examples:
+          - 4
+      - name: per_page
+        in: query
+        description: Number of results to show for each page.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 20
+          examples:
+          - 30
+      - name: types
+        in: query
+        description: 'A list of activity types to return, separated by commas. Leave blank to return all activity
+
+          types.
+
+
+          Activities available for retrieval are:​
+
+          - incident_created​
+
+          - incident_assigned​
+
+          - incident_unassigned
+
+          - incident_become_flapping
+
+          - incident_commented​
+
+          - incident_resolved_ui_manually​
+
+          - incident_resolved_api
+
+          - incident_alerts_resolved
+
+          - incident_tag_removed
+
+          - incident_tag_updated​
+
+          - incident_merged_destination
+
+          - incident_merged_source
+
+          - incident_rcc_update
+
+          - incident_shared
+
+          - incident_splitted_destination
+
+          - incident_splitted_source
+
+          - incident_snoozed
+
+          - incident_unsnoozed
+
+          - incident_opened
+
+          - incident_reopen
+
+          - incident_resolved_by_alerts
+
+          '
+        required: false
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/incident_activities'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770105-run
+      x-source-url: https://api-docs.bigpanda.io/get-incident-activities-37770105e0.md
+      x-source-page: Get Incident Activities
+  /resources/v2.0/incidents/tags/definitions/{incidenttag_id}:
+    get:
+      summary: Get an Incident Tag Definition
+      deprecated: false
+      description: "Get incident tag definition by ID.\n\n## Authentication\nAll BigPanda APIs require Bearer Token Authorization\
+        \ in the call headers.\nThis API uses the User API Key type of Authorization token. Your User API Key must be provided\
+        \ in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_USER_API_KEY]`\n\n> \U0001F6A7\
+        \ **Tag value format**\n> \n> Incident tag values are generally a single string. When this value is for an incident\
+        \ tag with a fixed list type, the value must be encased in brackets '[]'\n\n**Rate limit:** 5 requests per second."
+      operationId: get-an-incident-tag-definition
+      tags:
+      - Incidents
+      parameters:
+      - name: incidenttag_id
+        in: path
+        description: The ID of the incident tag.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 1611g13t1461
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/incident_tag_schema_response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770114-run
+      x-source-url: https://api-docs.bigpanda.io/get-an-incident-tag-definition-37770114e0.md
+      x-source-page: Get an Incident Tag Definition
+    put:
+      summary: Update an Incident Tag Definition
+      deprecated: false
+      description: "Update an incident tag definition by ID.\n\n## Authentication\nAll BigPanda APIs require Bearer Token\
+        \ Authorization in the call headers.\nThis API uses the User API Key type of Authorization token. Your User API Key\
+        \ must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_USER_API_KEY]`\n\
+        \n> \U0001F6A7 **Tag value format**\n> \n> Incident tag values are generally a single string. When this value is for\
+        \ an incident tag with a fixed list type, the value must be encased in brackets '[]'\n\n**Rate limit:** 5 requests\
+        \ per second."
+      operationId: update-an-incident-tag-definition
+      tags:
+      - Incidents
+      parameters:
+      - name: incidenttag_id
+        in: path
+        description: The ID of the incident tag.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 1611g13t1461
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/incident_tag_schema'
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/incident_tag_schema_response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770115-run
+      x-source-url: https://api-docs.bigpanda.io/update-an-incident-tag-definition-37770115e0.md
+      x-source-page: Update an Incident Tag Definition
+  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}/merge:
+    post:
+      summary: Merge Incidents
+      deprecated: false
+      description: "Merges a list of BigPanda incidents into 1 incident.\n\n> \U0001F6A7 **Alert limit**\n> \n> The maximum\
+        \ number of alerts that can be correlated into a single incident is 300. \n>\n> If the combined number of alerts in\
+        \ the incidents being merged exceeds 300, the merge will fail.\n\n## Authentication\nAll BigPanda APIs require Bearer\
+        \ Token Authorization in the call headers.\nThis API uses the User API Key type of Authorization token. Your User\
+        \ API Key must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_USER_API_KEY]`\n\
+        \n**Rate limit:** 5 requests per second."
+      operationId: merge-incidents-1
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/merge_incidents'
+      responses:
+        '202':
+          x-apidog-ordering: 0
+          description: '202'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic202response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770098-run
+      x-source-url: https://api-docs.bigpanda.io/merge-incidents-37770098e0.md
+      x-source-page: Merge Incidents
+  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}/resolve:
+    post:
+      summary: Resolve Incident
+      deprecated: false
+      description: 'Resolve a BigPanda incident.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: resolve-incident-1
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/incident_comment'
+      responses:
+        '202':
+          x-apidog-ordering: 0
+          description: '202'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic202response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770104-run
+      x-source-url: https://api-docs.bigpanda.io/resolve-incident-37770104e0.md
+      x-source-page: Resolve Incident
+  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}:
+    get:
+      summary: Retrieve Incident by ID
+      deprecated: false
+      description: "Retrieves a specific BigPanda incident.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
+        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\
+        \ Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: retrieve-incident-by-id
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      - name: expand
+        in: query
+        description: 'When set to ''alerts'' the payload will contain the alerts payload by their schema. Page_size cannot
+          be larger than 10 for expanded queries.
+
+          '
+        required: false
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/incidents_v2_response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770095-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-incident-by-id-37770095e0.md
+      x-source-page: Retrieve Incident by ID
+  /resources/v2.0/environments/{environment_id}/incidents:
+    get:
+      summary: Search Incidents
+      deprecated: false
+      description: 'Retrieves all BigPanda incidents that meet query parameters within an
+
+        environment.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        ## Expanding alert data
+
+        To include the full alert object for each retrieved incident, include `expand=alerts` in the query. When making a
+        call with alerts expanded, page size cannot be larger than 10. An expanded call with a page size greater than 10 will
+        return a 400 error.
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: search-incidents
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: query
+        in: query
+        description: 'The [URL encoded](https://en.wikipedia.org/wiki/Percent-encoding) [BPQL query](https://docs.bigpanda.io/docs/bigpanda-query-language)
+          to
+
+          filter incidents.  Default is All Incidents (“*”). 2000 characters max
+
+          '
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: from
+        in: query
+        description: 'Unix epoch time when the start time of the search window occurred (in seconds). Incidents that were
+          active at any point during the window will be returned.
+
+          '
+        required: false
+        example: 0
+        schema:
+          type: integer
+          format: int32
+      - name: to
+        in: query
+        description: 'Unix epoch time when the end of the search window occurred (in seconds). Incidents that were active
+          at any point during the window will be returned. Default is Query Timestamp
+
+          '
+        required: false
+        example: 0
+        schema:
+          type: integer
+          format: int32
+      - name: sort_by
+        in: query
+        description: Sort option. One of [`last_change`, `status`, `start`, `alerts`].
+        required: false
+        example: ''
+        schema:
+          type: string
+          default: last_change
+      - name: page
+        in: query
+        description: Which set of results to return.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 1
+          examples:
+          - 4
+      - name: page_size
+        in: query
+        description: Number of results to show for each page.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 10
+          examples:
+          - 30
+      - name: expand
+        in: query
+        description: 'When set to ''alerts'' the payload will contain the alerts payload by their schema. Page_size cannot
+          be larger than 10 for expanded queries.
+
+          '
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: folder
+        in: query
+        description: 'One of: ''active'', ''shared'', ''snoozed'', ''resolved'', ''unhandled'', ''maintenance''. If no folder
+          is specified, the API will search all folders.
+
+          '
+        required: false
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/incidents_v2_response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770096-run
+      x-source-url: https://api-docs.bigpanda.io/search-incidents-37770096e0.md
+      x-source-page: Search Incidents
+  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}/snooze:
+    put:
+      summary: Snooze Incident
+      deprecated: false
+      description: 'Place an incident in the snooze state.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: snooze-incident
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/snooze'
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic204response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770100-run
+      x-source-url: https://api-docs.bigpanda.io/snooze-incident-37770100e0.md
+      x-source-page: Snooze Incident
+    delete:
+      summary: Unsnooze Incident
+      deprecated: false
+      description: 'Remove the snooze state from an incident.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: unsnooze-incident
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic204response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770101-run
+      x-source-url: https://api-docs.bigpanda.io/unsnooze-incident-37770101e0.md
+      x-source-page: Unsnooze Incident
+  /resources/v2.0/environments/{environment_id}/incidents/{incident_id}/split:
+    post:
+      summary: Split Incident
+      deprecated: false
+      description: 'Splits a list of alerts into a new BigPanda incident.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
+        by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
+      operationId: split-incident
+      tags:
+      - Incidents
+      parameters:
+      - name: environment_id
+        in: path
+        description: The system id of a BigPanda environment
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 63bd568809cb331300ffa555
+      - name: incident_id
+        in: path
+        description: The system id of a BigPanda incident
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 681102f731824249f48df555
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/split_incident'
+      responses:
+        '202':
+          x-apidog-ordering: 0
+          description: '202'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic202response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770097-run
+      x-source-url: https://api-docs.bigpanda.io/split-incident-37770097e0.md
+      x-source-page: Split Incident
+components:
+  securitySchemes:
+    BearerUser131:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
+        tool you use to make API calls
+
+        '
+  schemas:
+    tag_array:
+      type: array
+      items:
+        $ref: '#/components/schemas/incident_tag'
+      x-apidog-folder: ''
+    incident_tag:
+      type: object
+      properties:
+        tag_value:
+          type: string
+          description: 'The content of the incident tag. When this value is for an incident tag with a fixed list type, the
+            value must be encased in brackets ''[]''
+
+            '
+          examples:
+          - P1
+        tag_id:
+          type: string
+          description: System-generated unique identifier for the incident tag.
+          examples:
+          - itd-9ff554bc0c
+      x-apidog-orders:
+      - tag_value
+      - tag_id
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    incident_tag_return:
+      type: object
+      properties:
+        tag_id:
+          type: string
+          description: System-generated unique identifier for the incident tag.
+          examples:
+          - tagid
+        incident_id:
+          type: string
+          description: System-generated unique identifier for the incident that contains the incident tag.
+          examples:
+          - 624d42c54f93a00113aa1234
+        tag_value:
+          type: string
+          description: 'The content of the incident tag. When this value is for an incident tag with a fixed-list, the value
+            must be enclosed in brackets ''[]''
+
+            '
+          examples:
+          - SDIT-Application Operations
+        name:
+          type: string
+          examples:
+          - ''
+        email:
+          type: string
+          examples:
+          - ''
+        timestamp:
+          type: integer
+          examples:
+          - 0
+      x-apidog-orders:
+      - tag_id
+      - incident_id
+      - tag_value
+      - name
+      - email
+      - timestamp
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    tag_value_post:
+      type: object
+      properties:
+        tag_value:
+          $ref: '#/components/schemas/tag_value'
+      x-apidog-orders:
+      - tag_value
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    tag_value:
+      type: string
+      description: The value of the tag.
+      x-apidog-folder: ''
+      examples:
+      - P1
+    assign_incident:
+      required:
+      - assignee
+      type: object
+      properties:
+        assignee:
+          type: string
+          description: The ID of the user to assign to the incident
+          examples:
+          - 651d16e46db9ffbf9d5883d9
+      x-apidog-orders:
+      - assignee
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic204response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
         status:
           type: integer
-          description: HTTP status code.
-          example: 404
-    Incident:
-      title: Incident
-      description: A correlated incident from multiple alerts.
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
+      x-apidog-ignore-properties: []
+    incident_comments:
+      required:
+      - comment
+      type: object
+      properties:
+        comment:
+          type: string
+          description: A comment or short description.
+          examples:
+          - Marking for regional similarity
+      x-apidog-orders:
+      - comment
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    incident_tag_schema:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        active:
+          type: boolean
+        canManualInput:
+          type: boolean
+        enrichment_config:
+          type: object
+          properties:
+            append_matching_items:
+              type: boolean
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  value:
+                    type: string
+                  condition:
+                    type: string
+                x-apidog-orders:
+                - value
+                - condition
+                x-apidog-ignore-properties: []
+          x-apidog-orders:
+          - append_matching_items
+          - items
+          x-apidog-ignore-properties: []
+      required:
+      - name
+      - type
+      description: A list of all matching tag schemas
+      x-apidog-orders:
+      - name
+      - description
+      - type
+      - active
+      - canManualInput
+      - enrichment_config
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    incident_tag_schema_response:
+      type: object
+      description: A list of all matching tag schemas
+      properties:
+        id:
+          type: string
+          description: System-generated unique identifier for the incident tag definition. Determined by the tag name.
+          examples:
+          - affected services
+        name:
+          type: string
+          description: Incident tag definition's name. Unique. 1-20 chars (Required)
+          examples:
+          - Affected_Services
+        description:
+          type: string
+          description: Incident tag definition's description. 0-200 chars (Optional)
+          examples:
+          - List of affected services
+        type:
+          type: string
+          description: Incident tag definition's type. Can be one of [`Text`, `MultiValue`, `Priority`, `ClosedListValuesMulti`,
+            `ClosedListValuesSingle`]. (Required)
+          examples:
+          - Multivalue
+        active:
+          $ref: '#/components/schemas/active'
+        created_by:
+          $ref: '#/components/schemas/created_by'
+        created_at:
+          $ref: '#/components/schemas/created_at'
+        updated_by:
+          $ref: '#/components/schemas/updated_by'
+        updated_at:
+          $ref: '#/components/schemas/updated_at'
+        config:
+          type: object
+          description: Configuration object for the Priority and List type tags. (Required for Priority and Closed Lists)
+          properties:
+            ordered_list:
+              type: array
+              description: Array of objects that define display and calculation settings for individual priority levels
+              items:
+                type: string
+            incident_tag_values:
+              type: array
+              description: Array of strings that define the value options for a closed-list tag
+              items:
+                type: string
+          x-apidog-orders:
+          - ordered_list
+          - incident_tag_values
+          x-apidog-ignore-properties: []
+        enrichment_config:
+          type: object
+          description: Configuration object to add automatic enrichment to the incident tag.
+          properties:
+            items:
+              type: array
+              description: Array of objects that define automatic enrichment rules for the incident tag.
+              items:
+                type: object
+                properties:
+                  value:
+                    type: string
+                    description: The formula, regex, or text that should be added to incidents that match the condition.
+                    examples:
+                    - 1000
+                  condition:
+                    type: string
+                    description: BPQL filter to define which incidents should receive the value.
+                    examples:
+                    - priority = "p0"
+                  id:
+                    type: string
+                    description: System generated field to identify the rule within BigPanda.
+                    examples:
+                    - d9e7a648-48b2-4d28-a42d-398a7b0da237
+                x-apidog-orders:
+                - value
+                - condition
+                - id
+                x-apidog-ignore-properties: []
+            append_matching_items:
+              type: boolean
+              description: Whether the automatic enrichment will include the value of all matched conditions. When set to
+                false, only the first matched value is applied. Required for closed-list multi-type tags.
+              default: false
+          x-apidog-orders:
+          - items
+          - append_matching_items
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - id
+      - name
+      - description
+      - type
+      - active
+      - created_by
+      - created_at
+      - updated_by
+      - updated_at
+      - config
+      - enrichment_config
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    updated_at:
+      type: integer
+      description: The time the resource was last updated(in Unix epoch seconds).
+      x-apidog-folder: ''
+      examples:
+      - 1613252381
+    updated_by:
+      type: string
+      description: System id of the user or tool that last updated the resource.
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
+    created_at:
+      type: integer
+      description: The time the resource was created(in Unix epoch seconds).
+      x-apidog-folder: ''
+      examples:
+      - 1613252381
+    created_by:
+      description: System id of the user or tool that created the resource.
+      type: string
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
+    active:
+      type: boolean
+      description: Whether the new configuration should apply to future data.
+      default: true
+      x-apidog-folder: ''
+      examples:
+      - false
+    incident_activities:
+      description: A list of actions taken on the incident.
+      type: array
+      items:
+        $ref: '#/components/schemas/activity'
+      x-apidog-folder: ''
+    activity:
       type: object
       properties:
         id:
           type: string
-          description: Incident ID.
-          example: inc-abc123
+          description: System-generated unique identifier for the activity
+          examples:
+          - 161b4dc6c33740283e5416b0e6d6c70b
+        type:
+          type: string
+          description: The type of activity
+          examples:
+          - incident_shared
+        timestamp:
+          type: integer
+          description: Unix epoch time when the activity occurred in the system (in seconds)
+          examples:
+          - 1643700751
+        created_by:
+          type: string
+          description: User ID of the user who manually took action
+          examples:
+          - 61950bc8c481fd1100abc3a3
+        params:
+          type: object
+          description: Additional fields depending on activity type
+          additionalProperties: true
+          properties:
+            anyOf:
+              type: object
+              description: 'Possible values: `incident_become_flapping`, `incident_commented`, `incident_resolved_ui_manually`,
+                `incident_resolved_api`, `incident_alerts_resolved`, `incident_tag_removed`, `incident_tag_updated`, `incident_merged_destination`,
+                `incident_merged_source`, `incident_created`, `incident_rcc_update`, `incident_shared`, `incident_snoozed`,
+                `incident_splitted_source`, `incident_unassigned`, `incident_unsnoozed`, `incident_reopened`, `incident_resolved_by_alerts`.'
+              x-apidog-orders: []
+              properties: {}
+              x-apidog-ignore-properties: []
+          x-apidog-orders:
+          - anyOf
+          examples:
+          - share_target: webhook.whtest
+            share_auto: false
+            escalation_id: 61f8e20e89325b001201b9a3
+            firstTime: true
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - id
+      - type
+      - timestamp
+      - created_by
+      - params
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    merge_incidents:
+      required:
+      - source_incidents
+      type: object
+      properties:
+        source_incidents:
+          type: array
+          description: A list of the IDs of incidents to merge into the destination incident defined in the URL path
+          items:
+            type: object
+            properties: {}
+            x-apidog-orders: []
+            x-apidog-ignore-properties: []
+        comment:
+          $ref: '#/components/schemas/comment'
+      x-apidog-orders:
+      - source_incidents
+      - comment
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    comment:
+      type: string
+      description: An optional comment or short description.
+      x-apidog-folder: ''
+      examples:
+      - Marking for regional similarity
+    generic202response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 202
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 202
+        data: {}
+      x-apidog-ignore-properties: []
+    incident_comment:
+      required:
+      - comments
+      type: object
+      properties:
+        comments:
+          type: string
+          description: The comment to add to the incident.
+      x-apidog-orders:
+      - comments
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    incidents_v2_response:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - 60a4ee83bb7d9d046b8d7a93
         status:
           type: string
-          description: Incident status.
-          enum:
-          - active
-          - resolved
-          - acknowledged
-          example: active
+          examples:
+          - Ok
+        active:
+          $ref: '#/components/schemas/active'
         severity:
           type: string
-          description: Incident severity level.
-          enum:
-          - critical
-          - warning
-          - unknown
-          example: critical
-        description:
+          examples:
+          - Critical
+        flapping:
+          type: boolean
+          default: true
+          examples:
+          - false
+        shared:
+          type: boolean
+          default: true
+          examples:
+          - false
+        maintenance:
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          x-apidog-ignore-properties: []
+        start:
+          type: integer
+          examples:
+          - 1621421699
+        changed_at:
+          type: integer
+          examples:
+          - 1629410549
+        updated_at:
+          $ref: '#/components/schemas/updated_at'
+        end:
+          type: integer
+          examples:
+          - 1629410549
+        alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/incidents-v2inline_response_200_alerts'
+        environments:
+          type: array
+          items:
+            type: string
+        folders:
+          type: array
+          items:
+            type: string
+        incident_tags:
+          type: array
+          items:
+            type: object
+            properties: {}
+            x-apidog-orders: []
+            x-apidog-ignore-properties: []
+        correlation_matchers_log:
+          type: array
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                time_window:
+                  type: integer
+                  examples:
+                  - 7200
+                tags:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        examples:
+                        - case
+                      value:
+                        type: string
+                        examples:
+                        - sensitive1
+                    x-apidog-orders:
+                    - name
+                    - value
+                    x-apidog-ignore-properties: []
+                correlation_id:
+                  type: string
+                  examples:
+                  - a02fde2f-0ec3-4cc2-9cbd-74895cb13050
+                source_system:
+                  type: string
+                  examples:
+                  - api.backend_monitoring
+              x-apidog-orders:
+              - time_window
+              - tags
+              - correlation_id
+              - source_system
+              x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - id
+      - status
+      - active
+      - severity
+      - flapping
+      - shared
+      - maintenance
+      - start
+      - changed_at
+      - updated_at
+      - end
+      - alerts
+      - environments
+      - folders
+      - incident_tags
+      - correlation_matchers_log
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    incidents-v2inline_response_200_alerts:
+      type: object
+      properties:
+        alert_id:
           type: string
-          description: Incident description.
-          example: CPU overload on production-database-1
-        alerts_count:
+          examples:
+          - 60a4ee83bb7d9d046b8d7a93
+      x-apidog-orders:
+      - alert_id
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    snooze:
+      type: object
+      properties:
+        comment:
+          type: string
+        end_time:
           type: integer
-          description: Number of correlated alerts.
-          example: 3
-        started_at:
+          description: Unix epoch (seconds) when the snooze ends.
+        cancel_on_incident_updates:
+          type: boolean
+      required:
+      - end_time
+      x-apidog-orders:
+      - comment
+      - end_time
+      - cancel_on_incident_updates
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    split_incident:
+      required:
+      - alerts
+      type: object
+      properties:
+        comment:
+          $ref: '#/components/schemas/comment'
+        alerts:
+          type: array
+          description: A list of the alert IDs to move into a new incident.
+          items:
+            type: object
+            properties: {}
+            x-apidog-orders: []
+            x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - comment
+      - alerts
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
           type: integer
-          description: Unix timestamp when incident started.
-          example: 1713000000
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      description: BigPanda API Bearer token
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

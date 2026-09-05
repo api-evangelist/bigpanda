@@ -1,13 +1,96 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/bigpanda-openapi.yml
+generated: '2026-09-04'
+method: searched
+source: https://api-docs.bigpanda.io/authentication-and-headers, upgraded from the derived profile over openapi/
 summary:
   types:
+  - apiKey
   - http
+  api_key_in:
+  - header
+  style: bearer
+  oauth: false
 schemes:
-- name: bearerAuth
+- name: BearerUser11
   type: http
   scheme: bearer
-  description: BigPanda API Bearer token
+  description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+    [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
+
+    headers only in the secure tool you use to make API calls'
   sources:
-  - openapi/bigpanda-openapi.yml
+  - openapi/bigpanda-agents-api-openapi.yml
+  - openapi/bigpanda-ai-settings-api-openapi.yml
+  - openapi/bigpanda-alert-enrichment-api-openapi.yml
+  - openapi/bigpanda-alert-filters-api-openapi.yml
+  - openapi/bigpanda-alert-ingestion-oim-api-openapi.yml
+  - openapi/bigpanda-alerts-api-openapi.yml
+  - openapi/bigpanda-api-keys-api-openapi.yml
+  - openapi/bigpanda-audit-api-openapi.yml
+  - openapi/bigpanda-biggy-query-api-openapi.yml
+  - openapi/bigpanda-change-risk-api-openapi.yml
+  - openapi/bigpanda-changes-api-openapi.yml
+  - openapi/bigpanda-correlation-patterns-api-openapi.yml
+  - openapi/bigpanda-data-connectors-api-openapi.yml
+  - openapi/bigpanda-email-parser-configuration-api-openapi.yml
+  - openapi/bigpanda-environments-api-openapi.yml
+  - openapi/bigpanda-incidents-api-openapi.yml
+  - openapi/bigpanda-maintenance-plans-api-openapi.yml
+  - openapi/bigpanda-meetings-transcripts-api-openapi.yml
+  - openapi/bigpanda-notifications-api-openapi.yml
+  - openapi/bigpanda-oim-configuration-api-openapi.yml
+  - openapi/bigpanda-reporting-api-openapi.yml
+  - openapi/bigpanda-roles-permissions-api-openapi.yml
+  - openapi/bigpanda-topology-api-openapi.yml
+  - openapi/bigpanda-users-api-openapi.yml
+- name: BearerOrg5
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: 'Format: "Bearer {Org Token}" BigPanda recommends adding [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
+    headers only in the secure tool you use to make API calls'
+  sources:
+  - openapi/bigpanda-email-parser-configuration-api-openapi.yml
+  - openapi/bigpanda-oim-configuration-api-openapi.yml
+docs:
+- https://api-docs.bigpanda.io/authentication-and-headers
+- https://api-docs.bigpanda.io/api-credentials
+- https://docs.bigpanda.io/en/api-key-management.html
+- https://docs.bigpanda.io/en/access-management.html
+token_types:
+- name: User API Key
+  scheme: Bearer
+  scope: per user, limited by that user's role permissions
+  applies_to: all current APIs
+  rotation: Created and revoked from User menu > API Keys; the value is shown once.
+  docs: https://docs.bigpanda.io/en/api-key-management.html
+- name: Org Token
+  scheme: Bearer
+  scope: organization-wide, unscoped
+  applies_to: the inbound Alerts API and a small number of legacy endpoints only
+  note: Found in the Integrations tab example headers for any Alerts API integration. BigPanda tells new integrations to use
+    a User API Key instead.
+required_headers:
+- name: Authorization
+  value: Bearer <your_api_key>
+  when: every request
+- name: Accept
+  value: application/json
+  when: most requests
+- name: Content-Type
+  value: application/json; charset=utf8
+  when: POST and PUT with a body
+authorization_model: role-based; a 403 means the token is valid but the role lacks the permission
+oauth:
+  product_api: false
+  present_on: https://www.bigpanda.io/wp-json/mcp/mcp-oauth-server only
+  scopes:
+  - mcp
+  metadata: well-known/bigpanda-oauth-authorization-server.json
+  cross_link: scopes/bigpanda-scopes.yml
+spec_note: BigPanda's published fragments declare 26 near-duplicate securityScheme names (BearerUser, BearerUser1, BearerUser11,
+  BearerUser131, BearerOrg, BearerOrg121 and so on) that describe only two real credentials, and each is emitted with the
+  invalid OpenAPI type "bearer". The assembled specs in openapi/ keep the names the operations reference and correct the type
+  to http/bearer; see overlays/.
+note: Upgraded 2026-09-04 from derived to searched. The previous version of this file pointed at openapi/bigpanda-openapi.yml,
+  a scaffold generated from documentation that no longer exists in this repo.

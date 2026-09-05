@@ -1,0 +1,48 @@
+generated: '2026-09-04'
+method: probed
+source: https://www.bigpanda.io/.well-known/oauth-authorization-server
+description: >-
+  BigPanda's product API does not use OAuth and therefore declares no OAuth scopes — every one of the 263
+  operations is secured by a static Bearer token (a User API Key or an Org Token) and authorization is
+  enforced by the ROLE attached to the user behind the key, not by a scope on the token. The only OAuth
+  scope BigPanda publishes anywhere belongs to the WordPress MCP server on its marketing site.
+model: role-based
+oauth_present: true
+oauth_surface: https://www.bigpanda.io/wp-json/mcp/mcp-oauth-server
+scopes:
+  - name: mcp
+    description: >-
+      The single scope advertised by BigPanda's WordPress MCP authorization server. Declared in
+      scopes_supported of both /.well-known/oauth-authorization-server and
+      /.well-known/oauth-protected-resource.
+    surface: https://www.bigpanda.io/wp-json/mcp/mcp-oauth-server
+    evidence: well-known/bigpanda-oauth-authorization-server.json
+    http_status: 200
+    checked: '2026-09-04'
+oauth_metadata:
+  issuer: https://www.bigpanda.io
+  authorization_endpoint: https://www.bigpanda.io/oauth/authorize
+  token_endpoint: https://www.bigpanda.io/oauth/token
+  revocation_endpoint: https://www.bigpanda.io/oauth/revoke
+  response_types_supported: [code]
+  grant_types_supported: [authorization_code, refresh_token]
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [none]
+  client_id_metadata_document_supported: true
+product_api_authorization:
+  mechanism: role-permissions
+  note: >-
+    A User API Key inherits the permissions of the user's role; a 403 means "the token is valid but the
+    user's role lacks the permission". The permission surface is itself an API — see
+    openapi/bigpanda-roles-permissions-api-openapi.yml (create-a-role, update-a-role, deleteRoleUsers,
+    getAllPermissions) and /resources/v2.1/users/{user_id}/permissions in
+    openapi/bigpanda-users-api-openapi.yml — so an administrator can read and set the effective scope of
+    a key programmatically, but the token itself carries no scope claim.
+  org_token:
+    note: >-
+      The Org Token is organization-wide and unscoped. BigPanda restricts it to the inbound Alerts API
+      and a small number of legacy endpoints and tells new integrations to use a User API Key instead.
+  docs:
+    - https://api-docs.bigpanda.io/api-credentials
+    - https://docs.bigpanda.io/en/roles-management.html
+    - https://docs.bigpanda.io/en/api-key-management.html

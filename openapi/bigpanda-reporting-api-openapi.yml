@@ -1,0 +1,660 @@
+openapi: 3.0.3
+info:
+  title: BigPanda Reporting API
+  description: BigPanda Reporting operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own
+    API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it
+    was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base
+    URL for your region.
+  version: 1.0.0
+  contact:
+    name: BigPanda Support
+    url: https://api-docs.bigpanda.io/
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 3
+servers:
+- url: https://api.bigpanda.io
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
+tags:
+- name: Reporting
+paths:
+  /multi-context-generation/generate:
+    post:
+      summary: Generate a Report
+      deprecated: false
+      description: "Generate a report from multiple sources. At least one source is required. Transcripts, ServiceNow records,\
+        \ Slack channels, Teams chats, Teams channels, and Jira issues are supported.\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is\
+        \ limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need\
+        \ to be retried.\n\n> \U0001F4D8 **Streaming response**\n>\n> Setting the `streaming` field to `true` returns a streaming\
+        \ response. Setting it to `false` returns a JSON file. \n\n> \U0001F6A7 **async**\n> \n> When `async` is set to `true`,\
+        \ the `reportId is returned. Poll GET /multi-context-generation/reports/:reportId until executionState is `completed`\
+        \ or `failed`.\n"
+      operationId: create-a-multi-context-report
+      tags:
+      - Reporting
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: Instructions for how Biggy should create the report. If omitted, Biggy uses a default prompt.
+                  examples:
+                  - Produce an executive-ready summary with key decisions, risks, and next steps.
+                title:
+                  type: string
+                  description: Name for the report. If omitted, Biggy automatically generates a title.
+                  examples:
+                  - Executive Summary
+                transcripts:
+                  description: Transcripts of meetings or calls that Biggy will use to generate the report.
+                  type: array
+                  items:
+                    type: object
+                    properties: {}
+                    x-apidog-orders: []
+                    x-apidog-ignore-properties: []
+                serviceNow:
+                  description: One or more ServiceNow records that Biggy will use to generate the report.
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/serviceNow-object'
+                reasoningEffort:
+                  type: string
+                  description: Level of reasoning that should be used to generate the report. One of `Low`, `Medium`, `High`,  or
+                    `Extreme`.
+                  examples:
+                  - Low
+                visibility:
+                  type: string
+                  description: Defines who can view the report. One of `private` (default) or `org`.
+                  examples:
+                  - private
+                reportTags:
+                  type: array
+                  description: Optional report tags used to organize the list of reports within the web app.
+                  items:
+                    type: string
+                format:
+                  type: string
+                  description: Format that the report will be returned in. One of `markdown` (default) or `plaintext`.
+                  examples:
+                  - markdown
+                streaming:
+                  type: boolean
+                  description: Whether the response is streaming or in JSON format. One of `true` or `false`.
+                  examples:
+                  - false
+              x-apidog-orders:
+              - prompt
+              - title
+              - transcripts
+              - serviceNow
+              - reasoningEffort
+              - visibility
+              - reportTags
+              - format
+              - streaming
+              x-apidog-ignore-properties: []
+            examples: {}
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/multi-context200response'
+          headers: {}
+          x-apidog-name: ''
+        '403':
+          x-apidog-ordering: 1
+          description: '403'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic403response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser11: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37904796-run
+      x-source-url: https://api-docs.bigpanda.io/generate-a-report-37904796e0.md
+      x-source-page: Generate a Report
+  /resources/v2.1/integration-alerts:
+    get:
+      summary: Get Integration Alerts
+      deprecated: false
+      description: Retrieve the raw OIM-normalized alert payloads recently ingested by a specific integration. Pass the integration's
+        app key to see exactly what BigPanda received before enrichment — the fastest way to debug source-to-tag mapping.
+      operationId: get-integration-alerts
+      tags:
+      - Reporting
+      parameters:
+      - name: app_key
+        in: query
+        description: Integration app key
+        required: true
+        example: ''
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of alerts to return per page
+        required: false
+        example: 0
+        schema:
+          type: integer
+          minimum: 1
+      - name: page
+        in: query
+        description: Page number to return
+        required: false
+        example: 0
+        schema:
+          type: integer
+          minimum: 1
+      - name: since
+        in: query
+        description: Optional string to filter alerts from this unix epoch time in seconds
+        required: false
+        example: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationAlerts'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '401':
+          x-apidog-ordering: 2
+          description: Unauthorized
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 3
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+        '500':
+          x-apidog-ordering: 4
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error-response-v1'
+          headers: {}
+          x-apidog-name: ''
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769995-run
+      x-source-url: https://api-docs.bigpanda.io/get-integration-alerts-37769995e0.md
+      x-source-page: Get Integration Alerts
+  /resources/v2.0/troubleshooting/logs:
+    get:
+      summary: Retrieve All Troubleshooting Logs
+      deprecated: false
+      description: "Retrieves a specific definition for an enrichment schema.\n\n> \U0001F6A7 **Authentication**\n> \n> All\
+        \ BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type\
+        \ of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n\
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      operationId: retrieve-all-troubleshooting-logs
+      tags:
+      - Reporting
+      parameters:
+      - name: log_type
+        in: query
+        description: Type of logged event.
+        required: false
+        example: ''
+        schema:
+          type: array
+          items:
+            type: string
+      - name: level
+        in: query
+        description: 'Level of logged event. Options are: ''error'', ''warning'', or ''info''.'
+        required: false
+        example: ''
+        schema:
+          type: array
+          items:
+            type: string
+      - name: message
+        in: query
+        description: Textual search within the message field.
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: component_name
+        in: query
+        description: Brief message describing the event.
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: resource_id
+        in: query
+        description: System-generated unique identifier for the resource.
+        required: false
+        example: ''
+        schema:
+          type: array
+          items:
+            type: string
+      - name: payload
+        in: query
+        description: Textual search within the payload object.
+        required: false
+        example: ''
+        schema:
+          type: string
+      - name: start
+        in: query
+        description: Retrieve resources that occurred after this time(in Unix epoch seconds).
+        required: false
+        example: 0
+        schema:
+          type: integer
+          format: int32
+          examples:
+          - 1751242926
+      - name: end
+        in: query
+        description: Retrieve resources that occurred before this time(in Unix epoch seconds).
+        required: false
+        example: 0
+        schema:
+          type: integer
+          format: int32
+          examples:
+          - 1753834926
+      - name: page
+        in: query
+        description: Which set of results to return.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 1
+          examples:
+          - 4
+      - name: per_page
+        in: query
+        description: Number of results to show for each page.
+        required: false
+        example: 0
+        schema:
+          type: integer
+          default: 100
+          examples:
+          - 30
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/diagnostic_log'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerUser131: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770200-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-all-troubleshooting-logs-37770200e0.md
+      x-source-page: Retrieve All Troubleshooting Logs
+components:
+  securitySchemes:
+    BearerUser11:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
+
+        headers only in the secure tool you use to make API calls
+
+        '
+    BearerUser131:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
+        tool you use to make API calls
+
+        '
+  schemas:
+    serviceNow-object:
+      required:
+      - tableName
+      type: object
+      properties:
+        tableName:
+          type: string
+          description: Name of the ServiceNow table where the record is located.
+          examples:
+          - Incident
+        recordNumber:
+          type: string
+          description: ServiceNow record number.
+          examples:
+          - INC1234567
+        sysId:
+          type: string
+          description: ServiceNow unique record identifier.
+          examples:
+          - 9d385017c611228701d22104cc95g555
+      x-apidog-orders:
+      - tableName
+      - recordNumber
+      - sysId
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    multi-context200response:
+      type: object
+      properties:
+        reportId:
+          type: string
+          description: Unique ID of the multi-context report.
+          examples:
+          - 65f0c8f8d73b2b0012ab123
+        title:
+          type: string
+          description: Title of the report.
+          examples:
+          - Executive summary
+        format:
+          type: string
+          description: The format that the report was returned in.
+          examples:
+          - markdown
+        visibility:
+          type: string
+          description: Whether the report was private or visible to everyone in the organization.
+          examples:
+          - private
+        content:
+          type: string
+          description: Content of the report.
+          examples:
+          - This is the report.
+        warnings:
+          type: array
+          description: Warnings provided by the report.
+          schema:
+            type: string
+          items:
+            type: string
+      x-apidog-orders:
+      - reportId
+      - title
+      - format
+      - visibility
+      - content
+      - warnings
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic403response:
+      type: object
+      description: 'Forbidden
+
+        '
+      properties:
+        statusCode:
+          type: integer
+          examples:
+          - 403
+        error:
+          type: string
+          examples:
+          - Forbidden
+        message:
+          type: string
+          examples:
+          - Forbidden - insufficient permissions
+      x-apidog-orders:
+      - statusCode
+      - error
+      - message
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    IntegrationAlerts:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  alertData:
+                    type: string
+                  processingTime:
+                    type: string
+                required:
+                - alertData
+                - processingTime
+                x-apidog-orders:
+                - alertData
+                - processingTime
+                x-apidog-ignore-properties: []
+            total:
+              type: number
+              minimum: 0
+          required:
+          - items
+          - total
+          x-apidog-orders:
+          - items
+          - total
+          x-apidog-ignore-properties: []
+      required:
+      - status
+      - data
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    http-status-code-v1:
+      type: number
+      enum:
+      - 100
+      - 101
+      - 102
+      - 103
+      - 200
+      - 201
+      - 202
+      - 203
+      - 204
+      - 205
+      - 206
+      - 207
+      - 300
+      - 301
+      - 302
+      - 303
+      - 304
+      - 305
+      - 307
+      - 308
+      - 400
+      - 401
+      - 402
+      - 403
+      - 404
+      - 405
+      - 406
+      - 407
+      - 408
+      - 409
+      - 410
+      - 411
+      - 412
+      - 413
+      - 414
+      - 415
+      - 416
+      - 417
+      - 418
+      - 421
+      - 422
+      - 423
+      - 424
+      - 426
+      - 428
+      - 429
+      - 431
+      - 451
+      - 500
+      - 501
+      - 502
+      - 503
+      - 504
+      - 505
+      - 507
+      - 511
+      description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+      x-apidog-folder: ''
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    diagnostic_log:
+      type: object
+      properties:
+        log_id:
+          type: string
+          description: System-generated unique identifier for the log record.
+          examples:
+          - log_idABC
+        log_type:
+          type: string
+          description: Type of logged event.
+          examples:
+          - invalid_payload
+        level:
+          type: string
+          description: Level of logged event. One of [`error`, `warning`, or `info`].
+          examples:
+          - error
+        message:
+          type: string
+          description: Brief message describing the event.
+          examples:
+          - 'alert 1: ''status'' must exist
+
+            '
+        component_name:
+          type: string
+          description: 'Name of the component reporting the event. Must be "inbound".
+
+            '
+          examples:
+          - inbound
+        resource_id:
+          type: string
+          description: System-generated unique identifier for the resource.
+          examples:
+          - api.default
+        payload:
+          type: object
+          description: The received event object.
+          properties:
+            <property_1>:
+              type: string
+              examples:
+              - production-database-1
+            <property_2>:
+              type: string
+              examples:
+              - CPU overloaded
+            <property_3>:
+              type: string
+              examples:
+              - criticald
+          x-apidog-orders:
+          - <property_1>
+          - <property_2>
+          - <property_3>
+          x-apidog-ignore-properties: []
+        timestamp:
+          type: integer
+          description: Unix epoch time when the event occurred (in seconds).
+          examples:
+          - 1610622725329
+      x-apidog-orders:
+      - log_id
+      - log_type
+      - level
+      - message
+      - component_name
+      - resource_id
+      - payload
+      - timestamp
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

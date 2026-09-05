@@ -1,0 +1,420 @@
+openapi: 3.0.3
+info:
+  title: BigPanda Data Connectors API
+  description: BigPanda Data Connectors operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its
+    own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page
+    it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the
+    base URL for your region.
+  version: 1.0.0
+  contact:
+    name: BigPanda Support
+    url: https://api-docs.bigpanda.io/
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 5
+servers:
+- url: https://api.bigpanda.io
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
+tags:
+- name: Data Connectors
+paths:
+  /resources/v2.0/data-connectors/{connector_id}/auth-uri:
+    post:
+      summary: Add data connector authentication
+      deprecated: false
+      description: "Returns the secure URI where authentication and setup is configured.\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization\
+        \ token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n\
+        >\n> Example:\n> `Authorization: Bearer [YOUR_ORG_TOKEN]`\n\n> \U0001F6A7 **Incorrect URL in Builder**\n> \n> This\
+        \ endpoint is accessed at the https://integrations.bigpanda.io url, not https://api.bigpanda.io\n"
+      operationId: add-data-connector-authentication
+      tags:
+      - Data Connectors
+      parameters:
+      - name: connector_id
+        in: path
+        description: The unique identifier for the data connector.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 234yt3246
+      responses:
+        '201':
+          x-apidog-ordering: 0
+          description: '201'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic201response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerOrg22: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770205-run
+      x-source-url: https://api-docs.bigpanda.io/add-data-connector-authentication.md
+      x-source-page: Add data connector authentication
+  /resources/v2.0/data-connectors:
+    post:
+      summary: Create a data connector
+      deprecated: false
+      description: "> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization in the call\
+        \ headers.\n>\n> This API uses the Organization token type of Authorization token. Your org token must be provided\
+        \ in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_ORG_TOKEN]`\n"
+      operationId: create-a-data-connector
+      tags:
+      - Data Connectors
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/data_connector'
+            examples: {}
+      responses:
+        '201':
+          x-apidog-ordering: 0
+          description: '201'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/data_connector_response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerOrg22: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770202-run
+      x-source-url: https://api-docs.bigpanda.io/create-a-data-connector.md
+      x-source-page: Create a data connector
+    get:
+      summary: Retrieve all data connectors
+      deprecated: false
+      description: "Retrieves all data connectors the user has access to.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
+        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization token type of\
+        \ Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n\
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`\n"
+      operationId: retrieve-all-data-connectors
+      tags:
+      - Data Connectors
+      parameters: []
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/data_connector_response2'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerOrg22: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770201-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-all-data-connectors.md
+      x-source-page: Retrieve all data connectors
+  /resources/v2.0/data-connectors/{connector_id}:
+    delete:
+      summary: Delete a data connector
+      deprecated: false
+      description: "Remove a data connector integration.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
+        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization token type of Authorization\
+        \ token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_ORG_TOKEN]`\n"
+      operationId: delete-a-data-connector
+      tags:
+      - Data Connectors
+      parameters:
+      - name: connector_id
+        in: path
+        description: The unique identifier for the data connector.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 234yt3246
+      responses:
+        '204':
+          x-apidog-ordering: 0
+          description: '204'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic204response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerOrg22: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770204-run
+      x-source-url: https://api-docs.bigpanda.io/delete-a-data-connector.md
+      x-source-page: Delete a data connector
+    get:
+      summary: Retrieve a data connector
+      deprecated: false
+      description: "Retrieves a specific data connector.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
+        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization token type of Authorization\
+        \ token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
+        \ Bearer [YOUR_ORG_TOKEN]`\n\n> \U0001F6A7 **Incorrect URL in Builder**\n> \n> This endpoint is accessed at the https://integrations.bigpanda.io\
+        \ url, not https://api.bigpanda.io\n"
+      operationId: retrieve-a-data-connector
+      tags:
+      - Data Connectors
+      parameters:
+      - name: connector_id
+        in: path
+        description: The unique identifier for the data connector.
+        required: true
+        example: ''
+        schema:
+          type: string
+          examples:
+          - 234yt3246
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: '200'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/data_connector_response2'
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: '400'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/generic400response'
+          headers: {}
+          x-apidog-name: ''
+      security:
+      - BearerOrg22: []
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770203-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-a-data-connector.md
+      x-source-page: Retrieve a data connector
+components:
+  securitySchemes:
+    BearerOrg22:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
+        tool you use to make API calls
+
+        '
+  schemas:
+    generic201response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 201
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 201
+        data: {}
+      x-apidog-ignore-properties: []
+    data_connector:
+      type: object
+      properties:
+        schema:
+          required:
+          - connector_type
+          type: object
+          properties:
+            connector_type:
+              type: string
+              description: 'The type of ITSM tool that is connected to BigPanda through the sync. One of: servicenow'
+              default: servicenow
+              examples:
+              - servicenow
+          x-apidog-orders:
+          - connector_type
+          x--orders:
+          - connector_type
+          x--ignore-properties: []
+      x-apidog-orders:
+      - schema
+      x-apidog-folder: ''
+      x--orders:
+      - schema
+      x--ignore-properties: []
+    data_connector_response:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the data connector.
+          examples:
+          - abc123
+        status:
+          type: string
+          description: 'System field listing the current state of the connector. One of [required_auth, auth_error, pending_initialization,
+            initial_sync,
+
+            active, running, or sync_error]
+
+            '
+          examples:
+          - active
+        name:
+          type: string
+          description: The automatically generated name for the connector.
+          examples:
+          - ServiceNow Connector
+        type:
+          type: string
+          description: 'The type of ITSM tool that is connected to BigPanda through
+
+            the sync. One of [servicenow]
+
+            '
+          examples:
+          - servicenow
+        rescheduled_for:
+          type: string
+          format: date-time
+          description: The next scheduled data sync.
+          examples:
+          - '2025-05-07T21:59:05.918554Z'
+      x-apidog-orders:
+      - id
+      - status
+      - name
+      - type
+      - rescheduled_for
+      x-apidog-folder: ''
+      x--orders:
+      - id
+      - status
+      - name
+      - type
+      - rescheduled_for
+      x--ignore-properties: []
+    generic204response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
+      x-apidog-ignore-properties: []
+    data_connector_response2:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the data connector.
+          examples:
+          - abc123
+        status:
+          type: string
+          description: 'System field listing the current state of the connector. One of [required_auth, auth_error, pending_initialization,
+            initial_sync,
+
+            active, running, or sync_error]
+
+            '
+          examples:
+          - active
+        name:
+          type: string
+          description: The automatically generated name for the connector.
+          examples:
+          - ServiceNow Connector
+        type:
+          type: string
+          description: 'The type of ITSM tool that is connected to BigPanda through
+
+            the sync. One of [servicenow]
+
+            '
+          examples:
+          - servicenow
+        rescheduled_for:
+          type: string
+          format: date-time
+          description: The next scheduled data sync.
+          examples:
+          - '2025-05-07T21:59:05.918554Z'
+      x-apidog-orders:
+      - id
+      - status
+      - name
+      - type
+      - rescheduled_for
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.

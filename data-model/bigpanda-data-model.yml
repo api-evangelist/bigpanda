@@ -1,0 +1,249 @@
+generated: '2026-09-04'
+method: derived
+source: >-
+  Derived from the 165 paths and 263 operations in openapi/, by reading path-parameter nesting and
+  id-reference fields in the request/response schemas BigPanda publishes.
+description: >-
+  The BigPanda entity graph as the API expresses it. The spine is Environment -> Incident -> Alert:
+  an environment is a saved BPQL query that scopes a set of incidents, an incident is a correlated
+  cluster of alerts, and almost every incident operation is addressed through its environment
+  (/resources/v2.0/environments/{environment_id}/incidents/{incident_id}/...). Changes hang off
+  incidents through Root Cause Changes. Everything else — enrichment, filters, correlation patterns,
+  maintenance plans, topology — is configuration that shapes how alerts become incidents.
+root_entities:
+  - Environment
+  - Incident
+  - Alert
+  - Change
+entities:
+  - name: Environment
+    id_field: environment_id
+    path: /resources/v2.0/environments
+    spec: openapi/bigpanda-environments-api-openapi.yml
+    description: A BPQL-defined scope that groups incidents. The most-referenced identifier in the surface (13 paths nest under it).
+    operations: [create-an-environment, retrieve-all-environments, get-an-environment, update-environment, delete-environment]
+  - name: EnvironmentGroup
+    id_field: group_id
+    path: /resources/v2.0/environments-groups
+    spec: openapi/bigpanda-environments-api-openapi.yml
+  - name: Incident
+    id_field: incident_id
+    path: /resources/v2.0/environments/{environment_id}/incidents
+    spec: openapi/bigpanda-incidents-api-openapi.yml
+    description: A correlated cluster of alerts. Addressed through its environment, not globally.
+    state_transitions: [assign, unassign, snooze, unsnooze, comment, merge, split, resolve]
+  - name: IncidentTag
+    id_field: incidenttag_id
+    path: /resources/v2.0/environments/{environment_id}/incidents/{incident_id}/tags
+    spec: openapi/bigpanda-incidents-api-openapi.yml
+  - name: IncidentTagDefinition
+    id_field: incidenttag_id
+    path: /resources/v2.0/incidents/tags/definitions
+    spec: openapi/bigpanda-incidents-api-openapi.yml
+    description: The org-level definition a per-incident tag instantiates.
+  - name: Alert
+    id_field: alert_id
+    path: /data/v2/alerts
+    spec: openapi/bigpanda-alerts-api-openapi.yml
+    description: The ingested monitoring event. Written by integrations, read as part of an incident.
+  - name: AlertTag
+    id_field: alerttag_name
+    path: /resources/v2.0/env-tags
+    spec: openapi/bigpanda-alert-enrichment-api-openapi.yml
+  - name: EnrichmentItem
+    id_field: enrichment_id
+    spec: openapi/bigpanda-alert-enrichment-api-openapi.yml
+    description: An ordered rule that adds a tag value to an alert. Order is itself an addressable resource.
+  - name: MappingEnrichmentSchema
+    id_field: mapschema_id
+    spec: openapi/bigpanda-alert-enrichment-api-openapi.yml
+  - name: MappingEnrichmentRow
+    id_field: row_id
+    spec: openapi/bigpanda-alert-enrichment-api-openapi.yml
+  - name: AlertFilter
+    id_field: filter_id
+    spec: openapi/bigpanda-alert-filters-api-openapi.yml
+  - name: AlertFilterSchedule
+    id_field: schedule_id
+    spec: openapi/bigpanda-alert-filters-api-openapi.yml
+  - name: CorrelationPattern
+    id_field: correlation_id
+    spec: openapi/bigpanda-correlation-patterns-api-openapi.yml
+    description: The rule that turns alerts into incidents. Ordered, and the order is an API resource.
+  - name: MaintenancePlan
+    id_field: maintenance_id
+    spec: openapi/bigpanda-maintenance-plans-api-openapi.yml
+  - name: Topology
+    spec: openapi/bigpanda-topology-api-openapi.yml
+  - name: Change
+    id_field: change_id
+    path: /resources/v2.0/changes
+    spec: openapi/bigpanda-changes-api-openapi.yml
+  - name: RelatedChange
+    id_field: related_change_id
+    path: /resources/v2.0/rcc
+    spec: openapi/bigpanda-changes-api-openapi.yml
+    description: Root Cause Change — the link object binding a change to an incident.
+  - name: Integration
+    id_field: app_key
+    path: /resources/v2.1/integrations
+    spec: openapi/bigpanda-notifications-api-openapi.yml
+    description: >-
+      A configured inbound or outbound connection. Keyed by app_key, which is also the key the OIM
+      configuration surface addresses (app_key_p, 10 paths).
+  - name: IntegrationConfigurationVersion
+    id_field: version
+    path: /configurations/alerts/{integration}/{app_key_p}/versions/{version}
+    spec: openapi/bigpanda-oim-configuration-api-openapi.yml
+    description: Versioned integration configuration with diff and restore — the only versioned object in the surface.
+  - name: Job
+    id_field: job_id
+    spec: openapi/bigpanda-alert-enrichment-api-openapi.yml
+    description: The async work handle returned by a 202 Accepted in the Location header.
+  - name: User
+    id_field: user_id
+    path: /resources/v2.1/users
+    spec: openapi/bigpanda-users-api-openapi.yml
+  - name: ScimUser
+    id_field: user_id
+    path: /scim/v2/Users
+    spec: openapi/bigpanda-users-api-openapi.yml
+  - name: ScimGroup
+    id_field: group_id
+    path: /scim/v2/Groups
+    spec: openapi/bigpanda-users-api-openapi.yml
+  - name: Role
+    id_field: role_id
+    spec: openapi/bigpanda-roles-permissions-api-openapi.yml
+  - name: ApiKey
+    id_field: apikey_id
+    spec: openapi/bigpanda-api-keys-api-openapi.yml
+  - name: ServiceAccount
+    id_field: service_account_id
+    spec: openapi/bigpanda-service-accounts-api-openapi.yml
+  - name: DataConnector
+    id_field: connector_id
+    spec: openapi/bigpanda-data-connectors-api-openapi.yml
+  - name: MimTemplate
+    id_field: templateId
+    path: /mim/templates
+    spec: openapi/bigpanda-mim-api-openapi.yml
+  - name: MimExecution
+    id_field: executionId
+    path: /mim/executions
+    spec: openapi/bigpanda-mim-api-openapi.yml
+  - name: BiggyRequest
+    id_field: requestId
+    path: /query
+    spec: openapi/bigpanda-biggy-query-api-openapi.yml
+  - name: Meeting
+    id_field: conferenceCallId
+    spec: openapi/bigpanda-meetings-transcripts-api-openapi.yml
+  - name: Transcript
+    id_field: conferenceCallId
+    spec: openapi/bigpanda-meetings-transcripts-api-openapi.yml
+relationships:
+  - from: Environment
+    to: Incident
+    kind: has_many
+    via: environment_id (path)
+    evidence: /resources/v2.0/environments/{environment_id}/incidents
+  - from: EnvironmentGroup
+    to: Environment
+    kind: has_many
+    via: group_id
+  - from: Incident
+    to: Alert
+    kind: has_many
+    via: correlation
+    evidence: An incident is a correlated cluster of alerts; resolve-alerts operates on the alerts inside an environment.
+  - from: Incident
+    to: IncidentTag
+    kind: has_many
+    via: incident_id (path)
+  - from: IncidentTag
+    to: IncidentTagDefinition
+    kind: belongs_to
+    via: incidenttag_id
+  - from: Incident
+    to: RelatedChange
+    kind: has_many
+    via: /resources/v2.0/rcc
+    evidence: retrieve-rcc-relations takes an incident or a change and returns the links between them.
+  - from: RelatedChange
+    to: Change
+    kind: belongs_to
+    via: change_id
+  - from: Alert
+    to: AlertTag
+    kind: has_many
+    via: enrichment
+  - from: AlertTag
+    to: EnrichmentItem
+    kind: has_many
+    via: alerttag_name (path)
+  - from: MappingEnrichmentSchema
+    to: MappingEnrichmentRow
+    kind: has_many
+    via: mapschema_id (path)
+  - from: AlertFilter
+    to: AlertFilterSchedule
+    kind: has_many
+    via: filter_id (path)
+  - from: Integration
+    to: IntegrationConfigurationVersion
+    kind: has_many
+    via: app_key_p (path)
+  - from: Integration
+    to: Alert
+    kind: has_many
+    via: app_key
+    evidence: Inbound alerts are attributed to the integration app_key that delivered them.
+  - from: MimTemplate
+    to: MimExecution
+    kind: has_many
+    via: templateId
+    evidence: POST /mim/execute starts an execution from a template. BigPanda publishes no operationId for the MIM operations.
+  - from: MimExecution
+    to: Incident
+    kind: belongs_to
+    via: major incident context
+  - from: User
+    to: Role
+    kind: has_many
+    via: /users/{userId}/roles
+  - from: Role
+    to: User
+    kind: has_many
+    via: deleteRoleUsers / get-all-users-for-role
+  - from: ScimGroup
+    to: ScimUser
+    kind: has_many
+    via: SCIM group membership
+  - from: User
+    to: ApiKey
+    kind: has_many
+    via: A User API Key is scoped to a user and limited by that user's role.
+  - from: Meeting
+    to: Transcript
+    kind: has_one
+    via: conferenceCallId
+  - from: BiggyRequest
+    to: BiggyResponse
+    kind: has_one
+    via: requestId
+    evidence: An async query returns 202 with requestId; get-a-response fetches the result.
+notes:
+  - >-
+    Addressing is environment-scoped, not globally id-addressed. An agent that holds an incident_id
+    still cannot act on it without knowing which environment it belongs to — 11 of the 13 incident-level
+    paths require both ids.
+  - >-
+    Ordering is a first-class resource. Enrichment items, alert tags and correlation patterns each expose
+    a separate order endpoint (Update Enrichment Items Order, Update tag order, Update Correlation
+    Pattern Order, Reset Correlation Patterns Order), because evaluation order changes behaviour.
+  - >-
+    87 schema objects across 4 specs carry BigPanda's own placeholder text — "Schema pending: definition
+    lives in unbundled source-repo files. Replace once the bundled spec is provided." — chiefly on the
+    SCIM and configuration surfaces. Those entities are real and their paths are documented, but their
+    field-level shape is not published, so no relationship was inferred from them.

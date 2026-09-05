@@ -1,0 +1,1346 @@
+openapi: 3.0.3
+info:
+  title: BigPanda Major Incident Management API
+  description: BigPanda Major Incident Management operations, assembled verbatim from the OpenAPI fragments BigPanda publishes
+    on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
+    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
+    the base URL for your region.
+  version: 1.0.0
+  contact:
+    name: BigPanda Support
+    url: https://api-docs.bigpanda.io/
+  license:
+    name: Proprietary
+    url: https://www.bigpanda.io/legal/
+  x-provenance:
+    method: searched
+    source: https://api-docs.bigpanda.io/llms.txt
+    harvested: '2026-09-04'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
+      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
+      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
+      API Evangelist.'
+    operations: 7
+servers:
+- url: https://api.bigpanda.io
+  description: US Region
+- url: https://api.eu.bigpanda.io
+  description: EU Region
+tags:
+- name: Major Incident Management
+paths:
+  /mim/executions/{executionId}/cancel:
+    post:
+      summary: Cancel a MIM Execution
+      deprecated: false
+      description: "Cancels an active execution without resolving it. \n\nUnlike the resolve endpoint, cancellation moves\
+        \ the execution directly to `cancelled` status without performing closing-out work.\n\n> \U0001F6A7 **Authentication**\n\
+        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
+        \ type of Authorization token.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is\
+        \ limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need\
+        \ to be retried."
+      tags:
+      - Major Incident Management
+      parameters:
+      - name: executionId
+        in: path
+        description: Unique identifier of the MIM execution. (24 character string)
+        required: true
+        example: 665b2c3d4e5f6a7b8c9d0e1f
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                reason:
+                  description: Reason for the cancellation.
+                  type: string
+                  examples:
+                  - Duplicate incident - already handled by another team.
+                  example: Duplicate incident - already handled by another team.
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  executionId:
+                    type: string
+                    description: Unique idenfitier of the MIM execution.
+                    examples:
+                    - 665b2c3d4e5f6a7b8c9d0e1f
+                  status:
+                    type: string
+                    description: Status of the MIM execution.
+                    examples:
+                    - cancelled
+                  mimName:
+                    type: string
+                    description: Name of the inicdent.
+                    examples:
+                    - Payments Outage 2026-03-11
+                  templateId:
+                    type: string
+                    description: Template used in the MIM execution.
+                    examples:
+                    - 665a1b2c3d4e5f6a7b8c9d0e
+                  createdAt:
+                    type: string
+                    description: Date and time the execution was crated.
+                    examples:
+                    - '2026-03-11T22:30:00.000Z'
+                  createdBy:
+                    type: object
+                    properties:
+                      system:
+                        type: string
+                        description: Who created the execution.
+                        examples:
+                        - user
+                    required:
+                    - system
+                    x-apidog-orders:
+                    - system
+                  communicationEntities:
+                    type: array
+                    items:
+                      type: string
+                    description: Communication entities associated with the MIM execution.
+                  actions:
+                    type: array
+                    items:
+                      type: string
+                    description: Actions associated with the MIM execution.
+                x-apidog-orders:
+                - executionId
+                - status
+                - mimName
+                - templateId
+                - createdAt
+                - createdBy
+                - communicationEntities
+                - actions
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: Status code associated with the error.
+                    examples:
+                    - 400
+                  error:
+                    type: string
+                    description: Error type.
+                    examples:
+                    - MimValidationError
+                  message:
+                    type: string
+                    description: Error message.
+                    examples:
+                    - Cannot cancel execution in terminal status completed
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 2
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: Status code associated with the error.
+                    examples:
+                    - 404
+                  error:
+                    type: string
+                    description: Error type.
+                    examples:
+                    - MimNotFoundError
+                  message:
+                    type: string
+                    description: Error message.
+                    examples:
+                    - Execution not found.
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769968-run
+      x-source-url: https://api-docs.bigpanda.io/cancel-a-mim-execution-37769968e0.md
+      x-source-page: Cancel a MIM Execution
+  /mim/execute:
+    post:
+      summary: Execute a MIM Workflow From a Template
+      deprecated: false
+      description: "Start a major incident workflow from a template. Create communication channels, provision resources, and\
+        \ kick off automated actions. \n\nImmediately returns an executionId that can be polled via the executions endpoints.\
+        \ \n\nBanner posting and LLM enrichment happen asynchronously after creation and do not block the response.\n\nLookback\
+        \ backfill failures are returned in warnings rather than failing the request.\n\n> \U0001F6A7 **valueSource**\n> \n\
+        > If `valueSource` is `runtime` and `isRequired` is `true`, you must have values in `communicationEntityValues` or\
+        \ the request fails with a 400 return.\n\n> \U0001F4D8 **MIM creator**\n>\n> The user associated with the API key\
+        \ is automatically assigned as the MIM creator.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
+        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\
+        \n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute.\
+        \ Additional requests will return a 429 response code and the request will need to be retried."
+      tags:
+      - Major Incident Management
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                templateId:
+                  type: string
+                  description: Unique identifier of the MIM template.
+                  examples:
+                  - 665a1b2c3d4e5f6a7b8c9d0e
+                mimName:
+                  type: string
+                  description: Name of the MIM template.
+                  examples:
+                  - Payments Outage 2026-03-11
+                incidentPriority:
+                  type: string
+                  description: Priority level of the incident.
+                  examples:
+                  - P1
+                communicationEntityValues:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      entityId:
+                        type: string
+                        description: Unique identifier of the communication entity.
+                        examples:
+                        - 665b2c3d4e5f6a7b8c9d0e1f
+                      value:
+                        type: object
+                        properties:
+                          channelId:
+                            type: string
+                            description: Unique identifier of the communication entity channel.
+                            examples:
+                            - C0123456789
+                          channelName:
+                            type: string
+                            description: Name of the communication entity channel.
+                            examples:
+                            - null
+                        x-apidog-orders:
+                        - channelId
+                        - channelName
+                    x-apidog-orders:
+                    - entityId
+                    - value
+                incidentDetails:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      description: Title of the incident.
+                      examples:
+                      - Payment processing outage
+                    description:
+                      type: string
+                      description: Description of the incident.
+                      examples:
+                      - All payment processing is down across all regions.
+                    impact:
+                      type: object
+                      properties:
+                        services:
+                          type: array
+                          items:
+                            type: string
+                          description: Services impacted by the incident.
+                          examples:
+                          - payments-api
+                        statement:
+                          type: string
+                          description: Statement associated with the incident.
+                          examples:
+                          - All customers unable to complete purchases
+                      description: Impact of the incident.
+                      x-apidog-orders:
+                      - services
+                      - statement
+                  x-apidog-orders:
+                  - title
+                  - description
+                  - impact
+              x-apidog-orders:
+              - templateId
+              - mimName
+              - incidentPriority
+              - communicationEntityValues
+              - incidentDetails
+            example: "curl -sS -X POST \"https://api.biggy.io/mim/execute\" \\\r\n  -H \"Authorization: Bearer your-api-key\"\
+              \ \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"templateId\": \"665a1b2c3d4e5f6a7b8c9d0e\"\
+              ,\r\n    \"mimName\": \"Payments Outage 2026-03-11\",\r\n    \"incidentPriority\": \"P1\",\r\n    \"communicationEntityValues\"\
+              : [\r\n        {\r\n            \"entityId\": \"665b2c3d4e5f6a7b8c9d0e1f\",\r\n            \"value\": {\r\n\
+              \                \"channelId\": \"C0123456789\",\r\n                \"channelName\": \"#payments-outage-war-room\"\
+              \r\n            }\r\n        }\r\n    ],\r\n    \"incidentDetails\": {\r\n        \"title\": \"Payment processing\
+              \ outage\",\r\n        \"description\": \"All payment processing is down across all regions.\",\r\n        \"\
+              impact\": {\r\n            \"services\": [\r\n                \"payments-api\",\r\n                \"checkout-service\"\
+              \r\n            ],\r\n            \"statement\": \"All customers unable to complete purchases\"\r\n        }\r\
+              \n    }\r\n}'"
+      responses:
+        '201':
+          x-apidog-ordering: 0
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  executionId:
+                    type: string
+                    description: Unique identifier of the MIM execution.
+                  status:
+                    type: string
+                    description: Status of the MIM execution
+                  message:
+                    type: string
+                    description: 'Message associated with the MIM execution. '
+                  resolvedEntities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        entityId:
+                          type: string
+                          description: Unique identifier of the entity.
+                        type:
+                          type: string
+                          description: Type of entity.
+                        label:
+                          type: string
+                          description: Label associated with the entity.
+                        value:
+                          type: object
+                          properties:
+                            channelId:
+                              type: string
+                              description: Unique identifier of the channel.
+                            channelName:
+                              type: string
+                              description: Name of the channel.
+                            link:
+                              type: string
+                              description: Link to the channel.
+                          required:
+                          - channelId
+                          - channelName
+                          - link
+                          x-apidog-orders:
+                          - channelId
+                          - channelName
+                          - link
+                      x-apidog-orders:
+                      - entityId
+                      - type
+                      - label
+                      - value
+                    description: MIM entities that have been resolved.
+                  warnings:
+                    type: array
+                    items:
+                      type: string
+                    description: Warnings associated with the execution.
+                required:
+                - executionId
+                - status
+                - message
+                - resolvedEntities
+                - warnings
+                x-apidog-orders:
+                - executionId
+                - status
+                - message
+                - resolvedEntities
+                - warnings
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  error:
+                    type: string
+                  message:
+                    type: string
+                required:
+                - statusCode
+                - error
+                - message
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 2
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: Status code of the error.
+                  error:
+                    type: string
+                    description: Type of error.
+                  message:
+                    type: string
+                    description: Error message.
+                required:
+                - statusCode
+                - error
+                - message
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769964-run
+      x-source-url: https://api-docs.bigpanda.io/execute-a-mim-workflow-from-a-template-37769964e0.md
+      x-source-page: Execute a MIM Workflow From a Template
+  /mim/templates:
+    get:
+      summary: List Templates
+      deprecated: false
+      description: "Return a paginated list of MIM templates configured for your organization. \n\nEach template summary includes\
+        \ the communication entities and a count of automated actions.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
+        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
+        \ token.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests\
+        \ per minute. Additional requests will return a 429 response code and the request will need to be retried."
+      tags:
+      - Major Incident Management
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of templates to return. (1-100)
+        required: false
+        example: 3
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Maximum number of templates to skip. (Minimum is 0)
+        required: false
+        example: 0
+        schema:
+          type: integer
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  templates:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        templateId:
+                          type: string
+                          description: Unique identifier of the MIM template.
+                          examples:
+                          - 665a1b2c3d4e5f6a7b8c9d0e
+                        name:
+                          type: string
+                          description: Name of the MIM template.
+                          examples:
+                          - P1 Bridge
+                        description:
+                          type: string
+                          description: Short description of the MIM template.
+                          examples:
+                          - Full incident bridge with all communication channels.
+                        communicationEntities:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              entityId:
+                                type: string
+                                description: Unique identifier of the communication entity.
+                                examples:
+                                - 665b2c3d4e5f6a7b8c9d0e1f
+                              type:
+                                type: string
+                                description: Type of communication entity.
+                                examples:
+                                - slack_channel
+                              label:
+                                type: string
+                                description: Short label for the communication entity.
+                                examples:
+                                - War Room Channel
+                              isRequired:
+                                type: boolean
+                                description: Whether or not the communication entity is required.
+                                examples:
+                                - false
+                              valueSource:
+                                type: string
+                                description: Value source of the communication entity. One of  `runtime` (caller supplies),
+                                  `static` (pre-configured), or `create_on_mim_creation` (auto-created).
+                                examples:
+                                - runtime
+                              hintText:
+                                type: string
+                                description: Short text describing how to use the communication entity.
+                                examples:
+                                - Select or create a Slack channel for the war room
+                            x-apidog-orders:
+                            - entityId
+                            - type
+                            - label
+                            - isRequired
+                            - valueSource
+                            - hintText
+                          description: Communication entities configured in the MIM template.
+                        actionsCount:
+                          type: integer
+                          description: Number of actions associated with the MIM template.
+                          examples:
+                          - 5
+                        swarmInvestigationEligibility:
+                          type: string
+                          description: Whether or not swarm is enabled. One of `always_on`, `optionally_on`, `not_enabled`.
+                      x-apidog-orders:
+                      - templateId
+                      - name
+                      - description
+                      - communicationEntities
+                      - actionsCount
+                      - swarmInvestigationEligibility
+                  total:
+                    type: integer
+                    description: Total number of MIM templates.
+                    examples:
+                    - 3
+                required:
+                - templates
+                - total
+                x-apidog-orders:
+                - templates
+                - total
+              example:
+                templates:
+                - templateId: 665a1b2c3d4e5f6a7b8c9d0e
+                  name: P1 - Full Bridge
+                  description: Full incident bridge with all communication channels.
+                  communicationEntities:
+                  - entityId: 665b2c3d4e5f6a7b8c9d0e1f
+                    type: slack_channel
+                    label: War Room Channel
+                    isRequired: true
+                    valueSource: runtime
+                    hintText: Select or create a Slack channel for the war room
+                  actionsCount: 5
+                  swarmInvestigationEligibility: optionally_on
+                total: 3
+          headers: {}
+          x-apidog-name: ''
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769965-run
+      x-source-url: https://api-docs.bigpanda.io/list-templates-37769965e0.md
+      x-source-page: List Templates
+  /mim/executions/{executionId}/resolve:
+    post:
+      summary: Resolve a MIM execution
+      deprecated: false
+      description: "Marks an active execution as resolved. The execution transitions to `pending_resolution` status while\
+        \ the MIM orchestrator performs closing-out work (final reports, channel archiving, etc.).\n\nExecutions in `active`,\
+        \ `paused`, or `pending_resolution` status can be resolved.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
+        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
+        \ token.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests\
+        \ per minute. Additional requests will return a 429 response code and the request will need to be retried."
+      tags:
+      - Major Incident Management
+      parameters:
+      - name: executionId
+        in: path
+        description: Unique identifier of the MIM execution. (24 character string)
+        required: true
+        example: 665b2c3d4e5f6a7b8c9d0e1f
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: Reason for the resolution.
+                  examples:
+                  - Root cause identified and fix deployed. Payments restored.
+              x-apidog-orders:
+              - reason
+            example: "curl -sS -X POST \"https://api.biggy.io/mim/executions/:executionId/resolve\" \\\r\n  -H \"Authorization:\
+              \ Bearer your-api-key\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"reason\": \"Root\
+              \ cause identified and fix deployed. Payments restored.\"\r\n}'"
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  executionId:
+                    type: string
+                    description: Unique identifier of the MIM execution.
+                    examples:
+                    - 665b2c3d4e5f6a7b8c9d0e1f
+                  status:
+                    type: string
+                    description: Status of the MIM execution.
+                    examples:
+                    - active
+                  mimName:
+                    type: string
+                    description: Name of the inicdent.
+                    examples:
+                    - Payments Outage 2026-03-11
+                  templateId:
+                    type: string
+                    description: Unique identifier of the MIM template.
+                    examples:
+                    - 665a1b2c3d4e5f6a7b8c9d0e
+                  createdAt:
+                    type: string
+                    description: Date and time the execution was created.
+                    examples:
+                    - '2026-03-11T22:30:00.000Z'
+                  createdBy:
+                    type: object
+                    properties:
+                      system:
+                        type: string
+                        description: Who created the MIM execution.
+                        examples:
+                        - user
+                    x-apidog-orders:
+                    - system
+                  communicationEntities:
+                    type: array
+                    items:
+                      type: string
+                    description: Communication entities associated with the MIM execution.
+                  actions:
+                    type: array
+                    items:
+                      type: string
+                    description: Actions associated with the MIM execution.
+                x-apidog-orders:
+                - executionId
+                - status
+                - mimName
+                - templateId
+                - createdAt
+                - createdBy
+                - communicationEntities
+                - actions
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: Status code associated with the error.
+                    examples:
+                    - 400
+                  error:
+                    type: string
+                    description: Error type.
+                    examples:
+                    - MimValidationError
+                  message:
+                    type: string
+                    description: Error message.
+                    examples:
+                    - Cannot resolve execution in terminal status completed
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 2
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: Status code associated with the error.
+                    examples:
+                    - 404
+                  error:
+                    type: string
+                    description: Type of error.
+                    examples:
+                    - MimNotFoundError
+                  message:
+                    type: string
+                    description: Error message.
+                    examples:
+                    - Execution not found.
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769967-run
+      x-source-url: https://api-docs.bigpanda.io/resolve-a-mim-execution-37769967e0.md
+      x-source-page: Resolve a MIM execution
+  /mim/executions/{executionId}:
+    get:
+      summary: Retrieve MIM Execution Details
+      deprecated: false
+      description: "Returns full details of a single MIM execution, including all communication entities and action statuses.\n\
+        \n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n\
+        >\n> This API uses the User API Key type of Authorization token.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality\
+        \ of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response\
+        \ code and the request will need to be retried."
+      tags:
+      - Major Incident Management
+      parameters:
+      - name: executionId
+        in: path
+        description: Unique identifier of the MIM execution. (24 character string).
+        required: true
+        example: 665b2c3d4e5f6a7b8c9d0e1f
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  executionId:
+                    type: string
+                    description: Unique identififer of the MIM execution.
+                    examples:
+                    - 665b2c3d4e5f6a7b8c9d0e1f
+                  status:
+                    type: string
+                    description: Status of the MIM execution.
+                    examples:
+                    - active
+                  mimName:
+                    type: string
+                    description: Name of the incident.
+                    examples:
+                    - P1 outage
+                  templateId:
+                    type: string
+                    description: Unique identifier of the MIM template used for the execution.
+                    examples:
+                    - 665a1b2c3d4e5f6a7b8c9d0e
+                  templateName:
+                    type: string
+                    description: Name of the template used for the MIM execution.
+                    examples:
+                    - P1 Full bridge
+                  createdAt:
+                    type: string
+                    description: Time and date the execution was created.
+                    examples:
+                    - '2026-03-11T22:30:00.000Z'
+                  createdBy:
+                    type: object
+                    properties:
+                      system:
+                        type: string
+                        description: How the MIM execution was created.
+                        examples:
+                        - user
+                      description:
+                        type: object
+                        properties: {}
+                    x-apidog-orders:
+                    - system
+                    - description
+                  communicationEntities:
+                    type: array
+                    items:
+                      type: string
+                    description: Communication entities associated with the MIM execution.
+                  actions:
+                    type: array
+                    items:
+                      type: string
+                    description: Actions associated with the MIM execution.
+                x-apidog-orders:
+                - executionId
+                - status
+                - mimName
+                - templateId
+                - templateName
+                - createdAt
+                - createdBy
+                - communicationEntities
+                - actions
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: Status code of the error.
+                    examples:
+                    - 400
+                  error:
+                    type: string
+                    description: Type of error.
+                    examples:
+                    - Bad Request.
+                  message:
+                    type: string
+                    description: Error message.
+                    examples:
+                    - params/executionId must match pattern \"^[0-9a-fA-F]{24}$\"
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 2
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: Status code of the error.
+                    examples:
+                    - 404
+                  error:
+                    type: string
+                    description: Type of error.
+                    examples:
+                    - MimNotFoundError
+                  message:
+                    type: string
+                    description: Error message.
+                    examples:
+                    - Execution not found.
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769970-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-mim-execution-details-37769970e0.md
+      x-source-page: Retrieve MIM Execution Details
+  /mim/executions:
+    get:
+      summary: Retrieve MIM Executions
+      deprecated: false
+      description: "Returns MIM executions for the organization, optionally filtered by status. Useful for dashboards and\
+        \ monitoring active incidents.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization\
+        \ in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\n> ❗ **Rate limitations**\n\
+        > \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will\
+        \ return a 429 response code and the request will need to be retried."
+      tags:
+      - Major Incident Management
+      parameters:
+      - name: status
+        in: query
+        description: Filter by execution status. One of `active`, `paused`, `completed`, `failed`, `cancelled`, `pending_resolution`,
+          or `expired`.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  executions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        executionId:
+                          type: string
+                          description: Unique identififer of the MIM execution.
+                          examples:
+                          - 665b2c3d4e5f6a7b8c9d0e1f
+                        status:
+                          type: string
+                          description: Status of the MIM execution.
+                          examples:
+                          - active
+                        mimName:
+                          type: string
+                          description: Name of the incident.
+                          examples:
+                          - P1 outage
+                        templateId:
+                          type: string
+                          description: Unique identifier of the MIM template used for the execution.
+                          examples:
+                          - 665a1b2c3d4e5f6a7b8c9d0e
+                        templateName:
+                          type: string
+                          description: Name of the template used for the MIM execution.
+                          examples:
+                          - P1 Full bridge
+                        createdAt:
+                          type: string
+                          description: Time and date the execution was created.
+                          examples:
+                          - '2026-03-11T22:30:00.000Z'
+                        createdBy:
+                          type: object
+                          properties:
+                            system:
+                              type: string
+                              description: How the MIM execution was created.
+                              examples:
+                              - user
+                          description: Who created the MIM execution.
+                          x-apidog-orders:
+                          - system
+                        incidentDetails:
+                          type: object
+                          properties:
+                            title:
+                              type: string
+                              description: Incident title.
+                              examples:
+                              - Payment processing outage.
+                            description:
+                              type: string
+                              description: Incident description.
+                              examples:
+                              - All payment processing is down across all regions.
+                          description: Details about the incident.
+                          x-apidog-orders:
+                          - title
+                          - description
+                        communicationEntities:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              entityId:
+                                type: string
+                                description: Unique idenfitier of the communication entity.
+                                examples:
+                                - 665b2c3d4e5f6a7b8c9d0e1f
+                              type:
+                                type: string
+                                description: Type of communication entity.
+                                examples:
+                                - slack_channel
+                              label:
+                                type: string
+                                description: Label of the communication entity.
+                                examples:
+                                - War room channel
+                              resolved:
+                                type: object
+                                properties:
+                                  channelId:
+                                    type: string
+                                    description: Unique identifier of the MIM channel.
+                                    examples:
+                                    - C0123456789
+                                  channelName:
+                                    type: string
+                                    description: Name of the channel.
+                                    examples:
+                                    - null
+                                  link:
+                                    type: string
+                                    description: Link to the channel.
+                                    examples:
+                                    - slack://channel?team=T0123456789&id=C0123456789
+                                x-apidog-orders:
+                                - channelId
+                                - channelName
+                                - link
+                            x-apidog-orders:
+                            - entityId
+                            - type
+                            - label
+                            - resolved
+                          description: Communication entities used in the MIM execution.
+                        actions:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              title:
+                                type: string
+                                description: Title of the action.
+                                examples:
+                                - Post initial status update
+                              status:
+                                type: string
+                                description: Status of the action.
+                                examples:
+                                - in_progress
+                              lastRunAt:
+                                type: string
+                                description: Date and time when the action last ran.
+                                examples:
+                                - '2026-03-11T22:30:05.000Z'
+                              executionCount:
+                                type: integer
+                                description: Number of actions associated with the execution.
+                                examples:
+                                - 1
+                            x-apidog-orders:
+                            - title
+                            - status
+                            - lastRunAt
+                            - executionCount
+                          description: Actions associated with the MIM execution.
+                      x-apidog-orders:
+                      - executionId
+                      - status
+                      - mimName
+                      - templateId
+                      - templateName
+                      - createdAt
+                      - createdBy
+                      - incidentDetails
+                      - communicationEntities
+                      - actions
+                required:
+                - executions
+                x-apidog-orders:
+                - executions
+          headers: {}
+          x-apidog-name: ''
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769969-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-mim-executions-37769969e0.md
+      x-source-page: Retrieve MIM Executions
+  /mim/templates/{templateId}:
+    get:
+      summary: Retrieve Template Details
+      deprecated: false
+      description: "Returns full details for a single MIM template, including complete action definitions with scheduling,\
+        \ execution mode, and approval requirements.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
+        \ Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\n>\
+        \ ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute.\
+        \ Additional requests will return a 429 response code and the request will need to be retried."
+      tags:
+      - Major Incident Management
+      parameters:
+      - name: templateId
+        in: path
+        description: Unique identifier of the MIM template. (24 character long string)
+        required: true
+        example: 665a1b2c3d4e5f6a7b8c9d0e
+        schema:
+          type: string
+      responses:
+        '200':
+          x-apidog-ordering: 0
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  templateId:
+                    type: string
+                    description: Unique identifier of the MIM template.
+                    examples:
+                    - 665a1b2c3d4e5f6a7b8c9d0e
+                  name:
+                    type: string
+                    description: Name of the MIM template.
+                    examples:
+                    - P1 bridge
+                  description:
+                    type: string
+                    description: Short description of the MIM template.
+                    examples:
+                    - Full incident bridge with all communication channels.
+                  communicationEntities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        entityId:
+                          type: string
+                          description: Unique identifier of the communication entity.
+                          examples:
+                          - 665b2c3d4e5f6a7b8c9d0e1f
+                        type:
+                          type: string
+                          description: Type of communication entity.
+                          examples:
+                          - slack_channel
+                        label:
+                          type: string
+                          description: Label associated with the communication entity.
+                          examples:
+                          - War Room Channel
+                        isRequired:
+                          type: boolean
+                          description: Whether or not the entity is required.
+                          examples:
+                          - true
+                        valueSource:
+                          type: string
+                          description: Value source of the communication entity. One of `runtime` (caller supplies), `static`(pre-configured),
+                            or `create_on_mim_creation` (auto-created).
+                          examples:
+                          - runtime
+                        hintText:
+                          type: string
+                          description: Short text describing how to use the communication entity.
+                          examples:
+                          - Select or create a Slack channel
+                        isContextSource:
+                          type: boolean
+                          description: Whether or not the communication entity is used as a context source.
+                          examples:
+                          - true
+                        isOutputDestination:
+                          type: boolean
+                          description: Whether or not the communication entity is an output destination.
+                          examples:
+                          - true
+                      x-apidog-orders:
+                      - entityId
+                      - type
+                      - label
+                      - isRequired
+                      - valueSource
+                      - hintText
+                      - isContextSource
+                      - isOutputDestination
+                    description: Communication entities configured in the MIM template.
+                  actions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          description: Title of the action.
+                          examples:
+                          - Post initial status update
+                        description:
+                          type: string
+                          description: Description of the action.
+                          examples:
+                          - Posts a summary of the incident to the war room channel.
+                        scheduleType:
+                          type: string
+                          description: Type of action schedule.  One of `creation`, `one_time`, `recurring`, `resolution`.
+                          examples:
+                          - creation
+                        scheduleConfig:
+                          type: object
+                          properties:
+                            value:
+                              type: integer
+                              description: Time value of the action schedule.
+                              examples:
+                              - 0
+                            unit:
+                              type: string
+                              description: Time unit of the action schedule. One of `minutes`, `actions`, or `days`.
+                              examples:
+                              - minutes
+                          x-apidog-orders:
+                          - value
+                          - unit
+                        executionMode:
+                          type: string
+                          description: Type of execution. One of one of `prompt` (LLM-generated) or `action_plan` (structured
+                            plan).
+                          examples:
+                          - prompt
+                        requiresHumanApproval:
+                          type: boolean
+                          description: Whether or not the action requires human approval.
+                          examples:
+                          - false
+                        enabled:
+                          type: boolean
+                          description: Whether or not the action is enabled.
+                          examples:
+                          - true
+                      x-apidog-orders:
+                      - title
+                      - description
+                      - scheduleType
+                      - scheduleConfig
+                      - executionMode
+                      - requiresHumanApproval
+                      - enabled
+                  actionsCount:
+                    type: integer
+                    description: Total number of actions.
+                    examples:
+                    - 2
+                  swarmInvestigationEligibility:
+                    type: string
+                    description: Whether or not the template is eligible for incident swarm.
+                    examples:
+                    - optionally_on
+                x-apidog-orders:
+                - templateId
+                - name
+                - description
+                - communicationEntities
+                - actions
+                - actionsCount
+                - swarmInvestigationEligibility
+          headers: {}
+          x-apidog-name: ''
+        '400':
+          x-apidog-ordering: 1
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: Status code of the error.
+                    examples:
+                    - 400
+                  error:
+                    type: string
+                    description: Error type.
+                    examples:
+                    - Bad request.
+                  message:
+                    type: string
+                    description: Error message.
+                    examples:
+                    - params/templateId must match pattern \"^[0-9a-fA-F]{24}$\"
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+        '404':
+          x-apidog-ordering: 2
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: Status code of the error.
+                    examples:
+                    - 404
+                  error:
+                    type: string
+                    description: Error type.
+                    examples:
+                    - Not found.
+                  message:
+                    type: string
+                    description: Error message.
+                    examples:
+                    - Template not found.
+                x-apidog-orders:
+                - statusCode
+                - error
+                - message
+          headers: {}
+          x-apidog-name: ''
+      x-publication-status: live
+      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769966-run
+      x-source-url: https://api-docs.bigpanda.io/retrieve-template-details-37769966e0.md
+      x-source-page: Retrieve Template Details
+x-server-notes:
+- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
+  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
+  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
+  Recorded as published; not corrected.
