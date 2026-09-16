@@ -1,35 +1,15 @@
 aid: bigpanda
 url: https://raw.githubusercontent.com/api-evangelist/bigpanda/refs/heads/main/apis.yml
 apis:
-- aid: bigpanda:bigpanda-agents-api
-  name: BigPanda Agents API (MCP & A2A)
-  description: 'The three agent-facing endpoints: the MCP server, the A2A JSON-RPC endpoint and the agent-card retrieval
-    operation.'
-  humanURL: https://api-docs.bigpanda.io/agents
-  baseURL: https://api.bigpanda.io
-  tags:
-  - MCP
-  - A2A
-  - Agents
-  operations: 3
-  properties:
-  - type: OpenAPI
-    url: openapi/bigpanda-agents-api-openapi.yml
-  - type: Overlay
-    url: overlays/bigpanda-agents-overlay.yaml
-  - type: Documentation
-    url: https://api-docs.bigpanda.io/agents
-  - type: APIReference
-    url: https://api-docs.bigpanda.io/agents
-  - type: MCPServer
-    url: mcp/bigpanda-mcp.yml
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-ai-settings-api
   name: BigPanda AI Settings API
   description: AI analysis configurations and on-demand AI analysis generation.
   humanURL: https://api-docs.bigpanda.io/ai-settings
   baseURL: https://api.bigpanda.io
   tags:
+  - Artificial Intelligence
+  - Configuration
+  tags_raw:
   - AI
   - Configuration
   operations: 6
@@ -43,30 +23,10 @@ apis:
   - type: APIReference
     url: https://api-docs.bigpanda.io/ai-settings
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
-- aid: bigpanda:bigpanda-alert-enrichment-api
-  name: BigPanda Alert Tags & Enrichment API
-  description: Alert tags, enrichment items, mapping enrichment schemas and tables — the largest single resource
-    group, and the one that decides what context an incident carries.
-  humanURL: https://api-docs.bigpanda.io/alert-tags-and-enrichment
-  baseURL: https://api.bigpanda.io
-  tags:
-  - Alerts
-  - Enrichment
-  - Tags
-  operations: 45
-  properties:
-  - type: OpenAPI
-    url: openapi/bigpanda-alert-enrichment-api-openapi.yml
-  - type: Overlay
-    url: overlays/bigpanda-alert-enrichment-overlay.yaml
-  - type: Documentation
-    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
-  - type: APIReference
-    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-alert-filters-api
   name: BigPanda Alert Filters API
-  description: Alert filters and filter schedules, in current and v1 routes, for suppressing alerts before correlation.
+  description: >-
+    Alert filters and filter schedules, in current and v1 routes, for suppressing alerts before correlation.
   humanURL: https://api-docs.bigpanda.io/alert-filters
   baseURL: https://api.bigpanda.io
   tags:
@@ -85,11 +45,16 @@ apis:
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-alert-ingestion-oim-api
   name: BigPanda Alert Ingestion (OIM) API
-  description: Open Integration Hub ingestion — send raw tool payloads for normalization and processing, with 23
+  description: >-
+    Open Integration Hub ingestion — send raw tool payloads for normalization and processing, with 23
     documented tool reference payloads.
   humanURL: https://api-docs.bigpanda.io/alert-ingestion-oim
   baseURL: https://api.bigpanda.io
   tags:
+  - Alerts
+  - Integration
+  - Ingestion
+  tags_raw:
   - Alerts
   - Integrations
   - Ingestion
@@ -106,8 +71,9 @@ apis:
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-alerts-api
   name: BigPanda Alerts API
-  description: Inbound alert ingestion and batch alert resolution — the write path monitoring tools use to push
-    events into BigPanda.
+  description: >-
+    Inbound alert ingestion and batch alert resolution — the write path monitoring tools use to push events
+    into BigPanda.
   humanURL: https://api-docs.bigpanda.io/alert-ingestion
   baseURL: https://api.bigpanda.io
   tags:
@@ -130,6 +96,9 @@ apis:
   humanURL: https://api-docs.bigpanda.io/api-keys
   baseURL: https://api.bigpanda.io
   tags:
+  - APIKeys
+  - Security
+  tags_raw:
   - API Keys
   - Security
   operations: 6
@@ -164,11 +133,16 @@ apis:
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-biggy-query-api
   name: BigPanda Biggy Query API
-  description: Send a natural-language question to Biggy and retrieve the response, synchronously or as an async
+  description: >-
+    Send a natural-language question to Biggy and retrieve the response, synchronously or as an async
     job.
   humanURL: https://api-docs.bigpanda.io/query
   baseURL: https://api.bigpanda.io
   tags:
+  - Artificial Intelligence
+  - Biggy
+  - Assistant
+  tags_raw:
   - AI
   - Biggy
   - Assistant
@@ -190,6 +164,9 @@ apis:
   baseURL: https://api.bigpanda.io
   tags:
   - Change Risk
+  - Artificial Intelligence
+  tags_raw:
+  - Change Risk
   - AI
   operations: 2
   properties:
@@ -204,7 +181,8 @@ apis:
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-changes-api
   name: BigPanda Changes & Root Cause API
-  description: Ingest deployment and configuration changes and link them to incidents as Root Cause Changes.
+  description: >-
+    Ingest deployment and configuration changes and link them to incidents as Root Cause Changes.
   humanURL: https://api-docs.bigpanda.io/changes-and-root-cause
   baseURL: https://api.bigpanda.io
   tags:
@@ -247,6 +225,9 @@ apis:
   baseURL: https://api.bigpanda.io
   tags:
   - Connectors
+  - Integration
+  tags_raw:
+  - Connectors
   - Integrations
   operations: 5
   properties:
@@ -261,10 +242,14 @@ apis:
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-email-parser-configuration-api
   name: BigPanda Email Parser Configuration API
-  description: Versioned email-parser integration configuration, mirroring the OIM configuration lifecycle.
+  description: >-
+    Versioned email-parser integration configuration, mirroring the OIM configuration lifecycle.
   humanURL: https://api-docs.bigpanda.io/configuration
   baseURL: https://api.bigpanda.io
   tags:
+  - Configuration
+  - Integration
+  tags_raw:
   - Configuration
   - Integrations
   operations: 6
@@ -299,7 +284,8 @@ apis:
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-incidents-api
   name: BigPanda Incidents API
-  description: Search, read, assign, comment, tag, snooze, merge, split and resolve correlated incidents.
+  description: >-
+    Search, read, assign, comment, tag, snooze, merge, split and resolve correlated incidents.
   humanURL: https://api-docs.bigpanda.io/incidents
   baseURL: https://api.bigpanda.io
   tags:
@@ -317,7 +303,8 @@ apis:
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-maintenance-plans-api
   name: BigPanda Maintenance Plans API
-  description: Schedule maintenance windows to suppress alerts during planned work, and stop a running window early.
+  description: >-
+    Schedule maintenance windows to suppress alerts during planned work, and stop a running window early.
   humanURL: https://api-docs.bigpanda.io/maintenance-plans
   baseURL: https://api.bigpanda.io
   tags:
@@ -336,10 +323,15 @@ apis:
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-meetings-transcripts-api
   name: BigPanda Meetings & Transcripts API
-  description: Add the Biggy transcription bot to a call, then list transcripts, read raw text and generate AI summaries.
+  description: >-
+    Add the Biggy transcription bot to a call, then list transcripts, read raw text and generate AI summaries.
   humanURL: https://api-docs.bigpanda.io/meetings-and-transcripts
   baseURL: https://api.bigpanda.io
   tags:
+  - Meetings
+  - Transcripts
+  - Artificial Intelligence
+  tags_raw:
   - Meetings
   - Transcripts
   - AI
@@ -354,32 +346,17 @@ apis:
   - type: APIReference
     url: https://api-docs.bigpanda.io/meetings-and-transcripts
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
-- aid: bigpanda:bigpanda-mim-api
-  name: BigPanda Major Incident Management API
-  description: Execute a major-incident workflow from a template, then list, inspect, cancel or resolve the execution.
-  humanURL: https://api-docs.bigpanda.io/major-incident-management-mim
-  baseURL: https://api.bigpanda.io
-  tags:
-  - Major Incident Management
-  - Workflows
-  operations: 7
-  properties:
-  - type: OpenAPI
-    url: openapi/bigpanda-mim-api-openapi.yml
-  - type: Overlay
-    url: overlays/bigpanda-mim-overlay.yaml
-  - type: Documentation
-    url: https://api-docs.bigpanda.io/major-incident-management-mim
-  - type: APIReference
-    url: https://api-docs.bigpanda.io/major-incident-management-mim
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-notifications-api
   name: BigPanda Notifications & Webhooks API
-  description: Configure Notifications Webhook v2 destinations and discover the dynamic variables a webhook template
+  description: >-
+    Configure Notifications Webhook v2 destinations and discover the dynamic variables a webhook template
     can interpolate.
   humanURL: https://api-docs.bigpanda.io/notifications
   baseURL: https://api.bigpanda.io
   tags:
+  - Notification
+  - Webhook
+  tags_raw:
   - Notifications
   - Webhooks
   operations: 6
@@ -397,11 +374,15 @@ apis:
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-oim-configuration-api
   name: BigPanda OIM Configuration API
-  description: Versioned Open Integration Hub configuration with list, retrieve, diff and restore — the only versioned
+  description: >-
+    Versioned Open Integration Hub configuration with list, retrieve, diff and restore — the only versioned
     object in the BigPanda surface.
   humanURL: https://api-docs.bigpanda.io/configuration
   baseURL: https://api.bigpanda.io
   tags:
+  - Configuration
+  - Integration
+  tags_raw:
   - Configuration
   - Integrations
   operations: 7
@@ -436,7 +417,8 @@ apis:
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-roles-permissions-api
   name: BigPanda Roles & Permissions API
-  description: Roles, role membership and the permission catalog that decides what a User API Key can do.
+  description: >-
+    Roles, role membership and the permission catalog that decides what a User API Key can do.
   humanURL: https://api-docs.bigpanda.io/roles-and-permissions
   baseURL: https://api.bigpanda.io
   tags:
@@ -473,26 +455,6 @@ apis:
   - type: APIReference
     url: https://api-docs.bigpanda.io/service-accounts
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
-- aid: bigpanda:bigpanda-sso-provisioning-api
-  name: BigPanda SSO & JIT Provisioning API
-  description: SAML SSO configuration, a SAML debug endpoint, and just-in-time domain and role provisioning.
-  humanURL: https://api-docs.bigpanda.io/sso-an-jit-provisioning
-  baseURL: https://api.bigpanda.io
-  tags:
-  - SSO
-  - Identity
-  - SAML
-  operations: 10
-  properties:
-  - type: OpenAPI
-    url: openapi/bigpanda-sso-provisioning-api-openapi.yml
-  - type: Overlay
-    url: overlays/bigpanda-sso-provisioning-overlay.yaml
-  - type: Documentation
-    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
-  - type: APIReference
-    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-topology-api
   name: BigPanda Topology API
   description: Service and infrastructure topology used to relate alerts across systems.
@@ -513,10 +475,15 @@ apis:
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 - aid: bigpanda:bigpanda-users-api
   name: BigPanda Users & SCIM API
-  description: User management plus a standards-based SCIM 2.0 provisioning surface for Users and Groups.
+  description: >-
+    User management plus a standards-based SCIM 2.0 provisioning surface for Users and Groups.
   humanURL: https://api-docs.bigpanda.io/users-ai-detection-and-response
   baseURL: https://api.bigpanda.io
   tags:
+  - User
+  - SCIM
+  - Identity
+  tags_raw:
   - Users
   - SCIM
   - Identity
@@ -531,6 +498,165 @@ apis:
   - type: APIReference
     url: https://api-docs.bigpanda.io/users-ai-detection-and-response
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
+- aid: bigpanda:bigpanda-agents-mcp-a2a-api
+  name: BigPanda Agents (MCP & A2A) API
+  description: The Agents (MCP & A2A) API from BigPanda — 3 operation(s) for agents (mcp & a2a).
+  humanURL: https://api-docs.bigpanda.io/agents
+  baseURL: https://api.bigpanda.io
+  tags:
+  - Agents (MCP & A2A)
+  properties:
+  - type: OpenAPI
+    url: openapi/bigpanda-agents-mcp-a2a-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/agents
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/agents
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/major-incident-management-mim
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/major-incident-management-mim
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
+- aid: bigpanda:bigpanda-alert-tags-enrichment-api
+  name: BigPanda Alert Tags & Enrichment API
+  description: >-
+    The Alert Tags & Enrichment API from BigPanda — 22 operation(s) for alert tags & enrichment.
+  humanURL: https://api-docs.bigpanda.io/agents
+  baseURL: https://api.bigpanda.io
+  tags:
+  - Alert Tags & Enrichment
+  properties:
+  - type: OpenAPI
+    url: openapi/bigpanda-alert-tags-enrichment-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/agents
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/agents
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/major-incident-management-mim
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/major-incident-management-mim
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
+- aid: bigpanda:bigpanda-audit-log-api
+  name: BigPanda Audit Log API
+  description: The Audit Log API from BigPanda — 2 operation(s) for audit log.
+  humanURL: https://api-docs.bigpanda.io/agents
+  baseURL: https://api.bigpanda.io
+  tags:
+  - Audit Log
+  properties:
+  - type: OpenAPI
+    url: openapi/bigpanda-audit-log-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/agents
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/agents
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/major-incident-management-mim
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/major-incident-management-mim
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
+- aid: bigpanda:bigpanda-changes-root-cause-api
+  name: BigPanda Changes & Root Cause API
+  description: The Changes & Root Cause API from BigPanda — 4 operation(s) for changes & root cause.
+  humanURL: https://api-docs.bigpanda.io/agents
+  baseURL: https://api.bigpanda.io
+  tags:
+  - Changes & Root Cause
+  properties:
+  - type: OpenAPI
+    url: openapi/bigpanda-changes-root-cause-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/agents
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/agents
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/major-incident-management-mim
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/major-incident-management-mim
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
+- aid: bigpanda:bigpanda-major-incident-management-api
+  name: BigPanda Major Incident Management API
+  description: >-
+    The Major Incident Management API from BigPanda — 7 operation(s) for major incident management.
+  humanURL: https://api-docs.bigpanda.io/agents
+  baseURL: https://api.bigpanda.io
+  tags:
+  - Major Incident Management
+  properties:
+  - type: OpenAPI
+    url: openapi/bigpanda-major-incident-management-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/agents
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/agents
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/major-incident-management-mim
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/major-incident-management-mim
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
+- aid: bigpanda:bigpanda-sso-jit-provisioning-api
+  name: BigPanda SSO & JIT Provisioning API
+  description: >-
+    The SSO & JIT Provisioning API from BigPanda — 7 operation(s) for sso & jit provisioning.
+  humanURL: https://api-docs.bigpanda.io/agents
+  baseURL: https://api.bigpanda.io
+  tags:
+  - SSO & JIT Provisioning
+  properties:
+  - type: OpenAPI
+    url: openapi/bigpanda-sso-jit-provisioning-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/agents
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/agents
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/alert-tags-and-enrichment
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/major-incident-management-mim
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/major-incident-management-mim
+  - type: Documentation
+    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
+  - type: APIReference
+    url: https://api-docs.bigpanda.io/sso-an-jit-provisioning
 name: BigPanda
 tags:
 - Incidents
@@ -572,6 +698,14 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bigpanda.png
 access: 3rd-Party
 common:
+- type: Overlay
+  url: overlays/bigpanda-agents-overlay.yaml
+- type: Overlay
+  url: overlays/bigpanda-alert-enrichment-overlay.yaml
+- type: Overlay
+  url: overlays/bigpanda-mim-overlay.yaml
+- type: Overlay
+  url: overlays/bigpanda-sso-provisioning-overlay.yaml
 - type: Website
   url: https://www.bigpanda.io/
 - type: AgenticAccess
