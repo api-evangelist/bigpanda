@@ -269,6 +269,9 @@ apis:
   humanURL: https://api-docs.bigpanda.io/environments
   baseURL: https://api.bigpanda.io
   tags:
+  - Environment
+  - Incidents
+  tags_raw:
   - Environments
   - Incidents
   operations: 9
@@ -557,6 +560,8 @@ apis:
   humanURL: https://api-docs.bigpanda.io/agents
   baseURL: https://api.bigpanda.io
   tags:
+  - Audit Logs
+  tags_raw:
   - Audit Log
   properties:
   - type: OpenAPI
