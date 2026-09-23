@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda Notifications API
-  description: BigPanda Notifications operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its
-    own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page
-    it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the
-    base URL for your region.
+  description: BigPanda Notifications operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
     name: BigPanda Support
@@ -16,10 +13,7 @@ info:
     method: searched
     source: https://api-docs.bigpanda.io/llms.txt
     harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md. Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by API Evangelist.'
     operations: 6
 servers:
 - url: https://api.bigpanda.io
@@ -33,19 +27,35 @@ paths:
     post:
       summary: Create a new webhook v2 workflow integration
       deprecated: false
-      description: "The webhook v2 API allows you to programmatically manage the configuration for outbound webhook integrations.\n\
-        \nThe webhook v2 integration is currently API-only, so integrations can only be created and updated via the Notifications\
-        \ Webhook v2 API. Once the new integration is created via API, you will be able to access it via the share configuration\
-        \ screen for either AutoShare rules or manual shares. The webhook v2 integration will also appear on the Integrations\
-        \ tab with your other integrations, where it can be deactivated or deleted.\n> \U0001F6A7 **AI Processing delay**\n\
-        > \n> AI tags are generated at a 1-3 minute delay after initial incident processing. To include AI tags in static\
-        \ messages such as email, ensure the AutoShare is configured at a 3 minute delay.\n\n## Authentication\nAll BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\nThis API uses the User API Key type of Authorization\
-        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization:\
-        \ Bearer [YOUR_USER_API_KEY]`\n\n> \U0001F6A7 **Only webhook v2 dynamic variables **\n> \n> Custom email templates\
-        \ have a different set of available variables than webhook v2 integrations. Fields retrieved by the Dynamic Variables\
-        \ API are explicitly for webhook v2 and may not be available for email templates. See our [dynamic variables](https://docs.bigpanda.io/en/dynamic-variables)\
-        \ documentation for the list of fields available for email templates.\n"
+      description: 'The webhook v2 API allows you to programmatically manage the configuration for outbound webhook integrations.
+
+
+        The webhook v2 integration is currently API-only, so integrations can only be created and updated via the Notifications Webhook v2 API. Once the new integration is created via API, you will be able to access it via the share configuration screen for either AutoShare rules or manual shares. The webhook v2 integration will also appear on the Integrations tab with your other integrations, where it can be deactivated or deleted.
+
+        > 🚧 **AI Processing delay**
+
+        >
+
+        > AI tags are generated at a 1-3 minute delay after initial incident processing. To include AI tags in static messages such as email, ensure the AutoShare is configured at a 3 minute delay.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        > 🚧 **Only webhook v2 dynamic variables **
+
+        >
+
+        > Custom email templates have a different set of available variables than webhook v2 integrations. Fields retrieved by the Dynamic Variables API are explicitly for webhook v2 and may not be available for email templates. See our dynamic variables documentation for the list of fields available for email templates.'
       operationId: create-a-new-webhook-v2-workflow-integration
       tags:
       - Notifications
@@ -106,11 +116,7 @@ paths:
     get:
       summary: Retrieve all existing webhook v2 configurations
       deprecated: false
-      description: 'Customize share triggers and notification payloads when sending data from BigPanda to external tools like
-        ticket and messaging systems. These payloads can include customized headers and URL paths for each notification and
-        leverage dynamic variables for incident tags and metadata.
-
-        '
+      description: Customize share triggers and notification payloads when sending data from BigPanda to external tools like ticket and messaging systems. These payloads can include customized headers and URL paths for each notification and leverage dynamic variables for incident tags and metadata.
       operationId: retrieve-all-existing-webhook-v2-configurations
       tags:
       - Notifications
@@ -149,11 +155,13 @@ paths:
     delete:
       summary: Delete a webhook v2 workflow integration
       deprecated: false
-      description: "The DELETE route requires the integration app-key rather than the integration ID. The app key can be retrieved\
-        \ by going to the Integrations tab and selecting the desired integration.\n> \U0001F6A7 **Complete integration ID\
-        \ needed**\n> \n> When updating a webhook v2 configuration, you will need the complete integration ID, including the\
-        \ parent integration (For example: snmp.la_site_east). If you don’t know your integration ID, you can find it by opening\
-        \ the integration details in the Integrations tab.\n"
+      description: 'The DELETE route requires the integration app-key rather than the integration ID. The app key can be retrieved by going to the Integrations tab and selecting the desired integration.
+
+        > 🚧 **Complete integration ID needed**
+
+        >
+
+        > When updating a webhook v2 configuration, you will need the complete integration ID, including the parent integration (For example: snmp.la_site_east). If you don’t know your integration ID, you can find it by opening the integration details in the Integrations tab.'
       operationId: deleteResourcesV21IntegrationsByAppKey
       tags:
       - Notifications
@@ -262,21 +270,37 @@ paths:
     patch:
       summary: Update an existing webhook v2 workflow integration
       deprecated: false
-      description: "The webhook v2 API allows you to programmatically manage the configuration for outbound webhook integrations.\n\
-        \n> \U0001F6A7 **Complete integration ID needed**\n> \n> When updating a webhook v2 configuration, you will need the\
-        \ complete integration ID, including the parent integration (For example: snmp.la_site_east). If you don’t know your\
-        \ integration ID, you can find it by opening the integration details in the Integrations tab.\n\nThe webhook v2 integration\
-        \ is currently API-only, so integrations can only be created and updated via the Notifications Webhook v2 API. Once\
-        \ the new integration is created via API, you will be able to access it via the share configuration screen for either\
-        \ AutoShare rules or manual shares. The webhook v2 integration will also appear on the Integrations tab with your\
-        \ other integrations, where it can be deactivated or deleted.\n> \U0001F6A7 **AI Processing delay**\n> \n> AI tags\
-        \ are generated at a 1-3 minute delay after initial incident processing. To include AI tags in static messages such\
-        \ as email, ensure the AutoShare is configured at a 3 minute delay.\n\n## Authentication\nAll BigPanda APIs require\
-        \ Bearer Token Authorization in the call headers.\nThis API uses the User API Key type of Authorization token.\n\n\
-        > \U0001F6A7 **Only webhook v2 dynamic variables**\n> \n> Custom email templates have a different set of available\
-        \ variables than webhook v2 integrations. Fields retrieved by the Dynamic Variables API are explicitly for webhook\
-        \ v2 and may not be available for email templates. See our [dynamic variables](https://docs.bigpanda.io/en/dynamic-variables)\
-        \ documentation for the list of fields available for email templates.\n"
+      description: 'The webhook v2 API allows you to programmatically manage the configuration for outbound webhook integrations.
+
+
+        > 🚧 **Complete integration ID needed**
+
+        >
+
+        > When updating a webhook v2 configuration, you will need the complete integration ID, including the parent integration (For example: snmp.la_site_east). If you don’t know your integration ID, you can find it by opening the integration details in the Integrations tab.
+
+
+        The webhook v2 integration is currently API-only, so integrations can only be created and updated via the Notifications Webhook v2 API. Once the new integration is created via API, you will be able to access it via the share configuration screen for either AutoShare rules or manual shares. The webhook v2 integration will also appear on the Integrations tab with your other integrations, where it can be deactivated or deleted.
+
+        > 🚧 **AI Processing delay**
+
+        >
+
+        > AI tags are generated at a 1-3 minute delay after initial incident processing. To include AI tags in static messages such as email, ensure the AutoShare is configured at a 3 minute delay.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token.
+
+
+        > 🚧 **Only webhook v2 dynamic variables**
+
+        >
+
+        > Custom email templates have a different set of available variables than webhook v2 integrations. Fields retrieved by the Dynamic Variables API are explicitly for webhook v2 and may not be available for email templates. See our dynamic variables documentation for the list of fields available for email templates.'
       operationId: update-an-existing-webhook-v2-workflow-integration
       tags:
       - Notifications
@@ -342,19 +366,36 @@ paths:
     get:
       summary: Retrieve available dynamic variables
       deprecated: false
-      description: "The available dynamic variables API allows you to retrieve a list of incident and alert fields that can\
-        \ be used as a variable within outbound messaging templates and workflows.\n\nThis endpoint will return all dynamic\
-        \ variables available for use in a webhook v2 integration configuration. This includes a list of standard system fields\
-        \ as well as any unique incident and alert tags created by your organization.\n\n> \U0001F6A7 **AI Processing delay**\n\
-        > \n> AI tags are generated at a 1-3 minute delay after initial incident processing. To include AI tags in static\
-        \ messages such as email, ensure the AutoShare is configured at a 3 minute delay.\n\n## Authentication\nAll BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\nThis API uses the User API Key type of Authorization\
-        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization:\
-        \ Bearer [YOUR_USER_API_KEY]`\n\n> \U0001F6A7 **Only webhook v2 dynamic variables will be retrieved**\n> \n> Custom\
-        \ email templates have a different set of available variables than webhook v2 integrations. Fields retrieved by the\
-        \ Dynamic Variables API are explicitly for webhook v2 and may not be available for email templates. See our [dynamic\
-        \ variables](https://docs.bigpanda.io/en/dynamic-variables) documentation for the list of fields available for email\
-        \ templates.\n"
+      description: 'The available dynamic variables API allows you to retrieve a list of incident and alert fields that can be used as a variable within outbound messaging templates and workflows.
+
+
+        This endpoint will return all dynamic variables available for use in a webhook v2 integration configuration. This includes a list of standard system fields as well as any unique incident and alert tags created by your organization.
+
+
+        > 🚧 **AI Processing delay**
+
+        >
+
+        > AI tags are generated at a 1-3 minute delay after initial incident processing. To include AI tags in static messages such as email, ensure the AutoShare is configured at a 3 minute delay.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        > 🚧 **Only webhook v2 dynamic variables will be retrieved**
+
+        >
+
+        > Custom email templates have a different set of available variables than webhook v2 integrations. Fields retrieved by the Dynamic Variables API are explicitly for webhook v2 and may not be available for email templates. See our dynamic variables documentation for the list of fields available for email templates.'
       operationId: retrieve-available-dynamic-variables
       tags:
       - Notifications
@@ -364,8 +405,7 @@ paths:
           x-apidog-ordering: 0
           description: 'List of valid fields retrieved successfully.
 
-            Variables can be added to paths, headers, and the payload body by framing the variable value with double brackets:
-            `{{variable.name}}`.
+            Variables can be added to paths, headers, and the payload body by framing the variable value with double brackets: `{{variable.name}}`.
 
             '
           content:
@@ -386,25 +426,6 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/retrieve-available-dynamic-variables-37770071e0.md
       x-source-page: Retrieve available dynamic variables
 components:
-  securitySchemes:
-    BearerUser13:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
-        tool you use to make API calls
-
-        '
-    BearerUser131:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
-        tool you use to make API calls
-
-        '
   schemas:
     WorkflowConfig:
       type: object
@@ -418,14 +439,10 @@ components:
           properties:
             base_url:
               type: string
-              description: A base url to receive webhook messages. This route will be used for any triggers that do not have
-                an additional path route defined. Individual triggers can use static values or dynamic variables to extend
-                this URL.
+              description: A base url to receive webhook messages. This route will be used for any triggers that do not have an additional path route defined. Individual triggers can use static values or dynamic variables to extend this URL.
             expects_callbacks:
               type: boolean
-              description: Whether to enable locking on first share, preventing updates from being sent until a callback is
-                received or 15 minutes has passed. See the [Callback Service](https://docs.bigpanda.io/en/bigpanda-callback-service)
-                for details on callback functionality.
+              description: Whether to enable locking on first share, preventing updates from being sent until a callback is received or 15 minutes has passed. See the [Callback Service](https://docs.bigpanda.io/en/bigpanda-callback-service) for details on callback functionality.
               examples:
               - true
           x-apidog-orders:
@@ -452,11 +469,7 @@ components:
           x-apidog-orders: []
           properties: {}
           examples:
-          - "{\n  \"incident_start\": \"{{incident.start}}\",\n  \"assigner\": \"Assigned by {{assigner.username}}\",\n  \"\
-            assignee\": \"Assigned to {{assignee.username}}\",\n  \"primary_alert_host\": \"{{primaryAlert.tags.host}}\",\n\
-            \  \"priority\": \"{{incidentTags.itd_priority_1}}\",\n  \"nested_values\": {\n      \"double_nested_values\"\
-            : {\n          \"primary_alert_check\": \"'{{primaryAlert.tags.check}}'\",\n          \"incident_updated\": \"\
-            {{incident.updated_at}}\"\n      }\n  }\n}"
+          - "{\n  \"incident_start\": \"{{incident.start}}\",\n  \"assigner\": \"Assigned by {{assigner.username}}\",\n  \"assignee\": \"Assigned to {{assignee.username}}\",\n  \"primary_alert_host\": \"{{primaryAlert.tags.host}}\",\n  \"priority\": \"{{incidentTags.itd_priority_1}}\",\n  \"nested_values\": {\n      \"double_nested_values\": {\n          \"primary_alert_check\": \"'{{primaryAlert.tags.check}}'\",\n          \"incident_updated\": \"{{incident.updated_at}}\"\n      }\n  }\n}"
           x-apidog-ignore-properties: []
         headers:
           type: string
@@ -467,21 +480,17 @@ components:
             '
         path:
           type: string
-          description: If present, path that will be appended to the `workflow_config.config.base_url`. May contain templated
-            values.
+          description: If present, path that will be appended to the `workflow_config.config.base_url`. May contain templated values.
           examples:
           - /incident/{{incident.id}}
         authorization:
           type: string
-          description: An optional string to create an Authorization Header using Basic or Bearer format. The value is encrypted
-            in our database.
+          description: An optional string to create an Authorization Header using Basic or Bearer format. The value is encrypted in our database.
           examples:
           - Bearer {{incidentTags.itd_applications_1}}
         method:
           type: string
-          description: Define a specific HTTP method used for shares created by this event type, allowing for integration
-            with tools that have strict method usage, such as only permitting only PATCH for updates, or POST for creating
-            new objects.
+          description: Define a specific HTTP method used for shares created by this event type, allowing for integration with tools that have strict method usage, such as only permitting only PATCH for updates, or POST for creating new objects.
           enum:
           - POST
           - PUT
@@ -495,33 +504,6 @@ components:
       - path
       - authorization
       - method
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    webhookv2-200response:
-      type: array
-      description: A list of webhook v2 configurations.
-      items:
-        $ref: '#/components/schemas/workflow'
-      x-apidog-folder: ''
-    workflow:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the integration
-          examples:
-          - demo
-        parent_system_id:
-          type: string
-          description: The name of the type of integration
-          examples:
-          - webhook_v2
-        workflow_config:
-          $ref: '#/components/schemas/WorkflowConfig'
-      x-apidog-orders:
-      - name
-      - parent_system_id
-      - workflow_config
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     generic400response:
@@ -544,6 +526,12 @@ components:
       - status
       - errors
       x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    webhookv2-200response:
+      type: array
+      description: A list of webhook v2 configurations.
+      items:
+        $ref: '#/components/schemas/workflow'
       x-apidog-folder: ''
     generic204response:
       type: object
@@ -568,25 +556,44 @@ components:
       - status: 204
         data: {}
       x-apidog-ignore-properties: []
-    generic404response:
+    workflow:
       type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
       properties:
-        status:
-          type: integer
+        name:
+          type: string
+          description: The name of the integration
           examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
+          - demo
+        parent_system_id:
+          type: string
+          description: The name of the type of integration
+          examples:
+          - webhook_v2
+        workflow_config:
+          $ref: '#/components/schemas/WorkflowConfig'
       x-apidog-orders:
-      - status
-      - errors
+      - name
+      - parent_system_id
+      - workflow_config
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    dynamic_variable:
+      description: Details on the available dynamic variable.
+      type: object
+      properties:
+        title:
+          description: The name of the tag or metadata field.
+          type: string
+          examples:
+          - custom_tag
+        value:
+          description: The full variable to include in workflows.
+          type: string
+          examples:
+          - category.custom_tag
+      x-apidog-orders:
+      - title
+      - value
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     dynamicvariables200response:
@@ -604,20 +611,17 @@ components:
           items:
             $ref: '#/components/schemas/dynamic_variable'
         primaryAlert.tags:
-          description: Dynamic fields available with the `primaryAlert.tags.` variable category. The primary alert is the
-            oldest, most severe event associated with an incident.
+          description: Dynamic fields available with the `primaryAlert.tags.` variable category. The primary alert is the oldest, most severe event associated with an incident.
           type: array
           items:
             $ref: '#/components/schemas/dynamic_variable'
         primaryAlert:
-          description: Dynamic fields available with the `primaryAlert.` category. The primary alert is the oldest, most severe
-            event associated with an incident.
+          description: Dynamic fields available with the `primaryAlert.` category. The primary alert is the oldest, most severe event associated with an incident.
           type: array
           items:
             $ref: '#/components/schemas/dynamic_variable'
         metadata:
-          description: Dynamic fields available with the share `metadata.` category. These fields provide information on the
-            share action itself.
+          description: Dynamic fields available with the share `metadata.` category. These fields provide information on the share action itself.
           type: array
           items:
             $ref: '#/components/schemas/dynamic_variable'
@@ -653,28 +657,44 @@ components:
       - additional_fields
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    dynamic_variable:
-      description: Details on the available dynamic variable.
+    generic404response:
       type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
       properties:
-        title:
-          description: The name of the tag or metadata field.
-          type: string
+        status:
+          type: integer
           examples:
-          - custom_tag
-        value:
-          description: The full variable to include in workflows.
-          type: string
-          examples:
-          - category.custom_tag
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
       x-apidog-orders:
-      - title
-      - value
+      - status
+      - errors
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+  securitySchemes:
+    BearerUser13:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure tool you use to make API calls
+
+        '
+    BearerUser131:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure tool you use to make API calls
+
+        '
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required). The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve. Recorded as published; not corrected.

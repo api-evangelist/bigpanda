@@ -1,104 +1,203 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: BigPanda Environments API
-  description: BigPanda Environments operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own
-    API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it
-    was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base
-    URL for your region.
-  version: 1.0.0
-  contact:
-    name: BigPanda Support
-    url: https://api-docs.bigpanda.io/
+  title: Bigpanda Environments API
   license:
     name: Proprietary
     url: https://www.bigpanda.io/legal/
-  x-provenance:
-    method: searched
-    source: https://api-docs.bigpanda.io/llms.txt
-    harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
-    operations: 9
+  x-refined-note:
+  - x-generated-from differs across the merged source definitions and was not carried
+  - x-refined-note differs across the merged source definitions and was not carried
+  version: '1.0'
+  description: 'Operations tagged Environments across 2 of this provider''s published API definitions: bigpanda-openapi.yml, bigpanda-environments-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.bigpanda.io
-  description: US Region
+  description: BigPanda API
 - url: https://api.eu.bigpanda.io
   description: EU Region
 tags:
 - name: Environments
+  description: Define incident grouping environments
 paths:
   /resources/v2.0/environments:
-    post:
-      summary: Create an Environment
-      deprecated: false
-      description: "Create a new environment.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token\
-        \ Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token. Your User API\
-        \ Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\
-        \n**Rate limit:** 5 requests per second."
-      operationId: create-an-environment
+    get:
+      operationId: listEnvironments
+      summary: BigPanda List Environments
+      description: Returns a list of all BigPanda environments.
       tags:
       - Environments
-      parameters: []
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: List of environments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentsResponse'
+              examples:
+                ListEnvironments200Example:
+                  summary: Default listEnvironments 200 response
+                  x-microcks-default: true
+                  value:
+                    environments:
+                    - id: env-abc123
+                      name: Production
+                      description: Production environment
+                      condition: source = "nagios"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createEnvironment
+      summary: BigPanda Create Environment
+      description: Creates a new incident grouping environment.
+      tags:
+      - Environments
+      security:
+      - bearerAuth: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/environment_object'
+              $ref: '#/components/schemas/EnvironmentRequest'
+            examples:
+              CreateEnvironment201Example:
+                summary: Default createEnvironment request example
+                x-microcks-default: true
+                value:
+                  name: Production
+                  description: Production environment
+                  condition: source = "nagios"
       responses:
-        '200':
-          x-apidog-ordering: 0
-          description: '200'
+        '201':
+          description: Environment created successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/environment_object'
-          headers: {}
-          x-apidog-name: ''
-      security:
-      - BearerUser131: []
-      x-publication-status: live
-      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770085-run
-      x-source-url: https://api-docs.bigpanda.io/create-an-environment-37770085e0.md
-      x-source-page: Create an Environment
+                $ref: '#/components/schemas/Environment'
+              examples:
+                CreateEnvironment201Example:
+                  summary: Default createEnvironment 201 response
+                  x-microcks-default: true
+                  value:
+                    id: env-abc123
+                    name: Production
+                    description: Production environment
+                    condition: source = "nagios"
+        '400':
+          description: Invalid environment configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    servers:
+    - url: https://api.bigpanda.io
+      description: BigPanda API
+  /resources/v2.0/environments/{id}:
     get:
-      summary: Retrieve All Environments
-      deprecated: false
-      description: "Retrieve all environments for an organization.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
-        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
-      operationId: retrieve-all-environments
+      operationId: getEnvironment
+      summary: BigPanda Get Environment
+      description: Returns a single environment by ID.
       tags:
       - Environments
-      parameters: []
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: env-abc123
       responses:
         '200':
-          x-apidog-ordering: 0
-          description: '200'
+          description: Environment details.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/environment_object'
-          headers: {}
-          x-apidog-name: ''
+                $ref: '#/components/schemas/Environment'
+              examples:
+                GetEnvironment200Example:
+                  summary: Default getEnvironment 200 response
+                  x-microcks-default: true
+                  value:
+                    id: env-abc123
+                    name: Production
+                    description: Production environment
+                    condition: source = "nagios"
+        '404':
+          description: Environment not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteEnvironment
+      summary: BigPanda Delete Environment
+      description: Deletes an environment by ID.
+      tags:
+      - Environments
       security:
-      - BearerUser131: []
-      x-publication-status: live
-      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770084-run
-      x-source-url: https://api-docs.bigpanda.io/retrieve-all-environments-37770084e0.md
-      x-source-page: Retrieve All Environments
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: env-abc123
+      responses:
+        '204':
+          description: Environment deleted successfully.
+        '404':
+          description: Environment not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    servers:
+    - url: https://api.bigpanda.io
+      description: BigPanda API
   /resources/v2.0/environments-groups:
+    servers:
+    - url: https://api.bigpanda.io
+      description: US Region
+    - url: https://api.eu.bigpanda.io
+      description: EU Region
     post:
       summary: Create an Environment Group
       deprecated: false
-      description: "Create a new environment group.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
-        \ Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token. Your\
-        \ User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer\
-        \ [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Create a new environment group.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: create-environment-groups
       tags:
       - Environments
@@ -127,10 +226,27 @@ paths:
     get:
       summary: Retrieve All Environment Groups
       deprecated: false
-      description: "Get details for all environment groups.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
-        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\
-        \ Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Get details for all environment groups.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: retrieve-all-environment-groups
       tags:
       - Environments
@@ -154,13 +270,35 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/retrieve-all-environment-groups-37770089e0.md
       x-source-page: Retrieve All Environment Groups
   /resources/v2.0/environments/{environment_id}:
+    servers:
+    - url: https://api.bigpanda.io
+      description: US Region
+    - url: https://api.eu.bigpanda.io
+      description: EU Region
     delete:
       summary: Delete Environment
       deprecated: false
-      description: "Delete an environment.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token\
-        \ Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token. Your User API\
-        \ Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\
-        \n**Rate limit:** 5 requests per second."
+      description: 'Delete an environment.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: delete-environment
       tags:
       - Environments
@@ -193,10 +331,27 @@ paths:
     get:
       summary: Retrieve an Environment by ID
       deprecated: false
-      description: "Retrieve details for a specific environment.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs\
-        \ require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
-        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Retrieve details for a specific environment.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: get-an-environment
       tags:
       - Environments
@@ -229,10 +384,27 @@ paths:
     patch:
       summary: Update Environment
       deprecated: false
-      description: "Update an environment configuration.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
-        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\
-        \ Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Update an environment configuration.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: update-environment
       tags:
       - Environments
@@ -268,13 +440,35 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/update-environment-37770088e0.md
       x-source-page: Update Environment
   /resources/v2.0/environments-groups/{group_id}:
+    servers:
+    - url: https://api.bigpanda.io
+      description: US Region
+    - url: https://api.eu.bigpanda.io
+      description: EU Region
     delete:
       summary: Delete Environment Group
       deprecated: false
-      description: "Delete an environment group.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
-        \ Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token. Your\
-        \ User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer\
-        \ [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Delete an environment group.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: delete-environment-group
       tags:
       - Environments
@@ -316,10 +510,27 @@ paths:
     put:
       summary: Update Environment Group
       deprecated: false
-      description: "Update configuration for a specific environment group.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
-        \ token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Update configuration for a specific environment group.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: update-environment-group
       tags:
       - Environments
@@ -364,17 +575,136 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/update-environment-group-37770091e0.md
       x-source-page: Update Environment Group
 components:
-  securitySchemes:
-    BearerUser131:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
-        tool you use to make API calls
+  schemas:
+    EnvironmentRequest:
+      title: Environment Request
+      description: Payload for creating or updating an environment.
+      type: object
+      required:
+      - name
+      - condition
+      properties:
+        name:
+          type: string
+          description: Environment name.
+          example: Production
+        description:
+          type: string
+          description: Environment description.
+          example: Production environment
+        condition:
+          type: string
+          description: Filter condition for grouping incidents.
+          example: source = "nagios"
+    Environment:
+      title: Environment
+      description: A BigPanda environment for incident grouping.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Environment ID.
+          example: env-abc123
+        name:
+          type: string
+          description: Environment name.
+          example: Production
+        description:
+          type: string
+          description: Environment description.
+          example: Production environment
+        condition:
+          type: string
+          description: Filter condition for grouping incidents.
+          example: source = "nagios"
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+          example: resource not found
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+    EnvironmentsResponse:
+      title: Environments Response
+      description: List of BigPanda environments.
+      type: object
+      properties:
+        environments:
+          type: array
+          description: Array of environments.
+          items:
+            $ref: '#/components/schemas/Environment'
+    environment_group_response:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - 669fbed4da224b0f5bad8f13
+        name:
+          type: string
+          examples:
+          - EnvGroupName
+        environmentIds:
+          type: array
+          items:
+            type: string
+      x-apidog-orders:
+      - id
+      - name
+      - environmentIds
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
 
         '
-  schemas:
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    generic204response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
+      x-apidog-ignore-properties: []
     environment_object:
       required:
       - name
@@ -445,27 +775,6 @@ components:
       - environment_ids
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    environment_group_response:
-      type: object
-      properties:
-        id:
-          type: string
-          examples:
-          - 669fbed4da224b0f5bad8f13
-        name:
-          type: string
-          examples:
-          - EnvGroupName
-        environmentIds:
-          type: array
-          items:
-            type: string
-      x-apidog-orders:
-      - id
-      - name
-      - environmentIds
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     generic200response:
       type: object
       description: 'Call was successful.
@@ -493,29 +802,6 @@ components:
       - status
       - data
       x--ignore-properties: []
-    generic204response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 204
-        data: {}
-      x-apidog-ignore-properties: []
     generic404response:
       type: object
       description: 'Requested endpoint or resource is not found.
@@ -537,30 +823,19 @@ components:
       - errors
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: BigPanda API Bearer token
+    BearerUser131:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure tool you use to make API calls
 
         '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-x-server-notes:
-- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+x-refined-from:
+- bigpanda-openapi.yml
+- bigpanda-environments-api-openapi.yml

@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda Change Risk API
-  description: BigPanda Change Risk operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own
-    API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it
-    was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base
-    URL for your region.
+  description: BigPanda Change Risk operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
     name: BigPanda Support
@@ -16,10 +13,7 @@ info:
     method: searched
     source: https://api-docs.bigpanda.io/llms.txt
     harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md. Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by API Evangelist.'
     operations: 2
 servers:
 - url: https://api.bigpanda.io
@@ -33,14 +27,35 @@ paths:
     post:
       summary: Request a Change Risk Rating
       deprecated: false
-      description: "Request a risk rating for a specific change.\n\nAfter sending the API call, the risk rated change will\
-        \ appear in the [Change Risk Dashboard](https://docs.bigpanda.io/en/ai-incident-prevention-analytics-and-dashboards.html#change-risk-dashboard-156577),\
-        \ or you can use the Retrieve a Risk Rated Change API call to view the change. \n\n> \U0001F6A7 **Authentication**\n\
-        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
-        \ type of Authorization token.\n\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API\
-        \ is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will\
-        \ need to be retried.\n\n> \U0001F4D8 **profileId**\n>\n> The profileId can be found on the [Change Risk Configuration](https://docs.bigpanda.io/en/configure-ai-incident-prevention#change-risk-156592)\
-        \ page within the web app.\n"
+      description: 'Request a risk rating for a specific change.
+
+
+        After sending the API call, the risk rated change will appear in the Change Risk Dashboard, or you can use the Retrieve a Risk Rated Change API call to view the change.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.
+
+
+        > 📘 **profileId**
+
+        >
+
+        > The profileId can be found on the Change Risk Configuration page within the web app.'
       operationId: request-a-risk-rating
       tags:
       - Change Risk
@@ -87,12 +102,32 @@ paths:
     get:
       summary: Retrieve a Risk Rated Change
       deprecated: false
-      description: "Retrieve a risk rated change.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
-        \ Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\n\n\
-        > ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute.\
-        \ Additional requests will return a 429 response code and the request will need to be retried.\n\n> \U0001F4D8 **profileId**\n\
-        >\n> The profileId can be found on the [Change Risk Configuration](https://docs.bigpanda.io/en/configure-ai-incident-prevention#change-risk-156592)\
-        \ page within the web app.\n"
+      description: 'Retrieve a risk rated change.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.
+
+
+        > 📘 **profileId**
+
+        >
+
+        > The profileId can be found on the Change Risk Configuration page within the web app.'
       operationId: get-a-change
       tags:
       - Change Risk
@@ -137,18 +172,28 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/retrieve-a-risk-rated-change-37769976e0.md
       x-source-page: Retrieve a Risk Rated Change
 components:
-  securitySchemes:
-    BearerUser11:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
-
-        headers only in the secure tool you use to make API calls
+  schemas:
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
 
         '
-  schemas:
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     changerating202response:
       type: object
       description: 'Call was successful.
@@ -187,27 +232,6 @@ components:
       - data
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic404response:
-      type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     changerisk200response:
       type: object
       description: "Call was successful. \n"
@@ -242,8 +266,7 @@ components:
                   type: string
                   description: Full description of the change.
                   examples:
-                  - Installing Microsoft Security Critical Patches for May 2025 on production servers to address vulnerabilities
-                    and ensure compliance. Brief downtime (~5 minutes) for reboots is expected during off-peak hours.
+                  - Installing Microsoft Security Critical Patches for May 2025 on production servers to address vulnerabilities and ensure compliance. Brief downtime (~5 minutes) for reboots is expected during off-peak hours.
                 shortDescription:
                   type: string
                   description: Brief description of the change.
@@ -309,26 +332,22 @@ components:
                   properties:
                     implementationComplexity:
                       type: string
-                      description: Rating of how complex implementation of the change is predicted to be. Score is based on
-                        the documented change plan quality, implementation complexity, and the nature of the change itself.
+                      description: Rating of how complex implementation of the change is predicted to be. Score is based on the documented change plan quality, implementation complexity, and the nature of the change itself.
                       examples:
                       - 80
                     topologicalImpact:
                       type: string
-                      description: Rating of the change's predicted topological impact. Score is based on which parts of the
-                        environment will be affected and how critical they are.
+                      description: Rating of the change's predicted topological impact. Score is based on which parts of the environment will be affected and how critical they are.
                       examples:
                       - 90
                     historicalIncidentRisk:
                       type: string
-                      description: The risk score based on historical incidents. Score is based on the likelihood of causing
-                        an incident based on historically similar changes causing incidents
+                      description: The risk score based on historical incidents. Score is based on the likelihood of causing an incident based on historically similar changes causing incidents
                       examples:
                       - 76
                     teamAndIndividualRisk:
                       type: string
-                      description: Predicted risk impact of the team and individual. Score is based on the calculated experience
-                        and reliability of the team and individual performing the change
+                      description: Predicted risk impact of the team and individual. Score is based on the calculated experience and reliability of the team and individual performing the change
                       examples:
                       - 81
                     blendedScore:
@@ -403,9 +422,17 @@ components:
       - data
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+  securitySchemes:
+    BearerUser11:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
+
+        headers only in the secure tool you use to make API calls
+
+        '
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required). The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve. Recorded as published; not corrected.

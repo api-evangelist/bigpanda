@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda Email Parser Configuration API
-  description: BigPanda Email Parser Configuration operations, assembled verbatim from the OpenAPI fragments BigPanda publishes
-    on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
-    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
-    the base URL for your region.
+  description: BigPanda Email Parser Configuration operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
     name: BigPanda Support
@@ -16,10 +13,7 @@ info:
     method: searched
     source: https://api-docs.bigpanda.io/llms.txt
     harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md. Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by API Evangelist.'
     operations: 6
 servers:
 - url: https://api.bigpanda.io
@@ -33,16 +27,14 @@ paths:
     get:
       summary: Compare Configuration Versions for Email Parser
       deprecated: false
-      description: 'Return a diff between two saved versions of the integration configuration. The response highlights the
-        fields that have been added, removed, or modified between the `from` and `to` versions.
+      description: 'Return a diff between two saved versions of the integration configuration. The response highlights the fields that have been added, removed, or modified between the `from` and `to` versions.
 
 
         > 📘 **Version History Availability**
 
         >
 
-        > Configuration version history begins at May 5 2026. Records of configurations saved prior to history start cannot
-        be retrieved.
+        > Configuration version history begins at May 5 2026. Records of configurations saved prior to history start cannot be retrieved.
 
 
         ## Authentication
@@ -51,15 +43,12 @@ paths:
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
 
-        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
 
-        `Authorization: Bearer [YOUR_ORG_TOKEN]`
-
-        '
+        `Authorization: Bearer [YOUR_ORG_TOKEN]`'
       operationId: diff-configuration-versions
       tags:
       - Email Parser Configuration
@@ -187,13 +176,32 @@ paths:
     post:
       summary: Create/Update Email Parser Configuration
       deprecated: false
-      description: "## Authentication\nAll BigPanda APIs require Bearer Token Authorization in the call headers.\nThis API\
-        \ uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed\
-        \ by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_ORG_TOKEN]`\n\n> \U0001F6A7 **Incorrect URL in Builder**\n\
-        > \n> This endpoint is accessed at the https://integrations.bigpanda.io url, not https://api.bigpanda.io\n\n## Pre-configuration\n\
-        Before an email integration can be configured using the Email Parser API, the integration must be created within the\
-        \ UI.\nFollow the in-product steps to create a new Alerts API Integration and make note of the app key and integration\
-        \ id.\nOnce created, the integration can be configured through the Email Parser API\n"
+      description: '## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+
+        > 🚧 **Incorrect URL in Builder**
+
+        >
+
+        > This endpoint is accessed at the https://integrations.bigpanda.io url, not https://api.bigpanda.io
+
+
+        ## Pre-configuration
+
+        Before an email integration can be configured using the Email Parser API, the integration must be created within the UI.
+
+        Follow the in-product steps to create a new Alerts API Integration and make note of the app key and integration id.
+
+        Once created, the integration can be configured through the Email Parser API'
       operationId: create-update-email-parser-configuration
       tags:
       - Email Parser Configuration
@@ -231,10 +239,26 @@ paths:
     get:
       summary: Retrieve Email Parser Configuration
       deprecated: false
-      description: "Get a specific parser configuration.\n\n## Authentication\nAll BigPanda APIs require Bearer Token Authorization\
-        \ in the call headers.\nThis API uses the Organization token type of Authorization token. Your org token must be provided\
-        \ in the header, prefixed by the word `Bearer`.\n\nExample:\n`Authorization: Bearer [YOUR_ORG_TOKEN]`\n\n> \U0001F6A7\
-        \ **Incorrect URL in Builder**\n> \n> This endpoint is accessed at the https://integrations.bigpanda.io url, not https://api.bigpanda.io\n"
+      description: 'Get a specific parser configuration.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+
+        > 🚧 **Incorrect URL in Builder**
+
+        >
+
+        > This endpoint is accessed at the https://integrations.bigpanda.io url, not https://api.bigpanda.io'
       operationId: retrieve-email-parser-configuration
       tags:
       - Email Parser Configuration
@@ -268,16 +292,14 @@ paths:
     get:
       summary: List Configuration Versions for Email Parser
       deprecated: false
-      description: 'Retrieve the list of saved configuration versions for the specified integration. Each entry represents
-        a previously saved configuration, ordered from oldest to most recent.
+      description: 'Retrieve the list of saved configuration versions for the specified integration. Each entry represents a previously saved configuration, ordered from oldest to most recent.
 
 
         > 📘 **Version History Availability**
 
         >
 
-        > Configuration version history begins at May 5 2026. Records of configurations saved prior to history start cannot
-        be retrieved.
+        > Configuration version history begins at May 5 2026. Records of configurations saved prior to history start cannot be retrieved.
 
 
         ## Authentication
@@ -286,15 +308,12 @@ paths:
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
 
-        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
 
-        `Authorization: Bearer [YOUR_ORG_TOKEN]`
-
-        '
+        `Authorization: Bearer [YOUR_ORG_TOKEN]`'
       operationId: list-configuration-versions
       tags:
       - Email Parser Configuration
@@ -376,16 +395,14 @@ paths:
     post:
       summary: Restore Configuration Version Email Parser
       deprecated: false
-      description: 'Restore the integration configuration to a previously saved version. The restored configuration becomes
-        the active configuration and a new version entry is created in the history.
+      description: 'Restore the integration configuration to a previously saved version. The restored configuration becomes the active configuration and a new version entry is created in the history.
 
 
         > 📘 **Version History Availability**
 
         >
 
-        > Configuration version history begins at May 5 2026. Records of configurations saved prior to history start cannot
-        be retrieved.
+        > Configuration version history begins at May 5 2026. Records of configurations saved prior to history start cannot be retrieved.
 
 
         ## Authentication
@@ -394,15 +411,12 @@ paths:
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
 
-        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
 
-        `Authorization: Bearer [YOUR_ORG_TOKEN]`
-
-        '
+        `Authorization: Bearer [YOUR_ORG_TOKEN]`'
       operationId: restore-configuration-version
       tags:
       - Email Parser Configuration
@@ -502,8 +516,7 @@ paths:
 
         >
 
-        > Configuration version history begins at May 5 2026. Records of configurations saved prior to history start cannot
-        be retrieved.
+        > Configuration version history begins at May 5 2026. Records of configurations saved prior to history start cannot be retrieved.
 
 
         ## Authentication
@@ -512,15 +525,12 @@ paths:
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
 
-        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
 
-        `Authorization: Bearer [YOUR_ORG_TOKEN]`
-
-        '
+        `Authorization: Bearer [YOUR_ORG_TOKEN]`'
       operationId: retrieve-configuration-version
       tags:
       - Email Parser Configuration
@@ -635,23 +645,67 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/retrieve-configuration-version-for-email-parser-41913642e0.md
       x-source-page: Retrieve Configuration Version for Email Parser
 components:
-  securitySchemes:
-    BearerOrg22:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
-        tool you use to make API calls
-
-        '
-    BearerOrg5:
-      type: apiKey
-      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
-        headers only in the secure tool you use to make API calls'
-      name: Authorization
-      in: header
   schemas:
+    additional_attributes:
+      type: object
+      properties:
+        isDestinationAccepted:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the destination tag was accepted.
+        isSourceAccepted:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the source tag was accepted.
+        isSuggestion:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the tag was suggested by BigPanda Tag Normalization.
+        name:
+          type: string
+          examples:
+          - check
+          description: (Optional) Set a name for the tag in BigPanda.
+        source:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.labels.alertname'
+            - '@alert.labels.check'
+          description: Array of payload fields to match.
+        suggestedDestination:
+          type: string
+          examples:
+          - check
+          description: Suggested Destination tag name.
+        suggestedSources:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.labels.alertname'
+            - '@alert.labels.check'
+          description: Array of payload fields to match for suggested tags.
+        flatten:
+          type: boolean
+          examples:
+          - false
+          description: (Optional) Whether or not to flatten a nested object for improved mapping.
+      x-apidog-orders:
+      - isDestinationAccepted
+      - isSourceAccepted
+      - isSuggestion
+      - name
+      - source
+      - suggestedDestination
+      - suggestedSources
+      - flatten
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
     error-response-v1:
       title: error-response-v1
       type: object
@@ -666,88 +720,6 @@ components:
       required:
       - status
       - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    http-status-code-v1:
-      type: number
-      enum:
-      - 100
-      - 101
-      - 102
-      - 103
-      - 200
-      - 201
-      - 202
-      - 203
-      - 204
-      - 205
-      - 206
-      - 207
-      - 300
-      - 301
-      - 302
-      - 303
-      - 304
-      - 305
-      - 307
-      - 308
-      - 400
-      - 401
-      - 402
-      - 403
-      - 404
-      - 405
-      - 406
-      - 407
-      - 408
-      - 409
-      - 410
-      - 411
-      - 412
-      - 413
-      - 414
-      - 415
-      - 416
-      - 417
-      - 418
-      - 421
-      - 422
-      - 423
-      - 424
-      - 426
-      - 428
-      - 429
-      - 431
-      - 451
-      - 500
-      - 501
-      - 502
-      - 503
-      - 504
-      - 505
-      - 507
-      - 511
-      description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-      x-apidog-folder: ''
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
       x-apidog-orders:
       - status
       - errors
@@ -770,8 +742,7 @@ components:
               type: array
               items:
                 type: string
-              description: An array of allowed sender emails. Use a wildcard to allow for a range of email addresses. If no
-                address is provided, the parser will accept emails from any source and may lead to false alarms or issues.
+              description: An array of allowed sender emails. Use a wildcard to allow for a range of email addresses. If no address is provided, the parser will accept emails from any source and may lead to false alarms or issues.
               examples:
               - - '*@example.com'
             status:
@@ -883,30 +854,108 @@ components:
       - sample_payload
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
-    sample_payload:
+    generic400response:
       type: object
-      description: An example event payload from the tool that includes all tags that need to be normalized or referred to
-        in the schema.
-      x-apidog-orders: []
-      properties: {}
-      x-apidog-folder: ''
-      examples:
-      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n      \
-        \  \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to\
-        \ check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\
-        \n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n\
-        \        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\"\
-        : \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"\
-        env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\
-        \n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\"\
-        : \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n    \
-        \  \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\"\
-        ,\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n   \
-        \   \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n \
-        \     \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n\
-        \    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent\
-        \ server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
       x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    versions:
+      type: array
+      description: List of version changes
+      items:
+        type: object
+        properties:
+          version:
+            type: string
+            description: The unique identifier of the saved configuration version.
+            examples:
+            - '2026-04-29T15:42:11Z'
+          saved_at:
+            type: string
+            format: date-time
+            description: The timestamp when the version was saved.
+        x-apidog-orders:
+        - version
+        - saved_at
+        x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    http-status-code-v1:
+      type: number
+      enum:
+      - 100
+      - 101
+      - 102
+      - 103
+      - 200
+      - 201
+      - 202
+      - 203
+      - 204
+      - 205
+      - 206
+      - 207
+      - 300
+      - 301
+      - 302
+      - 303
+      - 304
+      - 305
+      - 307
+      - 308
+      - 400
+      - 401
+      - 402
+      - 403
+      - 404
+      - 405
+      - 406
+      - 407
+      - 408
+      - 409
+      - 410
+      - 411
+      - 412
+      - 413
+      - 414
+      - 415
+      - 416
+      - 417
+      - 418
+      - 421
+      - 422
+      - 423
+      - 424
+      - 426
+      - 428
+      - 429
+      - 431
+      - 451
+      - 500
+      - 501
+      - 502
+      - 503
+      - 504
+      - 505
+      - 507
+      - 511
+      description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+      x-apidog-folder: ''
     status_mapping:
       type: object
       properties:
@@ -941,8 +990,7 @@ components:
             - acknowledged
             ok:
             - resolved
-          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first
-            match. One of [`critical`, `warning`, `ok`, `acknowledged`]
+          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first match. One of [`critical`, `warning`, `ok`, `acknowledged`]
           properties: {}
           x-apidog-ignore-properties: []
       x-apidog-orders:
@@ -952,26 +1000,27 @@ components:
       description: null
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
-    versions:
-      type: array
-      description: List of version changes
-      items:
-        type: object
-        properties:
-          version:
-            type: string
-            description: The unique identifier of the saved configuration version.
-            examples:
-            - '2026-04-29T15:42:11Z'
-          saved_at:
-            type: string
-            format: date-time
-            description: The timestamp when the version was saved.
-        x-apidog-orders:
-        - version
-        - saved_at
-        x-apidog-ignore-properties: []
+    sample_payload:
+      type: object
+      description: An example event payload from the tool that includes all tags that need to be normalized or referred to in the schema.
+      x-apidog-orders: []
+      properties: {}
       x-apidog-folder: ''
+      examples:
+      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\": \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\",\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
+      x-apidog-ignore-properties: []
+    tag_properties:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Optional tag name to use in BigPanda.
+          examples:
+          - host
+      x-apidog-orders:
+      - name
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     oim_v2_config:
       type: object
       properties:
@@ -1052,8 +1101,7 @@ components:
               x-apidog-ignore-properties: []
             event_filter:
               type: string
-              description: A BPQL statement that dictates which events should be dropped upon initial ingestion (using Source
-                Tags).
+              description: A BPQL statement that dictates which events should be dropped upon initial ingestion (using Source Tags).
               examples:
               - '@alert.search_name = "OSS -- MINT Core -- *"'
             incident_identifier:
@@ -1096,81 +1144,20 @@ components:
       - sample_payload
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
-    tag_properties:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Optional tag name to use in BigPanda.
-          examples:
-          - host
-      x-apidog-orders:
-      - name
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    additional_attributes:
-      type: object
-      properties:
-        isDestinationAccepted:
-          type: boolean
-          examples:
-          - true
-          description: (Optional) Whether the destination tag was accepted.
-        isSourceAccepted:
-          type: boolean
-          examples:
-          - true
-          description: (Optional) Whether the source tag was accepted.
-        isSuggestion:
-          type: boolean
-          examples:
-          - true
-          description: (Optional) Whether the tag was suggested by BigPanda Tag Normalization.
-        name:
-          type: string
-          examples:
-          - check
-          description: (Optional) Set a name for the tag in BigPanda.
-        source:
-          type: array
-          items:
-            type: string
-          examples:
-          - - '@alert.labels.alertname'
-            - '@alert.labels.check'
-          description: Array of payload fields to match.
-        suggestedDestination:
-          type: string
-          examples:
-          - check
-          description: Suggested Destination tag name.
-        suggestedSources:
-          type: array
-          items:
-            type: string
-          examples:
-          - - '@alert.labels.alertname'
-            - '@alert.labels.check'
-          description: Array of payload fields to match for suggested tags.
-        flatten:
-          type: boolean
-          examples:
-          - false
-          description: (Optional) Whether or not to flatten a nested object for improved mapping.
-      x-apidog-orders:
-      - isDestinationAccepted
-      - isSourceAccepted
-      - isSuggestion
-      - name
-      - source
-      - suggestedDestination
-      - suggestedSources
-      - flatten
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
+  securitySchemes:
+    BearerOrg22:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure tool you use to make API calls
+
+        '
+    BearerOrg5:
+      type: apiKey
+      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure tool you use to make API calls'
+      name: Authorization
+      in: header
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required). The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve. Recorded as published; not corrected.

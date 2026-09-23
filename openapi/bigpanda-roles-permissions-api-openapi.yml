@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda Roles & Permissions API
-  description: BigPanda Roles & Permissions operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on
-    its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
-    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
-    the base URL for your region.
+  description: BigPanda Roles & Permissions operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
     name: BigPanda Support
@@ -16,10 +13,7 @@ info:
     method: searched
     source: https://api-docs.bigpanda.io/llms.txt
     harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md. Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by API Evangelist.'
     operations: 12
 servers:
 - url: https://api.bigpanda.io
@@ -33,8 +27,7 @@ paths:
     post:
       summary: Add users to role
       deprecated: false
-      description: Assign one or more users to a role in a single call. Use for bulk role membership changes when onboarding
-        a team.
+      description: Assign one or more users to a role in a single call. Use for bulk role membership changes when onboarding a team.
       operationId: postRoleUsers
       tags:
       - Roles & Permissions
@@ -66,8 +59,7 @@ paths:
                 allOf:
                 - type: object
                   additionalProperties: true
-                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
-                    spec is provided.'
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec is provided.'
                   x-apidog-orders: []
                   properties: {}
                   x--orders: []
@@ -140,8 +132,7 @@ paths:
                 allOf:
                 - type: object
                   additionalProperties: true
-                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
-                    spec is provided.'
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec is provided.'
                   x-apidog-orders: []
                   properties: {}
                   x--orders: []
@@ -193,13 +184,29 @@ paths:
     post:
       summary: Create a Role
       deprecated: false
-      description: "Creates a new role.\n\n## System fields\nSystem fields (​​id​​, ​created_by​​, ​created_at​​, and ​updated_at​​)\
-        \ will be set automatically. If included in the Create payload, these fields will be discarded.\n\n## Authentication\n\
-        All BigPanda APIs require Bearer Token Authorization in the call headers.\nThis API uses the User API Key type of\
-        \ Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\nExample:\n\
-        `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n## resource_type\nFor a full list of available resource_types, see\
-        \ the [Roles Management](https://docs.bigpanda.io/en/roles-management.html#roles-and-resource-permissions) documentation.\
-        \ \n"
+      description: 'Creates a new role.
+
+
+        ## System fields
+
+        System fields (​​id​​, ​created_by​​, ​created_at​​, and ​updated_at​​) will be set automatically. If included in the Create payload, these fields will be discarded.
+
+
+        ## Authentication
+
+        All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+
+        Example:
+
+        `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        ## resource_type
+
+        For a full list of available resource_types, see the Roles Management documentation.'
       operationId: create-a-role
       tags:
       - Roles & Permissions
@@ -228,8 +235,7 @@ paths:
     get:
       summary: Retrieve All Roles
       deprecated: false
-      description: 'The Roles API is a tool to help you manage user roles in the BigPanda system, enabling you to bulk manage
-        even large and complex permissions.
+      description: 'The Roles API is a tool to help you manage user roles in the BigPanda system, enabling you to bulk manage even large and complex permissions.
 
 
         Use the Roles API to create, retrieve, update, and delete roles from the BigPanda UI.
@@ -239,15 +245,12 @@ paths:
 
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
 
-        `Authorization: Bearer [YOUR_USER_API_KEY]`
-
-        '
+        `Authorization: Bearer [YOUR_USER_API_KEY]`'
       operationId: retrieve-all-roles
       tags:
       - Roles & Permissions
@@ -318,15 +321,12 @@ paths:
 
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
 
-        `Authorization: Bearer [YOUR_USER_API_KEY]`
-
-        '
+        `Authorization: Bearer [YOUR_USER_API_KEY]`'
       operationId: delete-a-role
       tags:
       - Roles & Permissions
@@ -366,15 +366,12 @@ paths:
 
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
 
-        `Authorization: Bearer [YOUR_USER_API_KEY]`
-
-        '
+        `Authorization: Bearer [YOUR_USER_API_KEY]`'
       operationId: retrieve-role-by-id
       tags:
       - Roles & Permissions
@@ -425,8 +422,7 @@ paths:
             schema:
               type: object
               additionalProperties: true
-              description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled).
-                Replace once the bundled spec is provided.'
+              description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled). Replace once the bundled spec is provided.'
               x-apidog-orders: []
               properties: {}
       responses:
@@ -439,14 +435,12 @@ paths:
                 allOf:
                 - type: object
                   additionalProperties: true
-                  description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled).
-                    Replace once the bundled spec is provided.'
+                  description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled). Replace once the bundled spec is provided.'
                   x-apidog-orders: []
                   properties: {}
                 - type: object
                   additionalProperties: true
-                  description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled).
-                    Replace once the bundled spec is provided.'
+                  description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled). Replace once the bundled spec is provided.'
                   x-apidog-orders: []
                   properties: {}
           headers: {}
@@ -459,8 +453,7 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-                description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled).
-                  Replace once the bundled spec is provided.'
+                description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled). Replace once the bundled spec is provided.'
                 x-apidog-orders: []
                 properties: {}
           headers: {}
@@ -473,8 +466,7 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-                description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled).
-                  Replace once the bundled spec is provided.'
+                description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled). Replace once the bundled spec is provided.'
                 x-apidog-orders: []
                 properties: {}
           headers: {}
@@ -487,8 +479,7 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-                description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled).
-                  Replace once the bundled spec is provided.'
+                description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled). Replace once the bundled spec is provided.'
                 x-apidog-orders: []
                 properties: {}
           headers: {}
@@ -501,8 +492,7 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-                description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled).
-                  Replace once the bundled spec is provided.'
+                description: 'Schema pending: full definition lives in the users-api source repo (multi-file refs not bundled). Replace once the bundled spec is provided.'
                 x-apidog-orders: []
                 properties: {}
           headers: {}
@@ -517,27 +507,22 @@ paths:
       description: 'You are able to update name, users, and permissions in a single call.
 
 
-        Any differences between the existing role and fields in the Update call will be applied. This includes incomplete
-        parameters.
+        Any differences between the existing role and fields in the Update call will be applied. This includes incomplete parameters.
 
 
-        The full list of users and permissions must be included in each update call. For example, if a role has eight permissions
-        and only one is included in the call, the role will be updated to only have the one permission.
+        The full list of users and permissions must be included in each update call. For example, if a role has eight permissions and only one is included in the call, the role will be updated to only have the one permission.
 
 
         ## Authentication
 
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
 
-        `Authorization: Bearer [YOUR_USER_API_KEY]`
-
-        '
+        `Authorization: Bearer [YOUR_USER_API_KEY]`'
       operationId: update-a-role
       tags:
       - Roles & Permissions
@@ -576,12 +561,32 @@ paths:
     get:
       summary: Retrieve All Roles
       deprecated: false
-      description: "Retrieve all of your organization's roles and associated permissions. \n\n> \U0001F6A7 **Authentication**\n\
-        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
-        \ type of Authorization token.\n\n> \U0001F4D8 **Required permissions**\n>\n>  Your account must have the `Role Management`\
-        \ permission set to `View` to use this endpoint.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service,\
-        \ the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the\
-        \ request will need to be retried."
+      description: 'Retrieve all of your organization''s roles and associated permissions.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > 📘 **Required permissions**
+
+        >
+
+        > Your account must have the `Role Management` permission set to `View` to use this endpoint.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.'
       operationId: get-all-roles
       tags:
       - Roles & Permissions
@@ -722,12 +727,32 @@ paths:
     get:
       summary: Retrieve All Users Associated with a Role
       deprecated: false
-      description: "Retrieve all users associated with a specific role. \n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
-        \ token.\n\n> \U0001F4D8 **Required permissions**\n>\n>  Your account must have the `Role Management` permission set\
-        \ to `View` to use this endpoint.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API\
-        \ is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will\
-        \ need to be retried."
+      description: 'Retrieve all users associated with a specific role.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > 📘 **Required permissions**
+
+        >
+
+        > Your account must have the `Role Management` permission set to `View` to use this endpoint.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.'
       operationId: get-all-users-for-role
       tags:
       - Roles & Permissions
@@ -849,12 +874,32 @@ paths:
     get:
       summary: Retrieve a Role
       deprecated: false
-      description: "Retrieve a single role and associated permissions by Role ID. \n\n> \U0001F6A7 **Authentication**\n> \n\
-        > All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type\
-        \ of Authorization token.\n\n> \U0001F4D8 **Required permissions**\n>\n>  Your account must have the `Role Management`\
-        \ permission set to `View` to use this endpoint.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service,\
-        \ the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the\
-        \ request will need to be retried."
+      description: 'Retrieve a single role and associated permissions by Role ID.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > 📘 **Required permissions**
+
+        >
+
+        > Your account must have the `Role Management` permission set to `View` to use this endpoint.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.'
       operationId: get-a-role
       tags:
       - Roles & Permissions
@@ -981,8 +1026,7 @@ paths:
                 allOf:
                 - type: object
                   additionalProperties: true
-                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
-                    spec is provided.'
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec is provided.'
                   x-apidog-orders: []
                   properties: {}
                   x-apidog-ignore-properties: []
@@ -1021,26 +1065,6 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/retrieve-all-permissions-37770128e0.md
       x-source-page: Retrieve all permissions
 components:
-  securitySchemes:
-    BearerUser11:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
-
-        headers only in the secure tool you use to make API calls
-
-        '
-    BearerUser131:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
-        tool you use to make API calls
-
-        '
   schemas:
     id-v1:
       type: string
@@ -1052,29 +1076,91 @@ components:
       x-apidog-folder: ''
       examples:
       - 60c5238222fa63633d93d52f
-    success-response-v1:
-      title: success-response-v1
+    error-response-v1:
+      title: error-response-v1
       type: object
+      description: BP default error response
       properties:
         status:
           $ref: '#/components/schemas/http-status-code-v1'
-        data:
-          type: object
-          x-apidog-orders: []
-          properties: {}
-          x--orders: []
-          x--ignore-properties: []
+        errors:
+          type: array
+          items:
+            type: string
       required:
       - status
-      - data
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x--orders:
+      - status
+      - errors
+      x--ignore-properties: []
+      x-apidog-folder: ''
+    generic204response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
       x-apidog-orders:
       - status
       - data
       x-apidog-folder: ''
-      x--orders:
+      examples:
+      - status: 204
+        data: {}
+      x-apidog-ignore-properties: []
+    error-response-v12:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
       - status
-      - data
-      x--ignore-properties: []
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    permission:
+      type: object
+      properties:
+        resource_type:
+          type: string
+          examples:
+          - environments
+        resource_id:
+          type: string
+          examples:
+          - 624e114fb4d7581100179111
+        actions:
+          type: string
+          examples:
+          - read
+      x-apidog-orders:
+      - resource_type
+      - resource_id
+      - actions
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     http-status-code-v1:
       type: number
       enum:
@@ -1136,28 +1222,25 @@ components:
       - 511
       description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
       x-apidog-folder: ''
-    error-response-v1:
-      title: error-response-v1
+    success-response-v12:
+      title: success-response-v1
       type: object
-      description: BP default error response
       properties:
         status:
           $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
+        data:
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          x-apidog-ignore-properties: []
       required:
       - status
-      - errors
+      - data
       x-apidog-orders:
       - status
-      - errors
-      x--orders:
-      - status
-      - errors
-      x--ignore-properties: []
+      - data
       x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     role_object:
       required:
       - name
@@ -1243,8 +1326,7 @@ components:
           type: array
           description: 'A list of permissions associated with the role.
 
-            Each permission grants access to a specific resource_type, which is an area in BigPanda. See ​[Roles and Resource
-            Permissions](https://docs.bigpanda.io/en/roles-management)​​ for more information.
+            Each permission grants access to a specific resource_type, which is an area in BigPanda. See ​[Roles and Resource Permissions](https://docs.bigpanda.io/en/roles-management)​​ for more information.
 
             '
           items:
@@ -1259,51 +1341,7 @@ components:
       - permissions
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    permission:
-      type: object
-      properties:
-        resource_type:
-          type: string
-          examples:
-          - environments
-        resource_id:
-          type: string
-          examples:
-          - 624e114fb4d7581100179111
-        actions:
-          type: string
-          examples:
-          - read
-      x-apidog-orders:
-      - resource_type
-      - resource_id
-      - actions
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic204response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 204
-        data: {}
-      x-apidog-ignore-properties: []
-    success-response-v12:
+    success-response-v1:
       title: success-response-v1
       type: object
       properties:
@@ -1313,7 +1351,8 @@ components:
           type: object
           x-apidog-orders: []
           properties: {}
-          x-apidog-ignore-properties: []
+          x--orders: []
+          x--ignore-properties: []
       required:
       - status
       - data
@@ -1321,29 +1360,29 @@ components:
       - status
       - data
       x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    error-response-v12:
-      title: error-response-v1
-      type: object
-      description: BP default error response
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
-      required:
+      x--orders:
       - status
-      - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
+      - data
+      x--ignore-properties: []
+  securitySchemes:
+    BearerUser11:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
+
+        headers only in the secure tool you use to make API calls
+
+        '
+    BearerUser131:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure tool you use to make API calls
+
+        '
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required). The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve. Recorded as published; not corrected.

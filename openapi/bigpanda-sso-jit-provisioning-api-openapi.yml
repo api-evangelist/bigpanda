@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda SSO & JIT Provisioning API
-  description: BigPanda SSO & JIT Provisioning operations, assembled verbatim from the OpenAPI fragments BigPanda publishes
-    on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
-    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
-    the base URL for your region.
+  description: BigPanda SSO & JIT Provisioning operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
     name: BigPanda Support
@@ -16,10 +13,7 @@ info:
     method: searched
     source: https://api-docs.bigpanda.io/llms.txt
     harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md. Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by API Evangelist.'
     operations: 10
 servers:
 - url: https://api.bigpanda.io
@@ -33,8 +27,7 @@ paths:
     post:
       summary: Configure SSO for provider
       deprecated: false
-      description: Configure single sign-on for a specific identity provider. Supply the provider's metadata; pair with the
-        SAML debug endpoint to validate assertions during setup.
+      description: Configure single sign-on for a specific identity provider. Supply the provider's metadata; pair with the SAML debug endpoint to validate assertions during setup.
       operationId: postSsoConfig
       tags:
       - SSO & JIT Provisioning
@@ -61,8 +54,7 @@ paths:
             schema:
               type: object
               additionalProperties: true
-              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
-                is provided.'
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec is provided.'
               x-apidog-orders: []
               properties: {}
               x-apidog-ignore-properties: []
@@ -248,8 +240,7 @@ paths:
                 allOf:
                 - type: object
                   additionalProperties: true
-                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
-                    spec is provided.'
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec is provided.'
                   x-apidog-orders: []
                   properties: {}
                   x-apidog-ignore-properties: []
@@ -314,8 +305,7 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
-                  is provided.'
+                description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec is provided.'
                 x-apidog-orders: []
                 properties: {}
                 x-apidog-ignore-properties: []
@@ -375,8 +365,7 @@ paths:
             schema:
               type: object
               additionalProperties: true
-              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
-                is provided.'
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec is provided.'
               x-apidog-orders: []
               properties: {}
               x-apidog-ignore-properties: []
@@ -436,8 +425,7 @@ paths:
             schema:
               type: object
               additionalProperties: true
-              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
-                is provided.'
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec is provided.'
               x-apidog-orders: []
               properties: {}
               x-apidog-ignore-properties: []
@@ -451,8 +439,7 @@ paths:
                 allOf:
                 - type: object
                   additionalProperties: true
-                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
-                    spec is provided.'
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec is provided.'
                   x-apidog-orders: []
                   properties: {}
                   x-apidog-ignore-properties: []
@@ -511,8 +498,7 @@ paths:
     get:
       summary: get jit domains
       deprecated: false
-      description: Retrieve the just-in-time domain rules — the email domains allowed to auto-provision accounts on first
-        SSO login.
+      description: Retrieve the just-in-time domain rules — the email domains allowed to auto-provision accounts on first SSO login.
       operationId: getJitDomains
       tags:
       - SSO & JIT Provisioning
@@ -527,8 +513,7 @@ paths:
                 allOf:
                 - type: object
                   additionalProperties: true
-                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
-                    spec is provided.'
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec is provided.'
                   x-apidog-orders: []
                   properties: {}
                   x-apidog-ignore-properties: []
@@ -570,8 +555,7 @@ paths:
     post:
       summary: create jit-role
       deprecated: false
-      description: Create a just-in-time role rule. JIT roles assign a role automatically when a user's account is created
-        on first SSO login.
+      description: Create a just-in-time role rule. JIT roles assign a role automatically when a user's account is created on first SSO login.
       operationId: createJitRole
       tags:
       - SSO & JIT Provisioning
@@ -582,8 +566,7 @@ paths:
             schema:
               type: object
               additionalProperties: true
-              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec
-                is provided.'
+              description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec is provided.'
               x-apidog-orders: []
               properties: {}
               x--orders: []
@@ -598,8 +581,7 @@ paths:
                 allOf:
                 - type: object
                   additionalProperties: true
-                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
-                    spec is provided.'
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec is provided.'
                   x-apidog-orders: []
                   properties: {}
                   x--orders: []
@@ -659,8 +641,7 @@ paths:
     get:
       summary: get jit-roles by organization
       deprecated: false
-      description: Retrieve the just-in-time role rules for your organization — the rules that decide which role a user receives
-        when their account is created on first SSO login.
+      description: Retrieve the just-in-time role rules for your organization — the rules that decide which role a user receives when their account is created on first SSO login.
       operationId: getJitRolesByOrg
       tags:
       - SSO & JIT Provisioning
@@ -675,8 +656,7 @@ paths:
                 allOf:
                 - type: object
                   additionalProperties: true
-                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled
-                    spec is provided.'
+                  description: 'Schema pending: definition lives in unbundled source-repo files. Replace once the bundled spec is provided.'
                   x-apidog-orders: []
                   properties: {}
                   x-apidog-ignore-properties: []
@@ -716,25 +696,47 @@ paths:
       x-source-page: get jit-roles by organization
 components:
   schemas:
-    success-response-v1:
-      title: success-response-v1
+    error-response-v1:
+      title: error-response-v1
       type: object
+      description: BP default error response
       properties:
         status:
           $ref: '#/components/schemas/http-status-code-v1'
-        data:
-          type: object
-          x-apidog-orders: []
-          properties: {}
-          x-apidog-ignore-properties: []
+        errors:
+          type: array
+          items:
+            type: string
       required:
       - status
-      - data
+      - errors
       x-apidog-orders:
       - status
-      - data
-      x-apidog-folder: ''
+      - errors
       x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    error-response-v12:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x--orders:
+      - status
+      - errors
+      x--ignore-properties: []
+      x-apidog-folder: ''
     http-status-code-v1:
       type: number
       enum:
@@ -796,25 +798,6 @@ components:
       - 511
       description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
       x-apidog-folder: ''
-    error-response-v1:
-      title: error-response-v1
-      type: object
-      description: BP default error response
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
-      required:
-      - status
-      - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
     success-response-v12:
       title: success-response-v1
       type: object
@@ -838,31 +821,25 @@ components:
       - status
       - data
       x--ignore-properties: []
-    error-response-v12:
-      title: error-response-v1
+    success-response-v1:
+      title: success-response-v1
       type: object
-      description: BP default error response
       properties:
         status:
           $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
+        data:
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          x-apidog-ignore-properties: []
       required:
       - status
-      - errors
+      - data
       x-apidog-orders:
       - status
-      - errors
-      x--orders:
-      - status
-      - errors
-      x--ignore-properties: []
+      - data
       x-apidog-folder: ''
+      x-apidog-ignore-properties: []
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required). The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve. Recorded as published; not corrected.

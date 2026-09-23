@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda Biggy Query API
-  description: BigPanda Biggy Query operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own
-    API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it
-    was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base
-    URL for your region.
+  description: BigPanda Biggy Query operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
     name: BigPanda Support
@@ -16,10 +13,7 @@ info:
     method: searched
     source: https://api-docs.bigpanda.io/llms.txt
     harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md. Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by API Evangelist.'
     operations: 2
 servers:
 - url: https://api.bigpanda.io
@@ -33,12 +27,32 @@ paths:
     get:
       summary: Retrieve a Response
       deprecated: false
-      description: "Retrieve a Biggy response by request ID.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
-        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\
-        \n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute.\
-        \ Additional requests will return a 429 response code and the request will need to be retried.\n\n> \U0001F4D8 **Messages**\n\
-        >\n> The `requestId` can be retrieved by sending a Send a Query request with the `async` field set to `true`. The\
-        \ requestId will be available in the 202 response. \n"
+      description: 'Retrieve a Biggy response by request ID.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.
+
+
+        > 📘 **Messages**
+
+        >
+
+        > The `requestId` can be retrieved by sending a Send a Query request with the `async` field set to `true`. The requestId will be available in the 202 response.'
       operationId: get-a-response
       tags:
       - Biggy Query
@@ -94,18 +108,54 @@ paths:
     post:
       summary: Send a Query
       deprecated: false
-      description: "Send a natural language query to Biggy.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
-        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\
-        \n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute.\
-        \ Additional requests will return a 429 response code and the request will need to be retried.\n\n\n> \U0001F6A7 **Streaming\
-        \ options**\n> \n> If streaming is set to `true`, the response will be a single streamed text line output. When streaming\
-        \ is set to `false`, the response is in JSON structure. \n\n\n> \U0001F4D8 **Messages**\n>\n> When you're continuing\
-        \ a conversation with Biggy, use the messages parameter to ensure that the LLM has the context it needs.\n>\n> Use\
-        \ the `user` role to share the latest user message sent to Biggy. The `assistant` role is used to send Biggy's last\
-        \ response as context in the messages parameter. \n\n> \U0001F6A7 **Async responses**\n> \n> When the `async` field\
-        \ is set to `true`, Biggy's query response will run asynchronously. A 202 response will be returned containing the\
-        \ `requestId`. To retrieve Biggy's response, use the Retrieve a Query endpoint. \n>\n> If `async` and `streaming`\
-        \ are both set to `true`, a 400 response will be returned. \n"
+      description: 'Send a natural language query to Biggy.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.
+
+
+        > 🚧 **Streaming options**
+
+        >
+
+        > If streaming is set to `true`, the response will be a single streamed text line output. When streaming is set to `false`, the response is in JSON structure.
+
+
+        > 📘 **Messages**
+
+        >
+
+        > When you''re continuing a conversation with Biggy, use the messages parameter to ensure that the LLM has the context it needs.
+
+        >
+
+        > Use the `user` role to share the latest user message sent to Biggy. The `assistant` role is used to send Biggy''s last response as context in the messages parameter.
+
+
+        > 🚧 **Async responses**
+
+        >
+
+        > When the `async` field is set to `true`, Biggy''s query response will run asynchronously. A 202 response will be returned containing the `requestId`. To retrieve Biggy''s response, use the Retrieve a Query endpoint.
+
+        >
+
+        > If `async` and `streaming` are both set to `true`, a 400 response will be returned.'
       operationId: send-a-query
       tags:
       - Biggy Query
@@ -127,14 +177,12 @@ paths:
                   - Who supports DEST service?
                 async:
                   type: boolean
-                  description: Whether or not you would like to wait for the query to process. Select `true` to let the query
-                    run asynchronously. Select `false` to wait for the query to load.
+                  description: Whether or not you would like to wait for the query to process. Select `true` to let the query run asynchronously. Select `false` to wait for the query to load.
                   examples:
                   - false
                 streaming:
                   type: boolean
-                  description: Determines if the response is streamed, or if Biggy waits until the response is fully generated
-                    to send.
+                  description: Determines if the response is streamed, or if Biggy waits until the response is fully generated to send.
                   examples:
                   - true
                 responseFormat:
@@ -212,17 +260,6 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/send-a-query.md
       x-source-page: Send a Query
 components:
-  securitySchemes:
-    BearerUser11:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
-
-        headers only in the secure tool you use to make API calls
-
-        '
   schemas:
     Biggy-response-object:
       required:
@@ -236,6 +273,27 @@ components:
           - 5a463805f883718f8
       x-apidog-orders:
       - requestId
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     getresponse200response:
@@ -266,8 +324,7 @@ components:
               - '## Who Supports `auth-api`? 😊
 
 
-                Based on the most up-to-date organizational context, the **auth-api** service is supported and owned by the
-                **Admin Platform**'
+                Based on the most up-to-date organizational context, the **auth-api** service is supported and owned by the **Admin Platform**'
             duration:
               type: string
               description: The amount of time (in milliseconds) that it took Biggy to complete the response.
@@ -279,6 +336,29 @@ components:
           - response
           - duration
           x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic200response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 200
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      examples:
+      - status: 200
+        data: {}
       x-apidog-orders:
       - status
       - data
@@ -309,27 +389,6 @@ components:
       - message
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic404response:
-      type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     Biggy-object:
       required:
       - query
@@ -342,14 +401,12 @@ components:
           - Who supports DEST service?
         async:
           type: boolean
-          description: Whether or not you would like to wait for the query to process. Select `true` to let the query run
-            asynchronously. Select `false` to wait for the query to load.
+          description: Whether or not you would like to wait for the query to process. Select `true` to let the query run asynchronously. Select `false` to wait for the query to load.
           examples:
           - false
         streaming:
           type: boolean
-          description: Determines if the response is streamed, or if Biggy waits until the response is fully generated to
-            send.
+          description: Determines if the response is streamed, or if Biggy waits until the response is fully generated to send.
           examples:
           - true
         responseFormat:
@@ -371,29 +428,6 @@ components:
       - streaming
       - responseFormat
       - messages
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic200response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 200
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      examples:
-      - status: 200
-        data: {}
-      x-apidog-orders:
-      - status
-      - data
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     biggy202response:
@@ -422,9 +456,17 @@ components:
       - data
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+  securitySchemes:
+    BearerUser11:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
+
+        headers only in the secure tool you use to make API calls
+
+        '
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required). The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve. Recorded as published; not corrected.

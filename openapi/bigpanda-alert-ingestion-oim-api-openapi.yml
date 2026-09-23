@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: BigPanda Alert Ingestion (OIM) API
-  description: BigPanda Alert Ingestion (OIM) operations, assembled verbatim from the OpenAPI fragments BigPanda publishes
-    on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
-    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
-    the base URL for your region.
+  title: BigPanda Alert Ingestion (OIM) Alert Ingestion (OIM) Alert……
+  description: BigPanda Alert Ingestion (OIM) operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
     name: BigPanda Support
@@ -16,10 +13,7 @@ info:
     method: searched
     source: https://api-docs.bigpanda.io/llms.txt
     harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md. Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by API Evangelist.'
     operations: 26
 servers:
 - url: https://api.bigpanda.io
@@ -33,7 +27,6 @@ paths:
     post:
       summary: Add an alert payload for OIM normalization and processing
       deprecated: false
-      description: Add an alert payload for OIM normalization and processing
       operationId: ingestAlert
       tags:
       - Alert Ingestion (OIM)
@@ -115,10 +108,7 @@ paths:
     post:
       summary: AppDynamics
       deprecated: false
-      description: Reference payload for AppDynamics. Shows the well-formed OIM alert payload shape for a AppDynamics source
-        — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing AppDynamics integration in BigPanda; the payload normalizes through that integration's parsing
-        rules.
+      description: Reference payload for AppDynamics. Shows the well-formed OIM alert payload shape for a AppDynamics source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing AppDynamics integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimAppdynamicsapiV3Alerts
       tags:
       - Alert Ingestion (OIM)
@@ -321,10 +311,7 @@ paths:
     post:
       summary: Azure
       deprecated: false
-      description: Reference payload for Azure Monitor. Shows the well-formed OIM alert payload shape for a Azure Monitor
-        source — send it against a test integration's app key to validate the pipeline end to end before connecting production
-        traffic. Requires an existing Azure Monitor integration in BigPanda; the payload normalizes through that integration's
-        parsing rules.
+      description: Reference payload for Azure Monitor. Shows the well-formed OIM alert payload shape for a Azure Monitor source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing Azure Monitor integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimAzureMonitorV2Alerts
       tags:
       - Alert Ingestion (OIM)
@@ -532,10 +519,7 @@ paths:
     post:
       summary: Cisco Meraki
       deprecated: false
-      description: Reference payload for Cisco Meraki. Shows the well-formed OIM alert payload shape for a Cisco Meraki source
-        — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing Cisco Meraki integration in BigPanda; the payload normalizes through that integration's parsing
-        rules.
+      description: Reference payload for Cisco Meraki. Shows the well-formed OIM alert payload shape for a Cisco Meraki source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing Cisco Meraki integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimMerakiAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -703,10 +687,7 @@ paths:
     post:
       summary: CloudWatch
       deprecated: false
-      description: Reference payload for Amazon CloudWatch. Shows the well-formed OIM alert payload shape for a Amazon CloudWatch
-        source — send it against a test integration's app key to validate the pipeline end to end before connecting production
-        traffic. Requires an existing Amazon CloudWatch integration in BigPanda; the payload normalizes through that integration's
-        parsing rules.
+      description: Reference payload for Amazon CloudWatch. Shows the well-formed OIM alert payload shape for a Amazon CloudWatch source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing Amazon CloudWatch integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimCloudwatchAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -866,9 +847,7 @@ paths:
     post:
       summary: Cribl
       deprecated: false
-      description: Reference payload for Cribl. Shows the well-formed OIM alert payload shape for a Cribl source — send it
-        against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires
-        an existing Cribl integration in BigPanda; the payload normalizes through that integration's parsing rules.
+      description: Reference payload for Cribl. Shows the well-formed OIM alert payload shape for a Cribl source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing Cribl integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimCriblAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -950,9 +929,7 @@ paths:
     post:
       summary: DataDog
       deprecated: false
-      description: Reference payload for Datadog. Shows the well-formed OIM alert payload shape for a Datadog source — send
-        it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing Datadog integration in BigPanda; the payload normalizes through that integration's parsing rules.
+      description: Reference payload for Datadog. Shows the well-formed OIM alert payload shape for a Datadog source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing Datadog integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimDatadogV2Alerts
       tags:
       - Alert Ingestion (OIM)
@@ -1179,10 +1156,7 @@ paths:
     post:
       summary: Dynatrace
       deprecated: false
-      description: Reference payload for Dynatrace. Shows the well-formed OIM alert payload shape for a Dynatrace source —
-        send it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing Dynatrace integration in BigPanda; the payload normalizes through that integration's parsing
-        rules.
+      description: Reference payload for Dynatrace. Shows the well-formed OIM alert payload shape for a Dynatrace source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing Dynatrace integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimDynatraceV2Alerts
       tags:
       - Alert Ingestion (OIM)
@@ -1428,9 +1402,7 @@ paths:
     post:
       summary: Entuity
       deprecated: false
-      description: Reference payload for Entuity. Shows the well-formed OIM alert payload shape for a Entuity source — send
-        it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing Entuity integration in BigPanda; the payload normalizes through that integration's parsing rules.
+      description: Reference payload for Entuity. Shows the well-formed OIM alert payload shape for a Entuity source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing Entuity integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimEntuityAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -1717,9 +1689,7 @@ paths:
       deprecated: false
       description: 'Ingest alerts from Falcon LogScale (formerly Humio) through the out-of-the-box LogScale integration.
 
-        > ❗ API endpoint > > This API is called at `integrations.bigpanda.io`, not `api.bigpanda.io`.
-
-        '
+        > ❗ API endpoint > > This API is called at `integrations.bigpanda.io`, not `api.bigpanda.io`.'
       operationId: postOimLogscaleAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -1966,9 +1936,7 @@ paths:
               - '#humioAutoShard': '19'
                 cluster: dev-level-2
                 kubernetes.labels.app.kubernetes.io/instance: ingress-nginx
-                log: '2023/05/03 20:48:47 [error] 31840#31840: *269463007 recv() failed (104: Connection reset by peer) while
-                  reading response header from upstream, client: 10.45.51.124, server: _, request: "POST /engine-rest/external-task/fetchAndLock
-                  HTTP/1.1", upstream: "http://10.42.4.176:8080/engine-rest/external-task/fetchAndLock", host: "workflow-incoming-goods-dev.dev2.paas.rewe.local"
+                log: '2023/05/03 20:48:47 [error] 31840#31840: *269463007 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 10.45.51.124, server: _, request: "POST /engine-rest/external-task/fetchAndLock HTTP/1.1", upstream: "http://10.42.4.176:8080/engine-rest/external-task/fetchAndLock", host: "workflow-incoming-goods-dev.dev2.paas.rewe.local"
 
                   '
                 kubernetes.labels.app.kubernetes.io/name: ingress-nginx
@@ -1995,20 +1963,13 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-s9d2g
-                '@rawstring': '{"log":"2023/05/03 20:48:47 [error] 31840#31840: *269463007 recv() failed (104: Connection
-                  reset by peer) while reading response header from upstream, client: 10.45.51.124, server: _, request: \"POST
-                  /engine-rest/external-task/fetchAndLock HTTP/1.1\", upstream: \"http://10.42.4.176:8080/engine-rest/external-task/fetchAndLock\",
-                  host: \"workflow-incoming-goods-dev.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:47.006563701Z","kubernetes":{"pod_name":"nginx-ingress-controller-s9d2g","namespace_name":"ingress-nginx","pod_id":"c39eb5b2-f0e3-4c78-ac13-695067fbbb1c","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2939","container_name":"controller","docker_id":"aebb570eaa583c33ee826d9d86324d86e89112b0533451146037a6ad6dee2144","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:47 [error] 31840#31840: *269463007 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 10.45.51.124, server: _, request: \"POST /engine-rest/external-task/fetchAndLock HTTP/1.1\", upstream: \"http://10.42.4.176:8080/engine-rest/external-task/fetchAndLock\", host: \"workflow-incoming-goods-dev.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:47.006563701Z","kubernetes":{"pod_name":"nginx-ingress-controller-s9d2g","namespace_name":"ingress-nginx","pod_id":"c39eb5b2-f0e3-4c78-ac13-695067fbbb1c","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2939","container_name":"controller","docker_id":"aebb570eaa583c33ee826d9d86324d86e89112b0533451146037a6ad6dee2144","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:47.006563701Z'
                 '#type': json-time
               - '#humioAutoShard': '1'
                 cluster: dev-level-2
                 kubernetes.labels.app.kubernetes.io/instance: ingress-nginx
-                log: '2023/05/03 20:48:46 [error] 32035#32035: *269474265 connect() failed (111: Connection refused) while
-                  connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET
-                  /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7",
-                  host: "lpas-mock-server.dev2.paas.rewe.local"
+                log: '2023/05/03 20:48:46 [error] 32035#32035: *269474265 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7", host: "lpas-mock-server.dev2.paas.rewe.local"
 
                   '
                 kubernetes.labels.app.kubernetes.io/name: ingress-nginx
@@ -2035,21 +1996,13 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-s9d2g
-                '@rawstring': '{"log":"2023/05/03 20:48:46 [error] 32035#32035: *269474265 connect() failed (111: Connection
-                  refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local,
-                  request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\",
-                  host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:46.355880078Z","kubernetes":{"pod_name":"nginx-ingress-controller-s9d2g","namespace_name":"ingress-nginx","pod_id":"c39eb5b2-f0e3-4c78-ac13-695067fbbb1c","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2939","container_name":"controller","docker_id":"aebb570eaa583c33ee826d9d86324d86e89112b0533451146037a6ad6dee2144","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:46 [error] 32035#32035: *269474265 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\", host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:46.355880078Z","kubernetes":{"pod_name":"nginx-ingress-controller-s9d2g","namespace_name":"ingress-nginx","pod_id":"c39eb5b2-f0e3-4c78-ac13-695067fbbb1c","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2939","container_name":"controller","docker_id":"aebb570eaa583c33ee826d9d86324d86e89112b0533451146037a6ad6dee2144","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:46.355880078Z'
                 '#type': json-time
               - '#humioAutoShard': '1'
                 cluster: dev-level-2
                 kubernetes.labels.app.kubernetes.io/instance: ingress-nginx
-                log: '2023/05/03 20:48:46 [error] 32035#32035: *269474265 connect() failed (111: Connection refused) while
-                  connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET
-                  /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7",
-                  host: "lpas-mock-server.dev2.paas.rewe.local"
+                log: '2023/05/03 20:48:46 [error] 32035#32035: *269474265 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7", host: "lpas-mock-server.dev2.paas.rewe.local"
 
                   '
                 kubernetes.labels.app.kubernetes.io/name: ingress-nginx
@@ -2076,21 +2029,13 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-s9d2g
-                '@rawstring': '{"log":"2023/05/03 20:48:46 [error] 32035#32035: *269474265 connect() failed (111: Connection
-                  refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local,
-                  request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\",
-                  host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:46.355218081Z","kubernetes":{"pod_name":"nginx-ingress-controller-s9d2g","namespace_name":"ingress-nginx","pod_id":"c39eb5b2-f0e3-4c78-ac13-695067fbbb1c","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2939","container_name":"controller","docker_id":"aebb570eaa583c33ee826d9d86324d86e89112b0533451146037a6ad6dee2144","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:46 [error] 32035#32035: *269474265 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\", host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:46.355218081Z","kubernetes":{"pod_name":"nginx-ingress-controller-s9d2g","namespace_name":"ingress-nginx","pod_id":"c39eb5b2-f0e3-4c78-ac13-695067fbbb1c","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2939","container_name":"controller","docker_id":"aebb570eaa583c33ee826d9d86324d86e89112b0533451146037a6ad6dee2144","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:46.355218081Z'
                 '#type': json-time
               - '#humioAutoShard': '1'
                 cluster: dev-level-2
                 kubernetes.labels.app.kubernetes.io/instance: ingress-nginx
-                log: '2023/05/03 20:48:46 [error] 32035#32035: *269474265 connect() failed (111: Connection refused) while
-                  connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET
-                  /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7",
-                  host: "lpas-mock-server.dev2.paas.rewe.local"
+                log: '2023/05/03 20:48:46 [error] 32035#32035: *269474265 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7", host: "lpas-mock-server.dev2.paas.rewe.local"
 
                   '
                 kubernetes.labels.app.kubernetes.io/name: ingress-nginx
@@ -2117,11 +2062,7 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-s9d2g
-                '@rawstring': '{"log":"2023/05/03 20:48:46 [error] 32035#32035: *269474265 connect() failed (111: Connection
-                  refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local,
-                  request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\",
-                  host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:46.354354993Z","kubernetes":{"pod_name":"nginx-ingress-controller-s9d2g","namespace_name":"ingress-nginx","pod_id":"c39eb5b2-f0e3-4c78-ac13-695067fbbb1c","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2939","container_name":"controller","docker_id":"aebb570eaa583c33ee826d9d86324d86e89112b0533451146037a6ad6dee2144","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:46 [error] 32035#32035: *269474265 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\", host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:46.354354993Z","kubernetes":{"pod_name":"nginx-ingress-controller-s9d2g","namespace_name":"ingress-nginx","pod_id":"c39eb5b2-f0e3-4c78-ac13-695067fbbb1c","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2939","container_name":"controller","docker_id":"aebb570eaa583c33ee826d9d86324d86e89112b0533451146037a6ad6dee2144","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:46.354354993Z'
                 '#type': json-time
               - '#humioAutoShard': '35'
@@ -2154,18 +2095,13 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-86kd4
-                '@rawstring': '{"log":"2023/05/03 20:48:32 [error] 35848#35848: *19957616 lua udp socket read timed out, context:
-                  ngx.timer\n","stream":"stderr","time":"2023-05-03T20:48:32.130177885Z","kubernetes":{"pod_name":"nginx-ingress-controller-86kd4","namespace_name":"ingress-nginx","pod_id":"04d5b4d6-523d-438c-949d-d7939c8621e5","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm3031","container_name":"controller","docker_id":"6c46bd19f6bbc972d21820836830d185505defa71f06ff49c81c6623ea83a20e","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:32 [error] 35848#35848: *19957616 lua udp socket read timed out, context: ngx.timer\n","stream":"stderr","time":"2023-05-03T20:48:32.130177885Z","kubernetes":{"pod_name":"nginx-ingress-controller-86kd4","namespace_name":"ingress-nginx","pod_id":"04d5b4d6-523d-438c-949d-d7939c8621e5","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm3031","container_name":"controller","docker_id":"6c46bd19f6bbc972d21820836830d185505defa71f06ff49c81c6623ea83a20e","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:32.130177885Z'
                 '#type': json-time
               - '#humioAutoShard': '13'
                 cluster: dev-level-2
                 kubernetes.labels.app.kubernetes.io/instance: ingress-nginx
-                log: '2023/05/03 20:48:31 [error] 23476#23476: *269341446 connect() failed (111: Connection refused) while
-                  connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET
-                  /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7",
-                  host: "lpas-mock-server.dev2.paas.rewe.local"
+                log: '2023/05/03 20:48:31 [error] 23476#23476: *269341446 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7", host: "lpas-mock-server.dev2.paas.rewe.local"
 
                   '
                 kubernetes.labels.app.kubernetes.io/name: ingress-nginx
@@ -2192,21 +2128,13 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-lgbx9
-                '@rawstring': '{"log":"2023/05/03 20:48:31 [error] 23476#23476: *269341446 connect() failed (111: Connection
-                  refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local,
-                  request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\",
-                  host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:31.363997181Z","kubernetes":{"pod_name":"nginx-ingress-controller-lgbx9","namespace_name":"ingress-nginx","pod_id":"12e7f8f5-c9e7-4c0c-8776-adf273ce4405","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2947","container_name":"controller","docker_id":"6392bf42768b023911baa29e1b7e3b84cec0b7ab46253e1cde393ee4f1d25442","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:31 [error] 23476#23476: *269341446 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\", host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:31.363997181Z","kubernetes":{"pod_name":"nginx-ingress-controller-lgbx9","namespace_name":"ingress-nginx","pod_id":"12e7f8f5-c9e7-4c0c-8776-adf273ce4405","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2947","container_name":"controller","docker_id":"6392bf42768b023911baa29e1b7e3b84cec0b7ab46253e1cde393ee4f1d25442","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:31.363997181Z'
                 '#type': json-time
               - '#humioAutoShard': '13'
                 cluster: dev-level-2
                 kubernetes.labels.app.kubernetes.io/instance: ingress-nginx
-                log: '2023/05/03 20:48:31 [error] 23476#23476: *269341446 connect() failed (111: Connection refused) while
-                  connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET
-                  /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7",
-                  host: "lpas-mock-server.dev2.paas.rewe.local"
+                log: '2023/05/03 20:48:31 [error] 23476#23476: *269341446 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7", host: "lpas-mock-server.dev2.paas.rewe.local"
 
                   '
                 kubernetes.labels.app.kubernetes.io/name: ingress-nginx
@@ -2233,21 +2161,13 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-lgbx9
-                '@rawstring': '{"log":"2023/05/03 20:48:31 [error] 23476#23476: *269341446 connect() failed (111: Connection
-                  refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local,
-                  request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\",
-                  host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:31.363504126Z","kubernetes":{"pod_name":"nginx-ingress-controller-lgbx9","namespace_name":"ingress-nginx","pod_id":"12e7f8f5-c9e7-4c0c-8776-adf273ce4405","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2947","container_name":"controller","docker_id":"6392bf42768b023911baa29e1b7e3b84cec0b7ab46253e1cde393ee4f1d25442","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:31 [error] 23476#23476: *269341446 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\", host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:31.363504126Z","kubernetes":{"pod_name":"nginx-ingress-controller-lgbx9","namespace_name":"ingress-nginx","pod_id":"12e7f8f5-c9e7-4c0c-8776-adf273ce4405","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2947","container_name":"controller","docker_id":"6392bf42768b023911baa29e1b7e3b84cec0b7ab46253e1cde393ee4f1d25442","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:31.363504126Z'
                 '#type': json-time
               - '#humioAutoShard': '13'
                 cluster: dev-level-2
                 kubernetes.labels.app.kubernetes.io/instance: ingress-nginx
-                log: '2023/05/03 20:48:31 [error] 23476#23476: *269341446 connect() failed (111: Connection refused) while
-                  connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET
-                  /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7",
-                  host: "lpas-mock-server.dev2.paas.rewe.local"
+                log: '2023/05/03 20:48:31 [error] 23476#23476: *269341446 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7", host: "lpas-mock-server.dev2.paas.rewe.local"
 
                   '
                 kubernetes.labels.app.kubernetes.io/name: ingress-nginx
@@ -2274,19 +2194,13 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-lgbx9
-                '@rawstring': '{"log":"2023/05/03 20:48:31 [error] 23476#23476: *269341446 connect() failed (111: Connection
-                  refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local,
-                  request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\",
-                  host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:31.362949203Z","kubernetes":{"pod_name":"nginx-ingress-controller-lgbx9","namespace_name":"ingress-nginx","pod_id":"12e7f8f5-c9e7-4c0c-8776-adf273ce4405","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2947","container_name":"controller","docker_id":"6392bf42768b023911baa29e1b7e3b84cec0b7ab46253e1cde393ee4f1d25442","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:31 [error] 23476#23476: *269341446 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.124, server: lpas-mock-server.dev2.paas.rewe.local, request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\", host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:31.362949203Z","kubernetes":{"pod_name":"nginx-ingress-controller-lgbx9","namespace_name":"ingress-nginx","pod_id":"12e7f8f5-c9e7-4c0c-8776-adf273ce4405","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2947","container_name":"controller","docker_id":"6392bf42768b023911baa29e1b7e3b84cec0b7ab46253e1cde393ee4f1d25442","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:31.362949203Z'
                 '#type': json-time
               - '#humioAutoShard': '0'
                 cluster: dev-level-2
                 kubernetes.labels.app.kubernetes.io/instance: ingress-nginx
-                log: '2023/05/03 20:48:23 [error] 83957#83957: *111280372 recv() failed (104: Connection reset by peer) while
-                  reading response header from upstream, client: 10.45.51.125, server: _, request: "POST /instances HTTP/1.1",
-                  upstream: "http://10.42.4.176:8080/instances", host: "pim-springboot-admin-app.dev2.paas.rewe.local"
+                log: '2023/05/03 20:48:23 [error] 83957#83957: *111280372 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 10.45.51.125, server: _, request: "POST /instances HTTP/1.1", upstream: "http://10.42.4.176:8080/instances", host: "pim-springboot-admin-app.dev2.paas.rewe.local"
 
                   '
                 kubernetes.labels.app.kubernetes.io/name: ingress-nginx
@@ -2313,9 +2227,7 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-pf7j6
-                '@rawstring': '{"log":"2023/05/03 20:48:23 [error] 83957#83957: *111280372 recv() failed (104: Connection
-                  reset by peer) while reading response header from upstream, client: 10.45.51.125, server: _, request: \"POST
-                  /instances HTTP/1.1\", upstream: \"http://10.42.4.176:8080/instances\", host: \"pim-springboot-admin-app.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:23.296421867Z","kubernetes":{"pod_name":"nginx-ingress-controller-pf7j6","namespace_name":"ingress-nginx","pod_id":"ae5d1cc0-7461-4424-9188-5872589937e0","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2949","container_name":"controller","docker_id":"707be58cb7839751f03be101f243461fa6307ffbf83dbc6b2566be0196900a75","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:23 [error] 83957#83957: *111280372 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 10.45.51.125, server: _, request: \"POST /instances HTTP/1.1\", upstream: \"http://10.42.4.176:8080/instances\", host: \"pim-springboot-admin-app.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:23.296421867Z","kubernetes":{"pod_name":"nginx-ingress-controller-pf7j6","namespace_name":"ingress-nginx","pod_id":"ae5d1cc0-7461-4424-9188-5872589937e0","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2949","container_name":"controller","docker_id":"707be58cb7839751f03be101f243461fa6307ffbf83dbc6b2566be0196900a75","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:23.296421867Z'
                 '#type': json-time
               - '#humioAutoShard': '21'
@@ -2348,8 +2260,7 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-86kd4
-                '@rawstring': '{"log":"2023/05/03 20:48:21 [error] 35951#35951: *19956982 lua udp socket read timed out, context:
-                  ngx.timer\n","stream":"stderr","time":"2023-05-03T20:48:21.21546204Z","kubernetes":{"pod_name":"nginx-ingress-controller-86kd4","namespace_name":"ingress-nginx","pod_id":"04d5b4d6-523d-438c-949d-d7939c8621e5","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm3031","container_name":"controller","docker_id":"6c46bd19f6bbc972d21820836830d185505defa71f06ff49c81c6623ea83a20e","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:21 [error] 35951#35951: *19956982 lua udp socket read timed out, context: ngx.timer\n","stream":"stderr","time":"2023-05-03T20:48:21.21546204Z","kubernetes":{"pod_name":"nginx-ingress-controller-86kd4","namespace_name":"ingress-nginx","pod_id":"04d5b4d6-523d-438c-949d-d7939c8621e5","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm3031","container_name":"controller","docker_id":"6c46bd19f6bbc972d21820836830d185505defa71f06ff49c81c6623ea83a20e","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:21.21546204Z'
                 '#type': json-time
               - '#humioAutoShard': '21'
@@ -2382,8 +2293,7 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-86kd4
-                '@rawstring': '{"log":"2023/05/03 20:48:21 [error] 35818#35818: *19956970 lua udp socket read timed out, context:
-                  ngx.timer\n","stream":"stderr","time":"2023-05-03T20:48:21.163576086Z","kubernetes":{"pod_name":"nginx-ingress-controller-86kd4","namespace_name":"ingress-nginx","pod_id":"04d5b4d6-523d-438c-949d-d7939c8621e5","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm3031","container_name":"controller","docker_id":"6c46bd19f6bbc972d21820836830d185505defa71f06ff49c81c6623ea83a20e","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:21 [error] 35818#35818: *19956970 lua udp socket read timed out, context: ngx.timer\n","stream":"stderr","time":"2023-05-03T20:48:21.163576086Z","kubernetes":{"pod_name":"nginx-ingress-controller-86kd4","namespace_name":"ingress-nginx","pod_id":"04d5b4d6-523d-438c-949d-d7939c8621e5","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm3031","container_name":"controller","docker_id":"6c46bd19f6bbc972d21820836830d185505defa71f06ff49c81c6623ea83a20e","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:21.163576086Z'
                 '#type': json-time
               - '#humioAutoShard': '31'
@@ -2416,18 +2326,13 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-6rtw4
-                '@rawstring': '{"log":"2023/05/03 20:48:16 [error] 84946#84946: *182489727 lua udp socket read timed out,
-                  context: ngx.timer\n","stream":"stderr","time":"2023-05-03T20:48:16.713828001Z","kubernetes":{"pod_name":"nginx-ingress-controller-6rtw4","namespace_name":"ingress-nginx","pod_id":"91d5860f-7e27-45f0-93a4-28137e572611","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm3032","container_name":"controller","docker_id":"12de2c11a9f8779ee3af242ac80de427dcb70a1fef73bdce2a1ab29e1d61c031","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:16 [error] 84946#84946: *182489727 lua udp socket read timed out, context: ngx.timer\n","stream":"stderr","time":"2023-05-03T20:48:16.713828001Z","kubernetes":{"pod_name":"nginx-ingress-controller-6rtw4","namespace_name":"ingress-nginx","pod_id":"91d5860f-7e27-45f0-93a4-28137e572611","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm3032","container_name":"controller","docker_id":"12de2c11a9f8779ee3af242ac80de427dcb70a1fef73bdce2a1ab29e1d61c031","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:16.713828001Z'
                 '#type': json-time
               - '#humioAutoShard': '9'
                 cluster: dev-level-2
                 kubernetes.labels.app.kubernetes.io/instance: ingress-nginx
-                log: '2023/05/03 20:48:16 [error] 50975#50975: *76961246 connect() failed (111: Connection refused) while
-                  connecting to upstream, client: 10.45.51.125, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET
-                  /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7",
-                  host: "lpas-mock-server.dev2.paas.rewe.local"
+                log: '2023/05/03 20:48:16 [error] 50975#50975: *76961246 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.125, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7", host: "lpas-mock-server.dev2.paas.rewe.local"
 
                   '
                 kubernetes.labels.app.kubernetes.io/name: ingress-nginx
@@ -2454,21 +2359,13 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-pzl96
-                '@rawstring': '{"log":"2023/05/03 20:48:16 [error] 50975#50975: *76961246 connect() failed (111: Connection
-                  refused) while connecting to upstream, client: 10.45.51.125, server: lpas-mock-server.dev2.paas.rewe.local,
-                  request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\",
-                  host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:16.365419327Z","kubernetes":{"pod_name":"nginx-ingress-controller-pzl96","namespace_name":"ingress-nginx","pod_id":"5530b61c-d2b2-4ac2-84c5-43e38e2dd3c7","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2927","container_name":"controller","docker_id":"7b64444e910db783b6bf14f26ff14972893ea3dc21d2a4d968d1adee128b0063","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:16 [error] 50975#50975: *76961246 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.125, server: lpas-mock-server.dev2.paas.rewe.local, request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\", host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:16.365419327Z","kubernetes":{"pod_name":"nginx-ingress-controller-pzl96","namespace_name":"ingress-nginx","pod_id":"5530b61c-d2b2-4ac2-84c5-43e38e2dd3c7","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2927","container_name":"controller","docker_id":"7b64444e910db783b6bf14f26ff14972893ea3dc21d2a4d968d1adee128b0063","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:16.365419327Z'
                 '#type': json-time
               - '#humioAutoShard': '9'
                 cluster: dev-level-2
                 kubernetes.labels.app.kubernetes.io/instance: ingress-nginx
-                log: '2023/05/03 20:48:16 [error] 50975#50975: *76961246 connect() failed (111: Connection refused) while
-                  connecting to upstream, client: 10.45.51.125, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET
-                  /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7",
-                  host: "lpas-mock-server.dev2.paas.rewe.local"
+                log: '2023/05/03 20:48:16 [error] 50975#50975: *76961246 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.125, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7", host: "lpas-mock-server.dev2.paas.rewe.local"
 
                   '
                 kubernetes.labels.app.kubernetes.io/name: ingress-nginx
@@ -2495,21 +2392,13 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-pzl96
-                '@rawstring': '{"log":"2023/05/03 20:48:16 [error] 50975#50975: *76961246 connect() failed (111: Connection
-                  refused) while connecting to upstream, client: 10.45.51.125, server: lpas-mock-server.dev2.paas.rewe.local,
-                  request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\",
-                  host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:16.364726889Z","kubernetes":{"pod_name":"nginx-ingress-controller-pzl96","namespace_name":"ingress-nginx","pod_id":"5530b61c-d2b2-4ac2-84c5-43e38e2dd3c7","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2927","container_name":"controller","docker_id":"7b64444e910db783b6bf14f26ff14972893ea3dc21d2a4d968d1adee128b0063","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:16 [error] 50975#50975: *76961246 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.125, server: lpas-mock-server.dev2.paas.rewe.local, request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\", host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:16.364726889Z","kubernetes":{"pod_name":"nginx-ingress-controller-pzl96","namespace_name":"ingress-nginx","pod_id":"5530b61c-d2b2-4ac2-84c5-43e38e2dd3c7","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2927","container_name":"controller","docker_id":"7b64444e910db783b6bf14f26ff14972893ea3dc21d2a4d968d1adee128b0063","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:16.364726889Z'
                 '#type': json-time
               - '#humioAutoShard': '9'
                 cluster: dev-level-2
                 kubernetes.labels.app.kubernetes.io/instance: ingress-nginx
-                log: '2023/05/03 20:48:16 [error] 50975#50975: *76961246 connect() failed (111: Connection refused) while
-                  connecting to upstream, client: 10.45.51.125, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET
-                  /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7",
-                  host: "lpas-mock-server.dev2.paas.rewe.local"
+                log: '2023/05/03 20:48:16 [error] 50975#50975: *76961246 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.125, server: lpas-mock-server.dev2.paas.rewe.local, request: "GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1", upstream: "http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7", host: "lpas-mock-server.dev2.paas.rewe.local"
 
                   '
                 kubernetes.labels.app.kubernetes.io/name: ingress-nginx
@@ -2536,19 +2425,13 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-pzl96
-                '@rawstring': '{"log":"2023/05/03 20:48:16 [error] 50975#50975: *76961246 connect() failed (111: Connection
-                  refused) while connecting to upstream, client: 10.45.51.125, server: lpas-mock-server.dev2.paas.rewe.local,
-                  request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7
-                  HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\",
-                  host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:16.364087876Z","kubernetes":{"pod_name":"nginx-ingress-controller-pzl96","namespace_name":"ingress-nginx","pod_id":"5530b61c-d2b2-4ac2-84c5-43e38e2dd3c7","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2927","container_name":"controller","docker_id":"7b64444e910db783b6bf14f26ff14972893ea3dc21d2a4d968d1adee128b0063","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:16 [error] 50975#50975: *76961246 connect() failed (111: Connection refused) while connecting to upstream, client: 10.45.51.125, server: lpas-mock-server.dev2.paas.rewe.local, request: \"GET /platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7 HTTP/1.1\", upstream: \"http://10.42.14.107:8080/platform-web/platform-register/v1/node-id/lpas-k8s-bundle-6996b484cd-44nfq_10_42_6_103_b552c8ec-4d1c-341f-8de0-76b66eb096e7\", host: \"lpas-mock-server.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:16.364087876Z","kubernetes":{"pod_name":"nginx-ingress-controller-pzl96","namespace_name":"ingress-nginx","pod_id":"5530b61c-d2b2-4ac2-84c5-43e38e2dd3c7","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2927","container_name":"controller","docker_id":"7b64444e910db783b6bf14f26ff14972893ea3dc21d2a4d968d1adee128b0063","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:16.364087876Z'
                 '#type': json-time
               - '#humioAutoShard': '31'
                 cluster: dev-level-2
                 kubernetes.labels.app.kubernetes.io/instance: ingress-nginx
-                log: '2023/05/03 20:48:07 [error] 31840#31840: *269463007 recv() failed (104: Connection reset by peer) while
-                  reading response header from upstream, client: 10.45.51.124, server: _, request: "POST /engine-rest/external-task/fetchAndLock
-                  HTTP/1.1", upstream: "http://10.42.4.176:8080/engine-rest/external-task/fetchAndLock", host: "workflow-incoming-goods-dev.dev2.paas.rewe.local"
+                log: '2023/05/03 20:48:07 [error] 31840#31840: *269463007 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 10.45.51.124, server: _, request: "POST /engine-rest/external-task/fetchAndLock HTTP/1.1", upstream: "http://10.42.4.176:8080/engine-rest/external-task/fetchAndLock", host: "workflow-incoming-goods-dev.dev2.paas.rewe.local"
 
                   '
                 kubernetes.labels.app.kubernetes.io/name: ingress-nginx
@@ -2575,10 +2458,7 @@ paths:
                 kubernetes.labels.controller-revision-hash: 7c546bdb79
                 '#repo': container-platform
                 kubernetes.pod_name: nginx-ingress-controller-s9d2g
-                '@rawstring': '{"log":"2023/05/03 20:48:07 [error] 31840#31840: *269463007 recv() failed (104: Connection
-                  reset by peer) while reading response header from upstream, client: 10.45.51.124, server: _, request: \"POST
-                  /engine-rest/external-task/fetchAndLock HTTP/1.1\", upstream: \"http://10.42.4.176:8080/engine-rest/external-task/fetchAndLock\",
-                  host: \"workflow-incoming-goods-dev.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:07.006060883Z","kubernetes":{"pod_name":"nginx-ingress-controller-s9d2g","namespace_name":"ingress-nginx","pod_id":"c39eb5b2-f0e3-4c78-ac13-695067fbbb1c","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2939","container_name":"controller","docker_id":"aebb570eaa583c33ee826d9d86324d86e89112b0533451146037a6ad6dee2144","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
+                '@rawstring': '{"log":"2023/05/03 20:48:07 [error] 31840#31840: *269463007 recv() failed (104: Connection reset by peer) while reading response header from upstream, client: 10.45.51.124, server: _, request: \"POST /engine-rest/external-task/fetchAndLock HTTP/1.1\", upstream: \"http://10.42.4.176:8080/engine-rest/external-task/fetchAndLock\", host: \"workflow-incoming-goods-dev.dev2.paas.rewe.local\"\n","stream":"stderr","time":"2023-05-03T20:48:07.006060883Z","kubernetes":{"pod_name":"nginx-ingress-controller-s9d2g","namespace_name":"ingress-nginx","pod_id":"c39eb5b2-f0e3-4c78-ac13-695067fbbb1c","labels":{"app":"ingress-nginx","app.kubernetes.io/component":"controller","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/name":"ingress-nginx","controller-revision-hash":"7c546bdb79","pod-template-generation":"23"},"annotations":{"kubernetes.io/psp":"default-psp"},"host":"vvm2939","container_name":"controller","docker_id":"aebb570eaa583c33ee826d9d86324d86e89112b0533451146037a6ad6dee2144","container_hash":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller@sha256:97c5d92cf9a6313551ad916989f064dc70a75f0862427a412c22fa762fbd1560","container_image":"docker.artifactory.rewe.local/rancher/nginx-ingress-controller:nginx-1.2.1-rancher1"},"index":"dev-level-2","cluster":"dev-level-2","environment":"prod"}'
                 time: '2023-05-03T20:48:07.006060883Z'
                 '#type': json-time
               numberOfEvents: 16
@@ -2624,10 +2504,7 @@ paths:
     post:
       summary: LogicMonitor
       deprecated: false
-      description: Reference payload for LogicMonitor. Shows the well-formed OIM alert payload shape for a LogicMonitor source
-        — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing LogicMonitor integration in BigPanda; the payload normalizes through that integration's parsing
-        rules.
+      description: Reference payload for LogicMonitor. Shows the well-formed OIM alert payload shape for a LogicMonitor source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing LogicMonitor integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimLogicmonitorAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -2777,9 +2654,7 @@ paths:
     post:
       summary: Nagios
       deprecated: false
-      description: Reference payload for Nagios. Shows the well-formed OIM alert payload shape for a Nagios source — send
-        it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing Nagios integration in BigPanda; the payload normalizes through that integration's parsing rules.
+      description: Reference payload for Nagios. Shows the well-formed OIM alert payload shape for a Nagios source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing Nagios integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimNagiosAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -2876,10 +2751,7 @@ paths:
     post:
       summary: New Relic
       deprecated: false
-      description: Reference payload for New Relic. Shows the well-formed OIM alert payload shape for a New Relic source —
-        send it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing New Relic integration in BigPanda; the payload normalizes through that integration's parsing
-        rules.
+      description: Reference payload for New Relic. Shows the well-formed OIM alert payload shape for a New Relic source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing New Relic integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimNewrelicAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -3000,10 +2872,7 @@ paths:
     post:
       summary: Prometheus
       deprecated: false
-      description: Reference payload for Prometheus. Shows the well-formed OIM alert payload shape for a Prometheus source
-        — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing Prometheus integration in BigPanda; the payload normalizes through that integration's parsing
-        rules.
+      description: Reference payload for Prometheus. Shows the well-formed OIM alert payload shape for a Prometheus source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing Prometheus integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimPrometheusAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -3206,10 +3075,7 @@ paths:
     post:
       summary: SCOM
       deprecated: false
-      description: Reference payload for Microsoft SCOM. Shows the well-formed OIM alert payload shape for a Microsoft SCOM
-        source — send it against a test integration's app key to validate the pipeline end to end before connecting production
-        traffic. Requires an existing Microsoft SCOM integration in BigPanda; the payload normalizes through that integration's
-        parsing rules.
+      description: Reference payload for Microsoft SCOM. Shows the well-formed OIM alert payload shape for a Microsoft SCOM source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing Microsoft SCOM integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimScomV2Alerts
       tags:
       - Alert Ingestion (OIM)
@@ -3497,10 +3363,7 @@ paths:
     post:
       summary: ScienceLogic
       deprecated: false
-      description: Reference payload for ScienceLogic. Shows the well-formed OIM alert payload shape for a ScienceLogic source
-        — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing ScienceLogic integration in BigPanda; the payload normalizes through that integration's parsing
-        rules.
+      description: Reference payload for ScienceLogic. Shows the well-formed OIM alert payload shape for a ScienceLogic source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing ScienceLogic integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimSciencelogicAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -3614,15 +3477,30 @@ paths:
       x-source-page: ScienceLogic
   /oim/api/preprocess:
     post:
-      summary: Send alert events to an OIM integration and shorten the URL.
+      summary: Send alert events to an OIM integration and shorten the URL
       deprecated: false
-      description: "> ❗ API endpoint\n> \n> This API is called at `integrations.bigpanda.io`\n\nThe Open Integration Manager\
-        \ enables you to create custom inbound alert integrations through the configuration of a generic inbound integration\
-        \ rather than creating custom code. The integration manager sets parsing rules for incoming payloads, pre-processing\
-        \ the content to match incoming data requirements before it reaches the BigPanda enrichment engine.\n\nThis API allows\
-        \ you to send OIM payloads to this URL to first shorten the URL through specific tags.\n\n> \U0001F6A7 **Authentication**\n\
-        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization\
-        \ token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n"
+      description: '> ❗ API endpoint
+
+        >
+
+        > This API is called at `integrations.bigpanda.io`
+
+
+        The Open Integration Manager enables you to create custom inbound alert integrations through the configuration of a generic inbound integration rather than creating custom code. The integration manager sets parsing rules for incoming payloads, pre-processing the content to match incoming data requirements before it reaches the BigPanda enrichment engine.
+
+
+        This API allows you to send OIM payloads to this URL to first shorten the URL through specific tags.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.'
       operationId: postOimApiPreprocess
       tags:
       - Alert Ingestion (OIM)
@@ -3659,12 +3537,30 @@ paths:
       x-source-page: Send alert events to an OIM integration and shorten the URL.
   /oim/api/alerts:
     post:
-      summary: Send alert events to an OIM integration.
+      summary: Send alert events to an OIM integration
       deprecated: false
-      description: "> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization in the call\
-        \ headers.\n>\n> This API uses the Organization token type of Authorization token. Your org token must be provided\
-        \ in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_ORG_TOKEN]`\n\n> \U0001F6A7\
-        \ **Incorrect URL in Builder**\n> \n> This endpoint is accessed at the https://integrations.bigpanda.io url, not https://api.bigpanda.io\n"
+      description: '> 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+
+        > 🚧 **Incorrect URL in Builder**
+
+        >
+
+        > This endpoint is accessed at the https://integrations.bigpanda.io url, not https://api.bigpanda.io'
       operationId: oim-send-alerts
       tags:
       - Alert Ingestion (OIM)
@@ -3705,10 +3601,7 @@ paths:
     post:
       summary: SiteScope
       deprecated: false
-      description: Reference payload for SiteScope. Shows the well-formed OIM alert payload shape for a SiteScope source —
-        send it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing SiteScope integration in BigPanda; the payload normalizes through that integration's parsing
-        rules.
+      description: Reference payload for SiteScope. Shows the well-formed OIM alert payload shape for a SiteScope source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing SiteScope integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimSitescopeAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -3867,10 +3760,7 @@ paths:
     post:
       summary: SolarWinds SQL Sentry
       deprecated: false
-      description: Reference payload for SQL Sentry. Shows the well-formed OIM alert payload shape for a SQL Sentry source
-        — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing SQL Sentry integration in BigPanda; the payload normalizes through that integration's parsing
-        rules.
+      description: Reference payload for SQL Sentry. Shows the well-formed OIM alert payload shape for a SQL Sentry source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing SQL Sentry integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimSqlsentryAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -4044,9 +3934,7 @@ paths:
     post:
       summary: Splunk
       deprecated: false
-      description: Reference payload for Splunk. Shows the well-formed OIM alert payload shape for a Splunk source — send
-        it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing Splunk integration in BigPanda; the payload normalizes through that integration's parsing rules.
+      description: Reference payload for Splunk. Shows the well-formed OIM alert payload shape for a Splunk source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing Splunk integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimSplunkV2Alerts
       tags:
       - Alert Ingestion (OIM)
@@ -4286,10 +4174,7 @@ paths:
     post:
       summary: Sumo logic
       deprecated: false
-      description: Reference payload for Sumo Logic. Shows the well-formed OIM alert payload shape for a Sumo Logic source
-        — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing Sumo Logic integration in BigPanda; the payload normalizes through that integration's parsing
-        rules.
+      description: Reference payload for Sumo Logic. Shows the well-formed OIM alert payload shape for a Sumo Logic source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing Sumo Logic integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimSumologicAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -4374,10 +4259,7 @@ paths:
     post:
       summary: ThousandEyes
       deprecated: false
-      description: Reference payload for ThousandEyes. Shows the well-formed OIM alert payload shape for a ThousandEyes source
-        — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing ThousandEyes integration in BigPanda; the payload normalizes through that integration's parsing
-        rules.
+      description: Reference payload for ThousandEyes. Shows the well-formed OIM alert payload shape for a ThousandEyes source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing ThousandEyes integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimThousandeyesAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -4563,10 +4445,7 @@ paths:
     post:
       summary: Tivoli
       deprecated: false
-      description: Reference payload for IBM Tivoli. Shows the well-formed OIM alert payload shape for a IBM Tivoli source
-        — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing IBM Tivoli integration in BigPanda; the payload normalizes through that integration's parsing
-        rules.
+      description: Reference payload for IBM Tivoli. Shows the well-formed OIM alert payload shape for a IBM Tivoli source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing IBM Tivoli integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimTivoliAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -4694,10 +4573,7 @@ paths:
     post:
       summary: VMware Aria
       deprecated: false
-      description: Reference payload for VMware Aria Operations. Shows the well-formed OIM alert payload shape for a VMware
-        Aria Operations source — send it against a test integration's app key to validate the pipeline end to end before connecting
-        production traffic. Requires an existing VMware Aria Operations integration in BigPanda; the payload normalizes through
-        that integration's parsing rules.
+      description: Reference payload for VMware Aria Operations. Shows the well-formed OIM alert payload shape for a VMware Aria Operations source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing VMware Aria Operations integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimAriaopsAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -4819,9 +4695,7 @@ paths:
     post:
       summary: Zabbix
       deprecated: false
-      description: Reference payload for Zabbix. Shows the well-formed OIM alert payload shape for a Zabbix source — send
-        it against a test integration's app key to validate the pipeline end to end before connecting production traffic.
-        Requires an existing Zabbix integration in BigPanda; the payload normalizes through that integration's parsing rules.
+      description: Reference payload for Zabbix. Shows the well-formed OIM alert payload shape for a Zabbix source — send it against a test integration's app key to validate the pipeline end to end before connecting production traffic. Requires an existing Zabbix integration in BigPanda; the payload normalizes through that integration's parsing rules.
       operationId: postOimZabbixAlerts
       tags:
       - Alert Ingestion (OIM)
@@ -4968,67 +4842,7 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/zabbix-37770226e0.md
       x-source-page: Zabbix
 components:
-  securitySchemes:
-    BearerOrg22:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
-        tool you use to make API calls
-
-        '
   schemas:
-    generic201response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 201
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 201
-        data: {}
-      x-apidog-ignore-properties: []
-    generic201response2:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 201
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x--orders: []
-          x--ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 201
-        data: {}
-      x--orders:
-      - status
-      - data
-      x--ignore-properties: []
     oim_alert_preprocessors:
       type: object
       properties:
@@ -5114,8 +4928,7 @@ components:
               x-apidog-ignore-properties: []
             event_filter:
               type: string
-              description: A BPQL statement that dictates which events should be dropped upon initial ingestion (using Source
-                Tags).
+              description: A BPQL statement that dictates which events should be dropped upon initial ingestion (using Source Tags).
               examples:
               - '@alert.search_name = "OSS -- MINT Core -- *"'
             incident_identifier:
@@ -5159,85 +4972,44 @@ components:
       - sample_payload
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    sample_payload:
+    shorten_url:
       type: object
-      description: An example event payload from the tool that includes all tags that need to be normalized or referred to
-        in the schema.
-      x-apidog-orders: []
-      properties: {}
-      x-apidog-folder: ''
-      examples:
-      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n      \
-        \  \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to\
-        \ check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\
-        \n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n\
-        \        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\"\
-        : \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"\
-        env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\
-        \n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\"\
-        : \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n    \
-        \  \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\"\
-        ,\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n   \
-        \   \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n \
-        \     \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n\
-        \    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent\
-        \ server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
-      x-apidog-ignore-properties: []
-    status_mapping:
-      type: object
+      description: Rules for url shortening
       properties:
-        default_to:
+        id:
           type: string
+          description: Type of preprocessor. Must be shortenUrl for URL shortening.
           examples:
-          - critical
-          description: The value to populate if no matches are found. `​Critical​​` is default setting.
-        source:
+          - shortenUrl
+        order:
+          type: integer
+          default: 1
+          examples:
+          - 1
+        params:
+          type: object
+          properties:
+            shortenAll:
+              description: If false only shortens url inside tags longer than 512 characters.
+              type: boolean
+              default: false
+          x-apidog-orders:
+          - shortenAll
+          x-apidog-ignore-properties: []
+        tags:
           type: array
           items:
             type: string
+            examples:
+            - region_group_id
+          description: null
           examples:
-          - - '@alert.status'
-            - '@alert.labels.severity'
-          description: Is the value in the body or subject?
-        status_map:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          x-apidog-orders: []
-          examples:
-          - critical:
-            - page
-            - critical
-            warning:
-            - warn
-            - warning
-            acknowledged:
-            - acknowledged
-            ok:
-            - resolved
-          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first
-            match. One of [`critical`, `warning`, `ok`, `acknowledged`]
-          properties: {}
-          x-apidog-ignore-properties: []
+          - "[\n        \"alert_severity\",\n        \"other\"\n    ]\n"
       x-apidog-orders:
-      - default_to
-      - source
-      - status_map
-      description: null
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    tag_properties:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Optional tag name to use in BigPanda.
-          examples:
-          - host
-      x-apidog-orders:
-      - name
+      - id
+      - order
+      - params
+      - tags
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     additional_attributes:
@@ -5300,65 +5072,6 @@ components:
       - flatten
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
-    shorten_url:
-      type: object
-      description: Rules for url shortening
-      properties:
-        id:
-          type: string
-          description: Type of preprocessor. Must be shortenUrl for URL shortening.
-          examples:
-          - shortenUrl
-        order:
-          type: integer
-          default: 1
-          examples:
-          - 1
-        params:
-          type: object
-          properties:
-            shortenAll:
-              description: If false only shortens url inside tags longer than 512 characters.
-              type: boolean
-              default: false
-          x-apidog-orders:
-          - shortenAll
-          x-apidog-ignore-properties: []
-        tags:
-          type: array
-          items:
-            type: string
-            examples:
-            - region_group_id
-          description: null
-          examples:
-          - "[\n        \"alert_severity\",\n        \"other\"\n    ]\n"
-      x-apidog-orders:
-      - id
-      - order
-      - params
-      - tags
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    multi_alert_payload:
-      type: object
-      description: Payload structure for multiple alerts.
-      properties:
-        app_key:
-          type: string
-          description: Integration app key.
-          examples:
-          - <APP KEY>
-        alerts:
-          type: array
-          description: Array of alert objects.
-          items:
-            $ref: '#/components/schemas/oim_alert'
-      x-apidog-orders:
-      - app_key
-      - alerts
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     oim_alert:
       type: object
       description: OIM single alert payload schema.
@@ -5426,9 +5139,149 @@ components:
       - description
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    status_mapping:
+      type: object
+      properties:
+        default_to:
+          type: string
+          examples:
+          - critical
+          description: The value to populate if no matches are found. `​Critical​​` is default setting.
+        source:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.status'
+            - '@alert.labels.severity'
+          description: Is the value in the body or subject?
+        status_map:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          x-apidog-orders: []
+          examples:
+          - critical:
+            - page
+            - critical
+            warning:
+            - warn
+            - warning
+            acknowledged:
+            - acknowledged
+            ok:
+            - resolved
+          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first match. One of [`critical`, `warning`, `ok`, `acknowledged`]
+          properties: {}
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - default_to
+      - source
+      - status_map
+      description: null
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    sample_payload:
+      type: object
+      description: An example event payload from the tool that includes all tags that need to be normalized or referred to in the schema.
+      x-apidog-orders: []
+      properties: {}
+      x-apidog-folder: ''
+      examples:
+      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\": \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\",\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
+      x-apidog-ignore-properties: []
+    multi_alert_payload:
+      type: object
+      description: Payload structure for multiple alerts.
+      properties:
+        app_key:
+          type: string
+          description: Integration app key.
+          examples:
+          - <APP KEY>
+        alerts:
+          type: array
+          description: Array of alert objects.
+          items:
+            $ref: '#/components/schemas/oim_alert'
+      x-apidog-orders:
+      - app_key
+      - alerts
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic201response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 201
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 201
+        data: {}
+      x-apidog-ignore-properties: []
+    tag_properties:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Optional tag name to use in BigPanda.
+          examples:
+          - host
+      x-apidog-orders:
+      - name
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic201response2:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 201
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x--orders: []
+          x--ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 201
+        data: {}
+      x--orders:
+      - status
+      - data
+      x--ignore-properties: []
+  securitySchemes:
+    BearerOrg22:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure tool you use to make API calls
+
+        '
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required). The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve. Recorded as published; not corrected.

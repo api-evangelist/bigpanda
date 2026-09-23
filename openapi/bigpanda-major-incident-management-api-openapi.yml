@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda Major Incident Management API
-  description: BigPanda Major Incident Management operations, assembled verbatim from the OpenAPI fragments BigPanda publishes
-    on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
-    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
-    the base URL for your region.
+  description: BigPanda Major Incident Management operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
     name: BigPanda Support
@@ -16,10 +13,7 @@ info:
     method: searched
     source: https://api-docs.bigpanda.io/llms.txt
     harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md. Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by API Evangelist.'
     operations: 7
 servers:
 - url: https://api.bigpanda.io
@@ -33,12 +27,28 @@ paths:
     post:
       summary: Cancel a MIM Execution
       deprecated: false
-      description: "Cancels an active execution without resolving it. \n\nUnlike the resolve endpoint, cancellation moves\
-        \ the execution directly to `cancelled` status without performing closing-out work.\n\n> \U0001F6A7 **Authentication**\n\
-        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
-        \ type of Authorization token.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is\
-        \ limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need\
-        \ to be retried."
+      description: 'Cancels an active execution without resolving it.
+
+
+        Unlike the resolve endpoint, cancellation moves the execution directly to `cancelled` status without performing closing-out work.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.'
       tags:
       - Major Incident Management
       parameters:
@@ -190,20 +200,54 @@ paths:
       x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769968-run
       x-source-url: https://api-docs.bigpanda.io/cancel-a-mim-execution-37769968e0.md
       x-source-page: Cancel a MIM Execution
+      operationId: postMimExecutionsByExecutionIdCancel
+      x-operation-id-source: derived
   /mim/execute:
     post:
       summary: Execute a MIM Workflow From a Template
       deprecated: false
-      description: "Start a major incident workflow from a template. Create communication channels, provision resources, and\
-        \ kick off automated actions. \n\nImmediately returns an executionId that can be polled via the executions endpoints.\
-        \ \n\nBanner posting and LLM enrichment happen asynchronously after creation and do not block the response.\n\nLookback\
-        \ backfill failures are returned in warnings rather than failing the request.\n\n> \U0001F6A7 **valueSource**\n> \n\
-        > If `valueSource` is `runtime` and `isRequired` is `true`, you must have values in `communicationEntityValues` or\
-        \ the request fails with a 400 return.\n\n> \U0001F4D8 **MIM creator**\n>\n> The user associated with the API key\
-        \ is automatically assigned as the MIM creator.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
-        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\
-        \n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute.\
-        \ Additional requests will return a 429 response code and the request will need to be retried."
+      description: 'Start a major incident workflow from a template. Create communication channels, provision resources, and kick off automated actions.
+
+
+        Immediately returns an executionId that can be polled via the executions endpoints.
+
+
+        Banner posting and LLM enrichment happen asynchronously after creation and do not block the response.
+
+
+        Lookback backfill failures are returned in warnings rather than failing the request.
+
+
+        > 🚧 **valueSource**
+
+        >
+
+        > If `valueSource` is `runtime` and `isRequired` is `true`, you must have values in `communicationEntityValues` or the request fails with a 400 return.
+
+
+        > 📘 **MIM creator**
+
+        >
+
+        > The user associated with the API key is automatically assigned as the MIM creator.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.'
       tags:
       - Major Incident Management
       parameters: []
@@ -299,16 +343,7 @@ paths:
               - incidentPriority
               - communicationEntityValues
               - incidentDetails
-            example: "curl -sS -X POST \"https://api.biggy.io/mim/execute\" \\\r\n  -H \"Authorization: Bearer your-api-key\"\
-              \ \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"templateId\": \"665a1b2c3d4e5f6a7b8c9d0e\"\
-              ,\r\n    \"mimName\": \"Payments Outage 2026-03-11\",\r\n    \"incidentPriority\": \"P1\",\r\n    \"communicationEntityValues\"\
-              : [\r\n        {\r\n            \"entityId\": \"665b2c3d4e5f6a7b8c9d0e1f\",\r\n            \"value\": {\r\n\
-              \                \"channelId\": \"C0123456789\",\r\n                \"channelName\": \"#payments-outage-war-room\"\
-              \r\n            }\r\n        }\r\n    ],\r\n    \"incidentDetails\": {\r\n        \"title\": \"Payment processing\
-              \ outage\",\r\n        \"description\": \"All payment processing is down across all regions.\",\r\n        \"\
-              impact\": {\r\n            \"services\": [\r\n                \"payments-api\",\r\n                \"checkout-service\"\
-              \r\n            ],\r\n            \"statement\": \"All customers unable to complete purchases\"\r\n        }\r\
-              \n    }\r\n}'"
+            example: "curl -sS -X POST \"https://api.biggy.io/mim/execute\" \\\n  -H \"Authorization: Bearer your-api-key\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"templateId\": \"665a1b2c3d4e5f6a7b8c9d0e\",\n    \"mimName\": \"Payments Outage 2026-03-11\",\n    \"incidentPriority\": \"P1\",\n    \"communicationEntityValues\": [\n        {\n            \"entityId\": \"665b2c3d4e5f6a7b8c9d0e1f\",\n            \"value\": {\n                \"channelId\": \"C0123456789\",\n                \"channelName\": \"#payments-outage-war-room\"\n            }\n        }\n    ],\n    \"incidentDetails\": {\n        \"title\": \"Payment processing outage\",\n        \"description\": \"All payment processing is down across all regions.\",\n        \"impact\": {\n            \"services\": [\n                \"payments-api\",\n                \"checkout-service\"\n            ],\n            \"statement\": \"All customers unable to complete purchases\"\n        }\n    }\n}'"
       responses:
         '201':
           x-apidog-ordering: 0
@@ -441,15 +476,34 @@ paths:
       x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769964-run
       x-source-url: https://api-docs.bigpanda.io/execute-a-mim-workflow-from-a-template-37769964e0.md
       x-source-page: Execute a MIM Workflow From a Template
+      operationId: postMimExecute
+      x-operation-id-source: derived
   /mim/templates:
     get:
       summary: List Templates
       deprecated: false
-      description: "Return a paginated list of MIM templates configured for your organization. \n\nEach template summary includes\
-        \ the communication entities and a count of automated actions.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
-        \ token.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests\
-        \ per minute. Additional requests will return a 429 response code and the request will need to be retried."
+      description: 'Return a paginated list of MIM templates configured for your organization.
+
+
+        Each template summary includes the communication entities and a count of automated actions.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.'
       tags:
       - Major Incident Management
       parameters:
@@ -523,8 +577,7 @@ paths:
                                 - false
                               valueSource:
                                 type: string
-                                description: Value source of the communication entity. One of  `runtime` (caller supplies),
-                                  `static` (pre-configured), or `create_on_mim_creation` (auto-created).
+                                description: Value source of the communication entity. One of  `runtime` (caller supplies), `static` (pre-configured), or `create_on_mim_creation` (auto-created).
                                 examples:
                                 - runtime
                               hintText:
@@ -587,16 +640,34 @@ paths:
       x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769965-run
       x-source-url: https://api-docs.bigpanda.io/list-templates-37769965e0.md
       x-source-page: List Templates
+      operationId: getMimTemplates
+      x-operation-id-source: derived
   /mim/executions/{executionId}/resolve:
     post:
       summary: Resolve a MIM execution
       deprecated: false
-      description: "Marks an active execution as resolved. The execution transitions to `pending_resolution` status while\
-        \ the MIM orchestrator performs closing-out work (final reports, channel archiving, etc.).\n\nExecutions in `active`,\
-        \ `paused`, or `pending_resolution` status can be resolved.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
-        \ token.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests\
-        \ per minute. Additional requests will return a 429 response code and the request will need to be retried."
+      description: 'Marks an active execution as resolved. The execution transitions to `pending_resolution` status while the MIM orchestrator performs closing-out work (final reports, channel archiving, etc.).
+
+
+        Executions in `active`, `paused`, or `pending_resolution` status can be resolved.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.'
       tags:
       - Major Incident Management
       parameters:
@@ -620,9 +691,7 @@ paths:
                   - Root cause identified and fix deployed. Payments restored.
               x-apidog-orders:
               - reason
-            example: "curl -sS -X POST \"https://api.biggy.io/mim/executions/:executionId/resolve\" \\\r\n  -H \"Authorization:\
-              \ Bearer your-api-key\" \\\r\n  -H \"Content-Type: application/json\" \\\r\n  -d '{\r\n    \"reason\": \"Root\
-              \ cause identified and fix deployed. Payments restored.\"\r\n}'"
+            example: "curl -sS -X POST \"https://api.biggy.io/mim/executions/:executionId/resolve\" \\\n  -H \"Authorization: Bearer your-api-key\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"reason\": \"Root cause identified and fix deployed. Payments restored.\"\n}'"
       responses:
         '200':
           x-apidog-ordering: 0
@@ -750,15 +819,31 @@ paths:
       x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769967-run
       x-source-url: https://api-docs.bigpanda.io/resolve-a-mim-execution-37769967e0.md
       x-source-page: Resolve a MIM execution
+      operationId: postMimExecutionsByExecutionIdResolve
+      x-operation-id-source: derived
   /mim/executions/{executionId}:
     get:
       summary: Retrieve MIM Execution Details
       deprecated: false
-      description: "Returns full details of a single MIM execution, including all communication entities and action statuses.\n\
-        \n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n\
-        >\n> This API uses the User API Key type of Authorization token.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality\
-        \ of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response\
-        \ code and the request will need to be retried."
+      description: 'Returns full details of a single MIM execution, including all communication entities and action statuses.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.'
       tags:
       - Major Incident Management
       parameters:
@@ -906,22 +991,37 @@ paths:
       x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769970-run
       x-source-url: https://api-docs.bigpanda.io/retrieve-mim-execution-details-37769970e0.md
       x-source-page: Retrieve MIM Execution Details
+      operationId: getMimExecutionsByExecutionId
+      x-operation-id-source: derived
   /mim/executions:
     get:
       summary: Retrieve MIM Executions
       deprecated: false
-      description: "Returns MIM executions for the organization, optionally filtered by status. Useful for dashboards and\
-        \ monitoring active incidents.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization\
-        \ in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\n> ❗ **Rate limitations**\n\
-        > \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will\
-        \ return a 429 response code and the request will need to be retried."
+      description: 'Returns MIM executions for the organization, optionally filtered by status. Useful for dashboards and monitoring active incidents.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.'
       tags:
       - Major Incident Management
       parameters:
       - name: status
         in: query
-        description: Filter by execution status. One of `active`, `paused`, `completed`, `failed`, `cancelled`, `pending_resolution`,
-          or `expired`.
+        description: Filter by execution status. One of `active`, `paused`, `completed`, `failed`, `cancelled`, `pending_resolution`, or `expired`.
         required: false
         schema:
           type: string
@@ -1097,15 +1197,31 @@ paths:
       x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769969-run
       x-source-url: https://api-docs.bigpanda.io/retrieve-mim-executions-37769969e0.md
       x-source-page: Retrieve MIM Executions
+      operationId: getMimExecutions
+      x-operation-id-source: derived
   /mim/templates/{templateId}:
     get:
       summary: Retrieve Template Details
       deprecated: false
-      description: "Returns full details for a single MIM template, including complete action definitions with scheduling,\
-        \ execution mode, and approval requirements.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
-        \ Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\n\n>\
-        \ ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is limited to 100 requests per minute.\
-        \ Additional requests will return a 429 response code and the request will need to be retried."
+      description: 'Returns full details for a single MIM template, including complete action definitions with scheduling, execution mode, and approval requirements.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.'
       tags:
       - Major Incident Management
       parameters:
@@ -1167,8 +1283,7 @@ paths:
                           - true
                         valueSource:
                           type: string
-                          description: Value source of the communication entity. One of `runtime` (caller supplies), `static`(pre-configured),
-                            or `create_on_mim_creation` (auto-created).
+                          description: Value source of the communication entity. One of `runtime` (caller supplies), `static`(pre-configured), or `create_on_mim_creation` (auto-created).
                           examples:
                           - runtime
                         hintText:
@@ -1234,8 +1349,7 @@ paths:
                           - unit
                         executionMode:
                           type: string
-                          description: Type of execution. One of one of `prompt` (LLM-generated) or `action_plan` (structured
-                            plan).
+                          description: Type of execution. One of one of `prompt` (LLM-generated) or `action_plan` (structured plan).
                           examples:
                           - prompt
                         requiresHumanApproval:
@@ -1338,9 +1452,8 @@ paths:
       x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37769966-run
       x-source-url: https://api-docs.bigpanda.io/retrieve-template-details-37769966e0.md
       x-source-page: Retrieve Template Details
+      operationId: getMimTemplatesByTemplateId
+      x-operation-id-source: derived
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required). The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve. Recorded as published; not corrected.

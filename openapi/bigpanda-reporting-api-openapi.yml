@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda Reporting API
-  description: BigPanda Reporting operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own
-    API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it
-    was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base
-    URL for your region.
+  description: BigPanda Reporting operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
     name: BigPanda Support
@@ -16,10 +13,7 @@ info:
     method: searched
     source: https://api-docs.bigpanda.io/llms.txt
     harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md. Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by API Evangelist.'
     operations: 3
 servers:
 - url: https://api.bigpanda.io
@@ -33,15 +27,39 @@ paths:
     post:
       summary: Generate a Report
       deprecated: false
-      description: "Generate a report from multiple sources. At least one source is required. Transcripts, ServiceNow records,\
-        \ Slack channels, Teams chats, Teams channels, and Jira issues are supported.\n\n> \U0001F6A7 **Authentication**\n\
-        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
-        \ type of Authorization token.\n\n> ❗ **Rate limitations**\n> \n> To maintain quality of service, the Biggy API is\
-        \ limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need\
-        \ to be retried.\n\n> \U0001F4D8 **Streaming response**\n>\n> Setting the `streaming` field to `true` returns a streaming\
-        \ response. Setting it to `false` returns a JSON file. \n\n> \U0001F6A7 **async**\n> \n> When `async` is set to `true`,\
-        \ the `reportId is returned. Poll GET /multi-context-generation/reports/:reportId until executionState is `completed`\
-        \ or `failed`.\n"
+      description: 'Generate a report from multiple sources. At least one source is required. Transcripts, ServiceNow records, Slack channels, Teams chats, Teams channels, and Jira issues are supported.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token.
+
+
+        > ❗ **Rate limitations**
+
+        >
+
+        > To maintain quality of service, the Biggy API is limited to 100 requests per minute. Additional requests will return a 429 response code and the request will need to be retried.
+
+
+        > 📘 **Streaming response**
+
+        >
+
+        > Setting the `streaming` field to `true` returns a streaming response. Setting it to `false` returns a JSON file.
+
+
+        > 🚧 **async**
+
+        >
+
+        > When `async` is set to `true`, the `reportId is returned. Poll GET /multi-context-generation/reports/:reportId until executionState is `completed` or `failed`.'
       operationId: create-a-multi-context-report
       tags:
       - Reporting
@@ -77,8 +95,7 @@ paths:
                     $ref: '#/components/schemas/serviceNow-object'
                 reasoningEffort:
                   type: string
-                  description: Level of reasoning that should be used to generate the report. One of `Low`, `Medium`, `High`,  or
-                    `Extreme`.
+                  description: Level of reasoning that should be used to generate the report. One of `Low`, `Medium`, `High`,  or `Extreme`.
                   examples:
                   - Low
                 visibility:
@@ -142,8 +159,7 @@ paths:
     get:
       summary: Get Integration Alerts
       deprecated: false
-      description: Retrieve the raw OIM-normalized alert payloads recently ingested by a specific integration. Pass the integration's
-        app key to see exactly what BigPanda received before enrichment — the fastest way to debug source-to-tag mapping.
+      description: Retrieve the raw OIM-normalized alert payloads recently ingested by a specific integration. Pass the integration's app key to see exactly what BigPanda received before enrichment — the fastest way to debug source-to-tag mapping.
       operationId: get-integration-alerts
       tags:
       - Reporting
@@ -228,10 +244,27 @@ paths:
     get:
       summary: Retrieve All Troubleshooting Logs
       deprecated: false
-      description: "Retrieves a specific definition for an enrichment schema.\n\n> \U0001F6A7 **Authentication**\n> \n> All\
-        \ BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type\
-        \ of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n\
-        > `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Retrieves a specific definition for an enrichment schema.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: retrieve-all-troubleshooting-logs
       tags:
       - Reporting
@@ -341,163 +374,26 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/retrieve-all-troubleshooting-logs-37770200e0.md
       x-source-page: Retrieve All Troubleshooting Logs
 components:
-  securitySchemes:
-    BearerUser11:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
-
-        headers only in the secure tool you use to make API calls
-
-        '
-    BearerUser131:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
-        tool you use to make API calls
-
-        '
   schemas:
-    serviceNow-object:
-      required:
-      - tableName
+    error-response-v1:
+      title: error-response-v1
       type: object
-      properties:
-        tableName:
-          type: string
-          description: Name of the ServiceNow table where the record is located.
-          examples:
-          - Incident
-        recordNumber:
-          type: string
-          description: ServiceNow record number.
-          examples:
-          - INC1234567
-        sysId:
-          type: string
-          description: ServiceNow unique record identifier.
-          examples:
-          - 9d385017c611228701d22104cc95g555
-      x-apidog-orders:
-      - tableName
-      - recordNumber
-      - sysId
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    multi-context200response:
-      type: object
-      properties:
-        reportId:
-          type: string
-          description: Unique ID of the multi-context report.
-          examples:
-          - 65f0c8f8d73b2b0012ab123
-        title:
-          type: string
-          description: Title of the report.
-          examples:
-          - Executive summary
-        format:
-          type: string
-          description: The format that the report was returned in.
-          examples:
-          - markdown
-        visibility:
-          type: string
-          description: Whether the report was private or visible to everyone in the organization.
-          examples:
-          - private
-        content:
-          type: string
-          description: Content of the report.
-          examples:
-          - This is the report.
-        warnings:
-          type: array
-          description: Warnings provided by the report.
-          schema:
-            type: string
-          items:
-            type: string
-      x-apidog-orders:
-      - reportId
-      - title
-      - format
-      - visibility
-      - content
-      - warnings
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic403response:
-      type: object
-      description: 'Forbidden
-
-        '
-      properties:
-        statusCode:
-          type: integer
-          examples:
-          - 403
-        error:
-          type: string
-          examples:
-          - Forbidden
-        message:
-          type: string
-          examples:
-          - Forbidden - insufficient permissions
-      x-apidog-orders:
-      - statusCode
-      - error
-      - message
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    IntegrationAlerts:
-      type: object
+      description: BP default error response
       properties:
         status:
           $ref: '#/components/schemas/http-status-code-v1'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                type: object
-                properties:
-                  alertData:
-                    type: string
-                  processingTime:
-                    type: string
-                required:
-                - alertData
-                - processingTime
-                x-apidog-orders:
-                - alertData
-                - processingTime
-                x-apidog-ignore-properties: []
-            total:
-              type: number
-              minimum: 0
-          required:
-          - items
-          - total
-          x-apidog-orders:
-          - items
-          - total
-          x-apidog-ignore-properties: []
+        errors:
+          type: array
+          items:
+            type: string
       required:
       - status
-      - data
+      - errors
       x-apidog-orders:
       - status
-      - data
-      x-apidog-folder: ''
+      - errors
       x-apidog-ignore-properties: []
+      x-apidog-folder: ''
     http-status-code-v1:
       type: number
       enum:
@@ -558,25 +454,6 @@ components:
       - 507
       - 511
       description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-      x-apidog-folder: ''
-    error-response-v1:
-      title: error-response-v1
-      type: object
-      description: BP default error response
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
-      required:
-      - status
-      - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
       x-apidog-folder: ''
     diagnostic_log:
       type: object
@@ -652,9 +529,161 @@ components:
       - timestamp
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    serviceNow-object:
+      required:
+      - tableName
+      type: object
+      properties:
+        tableName:
+          type: string
+          description: Name of the ServiceNow table where the record is located.
+          examples:
+          - Incident
+        recordNumber:
+          type: string
+          description: ServiceNow record number.
+          examples:
+          - INC1234567
+        sysId:
+          type: string
+          description: ServiceNow unique record identifier.
+          examples:
+          - 9d385017c611228701d22104cc95g555
+      x-apidog-orders:
+      - tableName
+      - recordNumber
+      - sysId
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    IntegrationAlerts:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  alertData:
+                    type: string
+                  processingTime:
+                    type: string
+                required:
+                - alertData
+                - processingTime
+                x-apidog-orders:
+                - alertData
+                - processingTime
+                x-apidog-ignore-properties: []
+            total:
+              type: number
+              minimum: 0
+          required:
+          - items
+          - total
+          x-apidog-orders:
+          - items
+          - total
+          x-apidog-ignore-properties: []
+      required:
+      - status
+      - data
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    multi-context200response:
+      type: object
+      properties:
+        reportId:
+          type: string
+          description: Unique ID of the multi-context report.
+          examples:
+          - 65f0c8f8d73b2b0012ab123
+        title:
+          type: string
+          description: Title of the report.
+          examples:
+          - Executive summary
+        format:
+          type: string
+          description: The format that the report was returned in.
+          examples:
+          - markdown
+        visibility:
+          type: string
+          description: Whether the report was private or visible to everyone in the organization.
+          examples:
+          - private
+        content:
+          type: string
+          description: Content of the report.
+          examples:
+          - This is the report.
+        warnings:
+          type: array
+          description: Warnings provided by the report.
+          schema:
+            type: string
+          items:
+            type: string
+      x-apidog-orders:
+      - reportId
+      - title
+      - format
+      - visibility
+      - content
+      - warnings
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic403response:
+      type: object
+      description: 'Forbidden
+
+        '
+      properties:
+        statusCode:
+          type: integer
+          examples:
+          - 403
+        error:
+          type: string
+          examples:
+          - Forbidden
+        message:
+          type: string
+          examples:
+          - Forbidden - insufficient permissions
+      x-apidog-orders:
+      - statusCode
+      - error
+      - message
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+  securitySchemes:
+    BearerUser11:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers)
+
+        headers only in the secure tool you use to make API calls
+
+        '
+    BearerUser131:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure tool you use to make API calls
+
+        '
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required). The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve. Recorded as published; not corrected.

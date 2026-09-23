@@ -1,106 +1,135 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: BigPanda Maintenance Plans API
-  description: BigPanda Maintenance Plans operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on
-    its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
-    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
-    the base URL for your region.
-  version: 1.0.0
-  contact:
-    name: BigPanda Support
-    url: https://api-docs.bigpanda.io/
+  title: Bigpanda Maintenance Plans API
   license:
     name: Proprietary
     url: https://www.bigpanda.io/legal/
-  x-provenance:
-    method: searched
-    source: https://api-docs.bigpanda.io/llms.txt
-    harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
-    operations: 6
+  x-refined-note:
+  - x-generated-from differs across the merged source definitions and was not carried
+  - x-refined-note differs across the merged source definitions and was not carried
+  version: '1.0'
+  description: 'Operations tagged Maintenance Plans across 2 of this provider''s published API definitions: bigpanda-openapi.yml, bigpanda-maintenance-plans-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.bigpanda.io
-  description: US Region
+  description: BigPanda API
 - url: https://api.eu.bigpanda.io
   description: EU Region
 tags:
 - name: Maintenance Plans
+  description: Schedule maintenance windows to suppress alerts
 paths:
   /resources/v2.0/maintenance-plans:
-    post:
-      summary: Create a new maintenance plan
-      deprecated: false
-      description: 'Creates a new schema definition for creating a new maintenance plan.
-
-
-        ## Condition limitations
-
-        Maintenance plan conditions cannot be longer than 25,000 characters long. All alert tags in maintenance plan conditions
-        are case-insensitive.
-
-
-        See the [Epoch Converter](http://www.epochconverter.com/#tools) to convert times to unix epoch format.
-
-
-        ## Authentication
-
-        All BigPanda APIs require Bearer Token Authorization in the call headers.
-
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
-
-
-        Example:
-
-        `Authorization: Bearer [YOUR_USER_API_KEY]`
-
-
-        **Rate limit:** 5 requests per second.'
-      operationId: maintenance-plan-v2-create-plan
+    get:
+      operationId: listMaintenancePlans
+      summary: BigPanda List Maintenance Plans
+      description: Returns all maintenance plans.
       tags:
       - Maintenance Plans
-      parameters: []
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: List of maintenance plans.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenancePlansResponse'
+              examples:
+                ListMaintenancePlans200Example:
+                  summary: Default listMaintenancePlans 200 response
+                  x-microcks-default: true
+                  value:
+                    maintenance_plans:
+                    - id: mp-abc123
+                      name: Weekend Maintenance
+                      active: false
+                      start: 1713000000
+                      end: 1713086400
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createMaintenancePlan
+      summary: BigPanda Create Maintenance Plan
+      description: Creates a new maintenance plan to suppress alerts during a window.
+      tags:
+      - Maintenance Plans
+      security:
+      - bearerAuth: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/maintenance_plan_object'
+              $ref: '#/components/schemas/MaintenancePlanRequest'
+            examples:
+              CreateMaintenancePlan201Example:
+                summary: Default createMaintenancePlan request example
+                x-microcks-default: true
+                value:
+                  name: Weekend Maintenance
+                  condition: host = "production-database-1"
+                  start: 1713000000
+                  end: 1713086400
       responses:
         '201':
-          x-apidog-ordering: 0
-          description: '201'
+          description: Maintenance plan created.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/maintenance_plan_response'
-          headers: {}
-          x-apidog-name: ''
+                $ref: '#/components/schemas/MaintenancePlan'
+              examples:
+                CreateMaintenancePlan201Example:
+                  summary: Default createMaintenancePlan 201 response
+                  x-microcks-default: true
+                  value:
+                    id: mp-abc123
+                    name: Weekend Maintenance
+                    active: false
+                    start: 1713000000
+                    end: 1713086400
         '400':
-          x-apidog-ordering: 1
-          description: '400'
+          description: Invalid maintenance plan.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/generic400response'
-          headers: {}
-          x-apidog-name: ''
-      security:
-      - BearerUser131: []
-      x-publication-status: live
-      x-run-in-apidog: https://app.apidog.com/web/project/1203004/apis/api-37770040-run
-      x-source-url: https://api-docs.bigpanda.io/create-a-new-maintenance-plan-37770040e0.md
-      x-source-page: Create a new maintenance plan
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    servers:
+    - url: https://api.bigpanda.io
+      description: BigPanda API
   /resources/v2.0/maintenance-plans/{maintenance_id}:
+    servers:
+    - url: https://api.bigpanda.io
+      description: US Region
+    - url: https://api.eu.bigpanda.io
+      description: EU Region
     delete:
       summary: Delete a Plan
       deprecated: false
-      description: "Deletes a specific maintenance plan and removes it from the system.\n\n> \U0001F6A7 **Authentication**\n\
-        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
-        \ type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\
-        >\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Deletes a specific maintenance plan and removes it from the system.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: maintenance-plan-v2-delete-plan
       tags:
       - Maintenance Plans
@@ -147,8 +176,7 @@ paths:
 
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
@@ -203,8 +231,7 @@ paths:
 
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
@@ -248,6 +275,11 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/update-a-plan-37770043e0.md
       x-source-page: Update a Plan
   /resources/v2.0/ordered-maintenance-plans:
+    servers:
+    - url: https://api.bigpanda.io
+      description: US Region
+    - url: https://api.eu.bigpanda.io
+      description: EU Region
     get:
       summary: Retrieve All Plans
       deprecated: false
@@ -260,8 +292,7 @@ paths:
 
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
@@ -358,13 +389,37 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/retrieve-all-plans-37770045e0.md
       x-source-page: Retrieve All Plans
   /resources/v2.0/maintenance-plans/{maintenance_id}/stop:
+    servers:
+    - url: https://api.bigpanda.io
+      description: US Region
+    - url: https://api.eu.bigpanda.io
+      description: EU Region
     post:
       summary: Stop Plan
       deprecated: false
-      description: "Stops a specific maintenance plan. Note: Only active plans can be\nstopped.\n\n> \U0001F6A7 **Authentication**\n\
-        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
-        \ type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\
-        >\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Stops a specific maintenance plan. Note: Only active plans can be
+
+        stopped.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: maintenance-plan-v2-stop-plan
       tags:
       - Maintenance Plans
@@ -395,17 +450,185 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/stop-plan-37770044e0.md
       x-source-page: Stop Plan
 components:
-  securitySchemes:
-    BearerUser131:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
-        tool you use to make API calls
+  schemas:
+    MaintenancePlan:
+      title: Maintenance Plan
+      description: A BigPanda maintenance plan for suppressing alerts.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Maintenance plan ID.
+          example: mp-abc123
+        name:
+          type: string
+          description: Maintenance plan name.
+          example: Weekend Maintenance
+        active:
+          type: boolean
+          description: Whether the maintenance plan is currently active.
+          example: false
+        start:
+          type: integer
+          description: Start Unix timestamp.
+          example: 1713000000
+        end:
+          type: integer
+          description: End Unix timestamp.
+          example: 1713086400
+    MaintenancePlanRequest:
+      title: Maintenance Plan Request
+      description: Payload for creating a maintenance plan.
+      type: object
+      required:
+      - name
+      - condition
+      - start
+      - end
+      properties:
+        name:
+          type: string
+          description: Maintenance plan name.
+          example: Weekend Maintenance
+        condition:
+          type: string
+          description: Filter condition for hosts in maintenance.
+          example: host = "production-database-1"
+        start:
+          type: integer
+          description: Start Unix timestamp.
+          example: 1713000000
+        end:
+          type: integer
+          description: End Unix timestamp.
+          example: 1713086400
+    MaintenancePlansResponse:
+      title: Maintenance Plans Response
+      description: List of maintenance plans.
+      type: object
+      properties:
+        maintenance_plans:
+          type: array
+          description: Array of maintenance plans.
+          items:
+            $ref: '#/components/schemas/MaintenancePlan'
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+          example: resource not found
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+    updated_by:
+      type: string
+      description: System id of the user or tool that last updated the resource.
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
+    maintenance_plan_response:
+      type: object
+      properties:
+        id:
+          type: string
+          description: System-generated unique identifier for a maintenance plan.
+          examples:
+          - 64f0b24f340000bbd269595c
+        status:
+          type: string
+          description: The maintenance plan's status.
+          examples:
+          - planned
+        maintenance_key:
+          type: string
+          description: Third party (Jira, ServiceNow, etc.) system key for integrated maintenance management. If no integration key is included in the call, a system ID will be added automatically.
+          examples:
+          - MNT-de9d22d700e9
+        name:
+          type: string
+          description: User-defined name for the plan.
+          examples:
+          - host1 maintenance
+        start:
+          type: integer
+          description: Unix epoch time when the scheduled plan starts (in seconds). For recurring plans, this time should be the start of the first maintenance window.
+          examples:
+          - 1733904622
+        end:
+          type: integer
+          description: Unix epoch time when the scheduled plan ends (in seconds). For recurring plans, this time should be the date when the plan should stop repeating.
+          examples:
+          - 1734768622
+        description:
+          type: string
+          description: Brief user-defined summary of the maintenance plan.
+          examples:
+          - this is a description
+        custom_tags:
+          type: array
+          description: Metadata about the plan in an array of key:value pairs.
+          items:
+            $ref: '#/components/schemas/maintenance_custom_tags'
+        created_by:
+          $ref: '#/components/schemas/created_by'
+        created_at:
+          $ref: '#/components/schemas/created_at'
+        updated_by:
+          $ref: '#/components/schemas/updated_by'
+        updated_at:
+          $ref: '#/components/schemas/updated_at'
+        frequency:
+          type: string
+          description: How often the scheduled plan should silence alerts. One of [`Once`, `Daily`, `Weekly`, `Monthly`]. Default is `Once`. This field is case-insensitive.
+          examples:
+          - Daily
+        frequency_data:
+          $ref: '#/components/schemas/updated_at'
+      x-apidog-orders:
+      - id
+      - status
+      - maintenance_key
+      - name
+      - start
+      - end
+      - description
+      - custom_tags
+      - created_by
+      - created_at
+      - updated_by
+      - updated_at
+      - frequency
+      - frequency_data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic204response:
+      type: object
+      description: 'Call was successful.
 
         '
-  schemas:
+      properties:
+        status:
+          type: integer
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
+      x-apidog-ignore-properties: []
     maintenance_plan_object:
       required:
       - name
@@ -422,8 +645,7 @@ components:
         condition:
           type: object
           additionalProperties: true
-          description: 'Maintenance condition in the form of a [BPQL object format](https://api-docs.bigpanda.io/en#description/bpql-object-syntax).
-            Cannot be longer than 80,000 characters long.
+          description: 'Maintenance condition in the form of a [BPQL object format](https://api-docs.bigpanda.io/en#description/bpql-object-syntax). Cannot be longer than 80,000 characters long.
 
             '
           x-apidog-orders: []
@@ -431,15 +653,13 @@ components:
           x-apidog-ignore-properties: []
         start:
           type: integer
-          description: 'Unix epoch time when the scheduled plan starts (in seconds). For recurring plans, this time should
-            be the start of the first maintenance window.
+          description: 'Unix epoch time when the scheduled plan starts (in seconds). For recurring plans, this time should be the start of the first maintenance window.
 
             '
           format: int32
         end:
           type: integer
-          description: 'Unix epoch time when the scheduled plan ends (in seconds). For recurring plans, this time should be
-            the date when the plan should stop repeating.
+          description: 'Unix epoch time when the scheduled plan ends (in seconds). For recurring plans, this time should be the date when the plan should stop repeating.
 
             '
           format: int32
@@ -448,8 +668,7 @@ components:
           description: Brief user-defined summary of the maintenance plan.
         frequency:
           type: string
-          description: 'How often the scheduled plan should silence alerts. One of: `Once`, `Daily`, `Weekly`, `Monthly`.
-            This field is case-sensitive.
+          description: 'How often the scheduled plan should silence alerts. One of: `Once`, `Daily`, `Weekly`, `Monthly`. This field is case-sensitive.
 
             '
           default: Once
@@ -469,15 +688,13 @@ components:
           x-apidog-ignore-properties: []
         post_maintenance_action:
           type: string
-          description: 'What should happen to alerts suppressed by this plan after the maintenance window ends.  One of: [Resolve,
-            Reactivate, None]
+          description: 'What should happen to alerts suppressed by this plan after the maintenance window ends.  One of: [Resolve, Reactivate, None]
 
             '
           default: None
         time_zone:
           type: string
-          description: 'The maintenance plan''s time zone setting. Default is UTC. See the [full list of supported time zones
-            here](https://docs.bigpanda.io/reference/supported-time-zones).
+          description: 'The maintenance plan''s time zone setting. Default is UTC. See the [full list of supported time zones here](https://docs.bigpanda.io/reference/supported-time-zones).
 
             '
         custom_tags:
@@ -506,97 +723,6 @@ components:
       - custom_tags
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    maintenance_plan_response:
-      type: object
-      properties:
-        id:
-          type: string
-          description: System-generated unique identifier for a maintenance plan.
-          examples:
-          - 64f0b24f340000bbd269595c
-        status:
-          type: string
-          description: The maintenance plan's status.
-          examples:
-          - planned
-        maintenance_key:
-          type: string
-          description: Third party (Jira, ServiceNow, etc.) system key for integrated maintenance management. If no integration
-            key is included in the call, a system ID will be added automatically.
-          examples:
-          - MNT-de9d22d700e9
-        name:
-          type: string
-          description: User-defined name for the plan.
-          examples:
-          - host1 maintenance
-        start:
-          type: integer
-          description: Unix epoch time when the scheduled plan starts (in seconds). For recurring plans, this time should
-            be the start of the first maintenance window.
-          examples:
-          - 1733904622
-        end:
-          type: integer
-          description: Unix epoch time when the scheduled plan ends (in seconds). For recurring plans, this time should be
-            the date when the plan should stop repeating.
-          examples:
-          - 1734768622
-        description:
-          type: string
-          description: Brief user-defined summary of the maintenance plan.
-          examples:
-          - this is a description
-        custom_tags:
-          type: array
-          description: Metadata about the plan in an array of key:value pairs.
-          items:
-            $ref: '#/components/schemas/maintenance_custom_tags'
-        created_by:
-          $ref: '#/components/schemas/created_by'
-        created_at:
-          $ref: '#/components/schemas/created_at'
-        updated_by:
-          $ref: '#/components/schemas/updated_by'
-        updated_at:
-          $ref: '#/components/schemas/updated_at'
-        frequency:
-          type: string
-          description: How often the scheduled plan should silence alerts. One of [`Once`, `Daily`, `Weekly`, `Monthly`].
-            Default is `Once`. This field is case-insensitive.
-          examples:
-          - Daily
-        frequency_data:
-          $ref: '#/components/schemas/updated_at'
-      x-apidog-orders:
-      - id
-      - status
-      - maintenance_key
-      - name
-      - start
-      - end
-      - description
-      - custom_tags
-      - created_by
-      - created_at
-      - updated_by
-      - updated_at
-      - frequency
-      - frequency_data
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    updated_at:
-      type: integer
-      description: The time the resource was last updated(in Unix epoch seconds).
-      x-apidog-folder: ''
-      examples:
-      - 1613252381
-    updated_by:
-      type: string
-      description: System id of the user or tool that last updated the resource.
-      x-apidog-folder: ''
-      examples:
-      - 63bd56897755560012bf3555
     created_at:
       type: integer
       description: The time the resource was created(in Unix epoch seconds).
@@ -609,6 +735,12 @@ components:
       x-apidog-folder: ''
       examples:
       - 63bd56897755560012bf3555
+    updated_at:
+      type: integer
+      description: The time the resource was last updated(in Unix epoch seconds).
+      x-apidog-folder: ''
+      examples:
+      - 1613252381
     maintenance_custom_tags:
       type: object
       description: Metadata about the plan in an array of key:value pairs.
@@ -628,53 +760,19 @@ components:
       - value
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: BigPanda API Bearer token
+    BearerUser131:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure tool you use to make API calls
 
         '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    generic204response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 204
-        data: {}
-      x-apidog-ignore-properties: []
-x-server-notes:
-- US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+x-refined-from:
+- bigpanda-openapi.yml
+- bigpanda-maintenance-plans-api-openapi.yml

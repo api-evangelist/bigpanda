@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda API Keys API
-  description: BigPanda API Keys operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API
-    reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was
-    read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL
-    for your region.
+  description: BigPanda API Keys operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
     name: BigPanda Support
@@ -16,10 +13,7 @@ info:
     method: searched
     source: https://api-docs.bigpanda.io/llms.txt
     harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md. Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by API Evangelist.'
     operations: 6
 servers:
 - url: https://api.bigpanda.io
@@ -33,9 +27,24 @@ paths:
     post:
       summary: Create API Key
       deprecated: false
-      description: "Create an API key.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization\
-        \ in the call headers.\n>\n> This API uses the Organization token type of Authorization token. Your org token must\
-        \ be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_ORG_TOKEN]`\n"
+      description: 'Create an API key.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`'
       operationId: create-api-key
       tags:
       - API Keys
@@ -73,10 +82,24 @@ paths:
     get:
       summary: Retrieve all API Keys
       deprecated: false
-      description: "Retrieve all API keys for an organization.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs\
-        \ require Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization token type of Authorization\
-        \ token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_ORG_TOKEN]`\n"
+      description: 'Retrieve all API keys for an organization.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`'
       operationId: retrieve-all-api-keys
       tags:
       - API Keys
@@ -110,9 +133,21 @@ paths:
     delete:
       summary: Delete an API Key
       deprecated: false
-      description: "> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization in the call\
-        \ headers.\n>\n> This API uses the Organization token type of Authorization token. Your org token must be provided\
-        \ in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_ORG_TOKEN]`\n"
+      description: '> 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`'
       operationId: delete-an-api-key
       tags:
       - API Keys
@@ -154,10 +189,24 @@ paths:
     get:
       summary: Retrieve an API Key
       deprecated: false
-      description: "Retrieve a specific API key.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
-        \ Token Authorization in the call headers.\n>\n> This API uses the Organization token type of Authorization token.\
-        \ Your org token must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_ORG_TOKEN]`\n"
+      description: 'Retrieve a specific API key.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`'
       operationId: retrieve-an-api-key
       tags:
       - API Keys
@@ -199,9 +248,21 @@ paths:
     patch:
       summary: Update an API Key
       deprecated: false
-      description: "> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization in the call\
-        \ headers.\n>\n> This API uses the Organization token type of Authorization token. Your org token must be provided\
-        \ in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_ORG_TOKEN]`\n"
+      description: '> 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`'
       operationId: update-an-api-key
       tags:
       - API Keys
@@ -249,9 +310,21 @@ paths:
     get:
       summary: Retrieve API Keys for a Service Account
       deprecated: false
-      description: "> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token Authorization in the call\
-        \ headers.\n>\n> This API uses the Organization token type of Authorization token. Your org token must be provided\
-        \ in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_ORG_TOKEN]`\n"
+      description: '> 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`'
       operationId: retrieve-api-keys-for-a-service-account
       tags:
       - API Keys
@@ -289,17 +362,65 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/retrieve-api-keys-for-a-service-account-37770153e0.md
       x-source-page: Retrieve API Keys for a Service Account
 components:
-  securitySchemes:
-    BearerOrg121:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
-        tool you use to make API calls
+  schemas:
+    update_key:
+      type: object
+      description: Key metadata to update
+      properties:
+        expires_at:
+          type: integer
+          description: (Optional) Unix epoch time when the API key will expire (in seconds).
+          examples:
+          - 1703001639
+        name:
+          type: string
+          description: (Optional) Name of the API key.
+          examples:
+          - Test Key
+        service_account_id:
+          type: string
+          description: (Optional) The unique ID of the BigPanda service account assigned to the API key.
+          examples:
+          - 63bd568977a8d60012bf3xyz
+      x-apidog-orders:
+      - expires_at
+      - name
+      - service_account_id
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
 
         '
-  schemas:
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    created_by:
+      description: System id of the user or tool that created the resource.
+      type: string
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
+    created_at:
+      type: integer
+      description: The time the resource was created(in Unix epoch seconds).
+      x-apidog-folder: ''
+      examples:
+      - 1613252381
     api_key:
       type: object
       description: Schema for a BigPanda API key object.
@@ -383,67 +504,15 @@ components:
       - id
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    created_at:
-      type: integer
-      description: The time the resource was created(in Unix epoch seconds).
-      x-apidog-folder: ''
-      examples:
-      - 1613252381
-    created_by:
-      description: System id of the user or tool that created the resource.
-      type: string
-      x-apidog-folder: ''
-      examples:
-      - 63bd56897755560012bf3555
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
+  securitySchemes:
+    BearerOrg121:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure tool you use to make API calls
 
         '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    update_key:
-      type: object
-      description: Key metadata to update
-      properties:
-        expires_at:
-          type: integer
-          description: (Optional) Unix epoch time when the API key will expire (in seconds).
-          examples:
-          - 1703001639
-        name:
-          type: string
-          description: (Optional) Name of the API key.
-          examples:
-          - Test Key
-        service_account_id:
-          type: string
-          description: (Optional) The unique ID of the BigPanda service account assigned to the API key.
-          examples:
-          - 63bd568977a8d60012bf3xyz
-      x-apidog-orders:
-      - expires_at
-      - name
-      - service_account_id
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required). The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve. Recorded as published; not corrected.

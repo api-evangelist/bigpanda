@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda Correlation Patterns API
-  description: BigPanda Correlation Patterns operations, assembled verbatim from the OpenAPI fragments BigPanda publishes
-    on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider
-    page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to
-    the base URL for your region.
+  description: BigPanda Correlation Patterns operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
     name: BigPanda Support
@@ -16,10 +13,7 @@ info:
     method: searched
     source: https://api-docs.bigpanda.io/llms.txt
     harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md. Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by API Evangelist.'
     operations: 7
 servers:
 - url: https://api.bigpanda.io
@@ -40,8 +34,7 @@ paths:
 
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
@@ -53,29 +46,22 @@ paths:
 
         Correlation patterns define the relationships between alerts.
 
-        - Source Systems - the integrated monitoring systems for which the pattern applies. For example, correlating alerts
-        that come from a specific instance of Datadog.
+        - Source Systems - the integrated monitoring systems for which the pattern applies. For example, correlating alerts that come from a specific instance of Datadog.
 
-        - Tags - the properties that indicate when alerts are related. For example, correlating alerts that come from the
-        same cluster and have the same check.
+        - Tags - the properties that indicate when alerts are related. For example, correlating alerts that come from the same cluster and have the same check.
 
-        - Time window - The amount of time between when the alerts started. For example, network-related alerts may start
-        within a short time from one another.
+        - Time window - The amount of time between when the alerts started. For example, network-related alerts may start within a short time from one another.
 
-        - Filter - (optional) The conditions that further refine which alerts to correlate. For example, correlating only
-        network-related alerts by data center, or specific tags from specific sources.
+        - Filter - (optional) The conditions that further refine which alerts to correlate. For example, correlating only network-related alerts by data center, or specific tags from specific sources.
 
 
-        By default, correlation patterns apply to all sources. Source systems can be added to the filter to narrow the pattern
-        to apply only to specific sources. Sources can be filtered by each individual instance using their unique Integration
-        ID, or by source type using a wildcard.
+        By default, correlation patterns apply to all sources. Source systems can be added to the filter to narrow the pattern to apply only to specific sources. Sources can be filtered by each individual instance using their unique Integration ID, or by source type using a wildcard.
 
         Examples
 
         - `​source_system=api.*​​` - All Alerts API sources will be included
 
-        - ​​`source_system=api.restapi`​​ - Only Alerts from the Rest API will be included Alerts from multiple sources can
-        be correlated together if cross-source correlation is enabled.
+        - ​​`source_system=api.restapi`​​ - Only Alerts from the Rest API will be included Alerts from multiple sources can be correlated together if cross-source correlation is enabled.
 
 
         **Rate limit:** 5 requests per second.'
@@ -140,8 +126,7 @@ paths:
 
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
@@ -193,8 +178,7 @@ paths:
 
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
@@ -242,8 +226,7 @@ paths:
 
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
@@ -255,29 +238,22 @@ paths:
 
         Correlation patterns define the relationships between alerts.
 
-        - Source Systems - the integrated monitoring systems for which the pattern applies. For example, correlating alerts
-        that come from a specific instance of Datadog.
+        - Source Systems - the integrated monitoring systems for which the pattern applies. For example, correlating alerts that come from a specific instance of Datadog.
 
-        - Tags - the properties that indicate when alerts are related. For example, correlating alerts that come from the
-        same cluster and have the same check.
+        - Tags - the properties that indicate when alerts are related. For example, correlating alerts that come from the same cluster and have the same check.
 
-        - Time window - The amount of time between when the alerts started. For example, network-related alerts may start
-        within a short time from one another.
+        - Time window - The amount of time between when the alerts started. For example, network-related alerts may start within a short time from one another.
 
-        - Filter - (optional) The conditions that further refine which alerts to correlate. For example, correlating only
-        network-related alerts by data center, or specific tags from specific sources.
+        - Filter - (optional) The conditions that further refine which alerts to correlate. For example, correlating only network-related alerts by data center, or specific tags from specific sources.
 
 
-        By default, correlation patterns apply to all sources. Source systems can be added to the filter to narrow the pattern
-        to apply only to specific sources. Sources can be filtered by each individual instance using their unique Integration
-        ID, or by source type using a wildcard.
+        By default, correlation patterns apply to all sources. Source systems can be added to the filter to narrow the pattern to apply only to specific sources. Sources can be filtered by each individual instance using their unique Integration ID, or by source type using a wildcard.
 
         Examples
 
         - `​source_system=api.*​​` - All Alerts API sources will be included
 
-        - ​​`source_system=api.restapi`​​ - Only Alerts from the Rest API will be included Alerts from multiple sources can
-        be correlated together if cross-source correlation is enabled.
+        - ​​`source_system=api.restapi`​​ - Only Alerts from the Rest API will be included Alerts from multiple sources can be correlated together if cross-source correlation is enabled.
 
 
         **Rate limit:** 5 requests per second.'
@@ -320,8 +296,7 @@ paths:
 
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
@@ -333,29 +308,22 @@ paths:
 
         Correlation patterns define the relationships between alerts.
 
-        - Source Systems - the integrated monitoring systems for which the pattern applies. For example, correlating alerts
-        that come from a specific instance of Datadog.
+        - Source Systems - the integrated monitoring systems for which the pattern applies. For example, correlating alerts that come from a specific instance of Datadog.
 
-        - Tags - the properties that indicate when alerts are related. For example, correlating alerts that come from the
-        same cluster and have the same check.
+        - Tags - the properties that indicate when alerts are related. For example, correlating alerts that come from the same cluster and have the same check.
 
-        - Time window - The amount of time between when the alerts started. For example, network-related alerts may start
-        within a short time from one another.
+        - Time window - The amount of time between when the alerts started. For example, network-related alerts may start within a short time from one another.
 
-        - Filter - (optional) The conditions that further refine which alerts to correlate. For example, correlating only
-        network-related alerts by data center, or specific tags from specific sources.
+        - Filter - (optional) The conditions that further refine which alerts to correlate. For example, correlating only network-related alerts by data center, or specific tags from specific sources.
 
 
-        By default, correlation patterns apply to all sources. Source systems can be added to the filter to narrow the pattern
-        to apply only to specific sources. Sources can be filtered by each individual instance using their unique Integration
-        ID, or by source type using a wildcard.
+        By default, correlation patterns apply to all sources. Source systems can be added to the filter to narrow the pattern to apply only to specific sources. Sources can be filtered by each individual instance using their unique Integration ID, or by source type using a wildcard.
 
         Examples
 
         - `​source_system=api.*​​` - All Alerts API sources will be included
 
-        - ​​`source_system=api.restapi`​​ - Only Alerts from the Rest API will be included Alerts from multiple sources can
-        be correlated together if cross-source correlation is enabled.
+        - ​​`source_system=api.restapi`​​ - Only Alerts from the Rest API will be included Alerts from multiple sources can be correlated together if cross-source correlation is enabled.
 
 
         **Rate limit:** 5 requests per second.'
@@ -417,10 +385,27 @@ paths:
     post:
       summary: Reset Correlation Patterns Order
       deprecated: false
-      description: "Reset the correlation pattern order to run in order by time window.\n\n> \U0001F6A7 **Authentication**\n\
-        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
-        \ type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.\n\
-        >\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Reset the correlation pattern order to run in order by time window.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: reset-correlation-patterns-order
       tags:
       - Correlation Patterns
@@ -461,8 +446,7 @@ paths:
 
         All BigPanda APIs require Bearer Token Authorization in the call headers.
 
-        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed
-        by the word `Bearer`.
+        This API uses the User API Key type of Authorization token. Your User API Key must be provided in the header, prefixed by the word `Bearer`.
 
 
         Example:
@@ -516,17 +500,44 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/update-correlation-pattern-order-37770037e0.md
       x-source-page: Update Correlation Pattern Order
 components:
-  securitySchemes:
-    BearerUser131:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
-        tool you use to make API calls
+  schemas:
+    tag:
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+          - case
+        value:
+          type: string
+          examples:
+          - sensitive1
+      x-apidog-orders:
+      - name
+      - value
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
 
         '
-  schemas:
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
     pattern:
       type: object
       properties:
@@ -555,22 +566,6 @@ components:
       - tags
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    tag:
-      type: object
-      properties:
-        name:
-          type: string
-          examples:
-          - case
-        value:
-          type: string
-          examples:
-          - sensitive1
-      x-apidog-orders:
-      - name
-      - value
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     pattern_order:
       type: object
       description: Schema for specifying the order of correlation patterns.
@@ -594,30 +589,15 @@ components:
       - correlation_pattern_order
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
+  securitySchemes:
+    BearerUser131:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure tool you use to make API calls
 
         '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required). The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve. Recorded as published; not corrected.

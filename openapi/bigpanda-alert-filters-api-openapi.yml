@@ -1,10 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: BigPanda Alert Filters API
-  description: BigPanda Alert Filters operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its
-    own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page
-    it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the
-    base URL for your region.
+  description: BigPanda Alert Filters operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
     name: BigPanda Support
@@ -16,10 +13,7 @@ info:
     method: searched
     source: https://api-docs.bigpanda.io/llms.txt
     harvested: '2026-09-04'
-    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md.
-      Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to
-      type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by
-      API Evangelist.'
+    assembly: 'Operations copied verbatim from the per-endpoint OpenAPI 3.0.1 fragments BigPanda publishes at https://api-docs.bigpanda.io/<endpoint>.md. Assembly-only normalizations: Apidog x-apidog security metadata stripped, securityScheme type "bearer" corrected to type http/scheme bearer, schema name collisions suffixed. No operation, parameter, schema or response was authored by API Evangelist.'
     operations: 20
 servers:
 - url: https://api.bigpanda.io
@@ -33,10 +27,27 @@ paths:
     post:
       summary: Create an Alert Filter
       deprecated: false
-      description: "Creates a new alert filter.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
-        \ Token Authorization in the call headers.\n>\n> This API uses the Organization token type of Authorization token.\
-        \ Your org token must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_ORG_TOKEN]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Creates a new alert filter.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: v1-create-an-alert-filter
       tags:
       - Alert Filters
@@ -65,10 +76,27 @@ paths:
     get:
       summary: Retrieve All Alert Filters
       deprecated: false
-      description: "Retrieves the schema for all existing alert filters.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization token type of\
-        \ Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n\
-        > `Authorization: Bearer [YOUR_ORG_TOKEN]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Retrieves the schema for all existing alert filters.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: v1-retrieve-all-alert-filters
       tags:
       - Alert Filters
@@ -105,10 +133,27 @@ paths:
     post:
       summary: Create an Alert Filter
       deprecated: false
-      description: "Creates a new alert filter.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer\
-        \ Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token. Your\
-        \ user API key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer\
-        \ [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Creates a new alert filter.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your user API key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: create-an-alert-filter
       tags:
       - Alert Filters
@@ -137,10 +182,27 @@ paths:
     get:
       summary: Retrieve All Alert Filters
       deprecated: false
-      description: "Retrieves the schema for all existing alert filters.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
-        \ token. Your user API key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Retrieves the schema for all existing alert filters.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your user API key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: retrieve-all-alert-filters
       tags:
       - Alert Filters
@@ -177,10 +239,27 @@ paths:
     post:
       summary: Create an Alert Filter Schedule
       deprecated: false
-      description: "Creates a new schedule.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token\
-        \ Authorization in the call headers.\n>\n> This API uses the Organization token type of Authorization token. Your\
-        \ org token must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer\
-        \ [YOUR_ORG_TOKEN]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Creates a new schedule.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: v1-create-an-alert-filter-schedule
       tags:
       - Alert Filters
@@ -209,10 +288,27 @@ paths:
     get:
       summary: Retrieve All Alert Filter Schedules
       deprecated: false
-      description: "Retrieves the schema for all existing schedules.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization token type of\
-        \ Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n\
-        > `Authorization: Bearer [YOUR_ORG_TOKEN]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Retrieves the schema for all existing schedules.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: v1-retrieve-all-alert-filter-schedules
       tags:
       - Alert Filters
@@ -248,10 +344,27 @@ paths:
     post:
       summary: Create an Alert Filter Schedule
       deprecated: false
-      description: "Creates a new schedule.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require Bearer Token\
-        \ Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token. Your user API\
-        \ key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\
-        \n**Rate limit:** 5 requests per second."
+      description: 'Creates a new schedule.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your user API key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: create-an-alert-filter-schedule
       tags:
       - Alert Filters
@@ -280,10 +393,27 @@ paths:
     get:
       summary: Retrieve All Alert Filter Schedules
       deprecated: false
-      description: "Retrieves the schema for all existing schedules.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
-        \ token. Your user API key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Retrieves the schema for all existing schedules.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your user API key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: retrieve-all-alert-filter-schedules
       tags:
       - Alert Filters
@@ -319,10 +449,27 @@ paths:
     delete:
       summary: Delete an Alert Filter
       deprecated: false
-      description: "Deletes an existing alert filter and removes it from the system.\n\n> \U0001F6A7 **Authentication**\n\
-        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization\
-        \ token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n\
-        >\n> Example:\n> `Authorization: Bearer [YOUR_ORG_TOKEN]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Deletes an existing alert filter and removes it from the system.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: v1-delete-an-alert-filter
       tags:
       - Alert Filters
@@ -355,10 +502,27 @@ paths:
     get:
       summary: Retrieve an Alert Filter
       deprecated: false
-      description: "Retrieves the schema for an existing alert filter.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization token type of\
-        \ Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n\
-        > `Authorization: Bearer [YOUR_ORG_TOKEN]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Retrieves the schema for an existing alert filter.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: v1-retrieve-an-alert-filter
       tags:
       - Alert Filters
@@ -391,10 +555,27 @@ paths:
     patch:
       summary: Update an Alert Filter
       deprecated: false
-      description: "Updates an existing alert filter.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
-        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization token type of Authorization\
-        \ token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_ORG_TOKEN]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Updates an existing alert filter.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: v1-update-an-alert-filter
       tags:
       - Alert Filters
@@ -433,10 +614,27 @@ paths:
     delete:
       summary: Delete an Alert Filter
       deprecated: false
-      description: "Deletes an existing alert filter and removes it from the system.\n\n> \U0001F6A7 **Authentication**\n\
-        > \n> All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key\
-        \ type of Authorization token. Your user API key must be provided in the header, prefixed by the word `Bearer`.\n\
-        >\n> Example:\n> `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Deletes an existing alert filter and removes it from the system.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your user API key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: delete-an-alert-filter
       tags:
       - Alert Filters
@@ -469,10 +667,27 @@ paths:
     get:
       summary: Retrieve an Alert Filter
       deprecated: false
-      description: "Retrieves the schema for an existing alert filter.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
-        \ token. Your user API key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Retrieves the schema for an existing alert filter.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your user API key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: retrieve-an-alert-filter
       tags:
       - Alert Filters
@@ -505,10 +720,27 @@ paths:
     patch:
       summary: Update an Alert Filter
       deprecated: false
-      description: "Updates an existing alert filter.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs require\
-        \ Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization token.\
-        \ Your user API key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Updates an existing alert filter.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your user API key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: update-an-alert-filter
       tags:
       - Alert Filters
@@ -547,10 +779,27 @@ paths:
     delete:
       summary: Delete an Alert Filter Schedule
       deprecated: false
-      description: "Deletes an existing schedule and removes it from the system.\n\n> \U0001F6A7 **Authentication**\n> \n\
-        > All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization token\
-        \ type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n>\n\
-        > Example:\n> `Authorization: Bearer [YOUR_ORG_TOKEN]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Deletes an existing schedule and removes it from the system.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: v1-delete-an-alert-filter-schedule
       tags:
       - Alert Filters
@@ -592,10 +841,27 @@ paths:
     get:
       summary: Retrieve an Alert Filter Schedule
       deprecated: false
-      description: "Retrieves the schema for an existing schedule.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization token type of\
-        \ Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n\
-        > `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Retrieves the schema for an existing schedule.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: v1-retrieve-an-alert-filter-schedule
       tags:
       - Alert Filters
@@ -630,10 +896,27 @@ paths:
     patch:
       summary: Update an Alert Filter Schedule
       deprecated: false
-      description: "Updates an existing alert filter schedule.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs\
-        \ require Bearer Token Authorization in the call headers.\n>\n> This API uses the Organization token type of Authorization\
-        \ token. Your org token must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_ORG_TOKEN]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Updates an existing alert filter schedule.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the Organization token type of Authorization token. Your org token must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_ORG_TOKEN]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: v1-update-an-alert-filter-schedule
       tags:
       - Alert Filters
@@ -681,10 +964,27 @@ paths:
     delete:
       summary: Delete an Alert Filter Schedule
       deprecated: false
-      description: "Deletes an existing schedule and removes it from the system.\n\n> \U0001F6A7 **Authentication**\n> \n\
-        > All BigPanda APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type\
-        \ of Authorization token. Your user API key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n\
-        > `Authorization: Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Deletes an existing schedule and removes it from the system.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your user API key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: delete-an-alert-filter-schedule
       tags:
       - Alert Filters
@@ -726,10 +1026,27 @@ paths:
     get:
       summary: Retrieve an Alert Filter Schedule
       deprecated: false
-      description: "Retrieves the schema for an existing schedule.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda\
-        \ APIs require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
-        \ token. Your user API key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Retrieves the schema for an existing schedule.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your user API key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: retrieve-an-alert-filter-schedule
       tags:
       - Alert Filters
@@ -764,10 +1081,27 @@ paths:
     patch:
       summary: Update an Alert Filter Schedule
       deprecated: false
-      description: "Updates an existing alert filter schedule.\n\n> \U0001F6A7 **Authentication**\n> \n> All BigPanda APIs\
-        \ require Bearer Token Authorization in the call headers.\n>\n> This API uses the User API Key type of Authorization\
-        \ token. Your user API key must be provided in the header, prefixed by the word `Bearer`.\n>\n> Example:\n> `Authorization:\
-        \ Bearer [YOUR_USER_API_KEY]`\n\n**Rate limit:** 5 requests per second."
+      description: 'Updates an existing alert filter schedule.
+
+
+        > 🚧 **Authentication**
+
+        >
+
+        > All BigPanda APIs require Bearer Token Authorization in the call headers.
+
+        >
+
+        > This API uses the User API Key type of Authorization token. Your user API key must be provided in the header, prefixed by the word `Bearer`.
+
+        >
+
+        > Example:
+
+        > `Authorization: Bearer [YOUR_USER_API_KEY]`
+
+
+        **Rate limit:** 5 requests per second.'
       operationId: update-an-alert-filter-schedule
       tags:
       - Alert Filters
@@ -812,26 +1146,13 @@ paths:
       x-source-url: https://api-docs.bigpanda.io/update-an-alert-filter-schedule-37770070e0.md
       x-source-page: Update an Alert Filter Schedule
 components:
-  securitySchemes:
-    BearerOrg121:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
-        tool you use to make API calls
-
-        '
-    BearerUser131:
-      type: http
-      scheme: bearer
-      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
-
-        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure
-        tool you use to make API calls
-
-        '
   schemas:
+    updated_by:
+      type: string
+      description: System id of the user or tool that last updated the resource.
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
     alert_filter_object:
       required:
       - name
@@ -846,8 +1167,7 @@ components:
           $ref: '#/components/schemas/active'
         bpql:
           type: string
-          description: The [BPQL object](https://docs.bigpanda.io/reference/bpql-object-syntax) to identify which alerts will
-            be filtered.
+          description: The [BPQL object](https://docs.bigpanda.io/reference/bpql-object-syntax) to identify which alerts will be filtered.
           format: json
         custom_tags:
           type: array
@@ -865,8 +1185,7 @@ components:
             x-apidog-ignore-properties: []
         schedule:
           type: string
-          description: The [Schedule ID](https://docs.bigpanda.io/reference/alert-filter-schedules-api) to be applied to the
-            alert filter
+          description: The [Schedule ID](https://docs.bigpanda.io/reference/alert-filter-schedules-api) to be applied to the alert filter
         exclude_status:
           type: array
           description: 'Alert statuses to exclude from suppression. One of: ["Ok", "Critical", "Warning", "Unknown"]'
@@ -885,335 +1204,6 @@ components:
       - description
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    active:
-      type: boolean
-      description: Whether the new configuration should apply to future data.
-      default: true
-      x-apidog-folder: ''
-      examples:
-      - false
-    alert_filter_return:
-      type: object
-      properties:
-        id:
-          type: string
-          examples:
-          - 590b3a991f00002000637538
-        name:
-          type: string
-          examples:
-          - Folsom Patch
-        active:
-          $ref: '#/components/schemas/active'
-        plan_type:
-          type: string
-          examples:
-          - normal
-        created_by:
-          $ref: '#/components/schemas/created_by'
-        created_on:
-          type: integer
-          examples:
-          - 1493908121
-        updated_by:
-          $ref: '#/components/schemas/updated_by'
-        updated_on:
-          type: integer
-          examples:
-          - 1493908121
-        custom_tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/alert_filter_custom_tags'
-        description:
-          type: string
-          examples:
-          - Patching Folsom server farm
-        exclude_status:
-          type: array
-          items:
-            type: string
-            examples:
-            - Ok
-        schedule:
-          type: object
-          x-apidog-orders: []
-          properties: {}
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - id
-      - name
-      - active
-      - plan_type
-      - created_by
-      - created_on
-      - updated_by
-      - updated_on
-      - custom_tags
-      - description
-      - exclude_status
-      - schedule
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    alert_filter_custom_tags:
-      type: object
-      properties:
-        name:
-          type: string
-          examples:
-          - server_farm
-        value:
-          type: string
-          examples:
-          - folsom
-      x-apidog-orders:
-      - name
-      - value
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    updated_by:
-      type: string
-      description: System id of the user or tool that last updated the resource.
-      x-apidog-folder: ''
-      examples:
-      - 63bd56897755560012bf3555
-    created_by:
-      description: System id of the user or tool that created the resource.
-      type: string
-      x-apidog-folder: ''
-      examples:
-      - 63bd56897755560012bf3555
-    alert_filter_object2:
-      required:
-      - name
-      - active
-      - bpql
-      type: object
-      properties:
-        name:
-          type: string
-          description: User defined name for the alert filter.
-        active:
-          $ref: '#/components/schemas/active'
-        bpql:
-          type: string
-          description: The [BPQL object](https://docs.bigpanda.io/reference/bpql-object-syntax) to identify which alerts will
-            be filtered.
-          format: json
-        custom_tags:
-          type: array
-          description: Metadata about the alert filter in an array of key-value pairs
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              value:
-                type: string
-            x-apidog-orders:
-            - name
-            - value
-            x--orders:
-            - name
-            - value
-            x--ignore-properties: []
-        schedule:
-          type: string
-          description: The [Schedule ID](https://docs.bigpanda.io/reference/alert-filter-schedules-api) to be applied to the
-            alert filter
-        exclude_status:
-          type: array
-          description: 'Alert statuses to exclude from suppression. One of: ["Ok", "Critical", "Warning", "Unknown"]'
-          items:
-            type: string
-        description:
-          type: string
-          description: Brief summary of the alert filter
-      x-apidog-orders:
-      - name
-      - active
-      - bpql
-      - custom_tags
-      - schedule
-      - exclude_status
-      - description
-      x-apidog-folder: ''
-      x--orders:
-      - name
-      - active
-      - bpql
-      - custom_tags
-      - schedule
-      - exclude_status
-      - description
-      x--ignore-properties: []
-    alert_filter_return2:
-      type: object
-      properties:
-        id:
-          type: string
-          examples:
-          - 590b3a991f00002000637538
-        name:
-          type: string
-          examples:
-          - Folsom Patch
-        active:
-          $ref: '#/components/schemas/active'
-        plan_type:
-          type: string
-          examples:
-          - normal
-        created_by:
-          $ref: '#/components/schemas/created_by'
-        created_on:
-          type: integer
-          examples:
-          - 1493908121
-        updated_by:
-          $ref: '#/components/schemas/updated_by'
-        updated_on:
-          type: integer
-          examples:
-          - 1493908121
-        custom_tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/alert_filter_custom_tags2'
-        description:
-          type: string
-          examples:
-          - Patching Folsom server farm
-        exclude_status:
-          type: array
-          items:
-            type: string
-            examples:
-            - Ok
-        schedule:
-          type: object
-          x-apidog-orders: []
-          properties: {}
-          x--orders: []
-          x--ignore-properties: []
-      x-apidog-orders:
-      - id
-      - name
-      - active
-      - plan_type
-      - created_by
-      - created_on
-      - updated_by
-      - updated_on
-      - custom_tags
-      - description
-      - exclude_status
-      - schedule
-      x-apidog-folder: ''
-      x--orders:
-      - id
-      - name
-      - active
-      - plan_type
-      - created_by
-      - created_on
-      - updated_by
-      - updated_on
-      - custom_tags
-      - description
-      - exclude_status
-      - schedule
-      x--ignore-properties: []
-    alert_filter_custom_tags2:
-      type: object
-      properties:
-        name:
-          type: string
-          examples:
-          - server_farm
-        value:
-          type: string
-          examples:
-          - folsom
-      x-apidog-orders:
-      - name
-      - value
-      x-apidog-folder: ''
-      x--orders:
-      - name
-      - value
-      x--ignore-properties: []
-    alert_filter_schedule:
-      type: object
-      properties:
-        name:
-          type: string
-          description: User defined name for the schedule.
-        active:
-          $ref: '#/components/schemas/active'
-        starts_on:
-          type: string
-          description: Unix epoch time when the schedule starts (in seconds).
-          format: date-time
-        ends_on:
-          type: string
-          description: Unix epoch time when the schedule ends (in seconds).
-          format: date-time
-        description:
-          type: string
-          description: Brief summary of the schedule.
-      x-apidog-orders:
-      - name
-      - active
-      - starts_on
-      - ends_on
-      - description
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic204response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 204
-        data: {}
-      x-apidog-ignore-properties: []
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
     alert_filter_schedule_response:
       type: object
       description: Schema for an Alert Filter Schedule object.
@@ -1298,9 +1288,344 @@ components:
       - active
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    alert_filter_return2:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - 590b3a991f00002000637538
+        name:
+          type: string
+          examples:
+          - Folsom Patch
+        active:
+          $ref: '#/components/schemas/active'
+        plan_type:
+          type: string
+          examples:
+          - normal
+        created_by:
+          $ref: '#/components/schemas/created_by'
+        created_on:
+          type: integer
+          examples:
+          - 1493908121
+        updated_by:
+          $ref: '#/components/schemas/updated_by'
+        updated_on:
+          type: integer
+          examples:
+          - 1493908121
+        custom_tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/alert_filter_custom_tags2'
+        description:
+          type: string
+          examples:
+          - Patching Folsom server farm
+        exclude_status:
+          type: array
+          items:
+            type: string
+            examples:
+            - Ok
+        schedule:
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          x--orders: []
+          x--ignore-properties: []
+      x-apidog-orders:
+      - id
+      - name
+      - active
+      - plan_type
+      - created_by
+      - created_on
+      - updated_by
+      - updated_on
+      - custom_tags
+      - description
+      - exclude_status
+      - schedule
+      x-apidog-folder: ''
+      x--orders:
+      - id
+      - name
+      - active
+      - plan_type
+      - created_by
+      - created_on
+      - updated_by
+      - updated_on
+      - custom_tags
+      - description
+      - exclude_status
+      - schedule
+      x--ignore-properties: []
+    alert_filter_object2:
+      required:
+      - name
+      - active
+      - bpql
+      type: object
+      properties:
+        name:
+          type: string
+          description: User defined name for the alert filter.
+        active:
+          $ref: '#/components/schemas/active'
+        bpql:
+          type: string
+          description: The [BPQL object](https://docs.bigpanda.io/reference/bpql-object-syntax) to identify which alerts will be filtered.
+          format: json
+        custom_tags:
+          type: array
+          description: Metadata about the alert filter in an array of key-value pairs
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+            x-apidog-orders:
+            - name
+            - value
+            x--orders:
+            - name
+            - value
+            x--ignore-properties: []
+        schedule:
+          type: string
+          description: The [Schedule ID](https://docs.bigpanda.io/reference/alert-filter-schedules-api) to be applied to the alert filter
+        exclude_status:
+          type: array
+          description: 'Alert statuses to exclude from suppression. One of: ["Ok", "Critical", "Warning", "Unknown"]'
+          items:
+            type: string
+        description:
+          type: string
+          description: Brief summary of the alert filter
+      x-apidog-orders:
+      - name
+      - active
+      - bpql
+      - custom_tags
+      - schedule
+      - exclude_status
+      - description
+      x-apidog-folder: ''
+      x--orders:
+      - name
+      - active
+      - bpql
+      - custom_tags
+      - schedule
+      - exclude_status
+      - description
+      x--ignore-properties: []
+    generic204response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
+      x-apidog-ignore-properties: []
+    alert_filter_schedule:
+      type: object
+      properties:
+        name:
+          type: string
+          description: User defined name for the schedule.
+        active:
+          $ref: '#/components/schemas/active'
+        starts_on:
+          type: string
+          description: Unix epoch time when the schedule starts (in seconds).
+          format: date-time
+        ends_on:
+          type: string
+          description: Unix epoch time when the schedule ends (in seconds).
+          format: date-time
+        description:
+          type: string
+          description: Brief summary of the schedule.
+      x-apidog-orders:
+      - name
+      - active
+      - starts_on
+      - ends_on
+      - description
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    alert_filter_custom_tags:
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+          - server_farm
+        value:
+          type: string
+          examples:
+          - folsom
+      x-apidog-orders:
+      - name
+      - value
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    created_by:
+      description: System id of the user or tool that created the resource.
+      type: string
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
+    alert_filter_custom_tags2:
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+          - server_farm
+        value:
+          type: string
+          examples:
+          - folsom
+      x-apidog-orders:
+      - name
+      - value
+      x-apidog-folder: ''
+      x--orders:
+      - name
+      - value
+      x--ignore-properties: []
+    active:
+      type: boolean
+      description: Whether the new configuration should apply to future data.
+      default: true
+      x-apidog-folder: ''
+      examples:
+      - false
+    alert_filter_return:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - 590b3a991f00002000637538
+        name:
+          type: string
+          examples:
+          - Folsom Patch
+        active:
+          $ref: '#/components/schemas/active'
+        plan_type:
+          type: string
+          examples:
+          - normal
+        created_by:
+          $ref: '#/components/schemas/created_by'
+        created_on:
+          type: integer
+          examples:
+          - 1493908121
+        updated_by:
+          $ref: '#/components/schemas/updated_by'
+        updated_on:
+          type: integer
+          examples:
+          - 1493908121
+        custom_tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/alert_filter_custom_tags'
+        description:
+          type: string
+          examples:
+          - Patching Folsom server farm
+        exclude_status:
+          type: array
+          items:
+            type: string
+            examples:
+            - Ok
+        schedule:
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - id
+      - name
+      - active
+      - plan_type
+      - created_by
+      - created_on
+      - updated_by
+      - updated_on
+      - custom_tags
+      - description
+      - exclude_status
+      - schedule
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+  securitySchemes:
+    BearerOrg121:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {Org Token}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure tool you use to make API calls
+
+        '
+    BearerUser131:
+      type: http
+      scheme: bearer
+      description: 'Format: "Bearer {User API Key}" BigPanda recommends adding
+
+        [Authentication](https://docs.bigpanda.io/reference/introduction#authentication-and-headers) headers only in the secure tool you use to make API calls
+
+        '
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
-- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve
-  in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required).
-  The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve.
-  Recorded as published; not corrected.
+- EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required). The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve. Recorded as published; not corrected.
