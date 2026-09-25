@@ -114,6 +114,9 @@ artifacts:
   finops/bigpanda-finops.yml:
     method: generated
     evidence: declared in the artifact
+  front-door-ai/2026-09-17.yml:
+    method: unknown
+    evidence: no authorship recorded
   json-ld/bigpanda-context.jsonld:
     method: unknown
     evidence: no authorship recorded
@@ -201,55 +204,7 @@ artifacts:
   json-structure/bigpanda-maintenance-plans-response-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-06T210741.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-07T135032.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-10T093022.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-10T111628.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-11T211707.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-12T193225.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-17T064519.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T080027.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T082702.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T114122.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T165047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T191845.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T205517.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-21T110057.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T064859.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T171257.yml:
+  kin/checks-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-08-25T125852.yml:
@@ -336,6 +291,123 @@ artifacts:
   kin/score-2026-09-05T072335.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T144739.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T195450.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-05T211839.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T011047.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T211804.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-06T224210.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-07T200636.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-07T213054.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-08T214843.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-08T232836.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-10T204815.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-10T222408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T062655.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T080032.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T204651.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T221936.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-13T214537.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T064754.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T210656.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T225847.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T211329.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T230249.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T210549.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T225339.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T211151.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T233623.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T205255.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T231945.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T165737.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T193153.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T205903.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T232958.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T211425.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T233935.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-22T213221.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-23T000603.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T064009.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T090406.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T161608.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/bigpanda-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -351,28 +423,31 @@ artifacts:
   mcp/bigpanda-tool-crosswalk.yml:
     method: derived
     evidence: declared in the artifact
-  openapi/bigpanda-agents-api-openapi.yml:
+  openapi/bigpanda-agents-mcp-a2a-api-openapi.yml:
     method: searched
     evidence: https://api-docs.bigpanda.io/retrieve-the-agent-card-37769994e0.md
   openapi/bigpanda-ai-settings-api-openapi.yml:
     method: searched
     evidence: https://api-docs.bigpanda.io/create-a-new-ai-analysis-configuration-37770117e0.md
-  openapi/bigpanda-alert-enrichment-api-openapi.yml:
-    method: searched
-    evidence: https://api-docs.bigpanda.io/check-status-of-upload-job-38346154e0.md
   openapi/bigpanda-alert-filters-api-openapi.yml:
     method: searched
     evidence: https://api-docs.bigpanda.io/create-an-alert-filter-37770052e0.md
   openapi/bigpanda-alert-ingestion-oim-api-openapi.yml:
     method: searched
     evidence: https://api-docs.bigpanda.io/add-an-alert-payload-for-oim-normalization-and-processing-37770217e0.md
-  openapi/bigpanda-alerts-api-openapi.yml:
+  openapi/bigpanda-alert-tags-enrichment-api-openapi.yml:
     method: searched
-    evidence: https://api-docs.bigpanda.io/oim-send-normalized-alerts-38345844e0.md
+    evidence: https://api-docs.bigpanda.io/check-status-of-upload-job-38346154e0.md
+  openapi/bigpanda-alerts-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   openapi/bigpanda-api-keys-api-openapi.yml:
     method: searched
     evidence: https://api-docs.bigpanda.io/create-api-key-37770152e0.md
   openapi/bigpanda-audit-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/bigpanda-audit-log-api-openapi.yml:
     method: searched
     evidence: https://api-docs.bigpanda.io/retrieve-audit-log-37904797e0.md
   openapi/bigpanda-biggy-query-api-openapi.yml:
@@ -382,6 +457,9 @@ artifacts:
     method: searched
     evidence: https://api-docs.bigpanda.io/request-a-change-risk-rating-37769975e0.md
   openapi/bigpanda-changes-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/bigpanda-changes-root-cause-api-openapi.yml:
     method: searched
     evidence: https://api-docs.bigpanda.io/create-an-rcc-relation-37770081e0.md
   openapi/bigpanda-correlation-patterns-api-openapi.yml:
@@ -394,18 +472,18 @@ artifacts:
     method: searched
     evidence: declared in the artifact
   openapi/bigpanda-environments-api-openapi.yml:
-    method: searched
-    evidence: https://api-docs.bigpanda.io/create-an-environment-37770085e0.md
+    method: unknown
+    evidence: no authorship recorded
   openapi/bigpanda-incidents-api-openapi.yml:
-    method: searched
-    evidence: https://api-docs.bigpanda.io/add-multiple-incident-tags-to-an-incident-37770110e0.md
+    method: unknown
+    evidence: no authorship recorded
   openapi/bigpanda-maintenance-plans-api-openapi.yml:
-    method: searched
-    evidence: https://api-docs.bigpanda.io/create-a-new-maintenance-plan-37770040e0.md
-  openapi/bigpanda-meetings-transcripts-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
+  openapi/bigpanda-major-incident-management-api-openapi.yml:
     method: searched
     evidence: declared in the artifact
-  openapi/bigpanda-mim-api-openapi.yml:
+  openapi/bigpanda-meetings-transcripts-api-openapi.yml:
     method: searched
     evidence: declared in the artifact
   openapi/bigpanda-notifications-api-openapi.yml:
@@ -419,11 +497,11 @@ artifacts:
     evidence: declared in the artifact
   openapi/bigpanda-roles-permissions-api-openapi.yml:
     method: searched
-    evidence: https
+    evidence: https://api-docs.bigpanda.io/add-users-to-role-38345847e0.md
   openapi/bigpanda-service-accounts-api-openapi.yml:
     method: searched
-    evidence: declared in the artifact
-  openapi/bigpanda-sso-provisioning-api-openapi.yml:
+    evidence: https://api-docs.bigpanda.io/create-service-account-3777
+  openapi/bigpanda-sso-jit-provisioning-api-openapi.yml:
     method: searched
     evidence: https://api-docs.bigpanda.io/configure-sso-for-provider-37770180e0.md
   openapi/bigpanda-topology-api-openapi.yml:
@@ -431,7 +509,7 @@ artifacts:
     evidence: https://api-docs.bigpanda.io/create-topology-37770047e0.md
   openapi/bigpanda-users-api-openapi.yml:
     method: searched
-    evidence: https://api-docs.
+    evidence: https://api-docs.bigpanda.io/activate-user-37770168e0.md
   overlays/bigpanda-agents-overlay.yaml:
     method: generated
     evidence: <per-operation>
