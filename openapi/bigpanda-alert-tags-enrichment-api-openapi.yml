@@ -3175,405 +3175,6 @@ paths:
       x-source-page: Update Enrichment Item Order for an Alert Tag
 components:
   schemas:
-    enrichment_config_composition:
-      type: object
-      description: Configuration for a composition enrichment item.
-      properties:
-        source:
-          type: string
-          description: Optional filter for event source.
-        destination:
-          type: string
-          description: Destination tag to populate.
-        value:
-          type: string
-          description: Template value to apply to destination tag.
-      required:
-      - source
-      - destination
-      - value
-      x-apidog-orders:
-      - source
-      - destination
-      - value
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    advanced_mapping_field:
-      type: object
-      required:
-      - type
-      - tag_name
-      description: A column definition in an advanced mapping schema.
-      properties:
-        type:
-          type: string
-          enum:
-          - query_tag
-          - result_tag
-          - group_tag
-          description: 'Column type: `query_tag` (matched against the alert), `result_tag` (value applied to the alert), or `group_tag` (a column used within a group).'
-        tag_name:
-          type: string
-          description: Column name. Must exactly match the column name in the uploaded map (and the BigPanda tag name).
-          examples:
-          - email
-        groups:
-          type: array
-          description: (Optional, `result_tag` only) Rules that cluster result columns together. The first group with matched columns applies as the tag value.
-          items:
-            $ref: '#/components/schemas/advanced_mapping_group'
-      x-apidog-orders:
-      - type
-      - tag_name
-      - groups
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    when:
-      type: object
-      description: 'A [​BPQL object query](https://api-docs.bigpanda.io/en#description/bpql-object-syntax)​​ to filter incoming alerts. Only matched alerts will receive a value based on the enrichment item.
-
-        '
-      x-apidog-folder: ''
-      additionalProperties: true
-      x-apidog-orders: []
-      examples:
-      - IN:
-        - source_system
-        - - type: regex
-            value: '*'
-      properties: {}
-      x-apidog-ignore-properties: []
-    advanced_mapping_config:
-      type: object
-      required:
-      - fields
-      description: 'Advanced mapping configuration: the ordered set of map columns.'
-      properties:
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/advanced_mapping_field'
-          description: Column definitions for the map.
-      x-apidog-orders:
-      - fields
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic400response2:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x--orders:
-      - status
-      - errors
-      x--ignore-properties: []
-      x-apidog-folder: ''
-    alert_tag_response:
-      type: object
-      description: Schema representing a BigPanda alert tag with optional enrichments.
-      properties:
-        name:
-          type: string
-          description: Name of the alert tag.
-        created_by:
-          $ref: '#/components/schemas/created_by'
-        created_at:
-          $ref: '#/components/schemas/created_at'
-        updated_by:
-          $ref: '#/components/schemas/updated_by'
-        updated_at:
-          $ref: '#/components/schemas/updated_at'
-        description:
-          $ref: '#/components/schemas/description'
-        active:
-          $ref: '#/components/schemas/active'
-        enrichments:
-          type: array
-          items:
-            $ref: '#/components/schemas/enrichment_item'
-          description: Array of enrichment items tied to the tag.
-      x-apidog-orders:
-      - name
-      - created_by
-      - created_at
-      - updated_by
-      - updated_at
-      - description
-      - active
-      - enrichments
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    updated_by:
-      type: string
-      description: System id of the user or tool that last updated the resource.
-      x-apidog-folder: ''
-      examples:
-      - 63bd56897755560012bf3555
-    advanced_mapping_group_field:
-      type: object
-      required:
-      - type
-      - tag_name
-      description: A grouped column reference.
-      properties:
-        type:
-          type: string
-          enum:
-          - group_tag
-          description: Column type within a group. Use `group_tag`.
-        tag_name:
-          type: string
-          description: Column name. Must exactly match the column name in the uploaded map.
-          examples:
-          - alert_group
-      x-apidog-orders:
-      - type
-      - tag_name
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    enrichment_config_extraction2:
-      type: object
-      description: Configuration for an extraction enrichment item.
-      properties:
-        source:
-          type: string
-          description: Field from which to extract the value.
-        destination:
-          type: string
-          description: Destination tag for extracted value.
-        regex:
-          type: string
-          description: Regex pattern for value extraction.
-        template:
-          type: string
-          description: (System field) Extracted value template.
-        selected_source_system:
-          type: string
-          description: Restricts the extraction to a specific source system / integration key (for example `oim.genalertsapi` or `emailparser.ciena_mcs`). Omit to apply across all source systems.
-      required:
-      - source
-      - destination
-      - regex
-      x-apidog-orders:
-      - source
-      - selected_source_system
-      - destination
-      - regex
-      - template
-      x-apidog-folder: ''
-      x--orders:
-      - source
-      - destination
-      - regex
-      - template
-      - selected_source_system
-      x--ignore-properties: []
-    when2:
-      type: object
-      description: 'A [​BPQL object query](https://api-docs.bigpanda.io/en#description/bpql-object-syntax)​​ to filter incoming alerts. Only matched alerts will receive a value based on the enrichment item.
-
-        '
-      x-apidog-folder: ''
-      additionalProperties: true
-      x-apidog-orders: []
-      examples:
-      - IN:
-        - source_system
-        - - type: regex
-            value: '*'
-      x--orders: []
-      properties: {}
-      x--ignore-properties: []
-    map_object_return:
-      type: object
-      description: Enrichment map in json key value pairs.
-      properties:
-        total_results:
-          type: integer
-          description: The total number of map fields returned.
-          examples:
-          - 100
-        items:
-          type: array
-          description: Each row of the enrichment map in a set of key value pairs where the key is the column name, and the value is the row value.
-          items:
-            type: object
-            x-apidog-orders: []
-            properties: {}
-            examples:
-            - "{\n    \"assoc_incoming\": \"emea\",\n    \"assoc_db\": \"null\",\n    \"runbook_link\": \"https://wikispace.runbook.com/x/c4atewqB\",\n    \"app_status\": \"Active\",\n    \"workgroup\": \"emea\",\n    \"app_priority\": \"P2\",\n    \"app\": \"Active Directory - East group\",\n    \"assoc_outgoing\": \"emea\"\n},\n{\n    \"assoc_incoming\": \"sudost\",\n    \"assoc_db\": \"0q253qjF-aja\",\n    \"runbook_link\": \"https://wikispace.runbook.com/x/gJqtwgQ\",\n    \"app_status\": \"Testing\",\n    \"workgroup\": \"sudost\",\n    \"app_priority\": \"P1\",\n    \"app\": \"Sudost - AWS\",\n    \"assoc_outgoing\": \"sudost\"\n}\n"
-            x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - total_results
-      - items
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    created_at:
-      type: integer
-      description: The time the resource was created(in Unix epoch seconds).
-      x-apidog-folder: ''
-      examples:
-      - 1613252381
-    http-status-code-v1:
-      type: number
-      enum:
-      - 100
-      - 101
-      - 102
-      - 103
-      - 200
-      - 201
-      - 202
-      - 203
-      - 204
-      - 205
-      - 206
-      - 207
-      - 300
-      - 301
-      - 302
-      - 303
-      - 304
-      - 305
-      - 307
-      - 308
-      - 400
-      - 401
-      - 402
-      - 403
-      - 404
-      - 405
-      - 406
-      - 407
-      - 408
-      - 409
-      - 410
-      - 411
-      - 412
-      - 413
-      - 414
-      - 415
-      - 416
-      - 417
-      - 418
-      - 421
-      - 422
-      - 423
-      - 424
-      - 426
-      - 428
-      - 429
-      - 431
-      - 451
-      - 500
-      - 501
-      - 502
-      - 503
-      - 504
-      - 505
-      - 507
-      - 511
-      description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-      x-apidog-folder: ''
-    mapping_config_response2:
-      type: object
-      description: Rules for mapping tag values to event data.
-      properties:
-        name:
-          type: string
-          description: A system name for the mapping table. This name will appear in the UI.
-          examples:
-          - mapping_rule
-        fields:
-          type: array
-          description: Settings for each field included in the mapping table.
-          items:
-            $ref: '#/components/schemas/enrichment_field'
-        id_generation_function:
-          type: string
-          description: (System field) Method for ID creation in system.
-          examples:
-          - uuid
-        case_insensitive:
-          type: boolean
-          description: Whether the field names for this configuration take character case into consideration.
-          examples:
-          - false
-        note:
-          $ref: '#/components/schemas/note'
-      x-apidog-orders:
-      - name
-      - fields
-      - id_generation_function
-      - case_insensitive
-      - note
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    active:
-      type: boolean
-      description: Whether the new configuration should apply to future data.
-      default: true
-      x-apidog-folder: ''
-      examples:
-      - false
-    mapping_config:
-      type: object
-      description: Rules for mapping tag values to event data.
-      properties:
-        name:
-          type: string
-          description: A system name for the mapping table. This name will appear in the UI.
-          examples:
-          - mapping_rule
-        fields:
-          type: array
-          description: Settings for each field included in the mapping table.
-          items:
-            $ref: '#/components/schemas/enrichment_field'
-            properties:
-              title:
-                type: string
-              type:
-                type: string
-              tag_name:
-                type: string
-              override_existing:
-                type: boolean
-        case_insensitive:
-          type: boolean
-        id_generation_function:
-          type: string
-          description: e.g. use_md5. [VERIFY] enum with engineering.
-      x-apidog-orders:
-      - name
-      - fields
-      - case_insensitive
-      - id_generation_function
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    alert_tags_order:
-      type: array
-      description: List of tag names in the order they should be run.
-      items:
-        type: string
-      x-apidog-folder: ''
-      examples:
-      - - wiki
-        - tagwith2rules
     enrichment_config_mapping:
       type: object
       description: Schema for a  mapping enrichment rule.
@@ -3590,268 +3191,21 @@ components:
       - fields
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    advanced_mapping_row:
+    advanced_mapping_config:
       type: object
-      description: A map row. Must include an `id` (UUID); the remaining keys are the map columns and must follow the schema's `config`. To insert a new row, generate a new UUID.
       required:
-      - id
+      - fields
+      description: 'Advanced mapping configuration: the ordered set of map columns.'
       properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier of the row.
-      additionalProperties: true
-      x-apidog-orders:
-      - id
-      x-apidog-folder: ''
-      examples:
-      - id: 955056f6-c7bf-4733-a3ad-d3b23f06f173
-        created_by: null
-        created_at: '2024-11-28T15:08:03.272+00:00'
-        updated_by: null
-        updated_at: '2024-11-28T15:08:03.303+00:00'
-        metadata: null
-        session_id: S129
-        location: Chicago
-        threat_score: '90'
-        vulnerability_score: '85'
-        action_type: Alert
-        escalation_level: Critical
-        risk_level: P1
-        remediation_action: Block
-      x-apidog-ignore-properties: []
-    alert_tag_object:
-      type: object
-      description: Schema representing a BigPanda alert tag with optional enrichments.
-      properties:
-        name:
-          type: string
-          description: Tag name in BigPands.
-        description:
-          $ref: '#/components/schemas/description'
-        active:
-          $ref: '#/components/schemas/active'
-        enrichments:
-          type: array
-          items:
-            $ref: '#/components/schemas/enrichment_item'
-          description: IDs of automatic enrichment items configured for this tag. Items are listed in their run order.
-      required:
-      - name
-      - active
-      x-apidog-orders:
-      - name
-      - description
-      - active
-      - enrichments
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    enrichment_config_extraction:
-      type: object
-      description: Configuration for an extraction enrichment item.
-      properties:
-        source:
-          type: string
-          description: Field from which to extract the value.
-        selected_source_system:
-          type: string
-          description: Restricts the extraction to a specific source system / integration key (for example `oim.genalertsapi` or `emailparser.ciena_mcs`). Omit to apply across all source systems.
-        destination:
-          type: string
-          description: Destination tag for extracted value.
-        regex:
-          type: string
-          description: Regex pattern for value extraction.
-        template:
-          type: string
-          description: (System field) Extracted value template.
-      required:
-      - source
-      - destination
-      - regex
-      x-apidog-orders:
-      - source
-      - selected_source_system
-      - destination
-      - regex
-      - template
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    mapping_enrichment:
-      type: object
-      description: Definition for a mapping enrichment schema.
-      properties:
-        type:
-          type: string
-          description: Enrichment function type. Must be "mapping".
-          examples:
-          - mapping
-        active:
-          type: boolean
-          description: Whether the mapping enrichment is active.
-          examples:
-          - true
-        config:
-          $ref: '#/components/schemas/mapping_config'
-        when:
-          type: object
-          additionalProperties: true
-          description: Freeform object (dynamic/JSON-logic structure).
-          x-apidog-orders: []
-          properties: {}
-          x-apidog-ignore-properties: []
-        note:
-          type: string
-      x-apidog-orders:
-      - type
-      - active
-      - config
-      - when
-      - note
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    enrichment_config_composition2:
-      type: object
-      description: Configuration for a composition enrichment item.
-      properties:
-        source:
-          type: string
-          description: Optional filter for event source.
-        destination:
-          type: string
-          description: Destination tag to populate.
-        value:
-          type: string
-          description: Template value to apply to destination tag.
-      required:
-      - source
-      - destination
-      - value
-      x-apidog-orders:
-      - source
-      - destination
-      - value
-      x-apidog-folder: ''
-      x--orders:
-      - source
-      - destination
-      - value
-      x--ignore-properties: []
-    mapping_config_response:
-      type: object
-      description: Rules for mapping tag values to event data.
-      properties:
-        name:
-          type: string
-          description: A system name for the mapping table. This name will appear in the UI.
-          examples:
-          - mapping_rule
         fields:
           type: array
-          description: Settings for each field included in the mapping table.
           items:
-            $ref: '#/components/schemas/enrichment_field'
-            properties:
-              title:
-                type: string
-              type:
-                type: string
-              tag_name:
-                type: string
-              override_existing:
-                type: boolean
-        id_generation_function:
-          type: string
-          description: (System field) Method for ID creation in system.
-          examples:
-          - uuid
-        case_insensitive:
-          type: boolean
-          description: Whether the field names for this configuration take character case into consideration.
-          examples:
-          - false
-        note:
-          $ref: '#/components/schemas/note'
+            $ref: '#/components/schemas/advanced_mapping_field'
+          description: Column definitions for the map.
       x-apidog-orders:
-      - name
       - fields
-      - id_generation_function
-      - case_insensitive
-      - note
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    enrichment_item:
-      type: object
-      description: Schema for an enrichment item.
-      properties:
-        type:
-          type: string
-          description: 'Type of enrichment item. One of: `composition`, `extraction`,  `mapping`
-
-            '
-        active:
-          type: boolean
-          description: Whether enrichment is active.
-        when:
-          $ref: '#/components/schemas/when'
-        config:
-          oneOf:
-          - $ref: '#/components/schemas/enrichment_config_composition'
-          - $ref: '#/components/schemas/enrichment_config_extraction'
-          - $ref: '#/components/schemas/enrichment_config_mapping'
-        note:
-          type:
-          - string
-          - 'null'
-          description: Optional notes about the enrichment.
-      x-apidog-orders:
-      - type
-      - active
-      - when
-      - config
-      - note
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    error-response-v1:
-      title: error-response-v1
-      type: object
-      description: BP default error response
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
-      required:
-      - status
-      - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
     update_mapping_enrichment:
       type: object
       description: Definition for a updating a mapping enrichment schema. After a schema has been created, only the schema status, condition, and description can be edited. To change mapping fields, you must create a new schema.
@@ -3869,151 +3223,6 @@ components:
       - active
       - when
       - note
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    created_by:
-      description: System id of the user or tool that created the resource.
-      type: string
-      x-apidog-folder: ''
-      examples:
-      - 63bd56897755560012bf3555
-    updated_at:
-      type: integer
-      description: The time the resource was last updated(in Unix epoch seconds).
-      x-apidog-folder: ''
-      examples:
-      - 1613252381
-    enrichment_field:
-      type: object
-      description: Definition for an individual enrichment field.
-      properties:
-        title:
-          type: string
-          description: Column name on the mapping table.
-          examples:
-          - application
-        type:
-          type: string
-          description: Whether the column is a `query_tag` or `result_tag`.
-          examples:
-          - query_tag
-        tag_name:
-          type: string
-          description: (Optional) The name of the tag in BigPanda.
-          examples:
-          - very_cool
-        override_existing:
-          type: boolean
-          description: (Optional) If a value has been populated for this tag by another map or enrichment rule, whether this value should replace that value
-          examples:
-          - false
-        optional:
-          type: boolean
-          description: (Optional) Whether the tag can be skipped if no matching value for incoming alerts. Default is false.
-          examples:
-          - true
-        original_name:
-          type: string
-          description: The name of the column in the original map.
-          examples:
-          - null
-      x-apidog-orders:
-      - title
-      - type
-      - tag_name
-      - override_existing
-      - optional
-      - original_name
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    enrichment_config_mapping2:
-      type: object
-      description: Schema for a  mapping enrichment rule.
-      properties:
-        name:
-          type: string
-          description: ''
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/enrichment_field2'
-      x-apidog-orders:
-      - name
-      - fields
-      x-apidog-folder: ''
-      x--orders:
-      - name
-      - fields
-      x--ignore-properties: []
-    enrichment_field2:
-      type: object
-      description: Definition for an individual enrichment field.
-      properties:
-        title:
-          type: string
-          description: Column name on the mapping table.
-          examples:
-          - application
-        type:
-          type: string
-          description: Whether the column is a `query_tag` or `result_tag`.
-          examples:
-          - query_tag
-        tag_name:
-          type: string
-          description: (Optional) The name of the tag in BigPanda.
-          examples:
-          - very_cool
-        override_existing:
-          type: boolean
-          description: (Optional) If a value has been populated for this tag by another map or enrichment rule, whether this value should replace that value
-          examples:
-          - false
-        optional:
-          type: boolean
-          description: (Optional) Whether the tag can be skipped if no matching value for incoming alerts. Default is false.
-          examples:
-          - true
-        original_name:
-          type: string
-          description: The name of the column in the original map.
-          examples:
-          - null
-      x-apidog-orders:
-      - title
-      - type
-      - tag_name
-      - override_existing
-      - optional
-      - original_name
-      x-apidog-folder: ''
-      x--orders:
-      - title
-      - type
-      - tag_name
-      - override_existing
-      - optional
-      - original_name
-      x--ignore-properties: []
-    generic404response:
-      type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
-      x-apidog-orders:
-      - status
-      - errors
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     advanced_mapping_group:
@@ -4053,6 +3262,76 @@ components:
       - method
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    created_at:
+      type: integer
+      description: The time the resource was created(in Unix epoch seconds).
+      x-apidog-folder: ''
+      examples:
+      - 1613252381
+    enrichment_config_extraction2:
+      type: object
+      description: Configuration for an extraction enrichment item.
+      properties:
+        source:
+          type: string
+          description: Field from which to extract the value.
+        destination:
+          type: string
+          description: Destination tag for extracted value.
+        regex:
+          type: string
+          description: Regex pattern for value extraction.
+        template:
+          type: string
+          description: (System field) Extracted value template.
+        selected_source_system:
+          type: string
+          description: Restricts the extraction to a specific source system / integration key (for example `oim.genalertsapi` or `emailparser.ciena_mcs`). Omit to apply across all source systems.
+      required:
+      - source
+      - destination
+      - regex
+      x-apidog-orders:
+      - source
+      - selected_source_system
+      - destination
+      - regex
+      - template
+      x-apidog-folder: ''
+      x--orders:
+      - source
+      - destination
+      - regex
+      - template
+      - selected_source_system
+      x--ignore-properties: []
+    enrichment_order:
+      type: array
+      description: List of enrichment IDs in the order they should run. By default, items are ordered by creation time.
+      items:
+        type: string
+      x-apidog-folder: ''
+      examples:
+      - - 49ff0d51-8e73-43a7-9cdd-6ffff242666
+        - 5036032b-eb0c-461e-ff17-74a05785777
+        - d987df48-83f6-40ff-a985-ad6f8927888
+        - 6cff549b-7c14-43f9-950f-3f73706ff99
+    when2:
+      type: object
+      description: 'A [​BPQL object query](https://api-docs.bigpanda.io/en#description/bpql-object-syntax)​​ to filter incoming alerts. Only matched alerts will receive a value based on the enrichment item.
+
+        '
+      x-apidog-folder: ''
+      additionalProperties: true
+      x-apidog-orders: []
+      examples:
+      - IN:
+        - source_system
+        - - type: regex
+            value: '*'
+      x--orders: []
+      properties: {}
+      x--ignore-properties: []
     job_status:
       type: object
       description: Status of a background job.
@@ -4075,85 +3354,28 @@ components:
       - trigger_uri
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    alert_tag_response2:
-      type: object
-      description: Schema representing a BigPanda alert tag with optional enrichments.
-      properties:
-        name:
-          type: string
-          description: Name of the alert tag.
-        created_by:
-          $ref: '#/components/schemas/created_by'
-        created_at:
-          $ref: '#/components/schemas/created_at'
-        updated_by:
-          $ref: '#/components/schemas/updated_by'
-        updated_at:
-          $ref: '#/components/schemas/updated_at'
-        description:
-          $ref: '#/components/schemas/description'
-        active:
-          $ref: '#/components/schemas/active'
-        enrichments:
-          type: array
-          items:
-            $ref: '#/components/schemas/enrichment_item2'
-          description: Array of enrichment items tied to the tag.
-      x-apidog-orders:
-      - name
-      - created_by
-      - created_at
-      - updated_by
-      - updated_at
-      - description
-      - active
-      - enrichments
-      x-apidog-folder: ''
-      x--orders:
-      - name
-      - created_by
-      - created_at
-      - updated_by
-      - updated_at
-      - description
-      - active
-      - enrichments
-      x--ignore-properties: []
-    enrichment_order:
-      type: array
-      description: List of enrichment IDs in the order they should run. By default, items are ordered by creation time.
-      items:
-        type: string
+    note:
+      type: string
+      description: An optional comment or short description.
       x-apidog-folder: ''
       examples:
-      - - 49ff0d51-8e73-43a7-9cdd-6ffff242666
-        - 5036032b-eb0c-461e-ff17-74a05785777
-        - d987df48-83f6-40ff-a985-ad6f8927888
-        - 6cff549b-7c14-43f9-950f-3f73706ff99
-    generic404response2:
+      - Marking for regional similarity
+    enrichment_order_response:
       type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
+      description: Schema for specifying the order of enrichment items.
       properties:
-        status:
-          type: integer
+        created_by:
+          type: string
+          description: The user who created the enrichment item order.
           examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
+          - 58d77efa5eafe459163f4111
+        enrichment_order:
+          $ref: '#/components/schemas/enrichment_order'
       x-apidog-orders:
-      - status
-      - errors
+      - created_by
+      - enrichment_order
       x-apidog-folder: ''
-      x--orders:
-      - status
-      - errors
-      x--ignore-properties: []
+      x-apidog-ignore-properties: []
     map_row_change:
       type: object
       description: The details of the map change.
@@ -4232,12 +3454,474 @@ components:
       - op
       - value
       x-apidog-ignore-properties: []
-    job_id:
+    updated_by:
       type: string
-      description: System id of the asynchronous job.
+      description: System id of the user or tool that last updated the resource.
       x-apidog-folder: ''
       examples:
-      - c750243a-39dd-4666-bf0c-f8715e19eb96_1662894455_indexcsv
+      - 63bd56897755560012bf3555
+    enrichment_config_extraction:
+      type: object
+      description: Configuration for an extraction enrichment item.
+      properties:
+        source:
+          type: string
+          description: Field from which to extract the value.
+        selected_source_system:
+          type: string
+          description: Restricts the extraction to a specific source system / integration key (for example `oim.genalertsapi` or `emailparser.ciena_mcs`). Omit to apply across all source systems.
+        destination:
+          type: string
+          description: Destination tag for extracted value.
+        regex:
+          type: string
+          description: Regex pattern for value extraction.
+        template:
+          type: string
+          description: (System field) Extracted value template.
+      required:
+      - source
+      - destination
+      - regex
+      x-apidog-orders:
+      - source
+      - selected_source_system
+      - destination
+      - regex
+      - template
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    active:
+      type: boolean
+      description: Whether the new configuration should apply to future data.
+      default: true
+      x-apidog-folder: ''
+      examples:
+      - false
+    http-status-code-v1:
+      type: number
+      enum:
+      - 100
+      - 101
+      - 102
+      - 103
+      - 200
+      - 201
+      - 202
+      - 203
+      - 204
+      - 205
+      - 206
+      - 207
+      - 300
+      - 301
+      - 302
+      - 303
+      - 304
+      - 305
+      - 307
+      - 308
+      - 400
+      - 401
+      - 402
+      - 403
+      - 404
+      - 405
+      - 406
+      - 407
+      - 408
+      - 409
+      - 410
+      - 411
+      - 412
+      - 413
+      - 414
+      - 415
+      - 416
+      - 417
+      - 418
+      - 421
+      - 422
+      - 423
+      - 424
+      - 426
+      - 428
+      - 429
+      - 431
+      - 451
+      - 500
+      - 501
+      - 502
+      - 503
+      - 504
+      - 505
+      - 507
+      - 511
+      description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+      x-apidog-folder: ''
+    alert_tag_response:
+      type: object
+      description: Schema representing a BigPanda alert tag with optional enrichments.
+      properties:
+        name:
+          type: string
+          description: Name of the alert tag.
+        created_by:
+          $ref: '#/components/schemas/created_by'
+        created_at:
+          $ref: '#/components/schemas/created_at'
+        updated_by:
+          $ref: '#/components/schemas/updated_by'
+        updated_at:
+          $ref: '#/components/schemas/updated_at'
+        description:
+          $ref: '#/components/schemas/description'
+        active:
+          $ref: '#/components/schemas/active'
+        enrichments:
+          type: array
+          items:
+            $ref: '#/components/schemas/enrichment_item'
+          description: Array of enrichment items tied to the tag.
+      x-apidog-orders:
+      - name
+      - created_by
+      - created_at
+      - updated_by
+      - updated_at
+      - description
+      - active
+      - enrichments
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    enrichment_field:
+      type: object
+      description: Definition for an individual enrichment field.
+      properties:
+        title:
+          type: string
+          description: Column name on the mapping table.
+          examples:
+          - application
+        type:
+          type: string
+          description: Whether the column is a `query_tag` or `result_tag`.
+          examples:
+          - query_tag
+        tag_name:
+          type: string
+          description: (Optional) The name of the tag in BigPanda.
+          examples:
+          - very_cool
+        override_existing:
+          type: boolean
+          description: (Optional) If a value has been populated for this tag by another map or enrichment rule, whether this value should replace that value
+          examples:
+          - false
+        optional:
+          type: boolean
+          description: (Optional) Whether the tag can be skipped if no matching value for incoming alerts. Default is false.
+          examples:
+          - true
+        original_name:
+          type: string
+          description: The name of the column in the original map.
+          examples:
+          - null
+      x-apidog-orders:
+      - title
+      - type
+      - tag_name
+      - override_existing
+      - optional
+      - original_name
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    advanced_mapping_group_field:
+      type: object
+      required:
+      - type
+      - tag_name
+      description: A grouped column reference.
+      properties:
+        type:
+          type: string
+          enum:
+          - group_tag
+          description: Column type within a group. Use `group_tag`.
+        tag_name:
+          type: string
+          description: Column name. Must exactly match the column name in the uploaded map.
+          examples:
+          - alert_group
+      x-apidog-orders:
+      - type
+      - tag_name
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    created_by:
+      description: System id of the user or tool that created the resource.
+      type: string
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    enrichment_itemresponse:
+      type: object
+      description: Schema for an enrichment item, including composition and extraction types.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the enrichment item.
+        type:
+          type: string
+          description: Type of enrichment (composition or extraction).
+        active:
+          type: boolean
+          description: Whether enrichment is active.
+        when:
+          $ref: '#/components/schemas/when'
+        version:
+          type: integer
+          description: Internal system version of the schema. This number is incremented automatically each time the item is updated.
+        config:
+          oneOf:
+          - $ref: '#/components/schemas/enrichment_config_composition'
+          - $ref: '#/components/schemas/enrichment_config_extraction'
+        created_by:
+          type: string
+          description: ID of user who created the enrichment.
+        updated_by:
+          type: string
+          description: ID of user who last updated the enrichment.
+        note:
+          type:
+          - string
+          - 'null'
+          description: Optional notes about the enrichment.
+      x-apidog-orders:
+      - id
+      - type
+      - active
+      - when
+      - version
+      - config
+      - created_by
+      - updated_by
+      - note
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    enrichment_field2:
+      type: object
+      description: Definition for an individual enrichment field.
+      properties:
+        title:
+          type: string
+          description: Column name on the mapping table.
+          examples:
+          - application
+        type:
+          type: string
+          description: Whether the column is a `query_tag` or `result_tag`.
+          examples:
+          - query_tag
+        tag_name:
+          type: string
+          description: (Optional) The name of the tag in BigPanda.
+          examples:
+          - very_cool
+        override_existing:
+          type: boolean
+          description: (Optional) If a value has been populated for this tag by another map or enrichment rule, whether this value should replace that value
+          examples:
+          - false
+        optional:
+          type: boolean
+          description: (Optional) Whether the tag can be skipped if no matching value for incoming alerts. Default is false.
+          examples:
+          - true
+        original_name:
+          type: string
+          description: The name of the column in the original map.
+          examples:
+          - null
+      x-apidog-orders:
+      - title
+      - type
+      - tag_name
+      - override_existing
+      - optional
+      - original_name
+      x-apidog-folder: ''
+      x--orders:
+      - title
+      - type
+      - tag_name
+      - override_existing
+      - optional
+      - original_name
+      x--ignore-properties: []
+    description:
+      type: string
+      x-apidog-folder: ''
+    advanced_mapping_row:
+      type: object
+      description: A map row. Must include an `id` (UUID); the remaining keys are the map columns and must follow the schema's `config`. To insert a new row, generate a new UUID.
+      required:
+      - id
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the row.
+      additionalProperties: true
+      x-apidog-orders:
+      - id
+      x-apidog-folder: ''
+      examples:
+      - id: 955056f6-c7bf-4733-a3ad-d3b23f06f173
+        created_by: null
+        created_at: '2024-11-28T15:08:03.272+00:00'
+        updated_by: null
+        updated_at: '2024-11-28T15:08:03.303+00:00'
+        metadata: null
+        session_id: S129
+        location: Chicago
+        threat_score: '90'
+        vulnerability_score: '85'
+        action_type: Alert
+        escalation_level: Critical
+        risk_level: P1
+        remediation_action: Block
+      x-apidog-ignore-properties: []
+    when:
+      type: object
+      description: 'A [​BPQL object query](https://api-docs.bigpanda.io/en#description/bpql-object-syntax)​​ to filter incoming alerts. Only matched alerts will receive a value based on the enrichment item.
+
+        '
+      x-apidog-folder: ''
+      additionalProperties: true
+      x-apidog-orders: []
+      examples:
+      - IN:
+        - source_system
+        - - type: regex
+            value: '*'
+      properties: {}
+      x-apidog-ignore-properties: []
+    enrichment_config_composition:
+      type: object
+      description: Configuration for a composition enrichment item.
+      properties:
+        source:
+          type: string
+          description: Optional filter for event source.
+        destination:
+          type: string
+          description: Destination tag to populate.
+        value:
+          type: string
+          description: Template value to apply to destination tag.
+      required:
+      - source
+      - destination
+      - value
+      x-apidog-orders:
+      - source
+      - destination
+      - value
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    alert_tags_order:
+      type: array
+      description: List of tag names in the order they should be run.
+      items:
+        type: string
+      x-apidog-folder: ''
+      examples:
+      - - wiki
+        - tagwith2rules
+    updated_at:
+      type: integer
+      description: The time the resource was last updated(in Unix epoch seconds).
+      x-apidog-folder: ''
+      examples:
+      - 1613252381
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    mapping_config_response2:
+      type: object
+      description: Rules for mapping tag values to event data.
+      properties:
+        name:
+          type: string
+          description: A system name for the mapping table. This name will appear in the UI.
+          examples:
+          - mapping_rule
+        fields:
+          type: array
+          description: Settings for each field included in the mapping table.
+          items:
+            $ref: '#/components/schemas/enrichment_field'
+        id_generation_function:
+          type: string
+          description: (System field) Method for ID creation in system.
+          examples:
+          - uuid
+        case_insensitive:
+          type: boolean
+          description: Whether the field names for this configuration take character case into consideration.
+          examples:
+          - false
+        note:
+          $ref: '#/components/schemas/note'
+      x-apidog-orders:
+      - name
+      - fields
+      - id_generation_function
+      - case_insensitive
+      - note
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     generic202response:
       type: object
       description: 'Call was successful.
@@ -4260,6 +3944,32 @@ components:
       examples:
       - status: 202
         data: {}
+      x-apidog-ignore-properties: []
+    alert_tag_object:
+      type: object
+      description: Schema representing a BigPanda alert tag with optional enrichments.
+      properties:
+        name:
+          type: string
+          description: Tag name in BigPands.
+        description:
+          $ref: '#/components/schemas/description'
+        active:
+          $ref: '#/components/schemas/active'
+        enrichments:
+          type: array
+          items:
+            $ref: '#/components/schemas/enrichment_item'
+          description: IDs of automatic enrichment items configured for this tag. Items are listed in their run order.
+      required:
+      - name
+      - active
+      x-apidog-orders:
+      - name
+      - description
+      - active
+      - enrichments
+      x-apidog-folder: ''
       x-apidog-ignore-properties: []
     mapping_enrichment_response:
       type: object
@@ -4316,6 +4026,65 @@ components:
       - note
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    enrichment_item:
+      type: object
+      description: Schema for an enrichment item.
+      properties:
+        type:
+          type: string
+          description: 'Type of enrichment item. One of: `composition`, `extraction`,  `mapping`
+
+            '
+        active:
+          type: boolean
+          description: Whether enrichment is active.
+        when:
+          $ref: '#/components/schemas/when'
+        config:
+          oneOf:
+          - $ref: '#/components/schemas/enrichment_config_composition'
+          - $ref: '#/components/schemas/enrichment_config_extraction'
+          - $ref: '#/components/schemas/enrichment_config_mapping'
+        note:
+          type:
+          - string
+          - 'null'
+          description: Optional notes about the enrichment.
+      x-apidog-orders:
+      - type
+      - active
+      - when
+      - config
+      - note
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    enrichment_config_composition2:
+      type: object
+      description: Configuration for a composition enrichment item.
+      properties:
+        source:
+          type: string
+          description: Optional filter for event source.
+        destination:
+          type: string
+          description: Destination tag to populate.
+        value:
+          type: string
+          description: Template value to apply to destination tag.
+      required:
+      - source
+      - destination
+      - value
+      x-apidog-orders:
+      - source
+      - destination
+      - value
+      x-apidog-folder: ''
+      x--orders:
+      - source
+      - destination
+      - value
+      x--ignore-properties: []
     enrichment_item2:
       type: object
       description: Schema for an enrichment item.
@@ -4354,6 +4123,141 @@ components:
       - config
       - note
       x--ignore-properties: []
+    mapping_config:
+      type: object
+      description: Rules for mapping tag values to event data.
+      properties:
+        name:
+          type: string
+          description: A system name for the mapping table. This name will appear in the UI.
+          examples:
+          - mapping_rule
+        fields:
+          type: array
+          description: Settings for each field included in the mapping table.
+          items:
+            $ref: '#/components/schemas/enrichment_field'
+            properties:
+              title:
+                type: string
+              type:
+                type: string
+              tag_name:
+                type: string
+              override_existing:
+                type: boolean
+        case_insensitive:
+          type: boolean
+        id_generation_function:
+          type: string
+          description: e.g. use_md5. [VERIFY] enum with engineering.
+      x-apidog-orders:
+      - name
+      - fields
+      - case_insensitive
+      - id_generation_function
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    map_object_return:
+      type: object
+      description: Enrichment map in json key value pairs.
+      properties:
+        total_results:
+          type: integer
+          description: The total number of map fields returned.
+          examples:
+          - 100
+        items:
+          type: array
+          description: Each row of the enrichment map in a set of key value pairs where the key is the column name, and the value is the row value.
+          items:
+            type: object
+            x-apidog-orders: []
+            properties: {}
+            examples:
+            - "{\n    \"assoc_incoming\": \"emea\",\n    \"assoc_db\": \"null\",\n    \"runbook_link\": \"https://wikispace.runbook.com/x/c4atewqB\",\n    \"app_status\": \"Active\",\n    \"workgroup\": \"emea\",\n    \"app_priority\": \"P2\",\n    \"app\": \"Active Directory - East group\",\n    \"assoc_outgoing\": \"emea\"\n},\n{\n    \"assoc_incoming\": \"sudost\",\n    \"assoc_db\": \"0q253qjF-aja\",\n    \"runbook_link\": \"https://wikispace.runbook.com/x/gJqtwgQ\",\n    \"app_status\": \"Testing\",\n    \"workgroup\": \"sudost\",\n    \"app_priority\": \"P1\",\n    \"app\": \"Sudost - AWS\",\n    \"assoc_outgoing\": \"sudost\"\n}\n"
+            x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - total_results
+      - items
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    mapping_enrichment:
+      type: object
+      description: Definition for a mapping enrichment schema.
+      properties:
+        type:
+          type: string
+          description: Enrichment function type. Must be "mapping".
+          examples:
+          - mapping
+        active:
+          type: boolean
+          description: Whether the mapping enrichment is active.
+          examples:
+          - true
+        config:
+          $ref: '#/components/schemas/mapping_config'
+        when:
+          type: object
+          additionalProperties: true
+          description: Freeform object (dynamic/JSON-logic structure).
+          x-apidog-orders: []
+          properties: {}
+          x-apidog-ignore-properties: []
+        note:
+          type: string
+      x-apidog-orders:
+      - type
+      - active
+      - config
+      - when
+      - note
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    generic404response2:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x--orders:
+      - status
+      - errors
+      x--ignore-properties: []
     generic204response:
       type: object
       description: 'Call was successful.
@@ -4377,76 +4281,172 @@ components:
       - status: 204
         data: {}
       x-apidog-ignore-properties: []
-    note:
+    job_id:
       type: string
-      description: An optional comment or short description.
+      description: System id of the asynchronous job.
       x-apidog-folder: ''
       examples:
-      - Marking for regional similarity
-    enrichment_itemresponse:
+      - c750243a-39dd-4666-bf0c-f8715e19eb96_1662894455_indexcsv
+    alert_tag_response2:
       type: object
-      description: Schema for an enrichment item, including composition and extraction types.
+      description: Schema representing a BigPanda alert tag with optional enrichments.
       properties:
-        id:
+        name:
           type: string
-          description: Unique identifier for the enrichment item.
+          description: Name of the alert tag.
+        created_by:
+          $ref: '#/components/schemas/created_by'
+        created_at:
+          $ref: '#/components/schemas/created_at'
+        updated_by:
+          $ref: '#/components/schemas/updated_by'
+        updated_at:
+          $ref: '#/components/schemas/updated_at'
+        description:
+          $ref: '#/components/schemas/description'
+        active:
+          $ref: '#/components/schemas/active'
+        enrichments:
+          type: array
+          items:
+            $ref: '#/components/schemas/enrichment_item2'
+          description: Array of enrichment items tied to the tag.
+      x-apidog-orders:
+      - name
+      - created_by
+      - created_at
+      - updated_by
+      - updated_at
+      - description
+      - active
+      - enrichments
+      x-apidog-folder: ''
+      x--orders:
+      - name
+      - created_by
+      - created_at
+      - updated_by
+      - updated_at
+      - description
+      - active
+      - enrichments
+      x--ignore-properties: []
+    advanced_mapping_field:
+      type: object
+      required:
+      - type
+      - tag_name
+      description: A column definition in an advanced mapping schema.
+      properties:
         type:
           type: string
-          description: Type of enrichment (composition or extraction).
-        active:
-          type: boolean
-          description: Whether enrichment is active.
-        when:
-          $ref: '#/components/schemas/when'
-        version:
-          type: integer
-          description: Internal system version of the schema. This number is incremented automatically each time the item is updated.
-        config:
-          oneOf:
-          - $ref: '#/components/schemas/enrichment_config_composition'
-          - $ref: '#/components/schemas/enrichment_config_extraction'
-        created_by:
+          enum:
+          - query_tag
+          - result_tag
+          - group_tag
+          description: 'Column type: `query_tag` (matched against the alert), `result_tag` (value applied to the alert), or `group_tag` (a column used within a group).'
+        tag_name:
           type: string
-          description: ID of user who created the enrichment.
-        updated_by:
-          type: string
-          description: ID of user who last updated the enrichment.
-        note:
-          type:
-          - string
-          - 'null'
-          description: Optional notes about the enrichment.
+          description: Column name. Must exactly match the column name in the uploaded map (and the BigPanda tag name).
+          examples:
+          - email
+        groups:
+          type: array
+          description: (Optional, `result_tag` only) Rules that cluster result columns together. The first group with matched columns applies as the tag value.
+          items:
+            $ref: '#/components/schemas/advanced_mapping_group'
       x-apidog-orders:
-      - id
       - type
-      - active
-      - when
-      - version
-      - config
-      - created_by
-      - updated_by
+      - tag_name
+      - groups
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    enrichment_config_mapping2:
+      type: object
+      description: Schema for a  mapping enrichment rule.
+      properties:
+        name:
+          type: string
+          description: ''
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/enrichment_field2'
+      x-apidog-orders:
+      - name
+      - fields
+      x-apidog-folder: ''
+      x--orders:
+      - name
+      - fields
+      x--ignore-properties: []
+    mapping_config_response:
+      type: object
+      description: Rules for mapping tag values to event data.
+      properties:
+        name:
+          type: string
+          description: A system name for the mapping table. This name will appear in the UI.
+          examples:
+          - mapping_rule
+        fields:
+          type: array
+          description: Settings for each field included in the mapping table.
+          items:
+            $ref: '#/components/schemas/enrichment_field'
+            properties:
+              title:
+                type: string
+              type:
+                type: string
+              tag_name:
+                type: string
+              override_existing:
+                type: boolean
+        id_generation_function:
+          type: string
+          description: (System field) Method for ID creation in system.
+          examples:
+          - uuid
+        case_insensitive:
+          type: boolean
+          description: Whether the field names for this configuration take character case into consideration.
+          examples:
+          - false
+        note:
+          $ref: '#/components/schemas/note'
+      x-apidog-orders:
+      - name
+      - fields
+      - id_generation_function
+      - case_insensitive
       - note
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    description:
-      type: string
-      x-apidog-folder: ''
-    enrichment_order_response:
+    generic400response2:
       type: object
-      description: Schema for specifying the order of enrichment items.
+      description: 'Call is missing parameters or malformed.
+
+        '
       properties:
-        created_by:
-          type: string
-          description: The user who created the enrichment item order.
+        status:
+          type: integer
           examples:
-          - 58d77efa5eafe459163f4111
-        enrichment_order:
-          $ref: '#/components/schemas/enrichment_order'
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
       x-apidog-orders:
-      - created_by
-      - enrichment_order
+      - status
+      - errors
+      x--orders:
+      - status
+      - errors
+      x--ignore-properties: []
       x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     advanced_mapping_schema:
       type: object
       description: An advanced mapping enrichment schema. Advanced mapping creates dynamic map rules that account for variable inbound fields across monitoring tools, with optional grouping of result columns.

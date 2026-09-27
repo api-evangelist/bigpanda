@@ -171,49 +171,6 @@ paths:
       x-source-page: Retrieve Audit Log Metadata
 components:
   schemas:
-    auditlogmetadata200response:
-      type: object
-      properties:
-        status:
-          type: integer
-          examples:
-          - 200
-        entityNames:
-          type: array
-          items:
-            type: string
-          examples:
-          - - general_settings
-            - integration
-            - action_plan
-            - workflow
-            - role
-            - team
-            - api_key
-            - user
-        changeTypes:
-          type: array
-          items:
-            type: string
-          examples:
-          - - create
-            - update
-            - delete
-        propertyChangeTypes:
-          type: array
-          items:
-            type: string
-          examples:
-          - - added
-            - modified
-            - removed
-      x-apidog-orders:
-      - status
-      - entityNames
-      - changeTypes
-      - propertyChangeTypes
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     generic403response:
       type: object
       description: 'Forbidden
@@ -371,6 +328,49 @@ components:
       - status
       - auditLogs
       - pagination
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    auditlogmetadata200response:
+      type: object
+      properties:
+        status:
+          type: integer
+          examples:
+          - 200
+        entityNames:
+          type: array
+          items:
+            type: string
+          examples:
+          - - general_settings
+            - integration
+            - action_plan
+            - workflow
+            - role
+            - team
+            - api_key
+            - user
+        changeTypes:
+          type: array
+          items:
+            type: string
+          examples:
+          - - create
+            - update
+            - delete
+        propertyChangeTypes:
+          type: array
+          items:
+            type: string
+          examples:
+          - - added
+            - modified
+            - removed
+      x-apidog-orders:
+      - status
+      - entityNames
+      - changeTypes
+      - propertyChangeTypes
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
   securitySchemes:

@@ -501,22 +501,6 @@ paths:
       x-source-page: Update Correlation Pattern Order
 components:
   schemas:
-    tag:
-      type: object
-      properties:
-        name:
-          type: string
-          examples:
-          - case
-        value:
-          type: string
-          examples:
-          - sensitive1
-      x-apidog-orders:
-      - name
-      - value
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     generic400response:
       type: object
       description: 'Call is missing parameters or malformed.
@@ -538,6 +522,29 @@ components:
       - errors
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
+    pattern_order:
+      type: object
+      description: Schema for specifying the order of correlation patterns.
+      properties:
+        created_by:
+          type: string
+          description: The user who created the pattern order.
+          examples:
+          - 58d77efa5eafe459163f4111
+        correlation_pattern_order:
+          type: array
+          description: Patterns listed in the order they should be applied to incoming alerts.
+          items:
+            type: string
+          examples:
+          - - 58d77efa5555e459163f4111
+            - 58d77efa5eafe455553f4111
+            - 55557efa5eafe459163f4111
+      x-apidog-orders:
+      - created_by
+      - correlation_pattern_order
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     pattern:
       type: object
       properties:
@@ -566,27 +573,20 @@ components:
       - tags
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    pattern_order:
+    tag:
       type: object
-      description: Schema for specifying the order of correlation patterns.
       properties:
-        created_by:
+        name:
           type: string
-          description: The user who created the pattern order.
           examples:
-          - 58d77efa5eafe459163f4111
-        correlation_pattern_order:
-          type: array
-          description: Patterns listed in the order they should be applied to incoming alerts.
-          items:
-            type: string
+          - case
+        value:
+          type: string
           examples:
-          - - 58d77efa5555e459163f4111
-            - 58d77efa5eafe455553f4111
-            - 55557efa5eafe459163f4111
+          - sensitive1
       x-apidog-orders:
-      - created_by
-      - correlation_pattern_order
+      - name
+      - value
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
   securitySchemes:

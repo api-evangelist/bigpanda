@@ -388,6 +388,18 @@ components:
       - service_account_id
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    created_at:
+      type: integer
+      description: The time the resource was created(in Unix epoch seconds).
+      x-apidog-folder: ''
+      examples:
+      - 1613252381
+    created_by:
+      description: System id of the user or tool that created the resource.
+      type: string
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
     generic400response:
       type: object
       description: 'Call is missing parameters or malformed.
@@ -409,18 +421,6 @@ components:
       - errors
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
-    created_by:
-      description: System id of the user or tool that created the resource.
-      type: string
-      x-apidog-folder: ''
-      examples:
-      - 63bd56897755560012bf3555
-    created_at:
-      type: integer
-      description: The time the resource was created(in Unix epoch seconds).
-      x-apidog-folder: ''
-      examples:
-      - 1613252381
     api_key:
       type: object
       description: Schema for a BigPanda API key object.

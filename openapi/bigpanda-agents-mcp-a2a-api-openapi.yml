@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: BigPanda Agents (MCP & A2A) Agents (MCP & A2A) Agents (MCP……
+  title: BigPanda Agents (MCP & A2A) Agents (MCP & A2A) Agents…
   description: BigPanda Agents (MCP & A2A) operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
@@ -204,6 +204,187 @@ components:
       - errors
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    mcp200response:
+      type: object
+      properties:
+        jsonRPC:
+          type: string
+          description: JSON RPC version.
+          examples:
+          - 2
+        id:
+          type: string
+          description: Identifier established by the client.
+          examples:
+          - 1
+        result:
+          type: object
+          properties:
+            protocolVersion:
+              type: string
+              description: MCP protocol version.
+              examples:
+              - '2025-11-25T00:00:00.000Z'
+            capabilities:
+              type: array
+              description: Client capabilities.
+              examples:
+              - tools
+              items:
+                type: string
+            serverInfo:
+              type: array
+              description: Information about the connected server.
+              examples:
+              - name
+              items:
+                type: string
+          x-apidog-orders:
+          - protocolVersion
+          - capabilities
+          - serverInfo
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - jsonRPC
+      - id
+      - result
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    mcp-initialize-config:
+      type: object
+      title: initialize
+      properties:
+        jsonRpc:
+          type: string
+          description: JSON RPC version. Must be 2.0.
+          examples:
+          - 2
+        id:
+          type: string
+          description: Identifier established by the client.
+          examples:
+          - 1
+        method:
+          type: string
+          description: Method used for this request. One of `initialize`, `tools/list`, or `tools/call`.
+          examples:
+          - initialize
+        params:
+          type: object
+          description: Parameter values to be used during the invocation of the method.
+          properties:
+            protocolVersion:
+              type: string
+              description: MCP protocol version.
+              examples:
+              - '2025-11-25T00:00:00.000Z'
+            capabilities:
+              type: string
+              description: Client capabilities.
+              examples:
+              - null
+            clientInfo:
+              type: array
+              description: Information about the MCP client.
+              examples:
+              - name
+              items:
+                type: string
+          x-apidog-orders:
+          - protocolVersion
+          - capabilities
+          - clientInfo
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - jsonRpc
+      - id
+      - method
+      - params
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    a2a200response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 200
+        data:
+          type: object
+          properties:
+            jsonRPC:
+              type: string
+              description: JSON RPC version.
+              examples:
+              - 2
+            id:
+              type: string
+              description: Identifier established by the client.
+              examples:
+              - 1
+            result:
+              type: object
+              properties:
+                taskId:
+                  type: string
+                  description: Unique identifier of the task.
+                  examples:
+                  - 6830f1a2e3b4c5d6e7f80001
+                status:
+                  type: string
+                  description: Status of the task. One of `running`, `completed`, `failed`, or `not_found`.
+                artifacts:
+                  type: object
+                  properties:
+                    parts:
+                      type: array
+                      description: Parts of the message.
+                      examples:
+                      - text
+                      items:
+                        type: string
+                  x-apidog-orders:
+                  - parts
+                  x-apidog-ignore-properties: []
+              x-apidog-orders:
+              - taskId
+              - status
+              - artifacts
+              x-apidog-ignore-properties: []
+          x-apidog-orders:
+          - jsonRPC
+          - id
+          - result
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     agentcard200:
       type: object
       description: 'Call was successful.
@@ -282,192 +463,6 @@ components:
       - data
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    a2a-tasksget-config:
-      type: object
-      title: tasks/get (polling)
-      properties:
-        json-rpc:
-          type: string
-          description: JSON RPC version. Must be 2.0.
-          examples:
-          - 2
-        id:
-          type: string
-          description: Identifier established by the client.
-          examples:
-          - 1
-        method:
-          type: string
-          description: The operation that will take place over this endpoint. One of `message/send`, `message/stream`, or `task/get`.
-          examples:
-          - tasks/get
-        params:
-          type: object
-          items:
-            type: object
-            properties: {}
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - json-rpc
-      - id
-      - method
-      - params
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    mcp-initialize-config:
-      type: object
-      title: initialize
-      properties:
-        jsonRpc:
-          type: string
-          description: JSON RPC version. Must be 2.0.
-          examples:
-          - 2
-        id:
-          type: string
-          description: Identifier established by the client.
-          examples:
-          - 1
-        method:
-          type: string
-          description: Method used for this request. One of `initialize`, `tools/list`, or `tools/call`.
-          examples:
-          - initialize
-        params:
-          type: object
-          description: Parameter values to be used during the invocation of the method.
-          properties:
-            protocolVersion:
-              type: string
-              description: MCP protocol version.
-              examples:
-              - '2025-11-25T00:00:00.000Z'
-            capabilities:
-              type: string
-              description: Client capabilities.
-              examples:
-              - null
-            clientInfo:
-              type: array
-              description: Information about the MCP client.
-              examples:
-              - name
-              items:
-                type: string
-          x-apidog-orders:
-          - protocolVersion
-          - capabilities
-          - clientInfo
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - jsonRpc
-      - id
-      - method
-      - params
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic404response:
-      type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    mcp200response:
-      type: object
-      properties:
-        jsonRPC:
-          type: string
-          description: JSON RPC version.
-          examples:
-          - 2
-        id:
-          type: string
-          description: Identifier established by the client.
-          examples:
-          - 1
-        result:
-          type: object
-          properties:
-            protocolVersion:
-              type: string
-              description: MCP protocol version.
-              examples:
-              - '2025-11-25T00:00:00.000Z'
-            capabilities:
-              type: array
-              description: Client capabilities.
-              examples:
-              - tools
-              items:
-                type: string
-            serverInfo:
-              type: array
-              description: Information about the connected server.
-              examples:
-              - name
-              items:
-                type: string
-          x-apidog-orders:
-          - protocolVersion
-          - capabilities
-          - serverInfo
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - jsonRPC
-      - id
-      - result
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    mcp-toolslist-config:
-      type: object
-      title: tools/list
-      properties:
-        jsonRpc:
-          type: string
-          description: JSON RPC version. Must be 2.0.
-          examples:
-          - 2
-        id:
-          type: string
-          description: Identifier established by the client.
-          examples:
-          - 1
-        method:
-          type: string
-          description: Method used for this request. One of `initialize`, `tools/list`, or `tools/call`.
-          examples:
-          - tools/list
-        params:
-          type: array
-          description: Parameter values to be used during the invocation of the method.
-          examples:
-          - null
-          items:
-            type: string
-      x-apidog-orders:
-      - jsonRpc
-      - id
-      - method
-      - params
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     mcp-calltool-config:
       type: object
       title: tools/call
@@ -518,66 +513,71 @@ components:
       - params
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    a2a200response:
+    a2a-tasksget-config:
       type: object
-      description: 'Call was successful.
-
-        '
+      title: tasks/get (polling)
       properties:
-        status:
-          type: integer
+        json-rpc:
+          type: string
+          description: JSON RPC version. Must be 2.0.
           examples:
-          - 200
-        data:
+          - 2
+        id:
+          type: string
+          description: Identifier established by the client.
+          examples:
+          - 1
+        method:
+          type: string
+          description: The operation that will take place over this endpoint. One of `message/send`, `message/stream`, or `task/get`.
+          examples:
+          - tasks/get
+        params:
           type: object
-          properties:
-            jsonRPC:
-              type: string
-              description: JSON RPC version.
-              examples:
-              - 2
-            id:
-              type: string
-              description: Identifier established by the client.
-              examples:
-              - 1
-            result:
-              type: object
-              properties:
-                taskId:
-                  type: string
-                  description: Unique identifier of the task.
-                  examples:
-                  - 6830f1a2e3b4c5d6e7f80001
-                status:
-                  type: string
-                  description: Status of the task. One of `running`, `completed`, `failed`, or `not_found`.
-                artifacts:
-                  type: object
-                  properties:
-                    parts:
-                      type: array
-                      description: Parts of the message.
-                      examples:
-                      - text
-                      items:
-                        type: string
-                  x-apidog-orders:
-                  - parts
-                  x-apidog-ignore-properties: []
-              x-apidog-orders:
-              - taskId
-              - status
-              - artifacts
-              x-apidog-ignore-properties: []
-          x-apidog-orders:
-          - jsonRPC
-          - id
-          - result
+          items:
+            type: object
+            properties: {}
+          properties: {}
+          x-apidog-orders: []
           x-apidog-ignore-properties: []
       x-apidog-orders:
-      - status
-      - data
+      - json-rpc
+      - id
+      - method
+      - params
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    mcp-toolslist-config:
+      type: object
+      title: tools/list
+      properties:
+        jsonRpc:
+          type: string
+          description: JSON RPC version. Must be 2.0.
+          examples:
+          - 2
+        id:
+          type: string
+          description: Identifier established by the client.
+          examples:
+          - 1
+        method:
+          type: string
+          description: Method used for this request. One of `initialize`, `tools/list`, or `tools/call`.
+          examples:
+          - tools/list
+        params:
+          type: array
+          description: Parameter values to be used during the invocation of the method.
+          examples:
+          - null
+          items:
+            type: string
+      x-apidog-orders:
+      - jsonRpc
+      - id
+      - method
+      - params
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
   securitySchemes:

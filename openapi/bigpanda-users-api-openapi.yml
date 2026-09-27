@@ -2806,45 +2806,6 @@ paths:
       x-source-page: Retrieve a User
 components:
   schemas:
-    UserStateFilter-enum:
-      type: string
-      description: User state
-      enum:
-      - valid
-      - initial
-      - welcome
-      x-examples:
-        example-1: valid
-      x-apidog-folder: ''
-    id-v1:
-      type: string
-      title: ID
-      pattern: ^[a-f\d]{24}$
-      description: Object's ID
-      minLength: 24
-      maxLength: 24
-      x-apidog-folder: ''
-      examples:
-      - 60c5238222fa63633d93d52f
-    error-response-v1:
-      title: error-response-v1
-      type: object
-      description: BP default error response
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
-      required:
-      - status
-      - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
     http-status-code-v1:
       type: number
       enum:
@@ -2906,6 +2867,45 @@ components:
       - 511
       description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
       x-apidog-folder: ''
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    UserStateFilter-enum:
+      type: string
+      description: User state
+      enum:
+      - valid
+      - initial
+      - welcome
+      x-examples:
+        example-1: valid
+      x-apidog-folder: ''
+    id-v1:
+      type: string
+      title: ID
+      pattern: ^[a-f\d]{24}$
+      description: Object's ID
+      minLength: 24
+      maxLength: 24
+      x-apidog-folder: ''
+      examples:
+      - 60c5238222fa63633d93d52f
     UserName:
       title: Name
       description: Resource name

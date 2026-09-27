@@ -1066,60 +1066,50 @@ paths:
       x-source-page: Retrieve all permissions
 components:
   schemas:
-    id-v1:
-      type: string
-      title: ID
-      pattern: ^[a-f\d]{24}$
-      description: Object's ID
-      minLength: 24
-      maxLength: 24
-      x-apidog-folder: ''
-      examples:
-      - 60c5238222fa63633d93d52f
-    error-response-v1:
-      title: error-response-v1
+    role_object:
+      required:
+      - name
+      - permissions
       type: object
-      description: BP default error response
       properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
+        name:
+          type: string
+          description: The name of the role as seen in the UI.
+        users:
           type: array
+          description: An array of user IDs associated with the role.
           items:
             type: string
-      required:
-      - status
-      - errors
+        permissions:
+          type: array
+          description: A list of permissions associated with the role.
+          items:
+            type: object
+            properties:
+              resource_type:
+                type: string
+                examples:
+                - analytics
+              resource_id:
+                type: string
+                examples:
+                - null
+              actions:
+                type: array
+                items:
+                  type: string
+                  examples:
+                  - full_access
+            x-apidog-orders:
+            - resource_type
+            - resource_id
+            - actions
+            x-apidog-ignore-properties: []
       x-apidog-orders:
-      - status
-      - errors
-      x--orders:
-      - status
-      - errors
-      x--ignore-properties: []
+      - name
+      - users
+      - permissions
       x-apidog-folder: ''
-    generic204response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 204
-        data: {}
       x-apidog-ignore-properties: []
     error-response-v12:
       title: error-response-v1
@@ -1140,27 +1130,6 @@ components:
       - errors
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
-    permission:
-      type: object
-      properties:
-        resource_type:
-          type: string
-          examples:
-          - environments
-        resource_id:
-          type: string
-          examples:
-          - 624e114fb4d7581100179111
-        actions:
-          type: string
-          examples:
-          - read
-      x-apidog-orders:
-      - resource_type
-      - resource_id
-      - actions
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     http-status-code-v1:
       type: number
       enum:
@@ -1222,6 +1191,28 @@ components:
       - 511
       description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
       x-apidog-folder: ''
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x--orders:
+      - status
+      - errors
+      x--ignore-properties: []
+      x-apidog-folder: ''
     success-response-v12:
       title: success-response-v1
       type: object
@@ -1241,51 +1232,39 @@ components:
       - data
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    role_object:
-      required:
-      - name
-      - permissions
+    generic204response:
       type: object
+      description: 'Call was successful.
+
+        '
       properties:
-        name:
-          type: string
-          description: The name of the role as seen in the UI.
-        users:
-          type: array
-          description: An array of user IDs associated with the role.
-          items:
-            type: string
-        permissions:
-          type: array
-          description: A list of permissions associated with the role.
-          items:
-            type: object
-            properties:
-              resource_type:
-                type: string
-                examples:
-                - analytics
-              resource_id:
-                type: string
-                examples:
-                - null
-              actions:
-                type: array
-                items:
-                  type: string
-                  examples:
-                  - full_access
-            x-apidog-orders:
-            - resource_type
-            - resource_id
-            - actions
-            x-apidog-ignore-properties: []
+        status:
+          type: integer
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
       x-apidog-orders:
-      - name
-      - users
-      - permissions
+      - status
+      - data
       x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
       x-apidog-ignore-properties: []
+    id-v1:
+      type: string
+      title: ID
+      pattern: ^[a-f\d]{24}$
+      description: Object's ID
+      minLength: 24
+      maxLength: 24
+      x-apidog-folder: ''
+      examples:
+      - 60c5238222fa63633d93d52f
     role:
       type: object
       properties:
@@ -1339,6 +1318,27 @@ components:
       - created_at
       - updated_at
       - permissions
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    permission:
+      type: object
+      properties:
+        resource_type:
+          type: string
+          examples:
+          - environments
+        resource_id:
+          type: string
+          examples:
+          - 624e114fb4d7581100179111
+        actions:
+          type: string
+          examples:
+          - read
+      x-apidog-orders:
+      - resource_type
+      - resource_id
+      - actions
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     success-response-v1:

@@ -489,87 +489,6 @@ paths:
       x-source-page: Retrieve raw transcript
 components:
   schemas:
-    generateatranscriptsummary201response:
-      type: object
-      properties:
-        conferenceCallId:
-          type: string
-          description: Unique ID of the conference call.
-          examples:
-          - 65f0c8f8d73b2b0012ab3412
-        meetingTitle:
-          type: string
-          description: User-assigned title of the meeting.
-          examples:
-          - Weekly Incident Review
-        summary:
-          type: string
-          description: Generated summary of the meeting.
-          examples:
-          - Summary text...
-        rawTranscript:
-          type: string
-          description: Raw transcript text. Only returned if `includeRawTranscripts` was set to `true`.
-          examples:
-          - Raw transcript text.
-        matchedConferenceCallsCount:
-          type: string
-          description: Number of conference calls that matched the request.
-          examples:
-          - 1
-        transcriptTruncated:
-          type: boolean
-          description: Whether or not the transcript was truncated.
-          examples:
-          - false
-        transcriptCharLimit:
-          type: string
-          description: Character limit of the returned transcript.
-          examples:
-          - 1000000
-        transcriptOriginalCharCount:
-          type: string
-          description: Number of characters in the original raw transcript.
-          examples:
-          - 12345
-        transcriptReturnedCharCount:
-          type: string
-          description: Number of characters returned.
-          examples:
-          - 12345
-      x-apidog-orders:
-      - conferenceCallId
-      - meetingTitle
-      - summary
-      - rawTranscript
-      - matchedConferenceCallsCount
-      - transcriptTruncated
-      - transcriptCharLimit
-      - transcriptOriginalCharCount
-      - transcriptReturnedCharCount
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     retrieverawtranscript200response:
       type: object
       properties:
@@ -654,164 +573,6 @@ components:
             x-apidog-ignore-properties: []
       x-apidog-orders:
       - items
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    retrievealltranscripts200response:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-            properties:
-              conferenceCallId:
-                type: string
-                description: Unique ID of the conference call.
-                examples:
-                - 65f0c8f8d73b2b0012ab3412
-              meetingTitle:
-                type: string
-                description: Title of the meeting.
-                examples:
-                - Incident Review
-              meetingUrl:
-                type: string
-                description: URL of the meeting.
-                examples:
-                - https://meet.example.com/abc
-              meetingPlatform:
-                type: string
-                description: Platform where the meeting took place.
-                examples:
-                - Zoom
-              timeStarted:
-                type: string
-                description: The ISO date/time when the meeting started.
-                examples:
-                - '2026-02-01T17:00:00.000Z'
-              timeEnded:
-                type: string
-                description: The ISO date/time when the meeting ended.
-                examples:
-                - '2026-02-01T17:30:00.000Z'
-            x-apidog-orders:
-            - conferenceCallId
-            - meetingTitle
-            - meetingUrl
-            - meetingPlatform
-            - timeStarted
-            - timeEnded
-            x-apidog-ignore-properties: []
-        pagination:
-          type: array
-          items:
-            type: object
-            properties:
-              page:
-                type: string
-                description: The maximum number of pages.
-                examples:
-                - 1
-              limit:
-                type: string
-                description: The maximum page size.
-                examples:
-                - 20
-              hasMore:
-                type: boolean
-                description: Whether or not additional transcripts are available.
-                examples:
-                - true
-            x-apidog-orders:
-            - page
-            - limit
-            - hasMore
-            x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - items
-      - pagination
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    joinameeting201response:
-      type: object
-      properties:
-        conferenceCallId:
-          type: string
-          description: Unique identifier of the conference call.
-          examples:
-          - 650f1a8b2c4b7e89abc12123
-        status:
-          type: string
-          description: The join status of the call.
-          examples:
-          - joining
-      x-apidog-orders:
-      - conferenceCallId
-      - status
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    joinameeting409response:
-      type: object
-      properties:
-        statusCode:
-          type: object
-          properties: {}
-        error:
-          type: string
-        message:
-          type: string
-        existingStatus:
-          type: string
-      x-apidog-orders:
-      - statusCode
-      - error
-      - message
-      - existingStatus
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic403response:
-      type: object
-      description: 'Forbidden
-
-        '
-      properties:
-        statusCode:
-          type: integer
-          examples:
-          - 403
-        error:
-          type: string
-          examples:
-          - Forbidden
-        message:
-          type: string
-          examples:
-          - Forbidden - insufficient permissions
-      x-apidog-orders:
-      - statusCode
-      - error
-      - message
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic404response:
-      type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
-      x-apidog-orders:
-      - status
-      - errors
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     transcripts410response:
@@ -943,6 +704,245 @@ components:
       - meetingUrl
       - summaryDestination
       - options
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generateatranscriptsummary201response:
+      type: object
+      properties:
+        conferenceCallId:
+          type: string
+          description: Unique ID of the conference call.
+          examples:
+          - 65f0c8f8d73b2b0012ab3412
+        meetingTitle:
+          type: string
+          description: User-assigned title of the meeting.
+          examples:
+          - Weekly Incident Review
+        summary:
+          type: string
+          description: Generated summary of the meeting.
+          examples:
+          - Summary text...
+        rawTranscript:
+          type: string
+          description: Raw transcript text. Only returned if `includeRawTranscripts` was set to `true`.
+          examples:
+          - Raw transcript text.
+        matchedConferenceCallsCount:
+          type: string
+          description: Number of conference calls that matched the request.
+          examples:
+          - 1
+        transcriptTruncated:
+          type: boolean
+          description: Whether or not the transcript was truncated.
+          examples:
+          - false
+        transcriptCharLimit:
+          type: string
+          description: Character limit of the returned transcript.
+          examples:
+          - 1000000
+        transcriptOriginalCharCount:
+          type: string
+          description: Number of characters in the original raw transcript.
+          examples:
+          - 12345
+        transcriptReturnedCharCount:
+          type: string
+          description: Number of characters returned.
+          examples:
+          - 12345
+      x-apidog-orders:
+      - conferenceCallId
+      - meetingTitle
+      - summary
+      - rawTranscript
+      - matchedConferenceCallsCount
+      - transcriptTruncated
+      - transcriptCharLimit
+      - transcriptOriginalCharCount
+      - transcriptReturnedCharCount
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    joinameeting201response:
+      type: object
+      properties:
+        conferenceCallId:
+          type: string
+          description: Unique identifier of the conference call.
+          examples:
+          - 650f1a8b2c4b7e89abc12123
+        status:
+          type: string
+          description: The join status of the call.
+          examples:
+          - joining
+      x-apidog-orders:
+      - conferenceCallId
+      - status
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic403response:
+      type: object
+      description: 'Forbidden
+
+        '
+      properties:
+        statusCode:
+          type: integer
+          examples:
+          - 403
+        error:
+          type: string
+          examples:
+          - Forbidden
+        message:
+          type: string
+          examples:
+          - Forbidden - insufficient permissions
+      x-apidog-orders:
+      - statusCode
+      - error
+      - message
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    joinameeting409response:
+      type: object
+      properties:
+        statusCode:
+          type: object
+          properties: {}
+        error:
+          type: string
+        message:
+          type: string
+        existingStatus:
+          type: string
+      x-apidog-orders:
+      - statusCode
+      - error
+      - message
+      - existingStatus
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    retrievealltranscripts200response:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              conferenceCallId:
+                type: string
+                description: Unique ID of the conference call.
+                examples:
+                - 65f0c8f8d73b2b0012ab3412
+              meetingTitle:
+                type: string
+                description: Title of the meeting.
+                examples:
+                - Incident Review
+              meetingUrl:
+                type: string
+                description: URL of the meeting.
+                examples:
+                - https://meet.example.com/abc
+              meetingPlatform:
+                type: string
+                description: Platform where the meeting took place.
+                examples:
+                - Zoom
+              timeStarted:
+                type: string
+                description: The ISO date/time when the meeting started.
+                examples:
+                - '2026-02-01T17:00:00.000Z'
+              timeEnded:
+                type: string
+                description: The ISO date/time when the meeting ended.
+                examples:
+                - '2026-02-01T17:30:00.000Z'
+            x-apidog-orders:
+            - conferenceCallId
+            - meetingTitle
+            - meetingUrl
+            - meetingPlatform
+            - timeStarted
+            - timeEnded
+            x-apidog-ignore-properties: []
+        pagination:
+          type: array
+          items:
+            type: object
+            properties:
+              page:
+                type: string
+                description: The maximum number of pages.
+                examples:
+                - 1
+              limit:
+                type: string
+                description: The maximum page size.
+                examples:
+                - 20
+              hasMore:
+                type: boolean
+                description: Whether or not additional transcripts are available.
+                examples:
+                - true
+            x-apidog-orders:
+            - page
+            - limit
+            - hasMore
+            x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - items
+      - pagination
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
   securitySchemes:

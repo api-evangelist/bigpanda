@@ -173,65 +173,6 @@ paths:
       x-source-page: Retrieve a Risk Rated Change
 components:
   schemas:
-    generic404response:
-      type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    changerating202response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 202
-        data:
-          type: object
-          properties:
-            changeNumber:
-              type: string
-              description: The unique ID of the change.
-              examples:
-              - CHG0004053111
-            status:
-              type: string
-              description: The status of the risk rating request.
-              examples:
-              - accepted
-            message:
-              type: string
-              description: The processing message.
-              examples:
-              - Change risk assessment queued for processing.
-          x-apidog-orders:
-          - changeNumber
-          - status
-          - message
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     changerisk200response:
       type: object
       description: "Call was successful. \n"
@@ -416,6 +357,65 @@ components:
           - riskPredictionOutputs
           - riskReasoning
           - suggestedMitigations
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    changerating202response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 202
+        data:
+          type: object
+          properties:
+            changeNumber:
+              type: string
+              description: The unique ID of the change.
+              examples:
+              - CHG0004053111
+            status:
+              type: string
+              description: The status of the risk rating request.
+              examples:
+              - accepted
+            message:
+              type: string
+              description: The processing message.
+              examples:
+              - Change risk assessment queued for processing.
+          x-apidog-orders:
+          - changeNumber
+          - status
+          - message
           x-apidog-ignore-properties: []
       x-apidog-orders:
       - status

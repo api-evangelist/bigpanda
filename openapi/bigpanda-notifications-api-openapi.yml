@@ -427,33 +427,73 @@ paths:
       x-source-page: Retrieve available dynamic variables
 components:
   schemas:
-    WorkflowConfig:
+    dynamicvariables200response:
+      description: A list of dynamic variable fields available for use in webhook v2 workflows.
       type: object
       properties:
-        events:
+        incident:
+          description: Dynamic fields available with the `incident.` variable category.
           type: array
           items:
-            $ref: '#/components/schemas/webhookv2_event'
-        config:
-          type: object
-          properties:
-            base_url:
-              type: string
-              description: A base url to receive webhook messages. This route will be used for any triggers that do not have an additional path route defined. Individual triggers can use static values or dynamic variables to extend this URL.
-            expects_callbacks:
-              type: boolean
-              description: Whether to enable locking on first share, preventing updates from being sent until a callback is received or 15 minutes has passed. See the [Callback Service](https://docs.bigpanda.io/en/bigpanda-callback-service) for details on callback functionality.
-              examples:
-              - true
-          x-apidog-orders:
-          - base_url
-          - expects_callbacks
-          x-apidog-ignore-properties: []
+            $ref: '#/components/schemas/dynamic_variable'
+        incidentTags:
+          description: Dynamic fields available with the `incidentTags.` variable category.
+          type: array
+          items:
+            $ref: '#/components/schemas/dynamic_variable'
+        primaryAlert.tags:
+          description: Dynamic fields available with the `primaryAlert.tags.` variable category. The primary alert is the oldest, most severe event associated with an incident.
+          type: array
+          items:
+            $ref: '#/components/schemas/dynamic_variable'
+        primaryAlert:
+          description: Dynamic fields available with the `primaryAlert.` category. The primary alert is the oldest, most severe event associated with an incident.
+          type: array
+          items:
+            $ref: '#/components/schemas/dynamic_variable'
+        metadata:
+          description: Dynamic fields available with the share `metadata.` category. These fields provide information on the share action itself.
+          type: array
+          items:
+            $ref: '#/components/schemas/dynamic_variable'
+        links:
+          description: Dynamic fields available with the `links.` category.
+          type: array
+          items:
+            $ref: '#/components/schemas/dynamic_variable'
+        assignee:
+          description: Dynamic fields available with the `assignee.` category.
+          type: array
+          items:
+            $ref: '#/components/schemas/dynamic_variable'
+        assigner:
+          description: Dynamic fields available with the `assigner.` category.
+          type: array
+          items:
+            $ref: '#/components/schemas/dynamic_variable'
+        additional_fields:
+          description: Dynamic fields available with the `additional_fields` category.
+          type: array
+          items:
+            $ref: '#/components/schemas/dynamic_variable'
       x-apidog-orders:
-      - events
-      - config
+      - incident
+      - incidentTags
+      - primaryAlert.tags
+      - primaryAlert
+      - metadata
+      - links
+      - assignee
+      - assigner
+      - additional_fields
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    webhookv2-200response:
+      type: array
+      description: A list of webhook v2 configurations.
+      items:
+        $ref: '#/components/schemas/workflow'
+      x-apidog-folder: ''
     webhookv2_event:
       type: object
       description: Notification settings for each trigger.
@@ -506,33 +546,27 @@ components:
       - method
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic400response:
+    generic404response:
       type: object
-      description: 'Call is missing parameters or malformed.
+      description: 'Requested endpoint or resource is not found.
 
         '
       properties:
         status:
           type: integer
           examples:
-          - 400
+          - 404
         errors:
           type: array
           items:
             type: string
             examples:
-            - Call is missing parameters or malformed.
+            - Requested endpoint or resource is not found.
       x-apidog-orders:
       - status
       - errors
+      x-apidog-folder: ''
       x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    webhookv2-200response:
-      type: array
-      description: A list of webhook v2 configurations.
-      items:
-        $ref: '#/components/schemas/workflow'
-      x-apidog-folder: ''
     generic204response:
       type: object
       description: 'Call was successful.
@@ -596,88 +630,54 @@ components:
       - value
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    dynamicvariables200response:
-      description: A list of dynamic variable fields available for use in webhook v2 workflows.
+    WorkflowConfig:
       type: object
       properties:
-        incident:
-          description: Dynamic fields available with the `incident.` variable category.
+        events:
           type: array
           items:
-            $ref: '#/components/schemas/dynamic_variable'
-        incidentTags:
-          description: Dynamic fields available with the `incidentTags.` variable category.
-          type: array
-          items:
-            $ref: '#/components/schemas/dynamic_variable'
-        primaryAlert.tags:
-          description: Dynamic fields available with the `primaryAlert.tags.` variable category. The primary alert is the oldest, most severe event associated with an incident.
-          type: array
-          items:
-            $ref: '#/components/schemas/dynamic_variable'
-        primaryAlert:
-          description: Dynamic fields available with the `primaryAlert.` category. The primary alert is the oldest, most severe event associated with an incident.
-          type: array
-          items:
-            $ref: '#/components/schemas/dynamic_variable'
-        metadata:
-          description: Dynamic fields available with the share `metadata.` category. These fields provide information on the share action itself.
-          type: array
-          items:
-            $ref: '#/components/schemas/dynamic_variable'
-        links:
-          description: Dynamic fields available with the `links.` category.
-          type: array
-          items:
-            $ref: '#/components/schemas/dynamic_variable'
-        assignee:
-          description: Dynamic fields available with the `assignee.` category.
-          type: array
-          items:
-            $ref: '#/components/schemas/dynamic_variable'
-        assigner:
-          description: Dynamic fields available with the `assigner.` category.
-          type: array
-          items:
-            $ref: '#/components/schemas/dynamic_variable'
-        additional_fields:
-          description: Dynamic fields available with the `additional_fields` category.
-          type: array
-          items:
-            $ref: '#/components/schemas/dynamic_variable'
+            $ref: '#/components/schemas/webhookv2_event'
+        config:
+          type: object
+          properties:
+            base_url:
+              type: string
+              description: A base url to receive webhook messages. This route will be used for any triggers that do not have an additional path route defined. Individual triggers can use static values or dynamic variables to extend this URL.
+            expects_callbacks:
+              type: boolean
+              description: Whether to enable locking on first share, preventing updates from being sent until a callback is received or 15 minutes has passed. See the [Callback Service](https://docs.bigpanda.io/en/bigpanda-callback-service) for details on callback functionality.
+              examples:
+              - true
+          x-apidog-orders:
+          - base_url
+          - expects_callbacks
+          x-apidog-ignore-properties: []
       x-apidog-orders:
-      - incident
-      - incidentTags
-      - primaryAlert.tags
-      - primaryAlert
-      - metadata
-      - links
-      - assignee
-      - assigner
-      - additional_fields
+      - events
+      - config
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic404response:
+    generic400response:
       type: object
-      description: 'Requested endpoint or resource is not found.
+      description: 'Call is missing parameters or malformed.
 
         '
       properties:
         status:
           type: integer
           examples:
-          - 404
+          - 400
         errors:
           type: array
           items:
             type: string
             examples:
-            - Requested endpoint or resource is not found.
+            - Call is missing parameters or malformed.
       x-apidog-orders:
       - status
       - errors
-      x-apidog-folder: ''
       x-apidog-ignore-properties: []
+      x-apidog-folder: ''
   securitySchemes:
     BearerUser13:
       type: http
