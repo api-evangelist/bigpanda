@@ -646,291 +646,6 @@ paths:
       x-source-page: Retrieve Configuration Version for Email Parser
 components:
   schemas:
-    status_mapping:
-      type: object
-      properties:
-        default_to:
-          type: string
-          examples:
-          - critical
-          description: The value to populate if no matches are found. `​Critical​​` is default setting.
-        source:
-          type: array
-          items:
-            type: string
-          examples:
-          - - '@alert.status'
-            - '@alert.labels.severity'
-          description: Is the value in the body or subject?
-        status_map:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          x-apidog-orders: []
-          examples:
-          - critical:
-            - page
-            - critical
-            warning:
-            - warn
-            - warning
-            acknowledged:
-            - acknowledged
-            ok:
-            - resolved
-          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first match. One of [`critical`, `warning`, `ok`, `acknowledged`]
-          properties: {}
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - default_to
-      - source
-      - status_map
-      description: null
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    versions:
-      type: array
-      description: List of version changes
-      items:
-        type: object
-        properties:
-          version:
-            type: string
-            description: The unique identifier of the saved configuration version.
-            examples:
-            - '2026-04-29T15:42:11Z'
-          saved_at:
-            type: string
-            format: date-time
-            description: The timestamp when the version was saved.
-        x-apidog-orders:
-        - version
-        - saved_at
-        x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    http-status-code-v1:
-      type: number
-      enum:
-      - 100
-      - 101
-      - 102
-      - 103
-      - 200
-      - 201
-      - 202
-      - 203
-      - 204
-      - 205
-      - 206
-      - 207
-      - 300
-      - 301
-      - 302
-      - 303
-      - 304
-      - 305
-      - 307
-      - 308
-      - 400
-      - 401
-      - 402
-      - 403
-      - 404
-      - 405
-      - 406
-      - 407
-      - 408
-      - 409
-      - 410
-      - 411
-      - 412
-      - 413
-      - 414
-      - 415
-      - 416
-      - 417
-      - 418
-      - 421
-      - 422
-      - 423
-      - 424
-      - 426
-      - 428
-      - 429
-      - 431
-      - 451
-      - 500
-      - 501
-      - 502
-      - 503
-      - 504
-      - 505
-      - 507
-      - 511
-      description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-      x-apidog-folder: ''
-    error-response-v1:
-      title: error-response-v1
-      type: object
-      description: BP default error response
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
-      required:
-      - status
-      - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    tag_properties:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Optional tag name to use in BigPanda.
-          examples:
-          - host
-      x-apidog-orders:
-      - name
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    email_parser_config:
-      type: object
-      description: Configuration object schema for the email parser integration.
-      properties:
-        config:
-          type: object
-          description: Parsing rules for the email copy.
-          properties:
-            email_format:
-              type: string
-              description: Format of the email content. Options are `plain_text` or `html`.
-              examples:
-              - plain_text
-            allow_list:
-              type: array
-              items:
-                type: string
-              description: An array of allowed sender emails. Use a wildcard to allow for a range of email addresses. If no address is provided, the parser will accept emails from any source and may lead to false alarms or issues.
-              examples:
-              - - '*@example.com'
-            status:
-              $ref: '#/components/schemas/status_mapping'
-            primary_property:
-              type: object
-              description: Mapping rule for the primary property.
-              properties:
-                name:
-                  type: string
-                  examples:
-                  - host
-                  description: Title of property. Default is `​alert_title`​
-                source:
-                  type: string
-                  examples:
-                  - body
-                  description: Is the value in the body or subject? Default is ​`subject`​​
-                extraction:
-                  type: string
-                  examples:
-                  - host is (.*)
-                  description: Regex rule to extract value
-                default_to:
-                  type: string
-                  examples:
-                  - general issue
-                  description: Value if nothing is extracted
-              x-apidog-orders:
-              - name
-              - source
-              - extraction
-              - default_to
-              x-apidog-ignore-properties: []
-            secondary_property:
-              type: object
-              description: Mapping rule for the secondary property.
-              properties:
-                name:
-                  type: string
-                  examples:
-                  - region
-                  description: Title of property
-                source:
-                  type: string
-                  examples:
-                  - body
-                  description: Is the value in the body or subject?
-                extraction:
-                  type: string
-                  examples:
-                  - region (.*)
-                  description: Regex rule to extract value
-                default_to:
-                  type: string
-                  examples:
-                  - us-west-1
-                  description: Value if nothing is extracted
-              x-apidog-orders:
-              - name
-              - source
-              - extraction
-              - default_to
-              x-apidog-ignore-properties: []
-            additional_attributes:
-              type: array
-              items:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    examples:
-                    - region
-                    description: Title of property
-                  source:
-                    type: string
-                    examples:
-                    - body
-                    description: Is the value in the body or subject?
-                  extraction:
-                    type: string
-                    examples:
-                    - 'region: (.*)'
-                    description: Regex rule to extract value
-                  default_to:
-                    type: string
-                    examples:
-                    - us-west-2
-                    description: Value if nothing is extracted
-                x-apidog-orders:
-                - name
-                - source
-                - extraction
-                - default_to
-                x-apidog-ignore-properties: []
-              description: Array of payload field objects to set mapping rules for additional tags. Each object must be defined.
-          x-apidog-orders:
-          - email_format
-          - allow_list
-          - status
-          - primary_property
-          - secondary_property
-          - additional_attributes
-          x-apidog-ignore-properties: []
-        sample_payload:
-          $ref: '#/components/schemas/sample_payload'
-      x-apidog-orders:
-      - config
-      - sample_payload
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
     additional_attributes:
       type: object
       properties:
@@ -1123,6 +838,162 @@ components:
       examples:
       - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\": \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\",\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
       x-apidog-ignore-properties: []
+    status_mapping:
+      type: object
+      properties:
+        default_to:
+          type: string
+          examples:
+          - critical
+          description: The value to populate if no matches are found. `​Critical​​` is default setting.
+        source:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.status'
+            - '@alert.labels.severity'
+          description: Is the value in the body or subject?
+        status_map:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          x-apidog-orders: []
+          examples:
+          - critical:
+            - page
+            - critical
+            warning:
+            - warn
+            - warning
+            acknowledged:
+            - acknowledged
+            ok:
+            - resolved
+          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first match. One of [`critical`, `warning`, `ok`, `acknowledged`]
+          properties: {}
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - default_to
+      - source
+      - status_map
+      description: null
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    http-status-code-v1:
+      type: number
+      enum:
+      - 100
+      - 101
+      - 102
+      - 103
+      - 200
+      - 201
+      - 202
+      - 203
+      - 204
+      - 205
+      - 206
+      - 207
+      - 300
+      - 301
+      - 302
+      - 303
+      - 304
+      - 305
+      - 307
+      - 308
+      - 400
+      - 401
+      - 402
+      - 403
+      - 404
+      - 405
+      - 406
+      - 407
+      - 408
+      - 409
+      - 410
+      - 411
+      - 412
+      - 413
+      - 414
+      - 415
+      - 416
+      - 417
+      - 418
+      - 421
+      - 422
+      - 423
+      - 424
+      - 426
+      - 428
+      - 429
+      - 431
+      - 451
+      - 500
+      - 501
+      - 502
+      - 503
+      - 504
+      - 505
+      - 507
+      - 511
+      description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+      x-apidog-folder: ''
+    tag_properties:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Optional tag name to use in BigPanda.
+          examples:
+          - host
+      x-apidog-orders:
+      - name
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    versions:
+      type: array
+      description: List of version changes
+      items:
+        type: object
+        properties:
+          version:
+            type: string
+            description: The unique identifier of the saved configuration version.
+            examples:
+            - '2026-04-29T15:42:11Z'
+          saved_at:
+            type: string
+            format: date-time
+            description: The timestamp when the version was saved.
+        x-apidog-orders:
+        - version
+        - saved_at
+        x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
     generic400response:
       type: object
       description: 'Call is missing parameters or malformed.
@@ -1142,6 +1013,135 @@ components:
       x-apidog-orders:
       - status
       - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    email_parser_config:
+      type: object
+      description: Configuration object schema for the email parser integration.
+      properties:
+        config:
+          type: object
+          description: Parsing rules for the email copy.
+          properties:
+            email_format:
+              type: string
+              description: Format of the email content. Options are `plain_text` or `html`.
+              examples:
+              - plain_text
+            allow_list:
+              type: array
+              items:
+                type: string
+              description: An array of allowed sender emails. Use a wildcard to allow for a range of email addresses. If no address is provided, the parser will accept emails from any source and may lead to false alarms or issues.
+              examples:
+              - - '*@example.com'
+            status:
+              $ref: '#/components/schemas/status_mapping'
+            primary_property:
+              type: object
+              description: Mapping rule for the primary property.
+              properties:
+                name:
+                  type: string
+                  examples:
+                  - host
+                  description: Title of property. Default is `​alert_title`​
+                source:
+                  type: string
+                  examples:
+                  - body
+                  description: Is the value in the body or subject? Default is ​`subject`​​
+                extraction:
+                  type: string
+                  examples:
+                  - host is (.*)
+                  description: Regex rule to extract value
+                default_to:
+                  type: string
+                  examples:
+                  - general issue
+                  description: Value if nothing is extracted
+              x-apidog-orders:
+              - name
+              - source
+              - extraction
+              - default_to
+              x-apidog-ignore-properties: []
+            secondary_property:
+              type: object
+              description: Mapping rule for the secondary property.
+              properties:
+                name:
+                  type: string
+                  examples:
+                  - region
+                  description: Title of property
+                source:
+                  type: string
+                  examples:
+                  - body
+                  description: Is the value in the body or subject?
+                extraction:
+                  type: string
+                  examples:
+                  - region (.*)
+                  description: Regex rule to extract value
+                default_to:
+                  type: string
+                  examples:
+                  - us-west-1
+                  description: Value if nothing is extracted
+              x-apidog-orders:
+              - name
+              - source
+              - extraction
+              - default_to
+              x-apidog-ignore-properties: []
+            additional_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    examples:
+                    - region
+                    description: Title of property
+                  source:
+                    type: string
+                    examples:
+                    - body
+                    description: Is the value in the body or subject?
+                  extraction:
+                    type: string
+                    examples:
+                    - 'region: (.*)'
+                    description: Regex rule to extract value
+                  default_to:
+                    type: string
+                    examples:
+                    - us-west-2
+                    description: Value if nothing is extracted
+                x-apidog-orders:
+                - name
+                - source
+                - extraction
+                - default_to
+                x-apidog-ignore-properties: []
+              description: Array of payload field objects to set mapping rules for additional tags. Each object must be defined.
+          x-apidog-orders:
+          - email_format
+          - allow_list
+          - status
+          - primary_property
+          - secondary_property
+          - additional_attributes
+          x-apidog-ignore-properties: []
+        sample_payload:
+          $ref: '#/components/schemas/sample_payload'
+      x-apidog-orders:
+      - config
+      - sample_payload
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
   securitySchemes:

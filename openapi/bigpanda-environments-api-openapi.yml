@@ -576,15 +576,14 @@ paths:
       x-source-page: Update Environment Group
 components:
   schemas:
-    Environment:
-      title: Environment
-      description: A BigPanda environment for incident grouping.
+    EnvironmentRequest:
+      title: Environment Request
+      description: Payload for creating or updating an environment.
       type: object
+      required:
+      - name
+      - condition
       properties:
-        id:
-          type: string
-          description: Environment ID.
-          example: env-abc123
         name:
           type: string
           description: Environment name.
@@ -597,16 +596,6 @@ components:
           type: string
           description: Filter condition for grouping incidents.
           example: source = "nagios"
-    EnvironmentsResponse:
-      title: Environments Response
-      description: List of BigPanda environments.
-      type: object
-      properties:
-        environments:
-          type: array
-          description: Array of environments.
-          items:
-            $ref: '#/components/schemas/Environment'
     ErrorResponse:
       title: Error Response
       description: Standard error response.
@@ -620,14 +609,25 @@ components:
           type: integer
           description: HTTP status code.
           example: 404
-    EnvironmentRequest:
-      title: Environment Request
-      description: Payload for creating or updating an environment.
+    EnvironmentsResponse:
+      title: Environments Response
+      description: List of BigPanda environments.
       type: object
-      required:
-      - name
-      - condition
       properties:
+        environments:
+          type: array
+          description: Array of environments.
+          items:
+            $ref: '#/components/schemas/Environment'
+    Environment:
+      title: Environment
+      description: A BigPanda environment for incident grouping.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Environment ID.
+          example: env-abc123
         name:
           type: string
           description: Environment name.
@@ -667,43 +667,6 @@ components:
       - status
       - data
       x--ignore-properties: []
-    generic404response:
-      type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    environment_group_object:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the environment group.
-        environment_ids:
-          type: array
-          description: System-generated unique identifier for an environment
-          items:
-            type: string
-      x-apidog-orders:
-      - name
-      - environment_ids
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     environment_object:
       required:
       - name
@@ -802,6 +765,27 @@ components:
       - environmentIds
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     generic400response:
       type: object
       description: 'Call is missing parameters or malformed.
@@ -823,6 +807,22 @@ components:
       - errors
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
+    environment_group_object:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the environment group.
+        environment_ids:
+          type: array
+          description: System-generated unique identifier for an environment
+          items:
+            type: string
+      x-apidog-orders:
+      - name
+      - environment_ids
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
   securitySchemes:
     bearerAuth:
       type: http

@@ -284,25 +284,30 @@ components:
       - data
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic404response:
+    biggy202response:
       type: object
-      description: 'Requested endpoint or resource is not found.
+      description: 'Call was successful.
 
         '
       properties:
         status:
           type: integer
           examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
+          - 202
+        data:
+          type: object
+          properties:
+            requestId:
+              type: string
+              description: The request ID of Biggy's response.
+              examples:
+              - 5a463805f883718f8
+          x-apidog-orders:
+          - requestId
+          x-apidog-ignore-properties: []
       x-apidog-orders:
       - status
-      - errors
+      - data
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     getresponse200response:
@@ -350,6 +355,20 @@ components:
       - data
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    Biggy-response-object:
+      required:
+      - requestId
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: The request ID of Biggy's response.
+          examples:
+          - 5a463805f883718f8
+      x-apidog-orders:
+      - requestId
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     getresponse202response:
       type: object
       description: "Call was successful. \n"
@@ -375,44 +394,25 @@ components:
       - message
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    Biggy-response-object:
-      required:
-      - requestId
+    generic404response:
       type: object
-      properties:
-        requestId:
-          type: string
-          description: The request ID of Biggy's response.
-          examples:
-          - 5a463805f883718f8
-      x-apidog-orders:
-      - requestId
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    biggy202response:
-      type: object
-      description: 'Call was successful.
+      description: 'Requested endpoint or resource is not found.
 
         '
       properties:
         status:
           type: integer
           examples:
-          - 202
-        data:
-          type: object
-          properties:
-            requestId:
-              type: string
-              description: The request ID of Biggy's response.
-              examples:
-              - 5a463805f883718f8
-          x-apidog-orders:
-          - requestId
-          x-apidog-ignore-properties: []
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
       x-apidog-orders:
       - status
-      - data
+      - errors
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     Biggy-object:

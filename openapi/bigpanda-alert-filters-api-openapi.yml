@@ -1147,12 +1147,158 @@ paths:
       x-source-page: Update an Alert Filter Schedule
 components:
   schemas:
-    updated_by:
+    alert_filter_custom_tags2:
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+          - server_farm
+        value:
+          type: string
+          examples:
+          - folsom
+      x-apidog-orders:
+      - name
+      - value
+      x-apidog-folder: ''
+      x--orders:
+      - name
+      - value
+      x--ignore-properties: []
+    alert_filter_return2:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - 590b3a991f00002000637538
+        name:
+          type: string
+          examples:
+          - Folsom Patch
+        active:
+          $ref: '#/components/schemas/active'
+        plan_type:
+          type: string
+          examples:
+          - normal
+        created_by:
+          $ref: '#/components/schemas/created_by'
+        created_on:
+          type: integer
+          examples:
+          - 1493908121
+        updated_by:
+          $ref: '#/components/schemas/updated_by'
+        updated_on:
+          type: integer
+          examples:
+          - 1493908121
+        custom_tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/alert_filter_custom_tags2'
+        description:
+          type: string
+          examples:
+          - Patching Folsom server farm
+        exclude_status:
+          type: array
+          items:
+            type: string
+            examples:
+            - Ok
+        schedule:
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          x--orders: []
+          x--ignore-properties: []
+      x-apidog-orders:
+      - id
+      - name
+      - active
+      - plan_type
+      - created_by
+      - created_on
+      - updated_by
+      - updated_on
+      - custom_tags
+      - description
+      - exclude_status
+      - schedule
+      x-apidog-folder: ''
+      x--orders:
+      - id
+      - name
+      - active
+      - plan_type
+      - created_by
+      - created_on
+      - updated_by
+      - updated_on
+      - custom_tags
+      - description
+      - exclude_status
+      - schedule
+      x--ignore-properties: []
+    generic204response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
+      x-apidog-ignore-properties: []
+    created_by:
+      description: System id of the user or tool that created the resource.
       type: string
-      description: System id of the user or tool that last updated the resource.
       x-apidog-folder: ''
       examples:
       - 63bd56897755560012bf3555
+    alert_filter_schedule:
+      type: object
+      properties:
+        name:
+          type: string
+          description: User defined name for the schedule.
+        active:
+          $ref: '#/components/schemas/active'
+        starts_on:
+          type: string
+          description: Unix epoch time when the schedule starts (in seconds).
+          format: date-time
+        ends_on:
+          type: string
+          description: Unix epoch time when the schedule ends (in seconds).
+          format: date-time
+        description:
+          type: string
+          description: Brief summary of the schedule.
+      x-apidog-orders:
+      - name
+      - active
+      - starts_on
+      - ends_on
+      - description
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     alert_filter_object2:
       required:
       - name
@@ -1215,87 +1361,6 @@ components:
       - exclude_status
       - description
       x--ignore-properties: []
-    active:
-      type: boolean
-      description: Whether the new configuration should apply to future data.
-      default: true
-      x-apidog-folder: ''
-      examples:
-      - false
-    alert_filter_object:
-      required:
-      - name
-      - active
-      - bpql
-      type: object
-      properties:
-        name:
-          type: string
-          description: User defined name for the alert filter.
-        active:
-          $ref: '#/components/schemas/active'
-        bpql:
-          type: string
-          description: The [BPQL object](https://docs.bigpanda.io/reference/bpql-object-syntax) to identify which alerts will be filtered.
-          format: json
-        custom_tags:
-          type: array
-          description: Metadata about the alert filter in an array of key-value pairs
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              value:
-                type: string
-            x-apidog-orders:
-            - name
-            - value
-            x-apidog-ignore-properties: []
-        schedule:
-          type: string
-          description: The [Schedule ID](https://docs.bigpanda.io/reference/alert-filter-schedules-api) to be applied to the alert filter
-        exclude_status:
-          type: array
-          description: 'Alert statuses to exclude from suppression. One of: ["Ok", "Critical", "Warning", "Unknown"]'
-          items:
-            type: string
-        description:
-          type: string
-          description: Brief summary of the alert filter
-      x-apidog-orders:
-      - name
-      - active
-      - bpql
-      - custom_tags
-      - schedule
-      - exclude_status
-      - description
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic204response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 204
-        data: {}
-      x-apidog-ignore-properties: []
     alert_filter_return:
       type: object
       properties:
@@ -1359,74 +1424,70 @@ components:
       - schedule
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    alert_filter_schedule:
+    alert_filter_object:
+      required:
+      - name
+      - active
+      - bpql
       type: object
       properties:
         name:
           type: string
-          description: User defined name for the schedule.
+          description: User defined name for the alert filter.
         active:
           $ref: '#/components/schemas/active'
-        starts_on:
+        bpql:
           type: string
-          description: Unix epoch time when the schedule starts (in seconds).
-          format: date-time
-        ends_on:
+          description: The [BPQL object](https://docs.bigpanda.io/reference/bpql-object-syntax) to identify which alerts will be filtered.
+          format: json
+        custom_tags:
+          type: array
+          description: Metadata about the alert filter in an array of key-value pairs
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+            x-apidog-orders:
+            - name
+            - value
+            x-apidog-ignore-properties: []
+        schedule:
           type: string
-          description: Unix epoch time when the schedule ends (in seconds).
-          format: date-time
+          description: The [Schedule ID](https://docs.bigpanda.io/reference/alert-filter-schedules-api) to be applied to the alert filter
+        exclude_status:
+          type: array
+          description: 'Alert statuses to exclude from suppression. One of: ["Ok", "Critical", "Warning", "Unknown"]'
+          items:
+            type: string
         description:
           type: string
-          description: Brief summary of the schedule.
+          description: Brief summary of the alert filter
       x-apidog-orders:
       - name
       - active
-      - starts_on
-      - ends_on
+      - bpql
+      - custom_tags
+      - schedule
+      - exclude_status
       - description
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    created_by:
-      description: System id of the user or tool that created the resource.
+    active:
+      type: boolean
+      description: Whether the new configuration should apply to future data.
+      default: true
+      x-apidog-folder: ''
+      examples:
+      - false
+    updated_by:
       type: string
+      description: System id of the user or tool that last updated the resource.
       x-apidog-folder: ''
       examples:
       - 63bd56897755560012bf3555
-    alert_filter_custom_tags:
-      type: object
-      properties:
-        name:
-          type: string
-          examples:
-          - server_farm
-        value:
-          type: string
-          examples:
-          - folsom
-      x-apidog-orders:
-      - name
-      - value
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    alert_filter_custom_tags2:
-      type: object
-      properties:
-        name:
-          type: string
-          examples:
-          - server_farm
-        value:
-          type: string
-          examples:
-          - folsom
-      x-apidog-orders:
-      - name
-      - value
-      x-apidog-folder: ''
-      x--orders:
-      - name
-      - value
-      x--ignore-properties: []
     alert_filter_schedule_response:
       type: object
       description: Schema for an Alert Filter Schedule object.
@@ -1511,83 +1572,6 @@ components:
       - active
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    alert_filter_return2:
-      type: object
-      properties:
-        id:
-          type: string
-          examples:
-          - 590b3a991f00002000637538
-        name:
-          type: string
-          examples:
-          - Folsom Patch
-        active:
-          $ref: '#/components/schemas/active'
-        plan_type:
-          type: string
-          examples:
-          - normal
-        created_by:
-          $ref: '#/components/schemas/created_by'
-        created_on:
-          type: integer
-          examples:
-          - 1493908121
-        updated_by:
-          $ref: '#/components/schemas/updated_by'
-        updated_on:
-          type: integer
-          examples:
-          - 1493908121
-        custom_tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/alert_filter_custom_tags2'
-        description:
-          type: string
-          examples:
-          - Patching Folsom server farm
-        exclude_status:
-          type: array
-          items:
-            type: string
-            examples:
-            - Ok
-        schedule:
-          type: object
-          x-apidog-orders: []
-          properties: {}
-          x--orders: []
-          x--ignore-properties: []
-      x-apidog-orders:
-      - id
-      - name
-      - active
-      - plan_type
-      - created_by
-      - created_on
-      - updated_by
-      - updated_on
-      - custom_tags
-      - description
-      - exclude_status
-      - schedule
-      x-apidog-folder: ''
-      x--orders:
-      - id
-      - name
-      - active
-      - plan_type
-      - created_by
-      - created_on
-      - updated_by
-      - updated_on
-      - custom_tags
-      - description
-      - exclude_status
-      - schedule
-      x--ignore-properties: []
     generic400response:
       type: object
       description: 'Call is missing parameters or malformed.
@@ -1609,6 +1593,22 @@ components:
       - errors
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
+    alert_filter_custom_tags:
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+          - server_farm
+        value:
+          type: string
+          examples:
+          - folsom
+      x-apidog-orders:
+      - name
+      - value
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
   securitySchemes:
     BearerOrg121:
       type: http

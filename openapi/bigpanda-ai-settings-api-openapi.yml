@@ -394,6 +394,125 @@ paths:
       x-source-page: Generate an AI Analysis
 components:
   schemas:
+    generic200response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 200
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 200
+        data: {}
+      x-apidog-ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    aia_config_object:
+      required:
+      - name
+      - enabled
+      - environments
+      - alertTags
+      - isAutoTriggerEnabled
+      - promptAddendum
+      type: object
+      description: Schema for the AIA config object.
+      properties:
+        name:
+          type: string
+          description: The name of the AI Analysis configuration.
+          examples:
+          - Test configuration
+        enabled:
+          type: boolean
+          description: Whether the configuration is enabled or disabled.
+          examples:
+          - true
+        environments:
+          type: array
+          description: The environment(s) that the AI analysis configuration applies to.
+          items:
+            type: string
+            examples:
+            - 63bd568809cb331300f55555
+        alertTags:
+          type: array
+          description: The alert tag(s) used to generate the AI analysis.
+          items:
+            type: string
+            examples:
+            - node, host
+        isAutoTriggerEnabled:
+          type: boolean
+          description: Whether or not the analysis is enabled to auto-generate in the environments.
+          examples:
+          - true
+        promptAddendum:
+          type: string
+          description: Instructions that the LLM will use when generating the analysis.
+          examples:
+          - Write the summary as if you were a pirate.
+      x-apidog-orders:
+      - name
+      - enabled
+      - environments
+      - alertTags
+      - isAutoTriggerEnabled
+      - promptAddendum
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     aia_retrieve_200:
       type: object
       properties:
@@ -466,125 +585,6 @@ components:
       - isAutoTriggerEnabled
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic200response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 200
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 200
-        data: {}
-      x-apidog-ignore-properties: []
-    generic404response:
-      type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    aia_config_object:
-      required:
-      - name
-      - enabled
-      - environments
-      - alertTags
-      - isAutoTriggerEnabled
-      - promptAddendum
-      type: object
-      description: Schema for the AIA config object.
-      properties:
-        name:
-          type: string
-          description: The name of the AI Analysis configuration.
-          examples:
-          - Test configuration
-        enabled:
-          type: boolean
-          description: Whether the configuration is enabled or disabled.
-          examples:
-          - true
-        environments:
-          type: array
-          description: The environment(s) that the AI analysis configuration applies to.
-          items:
-            type: string
-            examples:
-            - 63bd568809cb331300f55555
-        alertTags:
-          type: array
-          description: The alert tag(s) used to generate the AI analysis.
-          items:
-            type: string
-            examples:
-            - node, host
-        isAutoTriggerEnabled:
-          type: boolean
-          description: Whether or not the analysis is enabled to auto-generate in the environments.
-          examples:
-          - true
-        promptAddendum:
-          type: string
-          description: Instructions that the LLM will use when generating the analysis.
-          examples:
-          - Write the summary as if you were a pirate.
-      x-apidog-orders:
-      - name
-      - enabled
-      - environments
-      - alertTags
-      - isAutoTriggerEnabled
-      - promptAddendum
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
   securitySchemes:
     BearerUser131:
       type: http

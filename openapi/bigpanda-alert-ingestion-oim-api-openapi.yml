@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: BigPanda Alert Ingestion (OIM) Alert Ingestion (OIM)…
+  title: BigPanda Alert Ingestion (OIM) Alert Ingestion (OIM)… Alert…
   description: BigPanda Alert Ingestion (OIM) operations, assembled verbatim from the OpenAPI fragments BigPanda publishes on its own API reference at https://api-docs.bigpanda.io/. Each operation carries x-source-url naming the exact provider page it was read from. BigPanda hosts each organization in a single data management region (US or EU); send requests to the base URL for your region.
   version: 1.0.0
   contact:
@@ -4843,6 +4843,128 @@ paths:
       x-source-page: Zabbix
 components:
   schemas:
+    multi_alert_payload:
+      type: object
+      description: Payload structure for multiple alerts.
+      properties:
+        app_key:
+          type: string
+          description: Integration app key.
+          examples:
+          - <APP KEY>
+        alerts:
+          type: array
+          description: Array of alert objects.
+          items:
+            $ref: '#/components/schemas/oim_alert'
+      x-apidog-orders:
+      - app_key
+      - alerts
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    oim_alert:
+      type: object
+      description: OIM single alert payload schema.
+      properties:
+        app_key:
+          type: string
+          description: The app key of the integration.
+          examples:
+          - <app_key>
+        status:
+          type: string
+          description: 'Status of the event. One of: `ok`, `critical`, `warning`, `unknown`, `acknowledged`.
+
+            '
+          examples:
+          - critical
+        timestamp:
+          type: integer
+          description: Time the event occurred (Unix epoch, seconds).
+          examples:
+          - 1402303570
+        host:
+          type: string
+          description: Custom event property to tag the alert.
+          examples:
+          - production-database-1
+        check:
+          type: string
+          description: Custom event property to tag the alert.
+          examples:
+          - CPU overloaded
+        application:
+          type: string
+          description: Custom event property to tag the alert.
+          examples:
+          - Billing
+        regions:
+          type: array
+          description: Custom event property as a list.
+          items:
+            type: string
+          examples:
+          - - US1
+            - US2
+            - EMEA
+        count:
+          type: integer
+          description: Custom event property as a number.
+          examples:
+          - 47
+        description:
+          type: string
+          description: Brief summary of the alert.
+          examples:
+          - CPU is above warning limit (40%)
+      x-apidog-orders:
+      - app_key
+      - status
+      - timestamp
+      - host
+      - check
+      - application
+      - regions
+      - count
+      - description
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic201response2:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 201
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x--orders: []
+          x--ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 201
+        data: {}
+      x--orders:
+      - status
+      - data
+      x--ignore-properties: []
+    sample_payload:
+      type: object
+      description: An example event payload from the tool that includes all tags that need to be normalized or referred to in the schema.
+      x-apidog-orders: []
+      properties: {}
+      x-apidog-folder: ''
+      examples:
+      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\": \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\",\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
+      x-apidog-ignore-properties: []
     status_mapping:
       type: object
       properties:
@@ -4887,6 +5009,18 @@ components:
       description: null
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
+    tag_properties:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Optional tag name to use in BigPanda.
+          examples:
+          - host
+      x-apidog-orders:
+      - name
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     oim_alert_preprocessors:
       type: object
       properties:
@@ -5016,108 +5150,6 @@ components:
       - sample_payload
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic201response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 201
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 201
-        data: {}
-      x-apidog-ignore-properties: []
-    tag_properties:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Optional tag name to use in BigPanda.
-          examples:
-          - host
-      x-apidog-orders:
-      - name
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic201response2:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 201
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x--orders: []
-          x--ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 201
-        data: {}
-      x--orders:
-      - status
-      - data
-      x--ignore-properties: []
-    shorten_url:
-      type: object
-      description: Rules for url shortening
-      properties:
-        id:
-          type: string
-          description: Type of preprocessor. Must be shortenUrl for URL shortening.
-          examples:
-          - shortenUrl
-        order:
-          type: integer
-          default: 1
-          examples:
-          - 1
-        params:
-          type: object
-          properties:
-            shortenAll:
-              description: If false only shortens url inside tags longer than 512 characters.
-              type: boolean
-              default: false
-          x-apidog-orders:
-          - shortenAll
-          x-apidog-ignore-properties: []
-        tags:
-          type: array
-          items:
-            type: string
-            examples:
-            - region_group_id
-          description: null
-          examples:
-          - "[\n        \"alert_severity\",\n        \"other\"\n    ]\n"
-      x-apidog-orders:
-      - id
-      - order
-      - params
-      - tags
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     additional_attributes:
       type: object
       properties:
@@ -5178,99 +5210,67 @@ components:
       - flatten
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
-    sample_payload:
+    generic201response:
       type: object
-      description: An example event payload from the tool that includes all tags that need to be normalized or referred to in the schema.
-      x-apidog-orders: []
-      properties: {}
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 201
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
       x-apidog-folder: ''
       examples:
-      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\": \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\",\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
+      - status: 201
+        data: {}
       x-apidog-ignore-properties: []
-    multi_alert_payload:
+    shorten_url:
       type: object
-      description: Payload structure for multiple alerts.
+      description: Rules for url shortening
       properties:
-        app_key:
+        id:
           type: string
-          description: Integration app key.
+          description: Type of preprocessor. Must be shortenUrl for URL shortening.
           examples:
-          - <APP KEY>
-        alerts:
-          type: array
-          description: Array of alert objects.
-          items:
-            $ref: '#/components/schemas/oim_alert'
-      x-apidog-orders:
-      - app_key
-      - alerts
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    oim_alert:
-      type: object
-      description: OIM single alert payload schema.
-      properties:
-        app_key:
-          type: string
-          description: The app key of the integration.
-          examples:
-          - <app_key>
-        status:
-          type: string
-          description: 'Status of the event. One of: `ok`, `critical`, `warning`, `unknown`, `acknowledged`.
-
-            '
-          examples:
-          - critical
-        timestamp:
+          - shortenUrl
+        order:
           type: integer
-          description: Time the event occurred (Unix epoch, seconds).
+          default: 1
           examples:
-          - 1402303570
-        host:
-          type: string
-          description: Custom event property to tag the alert.
-          examples:
-          - production-database-1
-        check:
-          type: string
-          description: Custom event property to tag the alert.
-          examples:
-          - CPU overloaded
-        application:
-          type: string
-          description: Custom event property to tag the alert.
-          examples:
-          - Billing
-        regions:
+          - 1
+        params:
+          type: object
+          properties:
+            shortenAll:
+              description: If false only shortens url inside tags longer than 512 characters.
+              type: boolean
+              default: false
+          x-apidog-orders:
+          - shortenAll
+          x-apidog-ignore-properties: []
+        tags:
           type: array
-          description: Custom event property as a list.
           items:
             type: string
+            examples:
+            - region_group_id
+          description: null
           examples:
-          - - US1
-            - US2
-            - EMEA
-        count:
-          type: integer
-          description: Custom event property as a number.
-          examples:
-          - 47
-        description:
-          type: string
-          description: Brief summary of the alert.
-          examples:
-          - CPU is above warning limit (40%)
+          - "[\n        \"alert_severity\",\n        \"other\"\n    ]\n"
       x-apidog-orders:
-      - app_key
-      - status
-      - timestamp
-      - host
-      - check
-      - application
-      - regions
-      - count
-      - description
+      - id
+      - order
+      - params
+      - tags
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
   securitySchemes:

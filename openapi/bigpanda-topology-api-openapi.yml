@@ -297,27 +297,44 @@ paths:
       x-source-page: Update a Topology
 components:
   schemas:
-    updated_by:
-      type: string
-      description: System id of the user or tool that last updated the resource.
-      x-apidog-folder: ''
-      examples:
-      - 63bd56897755560012bf3555
     id:
       type: string
       description: System id of the resource.
       x-apidog-folder: ''
       examples:
       - 63bd56897755560012bf3555
+    generic204response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
+      x-apidog-ignore-properties: []
+    created_by:
+      description: System id of the user or tool that created the resource.
+      type: string
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
     created_at:
       type: integer
       description: The time the resource was created(in Unix epoch seconds).
-      x-apidog-folder: ''
-      examples:
-      - 1613252381
-    updated_at:
-      type: integer
-      description: The time the resource was last updated(in Unix epoch seconds).
       x-apidog-folder: ''
       examples:
       - 1613252381
@@ -353,32 +370,15 @@ components:
       - updated_at
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic204response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
+    updated_at:
+      type: integer
+      description: The time the resource was last updated(in Unix epoch seconds).
       x-apidog-folder: ''
       examples:
-      - status: 204
-        data: {}
-      x-apidog-ignore-properties: []
-    created_by:
-      description: System id of the user or tool that created the resource.
+      - 1613252381
+    updated_by:
       type: string
+      description: System id of the user or tool that last updated the resource.
       x-apidog-folder: ''
       examples:
       - 63bd56897755560012bf3555

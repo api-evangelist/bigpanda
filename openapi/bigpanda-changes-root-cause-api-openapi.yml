@@ -438,6 +438,12 @@ paths:
       x-source-page: Update an RCC Relation
 components:
   schemas:
+    comment:
+      type: string
+      description: An optional comment or short description.
+      x-apidog-folder: ''
+      examples:
+      - Marking for regional similarity
     change_object:
       required:
       - identifier
@@ -519,6 +525,32 @@ components:
       - metadata
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    related_change:
+      type: object
+      properties:
+        change_id:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+        incident_id:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+        comment:
+          $ref: '#/components/schemas/comment'
+        match_certainty:
+          type: string
+          examples:
+          - SUSPECT
+      x-apidog-orders:
+      - change_id
+      - incident_id
+      - comment
+      - match_certainty
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     Change-relation-object:
       required:
       - change_id
@@ -552,38 +584,6 @@ components:
       - comment
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    related_change:
-      type: object
-      properties:
-        change_id:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-        incident_id:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-        comment:
-          $ref: '#/components/schemas/comment'
-        match_certainty:
-          type: string
-          examples:
-          - SUSPECT
-      x-apidog-orders:
-      - change_id
-      - incident_id
-      - comment
-      - match_certainty
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    comment:
-      type: string
-      description: An optional comment or short description.
-      x-apidog-folder: ''
-      examples:
-      - Marking for regional similarity
     generic400response:
       type: object
       description: 'Call is missing parameters or malformed.

@@ -696,6 +696,51 @@ paths:
       x-source-page: get jit-roles by organization
 components:
   schemas:
+    error-response-v12:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x--orders:
+      - status
+      - errors
+      x--ignore-properties: []
+      x-apidog-folder: ''
+    success-response-v12:
+      title: success-response-v1
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        data:
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          x--orders: []
+          x--ignore-properties: []
+      required:
+      - status
+      - data
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x--orders:
+      - status
+      - data
+      x--ignore-properties: []
     http-status-code-v1:
       type: number
       enum:
@@ -757,48 +802,6 @@ components:
       - 511
       description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
       x-apidog-folder: ''
-    error-response-v1:
-      title: error-response-v1
-      type: object
-      description: BP default error response
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
-      required:
-      - status
-      - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    success-response-v12:
-      title: success-response-v1
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        data:
-          type: object
-          x-apidog-orders: []
-          properties: {}
-          x--orders: []
-          x--ignore-properties: []
-      required:
-      - status
-      - data
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      x--orders:
-      - status
-      - data
-      x--ignore-properties: []
     success-response-v1:
       title: success-response-v1
       type: object
@@ -818,7 +821,7 @@ components:
       - data
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    error-response-v12:
+    error-response-v1:
       title: error-response-v1
       type: object
       description: BP default error response
@@ -835,10 +838,7 @@ components:
       x-apidog-orders:
       - status
       - errors
-      x--orders:
-      - status
-      - errors
-      x--ignore-properties: []
+      x-apidog-ignore-properties: []
       x-apidog-folder: ''
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).

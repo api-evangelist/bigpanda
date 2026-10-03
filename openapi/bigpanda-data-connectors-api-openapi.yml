@@ -331,6 +331,50 @@ components:
       - rescheduled_for
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    generic204response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
+      x-apidog-ignore-properties: []
     data_connector_response:
       type: object
       properties:
@@ -407,29 +451,6 @@ components:
       x--orders:
       - schema
       x--ignore-properties: []
-    generic204response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 204
-        data: {}
-      x-apidog-ignore-properties: []
     generic201response:
       type: object
       description: 'Call was successful.
@@ -453,27 +474,6 @@ components:
       - status: 201
         data: {}
       x-apidog-ignore-properties: []
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
   securitySchemes:
     BearerOrg22:
       type: http

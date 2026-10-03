@@ -518,178 +518,6 @@ paths:
       x-source-page: Update Config with Preprocessor Function
 components:
   schemas:
-    oim_v2_config3:
-      type: object
-      properties:
-        config:
-          type: object
-          description: The schema for the integration configuration.
-          properties:
-            additional_attributes:
-              type: array
-              description: Array of payload mapping rules for additional tags.
-              items:
-                $ref: '#/components/schemas/additional_attributes2'
-            array_source:
-              type: string
-              description: Defines which payload property contains the tag values if is_array=true.
-              examples:
-              - alerts
-            is_array:
-              type: boolean
-              description: Whether the payloads sent to the integration should be treated as single alerts, or multiple.
-              examples:
-              - true
-            map_remaining:
-              type: boolean
-              description: Whether to create tags from fields not included in the mapping rules.
-              examples:
-              - false
-            map_remaining_flatten_array:
-              type: boolean
-              description: Whether to flatten arrays to map remaining.
-              examples:
-              - false
-            primary_property:
-              type: array
-              description: Mapping rule for the primary property.
-              items:
-                $ref: '#/components/schemas/tag_properties2'
-              examples:
-              - - name: host
-                - name: application
-                - name: service
-            secondary_property:
-              type: array
-              description: Mapping rule for the secondary property.
-              items:
-                $ref: '#/components/schemas/tag_properties2'
-              examples:
-              - - name: check
-                - name: description
-            status:
-              $ref: '#/components/schemas/status_mapping2'
-            bp_timestamp:
-              type: object
-              description: Defines an optional tag to add a human-readable timestamp.
-              properties:
-                is_selected:
-                  type: boolean
-                  examples:
-                  - true
-              x-apidog-orders:
-              - is_selected
-              x-apidog-ignore-properties: []
-            timestamp:
-              type: object
-              description: Object that defines mapping rules for the timestamp property.
-              properties:
-                source:
-                  type: array
-                  items:
-                    type: string
-                  examples:
-                  - - '@alert.annotations.timestamp'
-                    - '@alert.startsat'
-                    - '@alert.endsat'
-                  description: The field(s) that contain the timestamp value.
-              x-apidog-orders:
-              - source
-              x-apidog-ignore-properties: []
-            event_filter:
-              type: string
-              description: A BPQL statement that dictates which events should be dropped upon initial ingestion (using Source Tags).
-              examples:
-              - '@alert.search_name = "OSS -- MINT Core -- *"'
-            incident_identifier:
-              type: array
-              description: Optional override for the incident identifier.
-              items:
-                type: string
-              examples:
-              - - application
-                - cluster
-            version:
-              type: string
-              description: The version of the OIM API.
-              examples:
-              - '2.0'
-            is_default:
-              type: boolean
-              examples:
-              - true
-          x-apidog-orders:
-          - additional_attributes
-          - array_source
-          - is_array
-          - map_remaining
-          - map_remaining_flatten_array
-          - primary_property
-          - secondary_property
-          - status
-          - bp_timestamp
-          - timestamp
-          - event_filter
-          - incident_identifier
-          - version
-          - is_default
-          x-apidog-ignore-properties: []
-        sample_payload:
-          $ref: '#/components/schemas/sample_payload2'
-      x-apidog-orders:
-      - config
-      - sample_payload
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    status_mapping:
-      type: object
-      properties:
-        default_to:
-          type: string
-          examples:
-          - critical
-          description: The value to populate if no matches are found. `​Critical​​` is default setting.
-        source:
-          type: array
-          items:
-            type: string
-          examples:
-          - - '@alert.status'
-            - '@alert.labels.severity'
-          description: Is the value in the body or subject?
-        status_map:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          x-apidog-orders: []
-          examples:
-          - critical:
-            - page
-            - critical
-            warning:
-            - warn
-            - warning
-            acknowledged:
-            - acknowledged
-            ok:
-            - resolved
-          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first match. One of [`critical`, `warning`, `ok`, `acknowledged`]
-          x--orders: []
-          properties: {}
-          x--ignore-properties: []
-      x-apidog-orders:
-      - default_to
-      - source
-      - status_map
-      description: null
-      x--orders:
-      - default_to
-      - source
-      - status_map
-      x--ignore-properties: []
-      x-apidog-folder: ''
     status_mapping2:
       type: object
       properties:
@@ -733,98 +561,6 @@ components:
       - status_map
       description: null
       x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    sample_payload2:
-      type: object
-      description: An example event payload from the tool that includes all tags that need to be normalized or referred to in the schema.
-      x-apidog-orders: []
-      properties: {}
-      x-apidog-folder: ''
-      examples:
-      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\": \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\",\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
-      x-apidog-ignore-properties: []
-    tag_properties:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Optional tag name to use in BigPanda.
-          examples:
-          - host
-      x-apidog-orders:
-      - name
-      x-apidog-folder: ''
-      x--orders:
-      - name
-      x--ignore-properties: []
-    additional_attributes:
-      type: object
-      properties:
-        isDestinationAccepted:
-          type: boolean
-          examples:
-          - true
-          description: (Optional) Whether the destination tag was accepted.
-        isSourceAccepted:
-          type: boolean
-          examples:
-          - true
-          description: (Optional) Whether the source tag was accepted.
-        isSuggestion:
-          type: boolean
-          examples:
-          - true
-          description: (Optional) Whether the tag was suggested by BigPanda Tag Normalization.
-        name:
-          type: string
-          examples:
-          - check
-          description: (Optional) Set a name for the tag in BigPanda.
-        source:
-          type: array
-          items:
-            type: string
-          examples:
-          - - '@alert.labels.alertname'
-            - '@alert.labels.check'
-          description: Array of payload fields to match.
-        suggestedDestination:
-          type: string
-          examples:
-          - check
-          description: Suggested Destination tag name.
-        suggestedSources:
-          type: array
-          items:
-            type: string
-          examples:
-          - - '@alert.labels.alertname'
-            - '@alert.labels.check'
-          description: Array of payload fields to match for suggested tags.
-        flatten:
-          type: boolean
-          examples:
-          - false
-          description: (Optional) Whether or not to flatten a nested object for improved mapping.
-      x-apidog-orders:
-      - isDestinationAccepted
-      - isSourceAccepted
-      - isSuggestion
-      - name
-      - source
-      - suggestedDestination
-      - suggestedSources
-      - flatten
-      x--orders:
-      - isDestinationAccepted
-      - isSourceAccepted
-      - isSuggestion
-      - name
-      - source
-      - suggestedDestination
-      - suggestedSources
-      - flatten
-      x--ignore-properties: []
       x-apidog-folder: ''
     oim_v2_config:
       type: object
@@ -981,6 +717,213 @@ components:
       - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\": \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\",\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
       x--orders: []
       x--ignore-properties: []
+    status_mapping:
+      type: object
+      properties:
+        default_to:
+          type: string
+          examples:
+          - critical
+          description: The value to populate if no matches are found. `​Critical​​` is default setting.
+        source:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.status'
+            - '@alert.labels.severity'
+          description: Is the value in the body or subject?
+        status_map:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          x-apidog-orders: []
+          examples:
+          - critical:
+            - page
+            - critical
+            warning:
+            - warn
+            - warning
+            acknowledged:
+            - acknowledged
+            ok:
+            - resolved
+          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first match. One of [`critical`, `warning`, `ok`, `acknowledged`]
+          x--orders: []
+          properties: {}
+          x--ignore-properties: []
+      x-apidog-orders:
+      - default_to
+      - source
+      - status_map
+      description: null
+      x--orders:
+      - default_to
+      - source
+      - status_map
+      x--ignore-properties: []
+      x-apidog-folder: ''
+    oim_v2_config3:
+      type: object
+      properties:
+        config:
+          type: object
+          description: The schema for the integration configuration.
+          properties:
+            additional_attributes:
+              type: array
+              description: Array of payload mapping rules for additional tags.
+              items:
+                $ref: '#/components/schemas/additional_attributes2'
+            array_source:
+              type: string
+              description: Defines which payload property contains the tag values if is_array=true.
+              examples:
+              - alerts
+            is_array:
+              type: boolean
+              description: Whether the payloads sent to the integration should be treated as single alerts, or multiple.
+              examples:
+              - true
+            map_remaining:
+              type: boolean
+              description: Whether to create tags from fields not included in the mapping rules.
+              examples:
+              - false
+            map_remaining_flatten_array:
+              type: boolean
+              description: Whether to flatten arrays to map remaining.
+              examples:
+              - false
+            primary_property:
+              type: array
+              description: Mapping rule for the primary property.
+              items:
+                $ref: '#/components/schemas/tag_properties2'
+              examples:
+              - - name: host
+                - name: application
+                - name: service
+            secondary_property:
+              type: array
+              description: Mapping rule for the secondary property.
+              items:
+                $ref: '#/components/schemas/tag_properties2'
+              examples:
+              - - name: check
+                - name: description
+            status:
+              $ref: '#/components/schemas/status_mapping2'
+            bp_timestamp:
+              type: object
+              description: Defines an optional tag to add a human-readable timestamp.
+              properties:
+                is_selected:
+                  type: boolean
+                  examples:
+                  - true
+              x-apidog-orders:
+              - is_selected
+              x-apidog-ignore-properties: []
+            timestamp:
+              type: object
+              description: Object that defines mapping rules for the timestamp property.
+              properties:
+                source:
+                  type: array
+                  items:
+                    type: string
+                  examples:
+                  - - '@alert.annotations.timestamp'
+                    - '@alert.startsat'
+                    - '@alert.endsat'
+                  description: The field(s) that contain the timestamp value.
+              x-apidog-orders:
+              - source
+              x-apidog-ignore-properties: []
+            event_filter:
+              type: string
+              description: A BPQL statement that dictates which events should be dropped upon initial ingestion (using Source Tags).
+              examples:
+              - '@alert.search_name = "OSS -- MINT Core -- *"'
+            incident_identifier:
+              type: array
+              description: Optional override for the incident identifier.
+              items:
+                type: string
+              examples:
+              - - application
+                - cluster
+            version:
+              type: string
+              description: The version of the OIM API.
+              examples:
+              - '2.0'
+            is_default:
+              type: boolean
+              examples:
+              - true
+          x-apidog-orders:
+          - additional_attributes
+          - array_source
+          - is_array
+          - map_remaining
+          - map_remaining_flatten_array
+          - primary_property
+          - secondary_property
+          - status
+          - bp_timestamp
+          - timestamp
+          - event_filter
+          - incident_identifier
+          - version
+          - is_default
+          x-apidog-ignore-properties: []
+        sample_payload:
+          $ref: '#/components/schemas/sample_payload2'
+      x-apidog-orders:
+      - config
+      - sample_payload
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    sample_payload2:
+      type: object
+      description: An example event payload from the tool that includes all tags that need to be normalized or referred to in the schema.
+      x-apidog-orders: []
+      properties: {}
+      x-apidog-folder: ''
+      examples:
+      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\": \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\",\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
+      x-apidog-ignore-properties: []
+    tag_properties:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Optional tag name to use in BigPanda.
+          examples:
+          - host
+      x-apidog-orders:
+      - name
+      x-apidog-folder: ''
+      x--orders:
+      - name
+      x--ignore-properties: []
+    tag_properties2:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Optional tag name to use in BigPanda.
+          examples:
+          - host
+      x-apidog-orders:
+      - name
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     additional_attributes2:
       type: object
       properties:
@@ -1041,18 +984,75 @@ components:
       - flatten
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
-    tag_properties2:
+    additional_attributes:
       type: object
       properties:
+        isDestinationAccepted:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the destination tag was accepted.
+        isSourceAccepted:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the source tag was accepted.
+        isSuggestion:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the tag was suggested by BigPanda Tag Normalization.
         name:
           type: string
-          description: Optional tag name to use in BigPanda.
           examples:
-          - host
+          - check
+          description: (Optional) Set a name for the tag in BigPanda.
+        source:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.labels.alertname'
+            - '@alert.labels.check'
+          description: Array of payload fields to match.
+        suggestedDestination:
+          type: string
+          examples:
+          - check
+          description: Suggested Destination tag name.
+        suggestedSources:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.labels.alertname'
+            - '@alert.labels.check'
+          description: Array of payload fields to match for suggested tags.
+        flatten:
+          type: boolean
+          examples:
+          - false
+          description: (Optional) Whether or not to flatten a nested object for improved mapping.
       x-apidog-orders:
+      - isDestinationAccepted
+      - isSourceAccepted
+      - isSuggestion
       - name
+      - source
+      - suggestedDestination
+      - suggestedSources
+      - flatten
+      x--orders:
+      - isDestinationAccepted
+      - isSourceAccepted
+      - isSuggestion
+      - name
+      - source
+      - suggestedDestination
+      - suggestedSources
+      - flatten
+      x--ignore-properties: []
       x-apidog-folder: ''
-      x-apidog-ignore-properties: []
   securitySchemes:
     BearerOrg22:
       type: http

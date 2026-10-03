@@ -375,46 +375,117 @@ paths:
       x-source-page: Retrieve All Troubleshooting Logs
 components:
   schemas:
-    IntegrationAlerts:
+    multi-context200response:
       type: object
+      properties:
+        reportId:
+          type: string
+          description: Unique ID of the multi-context report.
+          examples:
+          - 65f0c8f8d73b2b0012ab123
+        title:
+          type: string
+          description: Title of the report.
+          examples:
+          - Executive summary
+        format:
+          type: string
+          description: The format that the report was returned in.
+          examples:
+          - markdown
+        visibility:
+          type: string
+          description: Whether the report was private or visible to everyone in the organization.
+          examples:
+          - private
+        content:
+          type: string
+          description: Content of the report.
+          examples:
+          - This is the report.
+        warnings:
+          type: array
+          description: Warnings provided by the report.
+          schema:
+            type: string
+          items:
+            type: string
+      x-apidog-orders:
+      - reportId
+      - title
+      - format
+      - visibility
+      - content
+      - warnings
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
       properties:
         status:
           $ref: '#/components/schemas/http-status-code-v1'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                type: object
-                properties:
-                  alertData:
-                    type: string
-                  processingTime:
-                    type: string
-                required:
-                - alertData
-                - processingTime
-                x-apidog-orders:
-                - alertData
-                - processingTime
-                x-apidog-ignore-properties: []
-            total:
-              type: number
-              minimum: 0
-          required:
-          - items
-          - total
-          x-apidog-orders:
-          - items
-          - total
-          x-apidog-ignore-properties: []
+        errors:
+          type: array
+          items:
+            type: string
       required:
       - status
-      - data
+      - errors
       x-apidog-orders:
       - status
-      - data
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    generic403response:
+      type: object
+      description: 'Forbidden
+
+        '
+      properties:
+        statusCode:
+          type: integer
+          examples:
+          - 403
+        error:
+          type: string
+          examples:
+          - Forbidden
+        message:
+          type: string
+          examples:
+          - Forbidden - insufficient permissions
+      x-apidog-orders:
+      - statusCode
+      - error
+      - message
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    serviceNow-object:
+      required:
+      - tableName
+      type: object
+      properties:
+        tableName:
+          type: string
+          description: Name of the ServiceNow table where the record is located.
+          examples:
+          - Incident
+        recordNumber:
+          type: string
+          description: ServiceNow record number.
+          examples:
+          - INC1234567
+        sysId:
+          type: string
+          description: ServiceNow unique record identifier.
+          examples:
+          - 9d385017c611228701d22104cc95g555
+      x-apidog-orders:
+      - tableName
+      - recordNumber
+      - sysId
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     http-status-code-v1:
@@ -478,47 +549,46 @@ components:
       - 511
       description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
       x-apidog-folder: ''
-    error-response-v1:
-      title: error-response-v1
+    IntegrationAlerts:
       type: object
-      description: BP default error response
       properties:
         status:
           $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  alertData:
+                    type: string
+                  processingTime:
+                    type: string
+                required:
+                - alertData
+                - processingTime
+                x-apidog-orders:
+                - alertData
+                - processingTime
+                x-apidog-ignore-properties: []
+            total:
+              type: number
+              minimum: 0
+          required:
+          - items
+          - total
+          x-apidog-orders:
+          - items
+          - total
+          x-apidog-ignore-properties: []
       required:
       - status
-      - errors
+      - data
       x-apidog-orders:
       - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    generic403response:
-      type: object
-      description: 'Forbidden
-
-        '
-      properties:
-        statusCode:
-          type: integer
-          examples:
-          - 403
-        error:
-          type: string
-          examples:
-          - Forbidden
-        message:
-          type: string
-          examples:
-          - Forbidden - insufficient permissions
-      x-apidog-orders:
-      - statusCode
-      - error
-      - message
+      - data
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     diagnostic_log:
@@ -593,76 +663,6 @@ components:
       - resource_id
       - payload
       - timestamp
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    serviceNow-object:
-      required:
-      - tableName
-      type: object
-      properties:
-        tableName:
-          type: string
-          description: Name of the ServiceNow table where the record is located.
-          examples:
-          - Incident
-        recordNumber:
-          type: string
-          description: ServiceNow record number.
-          examples:
-          - INC1234567
-        sysId:
-          type: string
-          description: ServiceNow unique record identifier.
-          examples:
-          - 9d385017c611228701d22104cc95g555
-      x-apidog-orders:
-      - tableName
-      - recordNumber
-      - sysId
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    multi-context200response:
-      type: object
-      properties:
-        reportId:
-          type: string
-          description: Unique ID of the multi-context report.
-          examples:
-          - 65f0c8f8d73b2b0012ab123
-        title:
-          type: string
-          description: Title of the report.
-          examples:
-          - Executive summary
-        format:
-          type: string
-          description: The format that the report was returned in.
-          examples:
-          - markdown
-        visibility:
-          type: string
-          description: Whether the report was private or visible to everyone in the organization.
-          examples:
-          - private
-        content:
-          type: string
-          description: Content of the report.
-          examples:
-          - This is the report.
-        warnings:
-          type: array
-          description: Warnings provided by the report.
-          schema:
-            type: string
-          items:
-            type: string
-      x-apidog-orders:
-      - reportId
-      - title
-      - format
-      - visibility
-      - content
-      - warnings
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
   securitySchemes:

@@ -61,16 +61,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    AuditLogsResponse:
-      title: Audit Logs Response
-      description: List of audit log entries.
-      type: object
-      properties:
-        logs:
-          type: array
-          description: Array of log entries.
-          items:
-            $ref: '#/components/schemas/AuditLogEntry'
     AuditLogEntry:
       title: Audit Log Entry
       description: A single audit log entry.
@@ -92,6 +82,16 @@ components:
           type: integer
           description: Unix timestamp.
           example: 1713000000
+    AuditLogsResponse:
+      title: Audit Logs Response
+      description: List of audit log entries.
+      type: object
+      properties:
+        logs:
+          type: array
+          description: Array of log entries.
+          items:
+            $ref: '#/components/schemas/AuditLogEntry'
   securitySchemes:
     bearerAuth:
       type: http

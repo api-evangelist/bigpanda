@@ -206,6 +206,32 @@ paths:
       x-source-page: Retrieve destination tags
 components:
   schemas:
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+          example: resource not found
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+    AlertResponse:
+      title: Alert Response
+      description: Response after ingesting an alert.
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Internal alert ID.
+          example: alert-abc123
+        status:
+          type: string
+          description: Ingestion status.
+          example: ok
     AlertRequest:
       title: Alert Request
       description: Payload for ingesting a monitoring alert.
@@ -244,32 +270,35 @@ components:
           type: integer
           description: Unix timestamp of the alert.
           example: 1713000000
-    ErrorResponse:
-      title: Error Response
-      description: Standard error response.
+    destination_tags:
+      type: array
+      description: List of tags in the reverse order from when they were received by BigPanda.
+      items:
+        $ref: '#/components/schemas/destination_tag'
+      x-apidog-folder: ''
+    generic202response:
       type: object
+      description: 'Call was successful.
+
+        '
       properties:
-        error:
-          type: string
-          description: Error message.
-          example: resource not found
         status:
           type: integer
-          description: HTTP status code.
-          example: 404
-    AlertResponse:
-      title: Alert Response
-      description: Response after ingesting an alert.
-      type: object
-      properties:
-        _id:
-          type: string
-          description: Internal alert ID.
-          example: alert-abc123
-        status:
-          type: string
-          description: Ingestion status.
-          example: ok
+          examples:
+          - 202
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 202
+        data: {}
+      x-apidog-ignore-properties: []
     destination_tag:
       type: object
       description: Schema representing a BigPanda alert tag as ingested through alert processing.
@@ -308,41 +337,6 @@ components:
       - last update
       - total_hits
       x--ignore-properties: []
-    destination_tags:
-      type: array
-      description: List of tags in the reverse order from when they were received by BigPanda.
-      items:
-        $ref: '#/components/schemas/destination_tag'
-      x-apidog-folder: ''
-    generic202response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 202
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 202
-        data: {}
-      x-apidog-ignore-properties: []
-    comments:
-      type: string
-      description: An optional comment or short description.
-      x-apidog-folder: ''
-      examples:
-      - Marking for regional similarity
     resolve_alerts:
       required:
       - ids
@@ -364,6 +358,12 @@ components:
       - ids
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    comments:
+      type: string
+      description: An optional comment or short description.
+      x-apidog-folder: ''
+      examples:
+      - Marking for regional similarity
   securitySchemes:
     bearerAuth:
       type: http

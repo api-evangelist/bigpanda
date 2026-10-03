@@ -488,11 +488,116 @@ components:
       - additional_fields
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    generic204response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
+      x-apidog-ignore-properties: []
     webhookv2-200response:
       type: array
       description: A list of webhook v2 configurations.
       items:
         $ref: '#/components/schemas/workflow'
+      x-apidog-folder: ''
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    workflow:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the integration
+          examples:
+          - demo
+        parent_system_id:
+          type: string
+          description: The name of the type of integration
+          examples:
+          - webhook_v2
+        workflow_config:
+          $ref: '#/components/schemas/WorkflowConfig'
+      x-apidog-orders:
+      - name
+      - parent_system_id
+      - workflow_config
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    dynamic_variable:
+      description: Details on the available dynamic variable.
+      type: object
+      properties:
+        title:
+          description: The name of the tag or metadata field.
+          type: string
+          examples:
+          - custom_tag
+        value:
+          description: The full variable to include in workflows.
+          type: string
+          examples:
+          - category.custom_tag
+      x-apidog-orders:
+      - title
+      - value
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
       x-apidog-folder: ''
     webhookv2_event:
       type: object
@@ -546,90 +651,6 @@ components:
       - method
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic404response:
-      type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic204response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 204
-        data: {}
-      x-apidog-ignore-properties: []
-    workflow:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the integration
-          examples:
-          - demo
-        parent_system_id:
-          type: string
-          description: The name of the type of integration
-          examples:
-          - webhook_v2
-        workflow_config:
-          $ref: '#/components/schemas/WorkflowConfig'
-      x-apidog-orders:
-      - name
-      - parent_system_id
-      - workflow_config
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    dynamic_variable:
-      description: Details on the available dynamic variable.
-      type: object
-      properties:
-        title:
-          description: The name of the tag or metadata field.
-          type: string
-          examples:
-          - custom_tag
-        value:
-          description: The full variable to include in workflows.
-          type: string
-          examples:
-          - category.custom_tag
-      x-apidog-orders:
-      - title
-      - value
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     WorkflowConfig:
       type: object
       properties:
@@ -657,27 +678,6 @@ components:
       - config
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
   securitySchemes:
     BearerUser13:
       type: http
