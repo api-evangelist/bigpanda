@@ -464,6 +464,31 @@ components:
           type: integer
           description: HTTP status code.
           example: 404
+    MaintenancePlan:
+      title: Maintenance Plan
+      description: A BigPanda maintenance plan for suppressing alerts.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Maintenance plan ID.
+          example: mp-abc123
+        name:
+          type: string
+          description: Maintenance plan name.
+          example: Weekend Maintenance
+        active:
+          type: boolean
+          description: Whether the maintenance plan is currently active.
+          example: false
+        start:
+          type: integer
+          description: Start Unix timestamp.
+          example: 1713000000
+        end:
+          type: integer
+          description: End Unix timestamp.
+          example: 1713086400
     MaintenancePlanRequest:
       title: Maintenance Plan Request
       description: Payload for creating a maintenance plan.
@@ -500,172 +525,12 @@ components:
           description: Array of maintenance plans.
           items:
             $ref: '#/components/schemas/MaintenancePlan'
-    MaintenancePlan:
-      title: Maintenance Plan
-      description: A BigPanda maintenance plan for suppressing alerts.
-      type: object
-      properties:
-        id:
-          type: string
-          description: Maintenance plan ID.
-          example: mp-abc123
-        name:
-          type: string
-          description: Maintenance plan name.
-          example: Weekend Maintenance
-        active:
-          type: boolean
-          description: Whether the maintenance plan is currently active.
-          example: false
-        start:
-          type: integer
-          description: Start Unix timestamp.
-          example: 1713000000
-        end:
-          type: integer
-          description: End Unix timestamp.
-          example: 1713086400
-    maintenance_custom_tags:
-      type: object
-      description: Metadata about the plan in an array of key:value pairs.
-      properties:
-        name:
-          type: string
-          description: name of the tag
-          examples:
-          - app
-        value:
-          type: string
-          description: value of the tag
-          examples:
-          - esp
-      x-apidog-orders:
-      - name
-      - value
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic204response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 204
-        data: {}
-      x-apidog-ignore-properties: []
-    created_by:
-      description: System id of the user or tool that created the resource.
-      type: string
-      x-apidog-folder: ''
-      examples:
-      - 63bd56897755560012bf3555
     created_at:
       type: integer
       description: The time the resource was created(in Unix epoch seconds).
       x-apidog-folder: ''
       examples:
       - 1613252381
-    updated_at:
-      type: integer
-      description: The time the resource was last updated(in Unix epoch seconds).
-      x-apidog-folder: ''
-      examples:
-      - 1613252381
-    updated_by:
-      type: string
-      description: System id of the user or tool that last updated the resource.
-      x-apidog-folder: ''
-      examples:
-      - 63bd56897755560012bf3555
-    maintenance_plan_response:
-      type: object
-      properties:
-        id:
-          type: string
-          description: System-generated unique identifier for a maintenance plan.
-          examples:
-          - 64f0b24f340000bbd269595c
-        status:
-          type: string
-          description: The maintenance plan's status.
-          examples:
-          - planned
-        maintenance_key:
-          type: string
-          description: Third party (Jira, ServiceNow, etc.) system key for integrated maintenance management. If no integration key is included in the call, a system ID will be added automatically.
-          examples:
-          - MNT-de9d22d700e9
-        name:
-          type: string
-          description: User-defined name for the plan.
-          examples:
-          - host1 maintenance
-        start:
-          type: integer
-          description: Unix epoch time when the scheduled plan starts (in seconds). For recurring plans, this time should be the start of the first maintenance window.
-          examples:
-          - 1733904622
-        end:
-          type: integer
-          description: Unix epoch time when the scheduled plan ends (in seconds). For recurring plans, this time should be the date when the plan should stop repeating.
-          examples:
-          - 1734768622
-        description:
-          type: string
-          description: Brief user-defined summary of the maintenance plan.
-          examples:
-          - this is a description
-        custom_tags:
-          type: array
-          description: Metadata about the plan in an array of key:value pairs.
-          items:
-            $ref: '#/components/schemas/maintenance_custom_tags'
-        created_by:
-          $ref: '#/components/schemas/created_by'
-        created_at:
-          $ref: '#/components/schemas/created_at'
-        updated_by:
-          $ref: '#/components/schemas/updated_by'
-        updated_at:
-          $ref: '#/components/schemas/updated_at'
-        frequency:
-          type: string
-          description: How often the scheduled plan should silence alerts. One of [`Once`, `Daily`, `Weekly`, `Monthly`]. Default is `Once`. This field is case-insensitive.
-          examples:
-          - Daily
-        frequency_data:
-          $ref: '#/components/schemas/updated_at'
-      x-apidog-orders:
-      - id
-      - status
-      - maintenance_key
-      - name
-      - start
-      - end
-      - description
-      - custom_tags
-      - created_by
-      - created_at
-      - updated_by
-      - updated_at
-      - frequency
-      - frequency_data
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     maintenance_plan_object:
       required:
       - name
@@ -759,6 +624,141 @@ components:
       - time_zone
       - custom_tags
       x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    maintenance_custom_tags:
+      type: object
+      description: Metadata about the plan in an array of key:value pairs.
+      properties:
+        name:
+          type: string
+          description: name of the tag
+          examples:
+          - app
+        value:
+          type: string
+          description: value of the tag
+          examples:
+          - esp
+      x-apidog-orders:
+      - name
+      - value
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    updated_at:
+      type: integer
+      description: The time the resource was last updated(in Unix epoch seconds).
+      x-apidog-folder: ''
+      examples:
+      - 1613252381
+    updated_by:
+      type: string
+      description: System id of the user or tool that last updated the resource.
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
+    maintenance_plan_response:
+      type: object
+      properties:
+        id:
+          type: string
+          description: System-generated unique identifier for a maintenance plan.
+          examples:
+          - 64f0b24f340000bbd269595c
+        status:
+          type: string
+          description: The maintenance plan's status.
+          examples:
+          - planned
+        maintenance_key:
+          type: string
+          description: Third party (Jira, ServiceNow, etc.) system key for integrated maintenance management. If no integration key is included in the call, a system ID will be added automatically.
+          examples:
+          - MNT-de9d22d700e9
+        name:
+          type: string
+          description: User-defined name for the plan.
+          examples:
+          - host1 maintenance
+        start:
+          type: integer
+          description: Unix epoch time when the scheduled plan starts (in seconds). For recurring plans, this time should be the start of the first maintenance window.
+          examples:
+          - 1733904622
+        end:
+          type: integer
+          description: Unix epoch time when the scheduled plan ends (in seconds). For recurring plans, this time should be the date when the plan should stop repeating.
+          examples:
+          - 1734768622
+        description:
+          type: string
+          description: Brief user-defined summary of the maintenance plan.
+          examples:
+          - this is a description
+        custom_tags:
+          type: array
+          description: Metadata about the plan in an array of key:value pairs.
+          items:
+            $ref: '#/components/schemas/maintenance_custom_tags'
+        created_by:
+          $ref: '#/components/schemas/created_by'
+        created_at:
+          $ref: '#/components/schemas/created_at'
+        updated_by:
+          $ref: '#/components/schemas/updated_by'
+        updated_at:
+          $ref: '#/components/schemas/updated_at'
+        frequency:
+          type: string
+          description: How often the scheduled plan should silence alerts. One of [`Once`, `Daily`, `Weekly`, `Monthly`]. Default is `Once`. This field is case-insensitive.
+          examples:
+          - Daily
+        frequency_data:
+          $ref: '#/components/schemas/updated_at'
+      x-apidog-orders:
+      - id
+      - status
+      - maintenance_key
+      - name
+      - start
+      - end
+      - description
+      - custom_tags
+      - created_by
+      - created_at
+      - updated_by
+      - updated_at
+      - frequency
+      - frequency_data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    created_by:
+      description: System id of the user or tool that created the resource.
+      type: string
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
+    generic204response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
       x-apidog-ignore-properties: []
   securitySchemes:
     bearerAuth:

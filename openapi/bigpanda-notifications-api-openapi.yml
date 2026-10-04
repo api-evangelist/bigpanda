@@ -427,6 +427,127 @@ paths:
       x-source-page: Retrieve available dynamic variables
 components:
   schemas:
+    webhookv2_event:
+      type: object
+      description: Notification settings for each trigger.
+      properties:
+        enabled:
+          description: Boolean determining if this event type should trigger shares.
+          type: boolean
+          examples:
+          - true
+        body:
+          description: JSON Payload to send. May contain templated values.
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          examples:
+          - "{\n  \"incident_start\": \"{{incident.start}}\",\n  \"assigner\": \"Assigned by {{assigner.username}}\",\n  \"assignee\": \"Assigned to {{assignee.username}}\",\n  \"primary_alert_host\": \"{{primaryAlert.tags.host}}\",\n  \"priority\": \"{{incidentTags.itd_priority_1}}\",\n  \"nested_values\": {\n      \"double_nested_values\": {\n          \"primary_alert_check\": \"'{{primaryAlert.tags.check}}'\",\n          \"incident_updated\": \"{{incident.updated_at}}\"\n      }\n  }\n}"
+          x-apidog-ignore-properties: []
+        headers:
+          type: string
+          description: Headers to be used in the request. May contain templated values.
+          examples:
+          - '"x-client-id" : "{{ primaryAlert.tags.host }}"
+
+            '
+        path:
+          type: string
+          description: If present, path that will be appended to the `workflow_config.config.base_url`. May contain templated values.
+          examples:
+          - /incident/{{incident.id}}
+        authorization:
+          type: string
+          description: An optional string to create an Authorization Header using Basic or Bearer format. The value is encrypted in our database.
+          examples:
+          - Bearer {{incidentTags.itd_applications_1}}
+        method:
+          type: string
+          description: Define a specific HTTP method used for shares created by this event type, allowing for integration with tools that have strict method usage, such as only permitting only PATCH for updates, or POST for creating new objects.
+          enum:
+          - POST
+          - PUT
+          - PATCH
+          examples:
+          - PUT
+      x-apidog-orders:
+      - enabled
+      - body
+      - headers
+      - path
+      - authorization
+      - method
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    WorkflowConfig:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/webhookv2_event'
+        config:
+          type: object
+          properties:
+            base_url:
+              type: string
+              description: A base url to receive webhook messages. This route will be used for any triggers that do not have an additional path route defined. Individual triggers can use static values or dynamic variables to extend this URL.
+            expects_callbacks:
+              type: boolean
+              description: Whether to enable locking on first share, preventing updates from being sent until a callback is received or 15 minutes has passed. See the [Callback Service](https://docs.bigpanda.io/en/bigpanda-callback-service) for details on callback functionality.
+              examples:
+              - true
+          x-apidog-orders:
+          - base_url
+          - expects_callbacks
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - events
+      - config
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     dynamicvariables200response:
       description: A list of dynamic variable fields available for use in webhook v2 workflows.
       type: object
@@ -488,54 +609,23 @@ components:
       - additional_fields
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic204response:
+    dynamic_variable:
+      description: Details on the available dynamic variable.
       type: object
-      description: 'Call was successful.
-
-        '
       properties:
-        status:
-          type: integer
+        title:
+          description: The name of the tag or metadata field.
+          type: string
           examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 204
-        data: {}
-      x-apidog-ignore-properties: []
-    webhookv2-200response:
-      type: array
-      description: A list of webhook v2 configurations.
-      items:
-        $ref: '#/components/schemas/workflow'
-      x-apidog-folder: ''
-    generic404response:
-      type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
-      properties:
-        status:
-          type: integer
+          - custom_tag
+        value:
+          description: The full variable to include in workflows.
+          type: string
           examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
+          - category.custom_tag
       x-apidog-orders:
-      - status
-      - errors
+      - title
+      - value
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     workflow:
@@ -559,124 +649,34 @@ components:
       - workflow_config
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    dynamic_variable:
-      description: Details on the available dynamic variable.
-      type: object
-      properties:
-        title:
-          description: The name of the tag or metadata field.
-          type: string
-          examples:
-          - custom_tag
-        value:
-          description: The full variable to include in workflows.
-          type: string
-          examples:
-          - category.custom_tag
-      x-apidog-orders:
-      - title
-      - value
+    webhookv2-200response:
+      type: array
+      description: A list of webhook v2 configurations.
+      items:
+        $ref: '#/components/schemas/workflow'
       x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic400response:
+    generic204response:
       type: object
-      description: 'Call is missing parameters or malformed.
+      description: 'Call was successful.
 
         '
       properties:
         status:
           type: integer
           examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
       x-apidog-orders:
       - status
-      - errors
-      x-apidog-ignore-properties: []
+      - data
       x-apidog-folder: ''
-    webhookv2_event:
-      type: object
-      description: Notification settings for each trigger.
-      properties:
-        enabled:
-          description: Boolean determining if this event type should trigger shares.
-          type: boolean
-          examples:
-          - true
-        body:
-          description: JSON Payload to send. May contain templated values.
-          type: object
-          x-apidog-orders: []
-          properties: {}
-          examples:
-          - "{\n  \"incident_start\": \"{{incident.start}}\",\n  \"assigner\": \"Assigned by {{assigner.username}}\",\n  \"assignee\": \"Assigned to {{assignee.username}}\",\n  \"primary_alert_host\": \"{{primaryAlert.tags.host}}\",\n  \"priority\": \"{{incidentTags.itd_priority_1}}\",\n  \"nested_values\": {\n      \"double_nested_values\": {\n          \"primary_alert_check\": \"'{{primaryAlert.tags.check}}'\",\n          \"incident_updated\": \"{{incident.updated_at}}\"\n      }\n  }\n}"
-          x-apidog-ignore-properties: []
-        headers:
-          type: string
-          description: Headers to be used in the request. May contain templated values.
-          examples:
-          - '"x-client-id" : "{{ primaryAlert.tags.host }}"
-
-            '
-        path:
-          type: string
-          description: If present, path that will be appended to the `workflow_config.config.base_url`. May contain templated values.
-          examples:
-          - /incident/{{incident.id}}
-        authorization:
-          type: string
-          description: An optional string to create an Authorization Header using Basic or Bearer format. The value is encrypted in our database.
-          examples:
-          - Bearer {{incidentTags.itd_applications_1}}
-        method:
-          type: string
-          description: Define a specific HTTP method used for shares created by this event type, allowing for integration with tools that have strict method usage, such as only permitting only PATCH for updates, or POST for creating new objects.
-          enum:
-          - POST
-          - PUT
-          - PATCH
-          examples:
-          - PUT
-      x-apidog-orders:
-      - enabled
-      - body
-      - headers
-      - path
-      - authorization
-      - method
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    WorkflowConfig:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/webhookv2_event'
-        config:
-          type: object
-          properties:
-            base_url:
-              type: string
-              description: A base url to receive webhook messages. This route will be used for any triggers that do not have an additional path route defined. Individual triggers can use static values or dynamic variables to extend this URL.
-            expects_callbacks:
-              type: boolean
-              description: Whether to enable locking on first share, preventing updates from being sent until a callback is received or 15 minutes has passed. See the [Callback Service](https://docs.bigpanda.io/en/bigpanda-callback-service) for details on callback functionality.
-              examples:
-              - true
-          x-apidog-orders:
-          - base_url
-          - expects_callbacks
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - events
-      - config
-      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
       x-apidog-ignore-properties: []
   securitySchemes:
     BearerUser13:

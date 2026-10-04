@@ -173,44 +173,6 @@ paths:
       x-source-page: Retrieve a Risk Rated Change
 components:
   schemas:
-    changerating202response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 202
-        data:
-          type: object
-          properties:
-            changeNumber:
-              type: string
-              description: The unique ID of the change.
-              examples:
-              - CHG0004053111
-            status:
-              type: string
-              description: The status of the risk rating request.
-              examples:
-              - accepted
-            message:
-              type: string
-              description: The processing message.
-              examples:
-              - Change risk assessment queued for processing.
-          x-apidog-orders:
-          - changeNumber
-          - status
-          - message
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     generic404response:
       type: object
       description: 'Requested endpoint or resource is not found.
@@ -416,6 +378,44 @@ components:
           - riskPredictionOutputs
           - riskReasoning
           - suggestedMitigations
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    changerating202response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 202
+        data:
+          type: object
+          properties:
+            changeNumber:
+              type: string
+              description: The unique ID of the change.
+              examples:
+              - CHG0004053111
+            status:
+              type: string
+              description: The status of the risk rating request.
+              examples:
+              - accepted
+            message:
+              type: string
+              description: The processing message.
+              examples:
+              - Change risk assessment queued for processing.
+          x-apidog-orders:
+          - changeNumber
+          - status
+          - message
           x-apidog-ignore-properties: []
       x-apidog-orders:
       - status

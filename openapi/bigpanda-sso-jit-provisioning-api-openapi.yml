@@ -718,7 +718,26 @@ components:
       - errors
       x--ignore-properties: []
       x-apidog-folder: ''
-    success-response-v12:
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    success-response-v1:
       title: success-response-v1
       type: object
       properties:
@@ -728,8 +747,7 @@ components:
           type: object
           x-apidog-orders: []
           properties: {}
-          x--orders: []
-          x--ignore-properties: []
+          x-apidog-ignore-properties: []
       required:
       - status
       - data
@@ -737,10 +755,7 @@ components:
       - status
       - data
       x-apidog-folder: ''
-      x--orders:
-      - status
-      - data
-      x--ignore-properties: []
+      x-apidog-ignore-properties: []
     http-status-code-v1:
       type: number
       enum:
@@ -802,7 +817,7 @@ components:
       - 511
       description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
       x-apidog-folder: ''
-    success-response-v1:
+    success-response-v12:
       title: success-response-v1
       type: object
       properties:
@@ -812,7 +827,8 @@ components:
           type: object
           x-apidog-orders: []
           properties: {}
-          x-apidog-ignore-properties: []
+          x--orders: []
+          x--ignore-properties: []
       required:
       - status
       - data
@@ -820,26 +836,10 @@ components:
       - status
       - data
       x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    error-response-v1:
-      title: error-response-v1
-      type: object
-      description: BP default error response
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
-      required:
+      x--orders:
       - status
-      - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
+      - data
+      x--ignore-properties: []
 x-server-notes:
 - US host https://api.bigpanda.io verified live 2026-09-04 (HTTP 401 Authorization Required on an unauthenticated request).
 - EU host https://api.eu.bigpanda.io is the value BigPanda publishes at https://api-docs.bigpanda.io/regions. It did NOT resolve in DNS on 2026-09-04. The live EU host observed on that date is https://eu-api.bigpanda.io (401 Authorization Required). The per-endpoint fragments on the same site declare a third EU value, https://eu-api.biggy.io, which also does not resolve. Recorded as published; not corrected.

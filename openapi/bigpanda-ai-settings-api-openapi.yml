@@ -394,50 +394,6 @@ paths:
       x-source-page: Generate an AI Analysis
 components:
   schemas:
-    generic200response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 200
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 200
-        data: {}
-      x-apidog-ignore-properties: []
-    generic404response:
-      type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     generic400response:
       type: object
       description: 'Call is missing parameters or malformed.
@@ -513,6 +469,29 @@ components:
       - promptAddendum
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    generic200response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 200
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 200
+        data: {}
+      x-apidog-ignore-properties: []
     aia_retrieve_200:
       type: object
       properties:
@@ -583,6 +562,27 @@ components:
       - updatedBy
       - isDefault
       - isAutoTriggerEnabled
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
   securitySchemes:

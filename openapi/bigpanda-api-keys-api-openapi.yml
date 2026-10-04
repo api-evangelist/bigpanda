@@ -363,12 +363,58 @@ paths:
       x-source-page: Retrieve API Keys for a Service Account
 components:
   schemas:
-    created_by:
-      description: System id of the user or tool that created the resource.
-      type: string
+    created_at:
+      type: integer
+      description: The time the resource was created(in Unix epoch seconds).
       x-apidog-folder: ''
       examples:
-      - 63bd56897755560012bf3555
+      - 1613252381
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    update_key:
+      type: object
+      description: Key metadata to update
+      properties:
+        expires_at:
+          type: integer
+          description: (Optional) Unix epoch time when the API key will expire (in seconds).
+          examples:
+          - 1703001639
+        name:
+          type: string
+          description: (Optional) Name of the API key.
+          examples:
+          - Test Key
+        service_account_id:
+          type: string
+          description: (Optional) The unique ID of the BigPanda service account assigned to the API key.
+          examples:
+          - 63bd568977a8d60012bf3xyz
+      x-apidog-orders:
+      - expires_at
+      - name
+      - service_account_id
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     api_key:
       type: object
       description: Schema for a BigPanda API key object.
@@ -452,58 +498,12 @@ components:
       - id
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    update_key:
-      type: object
-      description: Key metadata to update
-      properties:
-        expires_at:
-          type: integer
-          description: (Optional) Unix epoch time when the API key will expire (in seconds).
-          examples:
-          - 1703001639
-        name:
-          type: string
-          description: (Optional) Name of the API key.
-          examples:
-          - Test Key
-        service_account_id:
-          type: string
-          description: (Optional) The unique ID of the BigPanda service account assigned to the API key.
-          examples:
-          - 63bd568977a8d60012bf3xyz
-      x-apidog-orders:
-      - expires_at
-      - name
-      - service_account_id
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    created_at:
-      type: integer
-      description: The time the resource was created(in Unix epoch seconds).
+    created_by:
+      description: System id of the user or tool that created the resource.
+      type: string
       x-apidog-folder: ''
       examples:
-      - 1613252381
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
+      - 63bd56897755560012bf3555
   securitySchemes:
     BearerOrg121:
       type: http

@@ -270,12 +270,6 @@ components:
           type: integer
           description: Unix timestamp of the alert.
           example: 1713000000
-    destination_tags:
-      type: array
-      description: List of tags in the reverse order from when they were received by BigPanda.
-      items:
-        $ref: '#/components/schemas/destination_tag'
-      x-apidog-folder: ''
     generic202response:
       type: object
       description: 'Call was successful.
@@ -299,6 +293,39 @@ components:
       - status: 202
         data: {}
       x-apidog-ignore-properties: []
+    destination_tags:
+      type: array
+      description: List of tags in the reverse order from when they were received by BigPanda.
+      items:
+        $ref: '#/components/schemas/destination_tag'
+      x-apidog-folder: ''
+    resolve_alerts:
+      required:
+      - ids
+      type: object
+      properties:
+        comments:
+          description: An optional comment to add to the resolve action. **May not be longer than 1000 characters.**
+          $ref: '#/components/schemas/comments'
+        ids:
+          type: array
+          description: A list of the unique identifiers for each alert to resolve
+          items:
+            type: string
+          examples:
+          - - 5d09d221aebaec1c43ccd448
+            - 5cff623a21169351a82cb5e2
+      x-apidog-orders:
+      - comments
+      - ids
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    comments:
+      type: string
+      description: An optional comment or short description.
+      x-apidog-folder: ''
+      examples:
+      - Marking for regional similarity
     destination_tag:
       type: object
       description: Schema representing a BigPanda alert tag as ingested through alert processing.
@@ -337,33 +364,6 @@ components:
       - last update
       - total_hits
       x--ignore-properties: []
-    resolve_alerts:
-      required:
-      - ids
-      type: object
-      properties:
-        comments:
-          description: An optional comment to add to the resolve action. **May not be longer than 1000 characters.**
-          $ref: '#/components/schemas/comments'
-        ids:
-          type: array
-          description: A list of the unique identifiers for each alert to resolve
-          items:
-            type: string
-          examples:
-          - - 5d09d221aebaec1c43ccd448
-            - 5cff623a21169351a82cb5e2
-      x-apidog-orders:
-      - comments
-      - ids
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    comments:
-      type: string
-      description: An optional comment or short description.
-      x-apidog-folder: ''
-      examples:
-      - Marking for regional similarity
   securitySchemes:
     bearerAuth:
       type: http

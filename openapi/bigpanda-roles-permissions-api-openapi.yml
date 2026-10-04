@@ -1066,29 +1066,16 @@ paths:
       x-source-page: Retrieve all permissions
 components:
   schemas:
-    generic204response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - status
-      - data
+    id-v1:
+      type: string
+      title: ID
+      pattern: ^[a-f\d]{24}$
+      description: Object's ID
+      minLength: 24
+      maxLength: 24
       x-apidog-folder: ''
       examples:
-      - status: 204
-        data: {}
-      x-apidog-ignore-properties: []
+      - 60c5238222fa63633d93d52f
     error-response-v12:
       title: error-response-v1
       type: object
@@ -1107,6 +1094,28 @@ components:
       - status
       - errors
       x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x--orders:
+      - status
+      - errors
+      x--ignore-properties: []
       x-apidog-folder: ''
     success-response-v1:
       title: success-response-v1
@@ -1131,35 +1140,61 @@ components:
       - status
       - data
       x--ignore-properties: []
-    success-response-v12:
-      title: success-response-v1
+    role:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        data:
-          type: object
-          x-apidog-orders: []
-          properties: {}
-          x-apidog-ignore-properties: []
-      required:
-      - status
-      - data
+        name:
+          type: string
+          description: The name of the role as seen in the UI.
+          examples:
+          - Admin
+        id:
+          type: string
+          description: Unique system identifier for the role.
+          examples:
+          - role-id-123
+        users:
+          type: array
+          description: An array of user IDs associated with the role.
+          items:
+            type: string
+          examples:
+          - - 60c5238222fa63633d935555
+            - 5555238222fa63633d93560c
+        created_by:
+          type: string
+          description: The unique ID associated with the user who created the role.
+          examples:
+          - user-id-123
+        created_at:
+          type: integer
+          description: Unix epoch time when the role was created (in seconds).
+          examples:
+          - 1620000000
+        updated_at:
+          type: integer
+          description: Unix epoch time when the role was last updated (in seconds).
+          examples:
+          - 1620500000
+        permissions:
+          type: array
+          description: 'A list of permissions associated with the role.
+
+            Each permission grants access to a specific resource_type, which is an area in BigPanda. See ​[Roles and Resource Permissions](https://docs.bigpanda.io/en/roles-management)​​ for more information.
+
+            '
+          items:
+            $ref: '#/components/schemas/permission'
       x-apidog-orders:
-      - status
-      - data
+      - name
+      - id
+      - users
+      - created_by
+      - created_at
+      - updated_at
+      - permissions
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    id-v1:
-      type: string
-      title: ID
-      pattern: ^[a-f\d]{24}$
-      description: Object's ID
-      minLength: 24
-      maxLength: 24
-      x-apidog-folder: ''
-      examples:
-      - 60c5238222fa63633d93d52f
     http-status-code-v1:
       type: number
       enum:
@@ -1221,6 +1256,27 @@ components:
       - 511
       description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
       x-apidog-folder: ''
+    permission:
+      type: object
+      properties:
+        resource_type:
+          type: string
+          examples:
+          - environments
+        resource_id:
+          type: string
+          examples:
+          - 624e114fb4d7581100179111
+        actions:
+          type: string
+          examples:
+          - read
+      x-apidog-orders:
+      - resource_type
+      - resource_id
+      - actions
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     role_object:
       required:
       - name
@@ -1266,103 +1322,47 @@ components:
       - permissions
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    permission:
+    success-response-v12:
+      title: success-response-v1
       type: object
-      properties:
-        resource_type:
-          type: string
-          examples:
-          - environments
-        resource_id:
-          type: string
-          examples:
-          - 624e114fb4d7581100179111
-        actions:
-          type: string
-          examples:
-          - read
-      x-apidog-orders:
-      - resource_type
-      - resource_id
-      - actions
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    error-response-v1:
-      title: error-response-v1
-      type: object
-      description: BP default error response
       properties:
         status:
           $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
+        data:
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          x-apidog-ignore-properties: []
       required:
       - status
-      - errors
+      - data
       x-apidog-orders:
       - status
-      - errors
-      x--orders:
-      - status
-      - errors
-      x--ignore-properties: []
+      - data
       x-apidog-folder: ''
-    role:
+      x-apidog-ignore-properties: []
+    generic204response:
       type: object
+      description: 'Call was successful.
+
+        '
       properties:
-        name:
-          type: string
-          description: The name of the role as seen in the UI.
-          examples:
-          - Admin
-        id:
-          type: string
-          description: Unique system identifier for the role.
-          examples:
-          - role-id-123
-        users:
-          type: array
-          description: An array of user IDs associated with the role.
-          items:
-            type: string
-          examples:
-          - - 60c5238222fa63633d935555
-            - 5555238222fa63633d93560c
-        created_by:
-          type: string
-          description: The unique ID associated with the user who created the role.
-          examples:
-          - user-id-123
-        created_at:
+        status:
           type: integer
-          description: Unix epoch time when the role was created (in seconds).
           examples:
-          - 1620000000
-        updated_at:
-          type: integer
-          description: Unix epoch time when the role was last updated (in seconds).
-          examples:
-          - 1620500000
-        permissions:
-          type: array
-          description: 'A list of permissions associated with the role.
-
-            Each permission grants access to a specific resource_type, which is an area in BigPanda. See ​[Roles and Resource Permissions](https://docs.bigpanda.io/en/roles-management)​​ for more information.
-
-            '
-          items:
-            $ref: '#/components/schemas/permission'
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
       x-apidog-orders:
-      - name
-      - id
-      - users
-      - created_by
-      - created_at
-      - updated_at
-      - permissions
+      - status
+      - data
       x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
       x-apidog-ignore-properties: []
   securitySchemes:
     BearerUser11:

@@ -501,43 +501,6 @@ paths:
       x-source-page: Update Correlation Pattern Order
 components:
   schemas:
-    tag:
-      type: object
-      properties:
-        name:
-          type: string
-          examples:
-          - case
-        value:
-          type: string
-          examples:
-          - sensitive1
-      x-apidog-orders:
-      - name
-      - value
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
     pattern_order:
       type: object
       description: Schema for specifying the order of correlation patterns.
@@ -587,6 +550,43 @@ components:
       - time_window
       - source_system
       - tags
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    tag:
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+          - case
+        value:
+          type: string
+          examples:
+          - sensitive1
+      x-apidog-orders:
+      - name
+      - value
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
   securitySchemes:

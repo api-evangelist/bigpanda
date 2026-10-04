@@ -438,6 +438,86 @@ paths:
       x-source-page: Update an RCC Relation
 components:
   schemas:
+    related_change:
+      type: object
+      properties:
+        change_id:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+        incident_id:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+        comment:
+          $ref: '#/components/schemas/comment'
+        match_certainty:
+          type: string
+          examples:
+          - SUSPECT
+      x-apidog-orders:
+      - change_id
+      - incident_id
+      - comment
+      - match_certainty
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    Change-relation-object:
+      required:
+      - change_id
+      - incident_id
+      - match_certainty
+      type: object
+      properties:
+        change_id:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+        incident_id:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+        match_certainty:
+          type: string
+          description: 'What the relationship is between the suspected change and the incident. One of: [MATCH, SUSPECT, NONE]
+
+            '
+          examples:
+          - MATCH
+        comment:
+          $ref: '#/components/schemas/comment'
+      x-apidog-orders:
+      - change_id
+      - incident_id
+      - match_certainty
+      - comment
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     comment:
       type: string
       description: An optional comment or short description.
@@ -525,86 +605,6 @@ components:
       - metadata
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    related_change:
-      type: object
-      properties:
-        change_id:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-        incident_id:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-        comment:
-          $ref: '#/components/schemas/comment'
-        match_certainty:
-          type: string
-          examples:
-          - SUSPECT
-      x-apidog-orders:
-      - change_id
-      - incident_id
-      - comment
-      - match_certainty
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    Change-relation-object:
-      required:
-      - change_id
-      - incident_id
-      - match_certainty
-      type: object
-      properties:
-        change_id:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-        incident_id:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-        match_certainty:
-          type: string
-          description: 'What the relationship is between the suspected change and the incident. One of: [MATCH, SUSPECT, NONE]
-
-            '
-          examples:
-          - MATCH
-        comment:
-          $ref: '#/components/schemas/comment'
-      x-apidog-orders:
-      - change_id
-      - incident_id
-      - match_certainty
-      - comment
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
   securitySchemes:
     BearerUser131:
       type: http

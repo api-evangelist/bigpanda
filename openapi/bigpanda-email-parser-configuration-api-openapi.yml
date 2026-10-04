@@ -646,66 +646,6 @@ paths:
       x-source-page: Retrieve Configuration Version for Email Parser
 components:
   schemas:
-    additional_attributes:
-      type: object
-      properties:
-        isDestinationAccepted:
-          type: boolean
-          examples:
-          - true
-          description: (Optional) Whether the destination tag was accepted.
-        isSourceAccepted:
-          type: boolean
-          examples:
-          - true
-          description: (Optional) Whether the source tag was accepted.
-        isSuggestion:
-          type: boolean
-          examples:
-          - true
-          description: (Optional) Whether the tag was suggested by BigPanda Tag Normalization.
-        name:
-          type: string
-          examples:
-          - check
-          description: (Optional) Set a name for the tag in BigPanda.
-        source:
-          type: array
-          items:
-            type: string
-          examples:
-          - - '@alert.labels.alertname'
-            - '@alert.labels.check'
-          description: Array of payload fields to match.
-        suggestedDestination:
-          type: string
-          examples:
-          - check
-          description: Suggested Destination tag name.
-        suggestedSources:
-          type: array
-          items:
-            type: string
-          examples:
-          - - '@alert.labels.alertname'
-            - '@alert.labels.check'
-          description: Array of payload fields to match for suggested tags.
-        flatten:
-          type: boolean
-          examples:
-          - false
-          description: (Optional) Whether or not to flatten a nested object for improved mapping.
-      x-apidog-orders:
-      - isDestinationAccepted
-      - isSourceAccepted
-      - isSuggestion
-      - name
-      - source
-      - suggestedDestination
-      - suggestedSources
-      - flatten
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
     oim_v2_config:
       type: object
       properties:
@@ -829,57 +769,64 @@ components:
       - sample_payload
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
-    sample_payload:
+    generic400response:
       type: object
-      description: An example event payload from the tool that includes all tags that need to be normalized or referred to in the schema.
-      x-apidog-orders: []
-      properties: {}
-      x-apidog-folder: ''
-      examples:
-      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\": \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\",\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
-      x-apidog-ignore-properties: []
-    status_mapping:
-      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
       properties:
-        default_to:
-          type: string
+        status:
+          type: integer
           examples:
-          - critical
-          description: The value to populate if no matches are found. `​Critical​​` is default setting.
-        source:
+          - 400
+        errors:
           type: array
           items:
             type: string
-          examples:
-          - - '@alert.status'
-            - '@alert.labels.severity'
-          description: Is the value in the body or subject?
-        status_map:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          x-apidog-orders: []
-          examples:
-          - critical:
-            - page
-            - critical
-            warning:
-            - warn
-            - warning
-            acknowledged:
-            - acknowledged
-            ok:
-            - resolved
-          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first match. One of [`critical`, `warning`, `ok`, `acknowledged`]
-          properties: {}
-          x-apidog-ignore-properties: []
+            examples:
+            - Call is missing parameters or malformed.
       x-apidog-orders:
-      - default_to
-      - source
-      - status_map
-      description: null
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    versions:
+      type: array
+      description: List of version changes
+      items:
+        type: object
+        properties:
+          version:
+            type: string
+            description: The unique identifier of the saved configuration version.
+            examples:
+            - '2026-04-29T15:42:11Z'
+          saved_at:
+            type: string
+            format: date-time
+            description: The timestamp when the version was saved.
+        x-apidog-orders:
+        - version
+        - saved_at
+        x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
     http-status-code-v1:
@@ -943,6 +890,110 @@ components:
       - 511
       description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
       x-apidog-folder: ''
+    status_mapping:
+      type: object
+      properties:
+        default_to:
+          type: string
+          examples:
+          - critical
+          description: The value to populate if no matches are found. `​Critical​​` is default setting.
+        source:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.status'
+            - '@alert.labels.severity'
+          description: Is the value in the body or subject?
+        status_map:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          x-apidog-orders: []
+          examples:
+          - critical:
+            - page
+            - critical
+            warning:
+            - warn
+            - warning
+            acknowledged:
+            - acknowledged
+            ok:
+            - resolved
+          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first match. One of [`critical`, `warning`, `ok`, `acknowledged`]
+          properties: {}
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - default_to
+      - source
+      - status_map
+      description: null
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    additional_attributes:
+      type: object
+      properties:
+        isDestinationAccepted:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the destination tag was accepted.
+        isSourceAccepted:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the source tag was accepted.
+        isSuggestion:
+          type: boolean
+          examples:
+          - true
+          description: (Optional) Whether the tag was suggested by BigPanda Tag Normalization.
+        name:
+          type: string
+          examples:
+          - check
+          description: (Optional) Set a name for the tag in BigPanda.
+        source:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.labels.alertname'
+            - '@alert.labels.check'
+          description: Array of payload fields to match.
+        suggestedDestination:
+          type: string
+          examples:
+          - check
+          description: Suggested Destination tag name.
+        suggestedSources:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.labels.alertname'
+            - '@alert.labels.check'
+          description: Array of payload fields to match for suggested tags.
+        flatten:
+          type: boolean
+          examples:
+          - false
+          description: (Optional) Whether or not to flatten a nested object for improved mapping.
+      x-apidog-orders:
+      - isDestinationAccepted
+      - isSourceAccepted
+      - isSuggestion
+      - name
+      - source
+      - suggestedDestination
+      - suggestedSources
+      - flatten
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
     tag_properties:
       type: object
       properties:
@@ -955,66 +1006,6 @@ components:
       - name
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    versions:
-      type: array
-      description: List of version changes
-      items:
-        type: object
-        properties:
-          version:
-            type: string
-            description: The unique identifier of the saved configuration version.
-            examples:
-            - '2026-04-29T15:42:11Z'
-          saved_at:
-            type: string
-            format: date-time
-            description: The timestamp when the version was saved.
-        x-apidog-orders:
-        - version
-        - saved_at
-        x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    error-response-v1:
-      title: error-response-v1
-      type: object
-      description: BP default error response
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
-      required:
-      - status
-      - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
     email_parser_config:
       type: object
       description: Configuration object schema for the email parser integration.
@@ -1144,6 +1135,15 @@ components:
       - sample_payload
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
+    sample_payload:
+      type: object
+      description: An example event payload from the tool that includes all tags that need to be normalized or referred to in the schema.
+      x-apidog-orders: []
+      properties: {}
+      x-apidog-folder: ''
+      examples:
+      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\": \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\",\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
+      x-apidog-ignore-properties: []
   securitySchemes:
     BearerOrg22:
       type: http

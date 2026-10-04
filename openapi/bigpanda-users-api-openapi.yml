@@ -2816,6 +2816,62 @@ components:
       x-apidog-folder: ''
       examples:
       - 60c5238222fa63633d93d52f
+    UserName:
+      title: Name
+      description: Resource name
+      type: string
+      pattern: ^(?!\s*$).+
+      x-apidog-folder: ''
+      examples:
+      - Jim Smith
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    success-response-v1:
+      title: success-response-v1
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        data:
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          x-apidog-ignore-properties: []
+      required:
+      - status
+      - data
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    UserStateFilter-enum:
+      type: string
+      description: User state
+      enum:
+      - valid
+      - initial
+      - welcome
+      x-examples:
+        example-1: valid
+      x-apidog-folder: ''
     http-status-code-v1:
       type: number
       enum:
@@ -2876,62 +2932,6 @@ components:
       - 507
       - 511
       description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
-      x-apidog-folder: ''
-    UserName:
-      title: Name
-      description: Resource name
-      type: string
-      pattern: ^(?!\s*$).+
-      x-apidog-folder: ''
-      examples:
-      - Jim Smith
-    success-response-v1:
-      title: success-response-v1
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        data:
-          type: object
-          x-apidog-orders: []
-          properties: {}
-          x-apidog-ignore-properties: []
-      required:
-      - status
-      - data
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    error-response-v1:
-      title: error-response-v1
-      type: object
-      description: BP default error response
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
-      required:
-      - status
-      - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    UserStateFilter-enum:
-      type: string
-      description: User state
-      enum:
-      - valid
-      - initial
-      - welcome
-      x-examples:
-        example-1: valid
       x-apidog-folder: ''
   securitySchemes:
     BearerUser11:

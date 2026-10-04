@@ -1592,43 +1592,74 @@ components:
           description: Array of incidents.
           items:
             $ref: '#/components/schemas/Incident'
-    snooze:
+    tag_value:
+      type: string
+      description: The value of the tag.
+      x-apidog-folder: ''
+      examples:
+      - P1
+    incident_comments:
+      required:
+      - comment
       type: object
       properties:
         comment:
           type: string
-        end_time:
-          type: integer
-          description: Unix epoch (seconds) when the snooze ends.
-        cancel_on_incident_updates:
-          type: boolean
-      required:
-      - end_time
+          description: A comment or short description.
+          examples:
+          - Marking for regional similarity
       x-apidog-orders:
       - comment
-      - end_time
-      - cancel_on_incident_updates
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    merge_incidents:
-      required:
-      - source_incidents
+    generic400response:
       type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
       properties:
-        source_incidents:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
           type: array
-          description: A list of the IDs of incidents to merge into the destination incident defined in the URL path
           items:
-            type: object
-            properties: {}
-            x-apidog-orders: []
-            x-apidog-ignore-properties: []
-        comment:
-          $ref: '#/components/schemas/comment'
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
       x-apidog-orders:
-      - source_incidents
-      - comment
+      - status
+      - errors
+      x-apidog-ignore-properties: []
       x-apidog-folder: ''
+    tag_array:
+      type: array
+      items:
+        $ref: '#/components/schemas/incident_tag'
+      x-apidog-folder: ''
+    generic202response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 202
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 202
+        data: {}
       x-apidog-ignore-properties: []
     activity:
       type: object
@@ -1680,18 +1711,119 @@ components:
       - params
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    updated_at:
-      type: integer
-      description: The time the resource was last updated(in Unix epoch seconds).
+    tag_value_post:
+      type: object
+      properties:
+        tag_value:
+          $ref: '#/components/schemas/tag_value'
+      x-apidog-orders:
+      - tag_value
       x-apidog-folder: ''
-      examples:
-      - 1613252381
+      x-apidog-ignore-properties: []
+    merge_incidents:
+      required:
+      - source_incidents
+      type: object
+      properties:
+        source_incidents:
+          type: array
+          description: A list of the IDs of incidents to merge into the destination incident defined in the URL path
+          items:
+            type: object
+            properties: {}
+            x-apidog-orders: []
+            x-apidog-ignore-properties: []
+        comment:
+          $ref: '#/components/schemas/comment'
+      x-apidog-orders:
+      - source_incidents
+      - comment
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    incident_comment:
+      required:
+      - comments
+      type: object
+      properties:
+        comments:
+          type: string
+          description: The comment to add to the incident.
+      x-apidog-orders:
+      - comments
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    incident_tag_schema:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        active:
+          type: boolean
+        canManualInput:
+          type: boolean
+        enrichment_config:
+          type: object
+          properties:
+            append_matching_items:
+              type: boolean
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  value:
+                    type: string
+                  condition:
+                    type: string
+                x-apidog-orders:
+                - value
+                - condition
+                x-apidog-ignore-properties: []
+          x-apidog-orders:
+          - append_matching_items
+          - items
+          x-apidog-ignore-properties: []
+      required:
+      - name
+      - type
+      description: A list of all matching tag schemas
+      x-apidog-orders:
+      - name
+      - description
+      - type
+      - active
+      - canManualInput
+      - enrichment_config
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     updated_by:
       type: string
       description: System id of the user or tool that last updated the resource.
       x-apidog-folder: ''
       examples:
       - 63bd56897755560012bf3555
+    created_by:
+      description: System id of the user or tool that created the resource.
+      type: string
+      x-apidog-folder: ''
+      examples:
+      - 63bd56897755560012bf3555
+    updated_at:
+      type: integer
+      description: The time the resource was last updated(in Unix epoch seconds).
+      x-apidog-folder: ''
+      examples:
+      - 1613252381
+    comment:
+      type: string
+      description: An optional comment or short description.
+      x-apidog-folder: ''
+      examples:
+      - Marking for regional similarity
     incident_tag_schema_response:
       type: object
       description: A list of all matching tag schemas
@@ -1796,33 +1928,6 @@ components:
       - enrichment_config
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    tag_value:
-      type: string
-      description: The value of the tag.
-      x-apidog-folder: ''
-      examples:
-      - P1
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
     incident_tag_return:
       type: object
       properties:
@@ -1864,6 +1969,19 @@ components:
       - timestamp
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    incident_activities:
+      description: A list of actions taken on the incident.
+      type: array
+      items:
+        $ref: '#/components/schemas/activity'
+      x-apidog-folder: ''
+    active:
+      type: boolean
+      description: Whether the new configuration should apply to future data.
+      default: true
+      x-apidog-folder: ''
+      examples:
+      - false
     generic204response:
       type: object
       description: 'Call was successful.
@@ -1887,74 +2005,12 @@ components:
       - status: 204
         data: {}
       x-apidog-ignore-properties: []
-    incident_activities:
-      description: A list of actions taken on the incident.
-      type: array
-      items:
-        $ref: '#/components/schemas/activity'
+    created_at:
+      type: integer
+      description: The time the resource was created(in Unix epoch seconds).
       x-apidog-folder: ''
-    incident_tag_schema:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        type:
-          type: string
-        active:
-          type: boolean
-        canManualInput:
-          type: boolean
-        enrichment_config:
-          type: object
-          properties:
-            append_matching_items:
-              type: boolean
-            items:
-              type: array
-              items:
-                type: object
-                properties:
-                  value:
-                    type: string
-                  condition:
-                    type: string
-                x-apidog-orders:
-                - value
-                - condition
-                x-apidog-ignore-properties: []
-          x-apidog-orders:
-          - append_matching_items
-          - items
-          x-apidog-ignore-properties: []
-      required:
-      - name
-      - type
-      description: A list of all matching tag schemas
-      x-apidog-orders:
-      - name
-      - description
-      - type
-      - active
-      - canManualInput
-      - enrichment_config
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    incident_comments:
-      required:
-      - comment
-      type: object
-      properties:
-        comment:
-          type: string
-          description: A comment or short description.
-          examples:
-          - Marking for regional similarity
-      x-apidog-orders:
-      - comment
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
+      examples:
+      - 1613252381
     incident_tag:
       type: object
       properties:
@@ -1975,63 +2031,38 @@ components:
       - tag_id
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    active:
-      type: boolean
-      description: Whether the new configuration should apply to future data.
-      default: true
-      x-apidog-folder: ''
-      examples:
-      - false
-    created_by:
-      description: System id of the user or tool that created the resource.
-      type: string
-      x-apidog-folder: ''
-      examples:
-      - 63bd56897755560012bf3555
-    generic202response:
+    snooze:
       type: object
-      description: 'Call was successful.
-
-        '
       properties:
-        status:
+        comment:
+          type: string
+        end_time:
           type: integer
-          examples:
-          - 202
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
+          description: Unix epoch (seconds) when the snooze ends.
+        cancel_on_incident_updates:
+          type: boolean
+      required:
+      - end_time
       x-apidog-orders:
-      - status
-      - data
+      - comment
+      - end_time
+      - cancel_on_incident_updates
       x-apidog-folder: ''
-      examples:
-      - status: 202
-        data: {}
       x-apidog-ignore-properties: []
-    created_at:
-      type: integer
-      description: The time the resource was created(in Unix epoch seconds).
-      x-apidog-folder: ''
-      examples:
-      - 1613252381
-    tag_value_post:
+    assign_incident:
+      required:
+      - assignee
       type: object
       properties:
-        tag_value:
-          $ref: '#/components/schemas/tag_value'
+        assignee:
+          type: string
+          description: The ID of the user to assign to the incident
+          examples:
+          - 651d16e46db9ffbf9d5883d9
       x-apidog-orders:
-      - tag_value
+      - assignee
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    comment:
-      type: string
-      description: An optional comment or short description.
-      x-apidog-folder: ''
-      examples:
-      - Marking for regional similarity
     split_incident:
       required:
       - alerts
@@ -2052,37 +2083,6 @@ components:
       - alerts
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    assign_incident:
-      required:
-      - assignee
-      type: object
-      properties:
-        assignee:
-          type: string
-          description: The ID of the user to assign to the incident
-          examples:
-          - 651d16e46db9ffbf9d5883d9
-      x-apidog-orders:
-      - assignee
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    incident_comment:
-      required:
-      - comments
-      type: object
-      properties:
-        comments:
-          type: string
-          description: The comment to add to the incident.
-      x-apidog-orders:
-      - comments
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    tag_array:
-      type: array
-      items:
-        $ref: '#/components/schemas/incident_tag'
-      x-apidog-folder: ''
   securitySchemes:
     bearerAuth:
       type: http

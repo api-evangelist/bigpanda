@@ -576,26 +576,6 @@ paths:
       x-source-page: Update Environment Group
 components:
   schemas:
-    EnvironmentRequest:
-      title: Environment Request
-      description: Payload for creating or updating an environment.
-      type: object
-      required:
-      - name
-      - condition
-      properties:
-        name:
-          type: string
-          description: Environment name.
-          example: Production
-        description:
-          type: string
-          description: Environment description.
-          example: Production environment
-        condition:
-          type: string
-          description: Filter condition for grouping incidents.
-          example: source = "nagios"
     ErrorResponse:
       title: Error Response
       description: Standard error response.
@@ -640,33 +620,42 @@ components:
           type: string
           description: Filter condition for grouping incidents.
           example: source = "nagios"
-    generic200response:
+    EnvironmentRequest:
+      title: Environment Request
+      description: Payload for creating or updating an environment.
       type: object
-      description: 'Call was successful.
-
-        '
+      required:
+      - name
+      - condition
       properties:
-        status:
-          type: integer
-          examples:
-          - 200
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x--orders: []
-          x--ignore-properties: []
+        name:
+          type: string
+          description: Environment name.
+          example: Production
+        description:
+          type: string
+          description: Environment description.
+          example: Production environment
+        condition:
+          type: string
+          description: Filter condition for grouping incidents.
+          example: source = "nagios"
+    environment_group_object:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the environment group.
+        environment_ids:
+          type: array
+          description: System-generated unique identifier for an environment
+          items:
+            type: string
       x-apidog-orders:
-      - status
-      - data
+      - name
+      - environment_ids
       x-apidog-folder: ''
-      examples:
-      - status: 200
-        data: {}
-      x--orders:
-      - status
-      - data
-      x--ignore-properties: []
+      x-apidog-ignore-properties: []
     environment_object:
       required:
       - name
@@ -721,7 +710,28 @@ components:
       - filter
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic204response:
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    generic200response:
       type: object
       description: 'Call was successful.
 
@@ -730,19 +740,44 @@ components:
         status:
           type: integer
           examples:
-          - 204
+          - 200
         data:
           type: object
           properties: {}
           x-apidog-orders: []
-          x-apidog-ignore-properties: []
+          x--orders: []
+          x--ignore-properties: []
       x-apidog-orders:
       - status
       - data
       x-apidog-folder: ''
       examples:
-      - status: 204
+      - status: 200
         data: {}
+      x--orders:
+      - status
+      - data
+      x--ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
       x-apidog-ignore-properties: []
     environment_group_response:
       type: object
@@ -765,63 +800,28 @@ components:
       - environmentIds
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic404response:
+    generic204response:
       type: object
-      description: 'Requested endpoint or resource is not found.
+      description: 'Call was successful.
 
         '
       properties:
         status:
           type: integer
           examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
       x-apidog-orders:
       - status
-      - errors
+      - data
       x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic400response:
-      type: object
-      description: 'Call is missing parameters or malformed.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    environment_group_object:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the environment group.
-        environment_ids:
-          type: array
-          description: System-generated unique identifier for an environment
-          items:
-            type: string
-      x-apidog-orders:
-      - name
-      - environment_ids
-      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
       x-apidog-ignore-properties: []
   securitySchemes:
     bearerAuth:

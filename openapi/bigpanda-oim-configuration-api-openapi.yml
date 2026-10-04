@@ -518,50 +518,6 @@ paths:
       x-source-page: Update Config with Preprocessor Function
 components:
   schemas:
-    status_mapping2:
-      type: object
-      properties:
-        default_to:
-          type: string
-          examples:
-          - critical
-          description: The value to populate if no matches are found. `​Critical​​` is default setting.
-        source:
-          type: array
-          items:
-            type: string
-          examples:
-          - - '@alert.status'
-            - '@alert.labels.severity'
-          description: Is the value in the body or subject?
-        status_map:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          x-apidog-orders: []
-          examples:
-          - critical:
-            - page
-            - critical
-            warning:
-            - warn
-            - warning
-            acknowledged:
-            - acknowledged
-            ok:
-            - resolved
-          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first match. One of [`critical`, `warning`, `ok`, `acknowledged`]
-          properties: {}
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - default_to
-      - source
-      - status_map
-      description: null
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
     oim_v2_config:
       type: object
       properties:
@@ -707,7 +663,7 @@ components:
       - sample_payload
       x--ignore-properties: []
       x-apidog-folder: ''
-    sample_payload:
+    sample_payload2:
       type: object
       description: An example event payload from the tool that includes all tags that need to be normalized or referred to in the schema.
       x-apidog-orders: []
@@ -715,57 +671,7 @@ components:
       x-apidog-folder: ''
       examples:
       - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\": \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\",\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
-      x--orders: []
-      x--ignore-properties: []
-    status_mapping:
-      type: object
-      properties:
-        default_to:
-          type: string
-          examples:
-          - critical
-          description: The value to populate if no matches are found. `​Critical​​` is default setting.
-        source:
-          type: array
-          items:
-            type: string
-          examples:
-          - - '@alert.status'
-            - '@alert.labels.severity'
-          description: Is the value in the body or subject?
-        status_map:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-          x-apidog-orders: []
-          examples:
-          - critical:
-            - page
-            - critical
-            warning:
-            - warn
-            - warning
-            acknowledged:
-            - acknowledged
-            ok:
-            - resolved
-          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first match. One of [`critical`, `warning`, `ok`, `acknowledged`]
-          x--orders: []
-          properties: {}
-          x--ignore-properties: []
-      x-apidog-orders:
-      - default_to
-      - source
-      - status_map
-      description: null
-      x--orders:
-      - default_to
-      - source
-      - status_map
-      x--ignore-properties: []
-      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     oim_v2_config3:
       type: object
       properties:
@@ -889,29 +795,6 @@ components:
       - sample_payload
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
-    sample_payload2:
-      type: object
-      description: An example event payload from the tool that includes all tags that need to be normalized or referred to in the schema.
-      x-apidog-orders: []
-      properties: {}
-      x-apidog-folder: ''
-      examples:
-      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\": \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\",\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
-      x-apidog-ignore-properties: []
-    tag_properties:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Optional tag name to use in BigPanda.
-          examples:
-          - host
-      x-apidog-orders:
-      - name
-      x-apidog-folder: ''
-      x--orders:
-      - name
-      x--ignore-properties: []
     tag_properties2:
       type: object
       properties:
@@ -924,6 +807,99 @@ components:
       - name
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    status_mapping:
+      type: object
+      properties:
+        default_to:
+          type: string
+          examples:
+          - critical
+          description: The value to populate if no matches are found. `​Critical​​` is default setting.
+        source:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.status'
+            - '@alert.labels.severity'
+          description: Is the value in the body or subject?
+        status_map:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          x-apidog-orders: []
+          examples:
+          - critical:
+            - page
+            - critical
+            warning:
+            - warn
+            - warning
+            acknowledged:
+            - acknowledged
+            ok:
+            - resolved
+          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first match. One of [`critical`, `warning`, `ok`, `acknowledged`]
+          x--orders: []
+          properties: {}
+          x--ignore-properties: []
+      x-apidog-orders:
+      - default_to
+      - source
+      - status_map
+      description: null
+      x--orders:
+      - default_to
+      - source
+      - status_map
+      x--ignore-properties: []
+      x-apidog-folder: ''
+    status_mapping2:
+      type: object
+      properties:
+        default_to:
+          type: string
+          examples:
+          - critical
+          description: The value to populate if no matches are found. `​Critical​​` is default setting.
+        source:
+          type: array
+          items:
+            type: string
+          examples:
+          - - '@alert.status'
+            - '@alert.labels.severity'
+          description: Is the value in the body or subject?
+        status_map:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          x-apidog-orders: []
+          examples:
+          - critical:
+            - page
+            - critical
+            warning:
+            - warn
+            - warning
+            acknowledged:
+            - acknowledged
+            ok:
+            - resolved
+          description: Defines values that map to assigned statuses. Values will be matched in order, stopping at the first match. One of [`critical`, `warning`, `ok`, `acknowledged`]
+          properties: {}
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - default_to
+      - source
+      - status_map
+      description: null
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
     additional_attributes2:
       type: object
       properties:
@@ -984,6 +960,20 @@ components:
       - flatten
       x-apidog-ignore-properties: []
       x-apidog-folder: ''
+    tag_properties:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Optional tag name to use in BigPanda.
+          examples:
+          - host
+      x-apidog-orders:
+      - name
+      x-apidog-folder: ''
+      x--orders:
+      - name
+      x--ignore-properties: []
     additional_attributes:
       type: object
       properties:
@@ -1053,6 +1043,16 @@ components:
       - flatten
       x--ignore-properties: []
       x-apidog-folder: ''
+    sample_payload:
+      type: object
+      description: An example event payload from the tool that includes all tags that need to be normalized or referred to in the schema.
+      x-apidog-orders: []
+      properties: {}
+      x-apidog-folder: ''
+      examples:
+      - "{  \"sample_payload\": {\n    \"alerts\": [\n      {\n        \"generatorURL\": \"https://some-url.io\",\n        \"fingerprint\": \"123456789\",\n        \"annotations\": {\n          \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n          \"runbook_url\": \"https://runbook.io/cpu-check\"\n        },\n        \"startsAt\": \"2022-07-05T19:59:25.661Z\",\n        \"endsAt\": \"0001-01-01T00:00:00Z\",\n        \"status\": \"firing\",\n        \"labels\": {\n          \"severity\": \"page\",\n          \"instance\": \"bigpanda-server\",\n          \"alertname\": \"BigPanda Test\",\n          \"team\": \"metrics\",\n          \"env\": \"test\",\n          \"job\": \"CPU Check\",\n          \"locale\": \"ca\",\n          \"timestamp\": \"1.657051103137505e+09\"\n        }\n      }\n    ],\n    \"commonLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"externalURL\": \"https://external-url.io\",\n    \"groupLabels\": {\n      \"instance\": \"bigpanda-server\",\n      \"alertname\": \"BigPanda Test\",\n      \"team\": \"metrics\",\n      \"env\": \"test\",\n      \"job\": \"CPU Check\",\n      \"locale\": \"ca\",\n      \"timestamp\": \"1.657051103137505e+09\"\n    },\n    \"receiver\": \"bigpanda\",\n    \"version\": \"4\",\n    \"commonAnnotations\": {\n      \"description\": \"This alert is used to check the CPU utilization of this non-existent server\",\n      \"runbook_url\": \"https://runbook.io/cpu-check\"\n    },\n    \"status\": \"firing\"\n  }\n"
+      x--orders: []
+      x--ignore-properties: []
   securitySchemes:
     BearerOrg22:
       type: http
