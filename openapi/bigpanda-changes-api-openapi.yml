@@ -68,32 +68,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    ErrorResponse:
-      title: Error Response
-      description: Standard error response.
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message.
-          example: resource not found
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 404
-    ChangeResponse:
-      title: Change Response
-      description: Response after ingesting a change event.
-      type: object
-      properties:
-        _id:
-          type: string
-          description: Internal change ID.
-          example: chg-abc123
-        status:
-          type: string
-          description: Ingestion status.
-          example: ok
     ChangeRequest:
       title: Change Request
       description: Payload for ingesting a change event.
@@ -129,6 +103,32 @@ components:
           type: integer
           description: Unix timestamp of the change.
           example: 1713000000
+    ChangeResponse:
+      title: Change Response
+      description: Response after ingesting a change event.
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Internal change ID.
+          example: chg-abc123
+        status:
+          type: string
+          description: Ingestion status.
+          example: ok
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+          example: resource not found
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
   securitySchemes:
     bearerAuth:
       type: http

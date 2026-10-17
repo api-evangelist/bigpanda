@@ -261,6 +261,108 @@ paths:
       x-source-page: Send a Query
 components:
   schemas:
+    Biggy-object:
+      required:
+      - query
+      type: object
+      properties:
+        query:
+          type: string
+          description: The query sent to Biggy.
+          examples:
+          - Who supports DEST service?
+        async:
+          type: boolean
+          description: Whether or not you would like to wait for the query to process. Select `true` to let the query run asynchronously. Select `false` to wait for the query to load.
+          examples:
+          - false
+        streaming:
+          type: boolean
+          description: Determines if the response is streamed, or if Biggy waits until the response is fully generated to send.
+          examples:
+          - true
+        responseFormat:
+          type: string
+          description: The format of Biggy's response. One of [`markdown` or `plain-text`]
+          examples:
+          - markdown
+        messages:
+          type: array
+          description: The latest user messages to Biggy, and responses from Biggy.
+          items:
+            type: object
+            properties: {}
+            x-apidog-orders: []
+            x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - query
+      - async
+      - streaming
+      - responseFormat
+      - messages
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    Biggy-response-object:
+      required:
+      - requestId
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: The request ID of Biggy's response.
+          examples:
+          - 5a463805f883718f8
+      x-apidog-orders:
+      - requestId
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    biggy202response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 202
+        data:
+          type: object
+          properties:
+            requestId:
+              type: string
+              description: The request ID of Biggy's response.
+              examples:
+              - 5a463805f883718f8
+          x-apidog-orders:
+          - requestId
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic404response:
+      type: object
+      description: 'Requested endpoint or resource is not found.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 404
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Requested endpoint or resource is not found.
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     getresponse202response:
       type: object
       description: "Call was successful. \n"
@@ -304,108 +406,6 @@ components:
       examples:
       - status: 200
         data: {}
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    Biggy-object:
-      required:
-      - query
-      type: object
-      properties:
-        query:
-          type: string
-          description: The query sent to Biggy.
-          examples:
-          - Who supports DEST service?
-        async:
-          type: boolean
-          description: Whether or not you would like to wait for the query to process. Select `true` to let the query run asynchronously. Select `false` to wait for the query to load.
-          examples:
-          - false
-        streaming:
-          type: boolean
-          description: Determines if the response is streamed, or if Biggy waits until the response is fully generated to send.
-          examples:
-          - true
-        responseFormat:
-          type: string
-          description: The format of Biggy's response. One of [`markdown` or `plain-text`]
-          examples:
-          - markdown
-        messages:
-          type: array
-          description: The latest user messages to Biggy, and responses from Biggy.
-          items:
-            type: object
-            properties: {}
-            x-apidog-orders: []
-            x-apidog-ignore-properties: []
-      x-apidog-orders:
-      - query
-      - async
-      - streaming
-      - responseFormat
-      - messages
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic404response:
-      type: object
-      description: 'Requested endpoint or resource is not found.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 404
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Requested endpoint or resource is not found.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    Biggy-response-object:
-      required:
-      - requestId
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: The request ID of Biggy's response.
-          examples:
-          - 5a463805f883718f8
-      x-apidog-orders:
-      - requestId
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    biggy202response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 202
-        data:
-          type: object
-          properties:
-            requestId:
-              type: string
-              description: The request ID of Biggy's response.
-              examples:
-              - 5a463805f883718f8
-          x-apidog-orders:
-          - requestId
-          x-apidog-ignore-properties: []
       x-apidog-orders:
       - status
       - data

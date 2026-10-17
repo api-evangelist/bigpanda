@@ -375,51 +375,6 @@ paths:
       x-source-page: Retrieve All Troubleshooting Logs
 components:
   schemas:
-    serviceNow-object:
-      required:
-      - tableName
-      type: object
-      properties:
-        tableName:
-          type: string
-          description: Name of the ServiceNow table where the record is located.
-          examples:
-          - Incident
-        recordNumber:
-          type: string
-          description: ServiceNow record number.
-          examples:
-          - INC1234567
-        sysId:
-          type: string
-          description: ServiceNow unique record identifier.
-          examples:
-          - 9d385017c611228701d22104cc95g555
-      x-apidog-orders:
-      - tableName
-      - recordNumber
-      - sysId
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    error-response-v1:
-      title: error-response-v1
-      type: object
-      description: BP default error response
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
-      required:
-      - status
-      - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
     http-status-code-v1:
       type: number
       enum:
@@ -481,6 +436,117 @@ components:
       - 511
       description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
       x-apidog-folder: ''
+    IntegrationAlerts:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  alertData:
+                    type: string
+                  processingTime:
+                    type: string
+                required:
+                - alertData
+                - processingTime
+                x-apidog-orders:
+                - alertData
+                - processingTime
+                x-apidog-ignore-properties: []
+            total:
+              type: number
+              minimum: 0
+          required:
+          - items
+          - total
+          x-apidog-orders:
+          - items
+          - total
+          x-apidog-ignore-properties: []
+      required:
+      - status
+      - data
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic403response:
+      type: object
+      description: 'Forbidden
+
+        '
+      properties:
+        statusCode:
+          type: integer
+          examples:
+          - 403
+        error:
+          type: string
+          examples:
+          - Forbidden
+        message:
+          type: string
+          examples:
+          - Forbidden - insufficient permissions
+      x-apidog-orders:
+      - statusCode
+      - error
+      - message
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
+    serviceNow-object:
+      required:
+      - tableName
+      type: object
+      properties:
+        tableName:
+          type: string
+          description: Name of the ServiceNow table where the record is located.
+          examples:
+          - Incident
+        recordNumber:
+          type: string
+          description: ServiceNow record number.
+          examples:
+          - INC1234567
+        sysId:
+          type: string
+          description: ServiceNow unique record identifier.
+          examples:
+          - 9d385017c611228701d22104cc95g555
+      x-apidog-orders:
+      - tableName
+      - recordNumber
+      - sysId
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     diagnostic_log:
       type: object
       properties:
@@ -553,72 +619,6 @@ components:
       - resource_id
       - payload
       - timestamp
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic403response:
-      type: object
-      description: 'Forbidden
-
-        '
-      properties:
-        statusCode:
-          type: integer
-          examples:
-          - 403
-        error:
-          type: string
-          examples:
-          - Forbidden
-        message:
-          type: string
-          examples:
-          - Forbidden - insufficient permissions
-      x-apidog-orders:
-      - statusCode
-      - error
-      - message
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    IntegrationAlerts:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                type: object
-                properties:
-                  alertData:
-                    type: string
-                  processingTime:
-                    type: string
-                required:
-                - alertData
-                - processingTime
-                x-apidog-orders:
-                - alertData
-                - processingTime
-                x-apidog-ignore-properties: []
-            total:
-              type: number
-              minimum: 0
-          required:
-          - items
-          - total
-          x-apidog-orders:
-          - items
-          - total
-          x-apidog-ignore-properties: []
-      required:
-      - status
-      - data
-      x-apidog-orders:
-      - status
-      - data
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     multi-context200response:

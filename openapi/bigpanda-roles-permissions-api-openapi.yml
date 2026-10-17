@@ -1066,80 +1066,6 @@ paths:
       x-source-page: Retrieve all permissions
 components:
   schemas:
-    id-v1:
-      type: string
-      title: ID
-      pattern: ^[a-f\d]{24}$
-      description: Object's ID
-      minLength: 24
-      maxLength: 24
-      x-apidog-folder: ''
-      examples:
-      - 60c5238222fa63633d93d52f
-    error-response-v12:
-      title: error-response-v1
-      type: object
-      description: BP default error response
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
-      required:
-      - status
-      - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    error-response-v1:
-      title: error-response-v1
-      type: object
-      description: BP default error response
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        errors:
-          type: array
-          items:
-            type: string
-      required:
-      - status
-      - errors
-      x-apidog-orders:
-      - status
-      - errors
-      x--orders:
-      - status
-      - errors
-      x--ignore-properties: []
-      x-apidog-folder: ''
-    success-response-v1:
-      title: success-response-v1
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/http-status-code-v1'
-        data:
-          type: object
-          x-apidog-orders: []
-          properties: {}
-          x--orders: []
-          x--ignore-properties: []
-      required:
-      - status
-      - data
-      x-apidog-orders:
-      - status
-      - data
-      x-apidog-folder: ''
-      x--orders:
-      - status
-      - data
-      x--ignore-properties: []
     role:
       type: object
       properties:
@@ -1256,6 +1182,77 @@ components:
       - 511
       description: Standard HTTP Status Code as explained in https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
       x-apidog-folder: ''
+    generic204response:
+      type: object
+      description: 'Call was successful.
+
+        '
+      properties:
+        status:
+          type: integer
+          examples:
+          - 204
+        data:
+          type: object
+          properties: {}
+          x-apidog-orders: []
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
+      x-apidog-ignore-properties: []
+    success-response-v12:
+      title: success-response-v1
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        data:
+          type: object
+          x-apidog-orders: []
+          properties: {}
+          x-apidog-ignore-properties: []
+      required:
+      - status
+      - data
+      x-apidog-orders:
+      - status
+      - data
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    id-v1:
+      type: string
+      title: ID
+      pattern: ^[a-f\d]{24}$
+      description: Object's ID
+      minLength: 24
+      maxLength: 24
+      x-apidog-folder: ''
+      examples:
+      - 60c5238222fa63633d93d52f
+    error-response-v12:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x-apidog-ignore-properties: []
+      x-apidog-folder: ''
     permission:
       type: object
       properties:
@@ -1277,6 +1274,28 @@ components:
       - actions
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
+    error-response-v1:
+      title: error-response-v1
+      type: object
+      description: BP default error response
+      properties:
+        status:
+          $ref: '#/components/schemas/http-status-code-v1'
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+      - status
+      - errors
+      x-apidog-orders:
+      - status
+      - errors
+      x--orders:
+      - status
+      - errors
+      x--ignore-properties: []
+      x-apidog-folder: ''
     role_object:
       required:
       - name
@@ -1322,7 +1341,7 @@ components:
       - permissions
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    success-response-v12:
+    success-response-v1:
       title: success-response-v1
       type: object
       properties:
@@ -1332,7 +1351,8 @@ components:
           type: object
           x-apidog-orders: []
           properties: {}
-          x-apidog-ignore-properties: []
+          x--orders: []
+          x--ignore-properties: []
       required:
       - status
       - data
@@ -1340,30 +1360,10 @@ components:
       - status
       - data
       x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    generic204response:
-      type: object
-      description: 'Call was successful.
-
-        '
-      properties:
-        status:
-          type: integer
-          examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
-      x-apidog-orders:
+      x--orders:
       - status
       - data
-      x-apidog-folder: ''
-      examples:
-      - status: 204
-        data: {}
-      x-apidog-ignore-properties: []
+      x--ignore-properties: []
   securitySchemes:
     BearerUser11:
       type: http

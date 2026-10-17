@@ -206,19 +206,6 @@ paths:
       x-source-page: Retrieve destination tags
 components:
   schemas:
-    ErrorResponse:
-      title: Error Response
-      description: Standard error response.
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message.
-          example: resource not found
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 404
     AlertResponse:
       title: Alert Response
       description: Response after ingesting an alert.
@@ -270,6 +257,46 @@ components:
           type: integer
           description: Unix timestamp of the alert.
           example: 1713000000
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message.
+          example: resource not found
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 404
+    comments:
+      type: string
+      description: An optional comment or short description.
+      x-apidog-folder: ''
+      examples:
+      - Marking for regional similarity
+    resolve_alerts:
+      required:
+      - ids
+      type: object
+      properties:
+        comments:
+          description: An optional comment to add to the resolve action. **May not be longer than 1000 characters.**
+          $ref: '#/components/schemas/comments'
+        ids:
+          type: array
+          description: A list of the unique identifiers for each alert to resolve
+          items:
+            type: string
+          examples:
+          - - 5d09d221aebaec1c43ccd448
+            - 5cff623a21169351a82cb5e2
+      x-apidog-orders:
+      - comments
+      - ids
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     generic202response:
       type: object
       description: 'Call was successful.
@@ -299,33 +326,6 @@ components:
       items:
         $ref: '#/components/schemas/destination_tag'
       x-apidog-folder: ''
-    resolve_alerts:
-      required:
-      - ids
-      type: object
-      properties:
-        comments:
-          description: An optional comment to add to the resolve action. **May not be longer than 1000 characters.**
-          $ref: '#/components/schemas/comments'
-        ids:
-          type: array
-          description: A list of the unique identifiers for each alert to resolve
-          items:
-            type: string
-          examples:
-          - - 5d09d221aebaec1c43ccd448
-            - 5cff623a21169351a82cb5e2
-      x-apidog-orders:
-      - comments
-      - ids
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    comments:
-      type: string
-      description: An optional comment or short description.
-      x-apidog-folder: ''
-      examples:
-      - Marking for regional similarity
     destination_tag:
       type: object
       description: Schema representing a BigPanda alert tag as ingested through alert processing.

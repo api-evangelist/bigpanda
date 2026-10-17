@@ -427,6 +427,25 @@ paths:
       x-source-page: Retrieve available dynamic variables
 components:
   schemas:
+    dynamic_variable:
+      description: Details on the available dynamic variable.
+      type: object
+      properties:
+        title:
+          description: The name of the tag or metadata field.
+          type: string
+          examples:
+          - custom_tag
+        value:
+          description: The full variable to include in workflows.
+          type: string
+          examples:
+          - category.custom_tag
+      x-apidog-orders:
+      - title
+      - value
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
     webhookv2_event:
       type: object
       description: Notification settings for each trigger.
@@ -479,53 +498,28 @@ components:
       - method
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    generic400response:
+    generic204response:
       type: object
-      description: 'Call is missing parameters or malformed.
+      description: 'Call was successful.
 
         '
       properties:
         status:
           type: integer
           examples:
-          - 400
-        errors:
-          type: array
-          items:
-            type: string
-            examples:
-            - Call is missing parameters or malformed.
-      x-apidog-orders:
-      - status
-      - errors
-      x-apidog-ignore-properties: []
-      x-apidog-folder: ''
-    WorkflowConfig:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/webhookv2_event'
-        config:
+          - 204
+        data:
           type: object
-          properties:
-            base_url:
-              type: string
-              description: A base url to receive webhook messages. This route will be used for any triggers that do not have an additional path route defined. Individual triggers can use static values or dynamic variables to extend this URL.
-            expects_callbacks:
-              type: boolean
-              description: Whether to enable locking on first share, preventing updates from being sent until a callback is received or 15 minutes has passed. See the [Callback Service](https://docs.bigpanda.io/en/bigpanda-callback-service) for details on callback functionality.
-              examples:
-              - true
-          x-apidog-orders:
-          - base_url
-          - expects_callbacks
+          properties: {}
+          x-apidog-orders: []
           x-apidog-ignore-properties: []
       x-apidog-orders:
-      - events
-      - config
+      - status
+      - data
       x-apidog-folder: ''
+      examples:
+      - status: 204
+        data: {}
       x-apidog-ignore-properties: []
     generic404response:
       type: object
@@ -546,6 +540,27 @@ components:
       x-apidog-orders:
       - status
       - errors
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    workflow:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the integration
+          examples:
+          - demo
+        parent_system_id:
+          type: string
+          description: The name of the type of integration
+          examples:
+          - webhook_v2
+        workflow_config:
+          $ref: '#/components/schemas/WorkflowConfig'
+      x-apidog-orders:
+      - name
+      - parent_system_id
+      - workflow_config
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
     dynamicvariables200response:
@@ -609,75 +624,60 @@ components:
       - additional_fields
       x-apidog-folder: ''
       x-apidog-ignore-properties: []
-    dynamic_variable:
-      description: Details on the available dynamic variable.
-      type: object
-      properties:
-        title:
-          description: The name of the tag or metadata field.
-          type: string
-          examples:
-          - custom_tag
-        value:
-          description: The full variable to include in workflows.
-          type: string
-          examples:
-          - category.custom_tag
-      x-apidog-orders:
-      - title
-      - value
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
-    workflow:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the integration
-          examples:
-          - demo
-        parent_system_id:
-          type: string
-          description: The name of the type of integration
-          examples:
-          - webhook_v2
-        workflow_config:
-          $ref: '#/components/schemas/WorkflowConfig'
-      x-apidog-orders:
-      - name
-      - parent_system_id
-      - workflow_config
-      x-apidog-folder: ''
-      x-apidog-ignore-properties: []
     webhookv2-200response:
       type: array
       description: A list of webhook v2 configurations.
       items:
         $ref: '#/components/schemas/workflow'
       x-apidog-folder: ''
-    generic204response:
+    WorkflowConfig:
       type: object
-      description: 'Call was successful.
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/webhookv2_event'
+        config:
+          type: object
+          properties:
+            base_url:
+              type: string
+              description: A base url to receive webhook messages. This route will be used for any triggers that do not have an additional path route defined. Individual triggers can use static values or dynamic variables to extend this URL.
+            expects_callbacks:
+              type: boolean
+              description: Whether to enable locking on first share, preventing updates from being sent until a callback is received or 15 minutes has passed. See the [Callback Service](https://docs.bigpanda.io/en/bigpanda-callback-service) for details on callback functionality.
+              examples:
+              - true
+          x-apidog-orders:
+          - base_url
+          - expects_callbacks
+          x-apidog-ignore-properties: []
+      x-apidog-orders:
+      - events
+      - config
+      x-apidog-folder: ''
+      x-apidog-ignore-properties: []
+    generic400response:
+      type: object
+      description: 'Call is missing parameters or malformed.
 
         '
       properties:
         status:
           type: integer
           examples:
-          - 204
-        data:
-          type: object
-          properties: {}
-          x-apidog-orders: []
-          x-apidog-ignore-properties: []
+          - 400
+        errors:
+          type: array
+          items:
+            type: string
+            examples:
+            - Call is missing parameters or malformed.
       x-apidog-orders:
       - status
-      - data
-      x-apidog-folder: ''
-      examples:
-      - status: 204
-        data: {}
+      - errors
       x-apidog-ignore-properties: []
+      x-apidog-folder: ''
   securitySchemes:
     BearerUser13:
       type: http
