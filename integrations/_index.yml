@@ -115,3 +115,58 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: bigpanda-battery-ventures
+  label: Battery Ventures
+  partner: battery-ventures
+  partner_name: Battery Ventures
+  category: vc portfolio participation
+  type: register
+  channel: standard-directory
+  evidence: https://www.battery.com/company/bigpanda/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: Battery Ventures companies (battery.com/company/, the page's own admin-ajax list + company pages)
+    standard: null
+    spec_file: null
+    role: vc-portfolio-company
+    registered_name: BigPanda
+    register_id: https://www.battery.com/company/bigpanda/
+    register_country: Mountain View, California
+    register_website: http://www.bigpanda.io
+    matched_domain: bigpanda.io
+    matched_by: domain
+    signal_note: 'participation only: the venture firm''s own published portfolio lists the company (investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-vc-portfolios.py
+    detected: '2026-10-21'
+    status: Active
+  status: not-a-workflow
+  arazzo: null
+- slug: bigpanda-sequoia-capital
+  label: Sequoia Capital
+  partner: sequoia-capital
+  partner_name: Sequoia Capital
+  category: vc portfolio participation
+  type: register
+  channel: standard-directory
+  evidence: https://sequoiacap.com/companies/bigpanda
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: Sequoia Capital companies (sequoiacap.com/companies/<slug>, from the site's sitemap.xml)
+    standard: null
+    spec_file: null
+    role: vc-portfolio-company
+    registered_name: BigPanda
+    register_id: https://sequoiacap.com/companies/bigpanda
+    register_country: null
+    register_website: https://bigpanda.io/
+    matched_domain: bigpanda.io
+    matched_by: domain
+    signal_note: 'participation only: the venture firm''s own published portfolio lists the company (investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-vc-portfolios.py
+    detected: '2026-10-21'
+  status: not-a-workflow
+  arazzo: null
