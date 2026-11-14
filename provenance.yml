@@ -5,12 +5,21 @@ artifacts:
   agentic-access/bigpanda-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  ai-preferences/bigpanda-ai-preferences.yml:
+    method: harvested
+    evidence: declared in the artifact
   asyncapi/bigpanda-webhooks.yml:
     method: searched
     evidence: declared in the artifact
   authentication/bigpanda-authentication.yml:
     method: searched
     evidence: declared in the artifact
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
   changelog/bigpanda-changelog.yml:
     method: searched
     evidence: declared in the artifact
@@ -62,8 +71,14 @@ artifacts:
   conventions/bigpanda-conventions.yml:
     method: searched
     evidence: declared in the artifact
+  data-license/bigpanda-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/bigpanda-data-model.yml:
     method: derived
+    evidence: declared in the artifact
+  eligibility/bigpanda-eligibility.yml:
+    method: harvested
     evidence: declared in the artifact
   errors/bigpanda-problem-types.yml:
     method: searched
@@ -117,6 +132,12 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   heartbeat/2026-11-02.yml:
+    method: unknown
+    evidence: no authorship recorded
+  heartbeat/2026-11-06.yml:
+    method: unknown
+    evidence: no authorship recorded
+  heartbeat/2026-11-13.yml:
     method: unknown
     evidence: no authorship recorded
   integrations/_index.yml:
@@ -215,7 +236,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -279,6 +300,9 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-11-02T082323.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/bigpanda-lifecycle.yml:
@@ -383,6 +407,9 @@ artifacts:
   openapi/bigpanda-users-api-openapi.yml:
     method: searched
     evidence: https://api-docs.bigpanda.io/activate-user-37770168e0.md
+  overlays/bigpanda-agents-mcp-a2a-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/bigpanda-agents-mcp-a2a-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
@@ -491,6 +518,9 @@ artifacts:
   overlays/bigpanda-maintenance-plans-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/bigpanda-major-incident-management-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/bigpanda-major-incident-management-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
@@ -515,24 +545,36 @@ artifacts:
   overlays/bigpanda-oim-configuration-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/bigpanda-reporting-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/bigpanda-reporting-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/bigpanda-reporting-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/bigpanda-roles-permissions-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/bigpanda-roles-permissions-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/bigpanda-roles-permissions-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/bigpanda-service-accounts-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/bigpanda-service-accounts-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/bigpanda-service-accounts-overlay.yaml:
     method: derived
     evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/bigpanda-sso-jit-provisioning-api-certification-overlay.yaml:
+    method: derived
+    evidence: declared in the artifact
   overlays/bigpanda-sso-jit-provisioning-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
@@ -575,6 +617,9 @@ artifacts:
   postman/bigpanda-maintenance-plans-api.postman_collection.json:
     method: derived
     evidence: openapi/bigpanda-maintenance-plans-api
+  privacy/bigpanda-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/bigpanda-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
@@ -610,6 +655,9 @@ artifacts:
     evidence: declared in the artifact
   skills/bigpanda-triage-and-resolve-an-incident.md:
     method: generated
+    evidence: declared in the artifact
+  terms/bigpanda-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   vocabulary/bigpanda-vocabulary.yaml:
     method: unknown
